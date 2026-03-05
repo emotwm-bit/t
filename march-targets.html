@@ -7,37 +7,34 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
   :root {
-    --dark: #0a0e1a;
-    --card: #111827;
-    --border: #1e2d45;
+    --dark: #1a1a2e;
+    --card: #f8f9fc;
+    --border: #dde3f0;
     --accent1: #00c6ff;
     --accent2: #f97316;
-    --first: #1e3a5f;
-    --second: #1a2e4a;
-    --header-bg: #0d1b2e;
-    --text: #e2e8f0;
-    --muted: #94a3b8;
-    --gold: #f5c518;
+    --header-bg: #eef1f8;
+    --text: #1e293b;
+    --muted: #64748b;
+    --gold: #d97706;
     --teal: #14b8a6;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: var(--dark);
+    background: linear-gradient(135deg, #e8edf8 0%, #f0e8f8 50%, #e8f4f8 100%);
     color: var(--text);
     font-family: 'Noto Sans TC', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
   }
 
-  /* Animated background */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(ellipse at 20% 20%, rgba(0,198,255,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 20%, rgba(99,102,241,0.08) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 80%, rgba(249,115,22,0.06) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
@@ -51,7 +48,6 @@
     margin: 0 auto;
   }
 
-  /* Header */
   .header {
     text-align: center;
     margin-bottom: 36px;
@@ -60,8 +56,8 @@
 
   .header-tag {
     display: inline-block;
-    background: linear-gradient(90deg, var(--accent1), var(--teal));
-    color: #000;
+    background: linear-gradient(90deg, #6366f1, #a855f7);
+    color: #fff;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 3px;
@@ -75,7 +71,7 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(28px, 6vw, 56px);
     letter-spacing: 4px;
-    background: linear-gradient(135deg, #fff 30%, var(--accent1) 100%);
+    background: linear-gradient(135deg, #1e293b 30%, #6366f1 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -99,18 +95,17 @@
   }
 
   .badge-first {
-    background: linear-gradient(135deg, #1e3a5f, #00c6ff22);
-    border: 1.5px solid var(--accent1);
-    color: var(--accent1);
+    background: linear-gradient(135deg, #dbeafe, #eff6ff);
+    border: 1.5px solid #3b82f6;
+    color: #1d4ed8;
   }
 
   .badge-second {
-    background: linear-gradient(135deg, #3b1c0a, #f9731622);
-    border: 1.5px solid var(--accent2);
-    color: var(--accent2);
+    background: linear-gradient(135deg, #ffedd5, #fff7ed);
+    border: 1.5px solid #f97316;
+    color: #c2410c;
   }
 
-  /* Store sections */
   .store-section {
     margin-bottom: 32px;
     animation: fadeUp 0.6s ease both;
@@ -127,9 +122,9 @@
     font-size: 13px;
     font-weight: 900;
     letter-spacing: 3px;
-    color: var(--gold);
-    background: linear-gradient(90deg, rgba(245,197,24,0.15), transparent);
-    border-left: 3px solid var(--gold);
+    color: #92400e;
+    background: linear-gradient(90deg, rgba(217,119,6,0.12), transparent);
+    border-left: 3px solid #d97706;
     padding: 6px 16px 6px 12px;
     border-radius: 0 20px 20px 0;
   }
@@ -137,16 +132,15 @@
   .store-line {
     flex: 1;
     height: 1px;
-    background: linear-gradient(90deg, rgba(245,197,24,0.3), transparent);
+    background: linear-gradient(90deg, rgba(217,119,6,0.25), transparent);
   }
 
-  /* Table container */
   .table-wrap {
-    background: var(--card);
-    border: 1px solid var(--border);
+    background: #fff;
+    border: 1px solid #e2e8f0;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.03);
+    box-shadow: 0 4px 24px rgba(99,102,241,0.08), 0 1px 4px rgba(0,0,0,0.04);
     overflow-x: auto;
   }
 
@@ -156,131 +150,68 @@
     min-width: 900px;
   }
 
-  /* Column headers */
   thead tr.col-headers th {
-    background: #0d1b2e;
-    color: var(--muted);
+    background: #1e293b;
+    color: #94a3b8;
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     padding: 10px 6px;
     text-align: center;
-    border-bottom: 1px solid var(--border);
-    border-right: 1px solid var(--border);
+    border-bottom: 1px solid #334155;
+    border-right: 1px solid #334155;
     white-space: nowrap;
   }
 
-  thead tr.col-headers th:first-child {
-    color: #fff;
-    font-size: 11px;
-    letter-spacing: 2px;
-  }
-
-  /* Sub headers (上半場/下半場) */
   thead tr.sub-headers th {
-    background: #0d1b2e;
+    background: #1e293b;
     font-size: 10px;
     font-weight: 700;
     padding: 6px 4px;
     text-align: center;
-    border-bottom: 2px solid var(--border);
-    border-right: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 2px solid #334155;
+    border-right: 1px solid #2d3f55;
     letter-spacing: 0.5px;
   }
 
-  .sub-first {
-    color: var(--accent1);
-  }
+  .sub-first { color: #60a5fa; }
+  .sub-second { color: #fb923c; }
 
-  .sub-second {
-    color: var(--accent2);
-  }
-
-  .th-name {
-    background: #0d1b2e !important;
-    color: var(--muted) !important;
-    font-size: 10px;
-  }
-
-  /* Data rows */
-  tbody tr {
-    transition: background 0.2s;
-  }
-
-  tbody tr:hover {
-    background: rgba(0,198,255,0.05);
-  }
-
-  tbody tr:nth-child(even) {
-    background: rgba(255,255,255,0.02);
-  }
-
-  tbody tr:nth-child(even):hover {
-    background: rgba(0,198,255,0.05);
-  }
+  tbody tr { transition: background 0.2s; }
+  tbody tr:hover { background: rgba(99,102,241,0.05); }
+  tbody tr:nth-child(even) { background: #f8fafc; }
+  tbody tr:nth-child(even):hover { background: rgba(99,102,241,0.05); }
 
   tbody td {
     padding: 9px 6px;
     text-align: center;
     font-size: 13px;
     font-weight: 500;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    border-right: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid #f1f5f9;
+    border-right: 1px solid #f1f5f9;
+    color: #334155;
   }
 
   td.name-cell {
     font-weight: 700;
-    color: #fff;
+    color: #0f172a;
     font-size: 13px;
     text-align: left;
     padding-left: 16px;
     white-space: nowrap;
-    background: rgba(255,255,255,0.02);
+    background: #f8fafc;
   }
 
-  td.first-half {
-    color: #93c5fd;
-  }
+  td.first-half { color: #1d4ed8; font-weight: 600; }
+  td.second-half { color: #c2410c; font-weight: 600; }
+  td.big-num { font-size: 12px; }
+  td.big-num.first-half { color: #0369a1; }
+  td.big-num.second-half { color: #b45309; }
 
-  td.second-half {
-    color: #fdba74;
-  }
+  tr.supervisor td { background: rgba(217,119,6,0.04); }
+  tr.supervisor td.name-cell { color: #92400e; font-style: italic; }
 
-  /* Special: AQ / 配件 columns - larger numbers */
-  td.big-num {
-    font-size: 12px;
-  }
-
-  td.big-num.first-half { color: #67e8f9; }
-  td.big-num.second-half { color: #fcd34d; }
-
-  /* 區督導 row */
-  tr.supervisor td {
-    background: rgba(245,197,24,0.06);
-  }
-
-  tr.supervisor td.name-cell {
-    color: var(--gold);
-    font-style: italic;
-  }
-
-  /* Category group divider */
-  td.group-divider {
-    border-left: 2px solid rgba(0,198,255,0.2);
-  }
-
-  /* Footer */
-  .footer {
-    text-align: center;
-    color: var(--muted);
-    font-size: 12px;
-    margin-top: 40px;
-    letter-spacing: 2px;
-    opacity: 0.6;
-  }
-
-  /* Legend */
   .legend {
     display: flex;
     gap: 20px;
@@ -293,16 +224,20 @@
     align-items: center;
     gap: 6px;
     font-size: 12px;
-    color: var(--muted);
+    color: #64748b;
   }
 
-  .legend-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  .footer {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 12px;
+    margin-top: 40px;
+    letter-spacing: 2px;
+    opacity: 0.7;
   }
 
-  /* Animations */
   @keyframes fadeDown {
     from { opacity: 0; transform: translateY(-20px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -319,12 +254,10 @@
   .store-section:nth-child(4) { animation-delay: 0.4s; }
   .store-section:nth-child(5) { animation-delay: 0.5s; }
 
-  /* Scrollbar */
   ::-webkit-scrollbar { height: 6px; width: 6px; }
   ::-webkit-scrollbar-track { background: var(--dark); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-  /* Mobile tweaks */
   @media (max-width: 600px) {
     .page-wrapper { padding: 16px 8px 40px; }
     tbody td { font-size: 11px; padding: 7px 4px; }
@@ -337,9 +270,8 @@
 <body>
 <div class="page-wrapper">
 
-  <!-- Header -->
   <div class="header">
-    <div class="header-tag">倚盟通訊 · 業績目標</div>
+    <div class="header-tag">倚盟電訊</div>
     <h1>3月份個人業績目標</h1>
     <div class="ratio-badges">
       <div class="ratio-badge badge-first">🏁 上半場 52%</div>
@@ -347,16 +279,18 @@
     </div>
   </div>
 
-  <!-- Legend -->
   <div style="display:flex;justify-content:center;margin-bottom:24px;">
     <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#93c5fd"></div>上半場數值</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#fdba74"></div>下半場數值</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#f5c518"></div>區督導</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#1d4ed8"></div>上半場數值</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c2410c"></div>下半場數值</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#92400e"></div>區督導</div>
     </div>
   </div>
 
-  <!-- Helper macro: build a table -->
+  <!-- 共用 thead macro -->
+  <style>
+    .std-thead tr.col-headers th { background:#0d1b2e; color:var(--muted); font-size:10px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; padding:10px 6px; text-align:center; border-bottom:1px solid var(--border); border-right:1px solid var(--border); white-space:nowrap; }
+  </style>
 
   <!-- ===== 鼎山店 ===== -->
   <div class="store-section">
@@ -364,111 +298,88 @@
       <div class="store-name">鼎山店</div>
       <div class="store-line"></div>
     </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr class="col-headers">
-            <th rowspan="2" style="min-width:60px;">姓名</th>
-            <th colspan="2">AQ點數</th>
-            <th colspan="2">RT點數</th>
-            <th colspan="2">RT件</th>
-            <th colspan="2">升轉</th>
-            <th colspan="2">特維</th>
-            <th colspan="2">RT999</th>
-            <th colspan="2">RT1399</th>
-            <th colspan="2">Device</th>
-            <th colspan="2">5G</th>
-            <th colspan="2">保險</th>
-            <th colspan="2">配件</th>
-          </tr>
-          <tr class="sub-headers">
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="name-cell">劉家妮</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">139</td><td class="second-half">129</td>
-            <td class="first-half">25</td><td class="second-half">24</td>
-            <td class="first-half">10</td><td class="second-half">9</td>
-            <td class="first-half">9</td><td class="second-half">8</td>
-            <td class="first-half">11</td><td class="second-half">10</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">21</td><td class="second-half">20</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">9</td><td class="second-half">9</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-          <tr>
-            <td class="name-cell">黃子珮</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">118</td><td class="second-half">100</td>
-            <td class="first-half">21</td><td class="second-half">20</td>
-            <td class="first-half">8</td><td class="second-half">8</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">9</td><td class="second-half">9</td>
-            <td class="first-half">6</td><td class="second-half">6</td>
-            <td class="first-half">18</td><td class="second-half">17</td>
-            <td class="first-half">6</td><td class="second-half">6</td>
-            <td class="first-half">8</td><td class="second-half">8</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-          <tr>
-            <td class="name-cell">陳季安</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">137</td><td class="second-half">127</td>
-            <td class="first-half">25</td><td class="second-half">23</td>
-            <td class="first-half">9</td><td class="second-half">9</td>
-            <td class="first-half">8</td><td class="second-half">8</td>
-            <td class="first-half">11</td><td class="second-half">10</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">21</td><td class="second-half">20</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">9</td><td class="second-half">9</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-          <tr>
-            <td class="name-cell">彥州</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">91</td><td class="second-half">84</td>
-            <td class="first-half">17</td><td class="second-half">15</td>
-            <td class="first-half">6</td><td class="second-half">6</td>
-            <td class="first-half">6</td><td class="second-half">5</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">5</td><td class="second-half">4</td>
-            <td class="first-half">14</td><td class="second-half">13</td>
-            <td class="first-half">5</td><td class="second-half">4</td>
-            <td class="first-half">6</td><td class="second-half">6</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-          <tr class="supervisor">
-            <td class="name-cell">黃庭鈞（區督導）</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">100</td><td class="second-half">93</td>
-            <td class="first-half">18</td><td class="second-half">17</td>
-            <td class="first-half">7</td><td class="second-half">6</td>
-            <td class="first-half">6</td><td class="second-half">5</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">5</td><td class="second-half">4</td>
-            <td class="first-half">15</td><td class="second-half">13</td>
-            <td class="first-half">5</td><td class="second-half">5</td>
-            <td class="first-half">7</td><td class="second-half">6</td>
-            <td class="first-half big-num">4226</td><td class="second-half big-num">3901</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="table-wrap"><table>
+      <thead>
+        <tr class="col-headers">
+          <th rowspan="2" style="min-width:64px;">姓名</th>
+          <th colspan="2">AQ點數</th><th colspan="2">RT點數</th><th colspan="2">RT件</th>
+          <th colspan="2">升轉</th><th colspan="2">特維</th><th colspan="2">RT999</th>
+          <th colspan="2">RT1399</th><th colspan="2">Device</th><th colspan="2">5G</th>
+          <th colspan="2">保險</th><th colspan="2">配件</th>
+        </tr>
+        <tr class="sub-headers">
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name-cell">劉家妘</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">139</td><td class="second-half">129</td>
+          <td class="first-half">25</td><td class="second-half">24</td>
+          <td class="first-half">10</td><td class="second-half">9</td>
+          <td class="first-half">9</td><td class="second-half">8</td>
+          <td class="first-half">11</td><td class="second-half">10</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">21</td><td class="second-half">20</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">9</td><td class="second-half">9</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+        <tr>
+          <td class="name-cell">黃子珊</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">118</td><td class="second-half">109</td>
+          <td class="first-half">21</td><td class="second-half">20</td>
+          <td class="first-half">8</td><td class="second-half">8</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">9</td><td class="second-half">9</td>
+          <td class="first-half">6</td><td class="second-half">6</td>
+          <td class="first-half">18</td><td class="second-half">17</td>
+          <td class="first-half">6</td><td class="second-half">6</td>
+          <td class="first-half">8</td><td class="second-half">8</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+        <tr>
+          <td class="name-cell">陳亭安</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">137</td><td class="second-half">127</td>
+          <td class="first-half">25</td><td class="second-half">23</td>
+          <td class="first-half">9</td><td class="second-half">9</td>
+          <td class="first-half">8</td><td class="second-half">8</td>
+          <td class="first-half">11</td><td class="second-half">10</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">21</td><td class="second-half">20</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">9</td><td class="second-half">9</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+        <tr>
+          <td class="name-cell">彥州</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">91</td><td class="second-half">84</td>
+          <td class="first-half">17</td><td class="second-half">15</td>
+          <td class="first-half">6</td><td class="second-half">6</td>
+          <td class="first-half">6</td><td class="second-half">5</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">5</td><td class="second-half">4</td>
+          <td class="first-half">14</td><td class="second-half">13</td>
+          <td class="first-half">5</td><td class="second-half">4</td>
+          <td class="first-half">6</td><td class="second-half">6</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+      </tbody>
+    </table></div>
   </div>
 
   <!-- ===== 陽明店 ===== -->
@@ -477,83 +388,74 @@
       <div class="store-name">陽明店</div>
       <div class="store-line"></div>
     </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr class="col-headers">
-            <th rowspan="2" style="min-width:60px;">姓名</th>
-            <th colspan="2">AQ點數</th>
-            <th colspan="2">RT點數</th>
-            <th colspan="2">RT件</th>
-            <th colspan="2">升轉</th>
-            <th colspan="2">特維</th>
-            <th colspan="2">RT999</th>
-            <th colspan="2">RT1399</th>
-            <th colspan="2">Device</th>
-            <th colspan="2">5G</th>
-            <th colspan="2">保險</th>
-            <th colspan="2">配件</th>
-          </tr>
-          <tr class="sub-headers">
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="name-cell">方若帆</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">151</td><td class="second-half">139</td>
-            <td class="first-half">28</td><td class="second-half">25</td>
-            <td class="first-half">10</td><td class="second-half">10</td>
-            <td class="first-half">9</td><td class="second-half">8</td>
-            <td class="first-half">10</td><td class="second-half">10</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">23</td><td class="second-half">21</td>
-            <td class="first-half">8</td><td class="second-half">8</td>
-            <td class="first-half">10</td><td class="second-half">9</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-          <tr>
-            <td class="name-cell">劉芳廷</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">153</td><td class="second-half">142</td>
-            <td class="first-half">28</td><td class="second-half">26</td>
-            <td class="first-half">10</td><td class="second-half">10</td>
-            <td class="first-half">9</td><td class="second-half">8</td>
-            <td class="first-half">10</td><td class="second-half">10</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">23</td><td class="second-half">21</td>
-            <td class="first-half">8</td><td class="second-half">8</td>
-            <td class="first-half">10</td><td class="second-half">10</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-          <tr>
-            <td class="name-cell">林瑞獻</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">107</td><td class="second-half">99</td>
-            <td class="first-half">19</td><td class="second-half">18</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">6</td><td class="second-half">6</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">5</td><td class="second-half">5</td>
-            <td class="first-half">16</td><td class="second-half">15</td>
-            <td class="first-half">6</td><td class="second-half">5</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="table-wrap"><table>
+      <thead>
+        <tr class="col-headers">
+          <th rowspan="2" style="min-width:64px;">姓名</th>
+          <th colspan="2">AQ點數</th><th colspan="2">RT點數</th><th colspan="2">RT件</th>
+          <th colspan="2">升轉</th><th colspan="2">特維</th><th colspan="2">RT999</th>
+          <th colspan="2">RT1399</th><th colspan="2">Device</th><th colspan="2">5G</th>
+          <th colspan="2">保險</th><th colspan="2">配件</th>
+        </tr>
+        <tr class="sub-headers">
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name-cell">方若帆</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">151</td><td class="second-half">139</td>
+          <td class="first-half">28</td><td class="second-half">25</td>
+          <td class="first-half">10</td><td class="second-half">10</td>
+          <td class="first-half">9</td><td class="second-half">8</td>
+          <td class="first-half">10</td><td class="second-half">10</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">23</td><td class="second-half">21</td>
+          <td class="first-half">8</td><td class="second-half">8</td>
+          <td class="first-half">10</td><td class="second-half">9</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+        <tr>
+          <td class="name-cell">劉芳廷</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">153</td><td class="second-half">142</td>
+          <td class="first-half">28</td><td class="second-half">26</td>
+          <td class="first-half">10</td><td class="second-half">10</td>
+          <td class="first-half">9</td><td class="second-half">8</td>
+          <td class="first-half">10</td><td class="second-half">10</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">23</td><td class="second-half">21</td>
+          <td class="first-half">8</td><td class="second-half">8</td>
+          <td class="first-half">10</td><td class="second-half">10</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+        <tr>
+          <td class="name-cell">林瑞獻</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">107</td><td class="second-half">99</td>
+          <td class="first-half">19</td><td class="second-half">18</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">6</td><td class="second-half">6</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">5</td><td class="second-half">5</td>
+          <td class="first-half">16</td><td class="second-half">15</td>
+          <td class="first-half">6</td><td class="second-half">5</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+      </tbody>
+    </table></div>
   </div>
 
   <!-- ===== 後昌店 ===== -->
@@ -562,83 +464,74 @@
       <div class="store-name">後昌店</div>
       <div class="store-line"></div>
     </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr class="col-headers">
-            <th rowspan="2" style="min-width:60px;">姓名</th>
-            <th colspan="2">AQ點數</th>
-            <th colspan="2">RT點數</th>
-            <th colspan="2">RT件</th>
-            <th colspan="2">升轉</th>
-            <th colspan="2">特維</th>
-            <th colspan="2">RT999</th>
-            <th colspan="2">RT1399</th>
-            <th colspan="2">Device</th>
-            <th colspan="2">5G</th>
-            <th colspan="2">保險</th>
-            <th colspan="2">配件</th>
-          </tr>
-          <tr class="sub-headers">
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="name-cell">郭家維</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">138</td><td class="second-half">128</td>
-            <td class="first-half">25</td><td class="second-half">23</td>
-            <td class="first-half">9</td><td class="second-half">8</td>
-            <td class="first-half">8</td><td class="second-half">8</td>
-            <td class="first-half">10</td><td class="second-half">10</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">20</td><td class="second-half">18</td>
-            <td class="first-half">8</td><td class="second-half">9</td>
-            <td class="first-half">9</td><td class="second-half">8</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-          <tr>
-            <td class="name-cell">邱雨蔚</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">138</td><td class="second-half">128</td>
-            <td class="first-half">25</td><td class="second-half">23</td>
-            <td class="first-half">9</td><td class="second-half">9</td>
-            <td class="first-half">8</td><td class="second-half">7</td>
-            <td class="first-half">10</td><td class="second-half">10</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">20</td><td class="second-half">18</td>
-            <td class="first-half">8</td><td class="second-half">8</td>
-            <td class="first-half">9</td><td class="second-half">8</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-          <tr>
-            <td class="name-cell">姜旻芯</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">108</td><td class="second-half">100</td>
-            <td class="first-half">20</td><td class="second-half">18</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">6</td><td class="second-half">6</td>
-            <td class="first-half">8</td><td class="second-half">8</td>
-            <td class="first-half">6</td><td class="second-half">5</td>
-            <td class="first-half">16</td><td class="second-half">14</td>
-            <td class="first-half">6</td><td class="second-half">6</td>
-            <td class="first-half">7</td><td class="second-half">6</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="table-wrap"><table>
+      <thead>
+        <tr class="col-headers">
+          <th rowspan="2" style="min-width:64px;">姓名</th>
+          <th colspan="2">AQ點數</th><th colspan="2">RT點數</th><th colspan="2">RT件</th>
+          <th colspan="2">升轉</th><th colspan="2">特維</th><th colspan="2">RT999</th>
+          <th colspan="2">RT1399</th><th colspan="2">Device</th><th colspan="2">5G</th>
+          <th colspan="2">保險</th><th colspan="2">配件</th>
+        </tr>
+        <tr class="sub-headers">
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name-cell">郭家維</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">138</td><td class="second-half">128</td>
+          <td class="first-half">25</td><td class="second-half">23</td>
+          <td class="first-half">9</td><td class="second-half">9</td>
+          <td class="first-half">8</td><td class="second-half">7</td>
+          <td class="first-half">10</td><td class="second-half">10</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">20</td><td class="second-half">18</td>
+          <td class="first-half">8</td><td class="second-half">7</td>
+          <td class="first-half">9</td><td class="second-half">8</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+        <tr>
+          <td class="name-cell">邱雨蔚</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">138</td><td class="second-half">128</td>
+          <td class="first-half">25</td><td class="second-half">23</td>
+          <td class="first-half">9</td><td class="second-half">9</td>
+          <td class="first-half">8</td><td class="second-half">7</td>
+          <td class="first-half">10</td><td class="second-half">10</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">20</td><td class="second-half">18</td>
+          <td class="first-half">8</td><td class="second-half">7</td>
+          <td class="first-half">9</td><td class="second-half">8</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+        <tr>
+          <td class="name-cell">秦曼芯</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">108</td><td class="second-half">100</td>
+          <td class="first-half">20</td><td class="second-half">18</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">6</td><td class="second-half">6</td>
+          <td class="first-half">8</td><td class="second-half">8</td>
+          <td class="first-half">6</td><td class="second-half">5</td>
+          <td class="first-half">16</td><td class="second-half">14</td>
+          <td class="first-half">6</td><td class="second-half">6</td>
+          <td class="first-half">7</td><td class="second-half">6</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+      </tbody>
+    </table></div>
   </div>
 
   <!-- ===== 仁雄店 ===== -->
@@ -647,111 +540,88 @@
       <div class="store-name">仁雄店</div>
       <div class="store-line"></div>
     </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr class="col-headers">
-            <th rowspan="2" style="min-width:60px;">姓名</th>
-            <th colspan="2">AQ點數</th>
-            <th colspan="2">RT點數</th>
-            <th colspan="2">RT件</th>
-            <th colspan="2">升轉</th>
-            <th colspan="2">特維</th>
-            <th colspan="2">RT999</th>
-            <th colspan="2">RT1399</th>
-            <th colspan="2">Device</th>
-            <th colspan="2">5G</th>
-            <th colspan="2">保險</th>
-            <th colspan="2">配件</th>
-          </tr>
-          <tr class="sub-headers">
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="name-cell">黃熙稜</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">132</td><td class="second-half">122</td>
-            <td class="first-half">24</td><td class="second-half">22</td>
-            <td class="first-half">9</td><td class="second-half">9</td>
-            <td class="first-half">8</td><td class="second-half">7</td>
-            <td class="first-half">10</td><td class="second-half">10</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">20</td><td class="second-half">19</td>
-            <td class="first-half">7</td><td class="second-half">6</td>
-            <td class="first-half">9</td><td class="second-half">8</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-          <tr>
-            <td class="name-cell">黃閔聖</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">134</td><td class="second-half">124</td>
-            <td class="first-half">24</td><td class="second-half">23</td>
-            <td class="first-half">9</td><td class="second-half">9</td>
-            <td class="first-half">8</td><td class="second-half">7</td>
-            <td class="first-half">10</td><td class="second-half">10</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">20</td><td class="second-half">19</td>
-            <td class="first-half">7</td><td class="second-half">6</td>
-            <td class="first-half">9</td><td class="second-half">9</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-          <tr>
-            <td class="name-cell">郭坤鴻</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">126</td><td class="second-half">117</td>
-            <td class="first-half">23</td><td class="second-half">21</td>
-            <td class="first-half">9</td><td class="second-half">8</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">10</td><td class="second-half">9</td>
-            <td class="first-half">7</td><td class="second-half">6</td>
-            <td class="first-half">19</td><td class="second-half">18</td>
-            <td class="first-half">7</td><td class="second-half">6</td>
-            <td class="first-half">9</td><td class="second-half">8</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-          <tr>
-            <td class="name-cell">蔡冠廷</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">94</td><td class="second-half">86</td>
-            <td class="first-half">17</td><td class="second-half">16</td>
-            <td class="first-half">6</td><td class="second-half">6</td>
-            <td class="first-half">6</td><td class="second-half">5</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">5</td><td class="second-half">5</td>
-            <td class="first-half">14</td><td class="second-half">13</td>
-            <td class="first-half">5</td><td class="second-half">4</td>
-            <td class="first-half">6</td><td class="second-half">6</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-          <tr>
-            <td class="name-cell">陳冠姍</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">150</td><td class="second-half">138</td>
-            <td class="first-half">27</td><td class="second-half">25</td>
-            <td class="first-half">10</td><td class="second-half">10</td>
-            <td class="first-half">8</td><td class="second-half">8</td>
-            <td class="first-half">11</td><td class="second-half">11</td>
-            <td class="first-half">6</td><td class="second-half">6</td>
-            <td class="first-half">22</td><td class="second-half">20</td>
-            <td class="first-half">8</td><td class="second-half">10</td>
-            <td class="first-half">10</td><td class="second-half">9</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="table-wrap"><table>
+      <thead>
+        <tr class="col-headers">
+          <th rowspan="2" style="min-width:64px;">姓名</th>
+          <th colspan="2">AQ點數</th><th colspan="2">RT點數</th><th colspan="2">RT件</th>
+          <th colspan="2">升轉</th><th colspan="2">特維</th><th colspan="2">RT999</th>
+          <th colspan="2">RT1399</th><th colspan="2">Device</th><th colspan="2">5G</th>
+          <th colspan="2">保險</th><th colspan="2">配件</th>
+        </tr>
+        <tr class="sub-headers">
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name-cell">黃傑稜</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">132</td><td class="second-half">122</td>
+          <td class="first-half">24</td><td class="second-half">22</td>
+          <td class="first-half">9</td><td class="second-half">9</td>
+          <td class="first-half">8</td><td class="second-half">7</td>
+          <td class="first-half">10</td><td class="second-half">10</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">20</td><td class="second-half">19</td>
+          <td class="first-half">7</td><td class="second-half">6</td>
+          <td class="first-half">9</td><td class="second-half">8</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+        <tr>
+          <td class="name-cell">黃閔聖</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">134</td><td class="second-half">124</td>
+          <td class="first-half">24</td><td class="second-half">23</td>
+          <td class="first-half">9</td><td class="second-half">9</td>
+          <td class="first-half">8</td><td class="second-half">7</td>
+          <td class="first-half">10</td><td class="second-half">10</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">20</td><td class="second-half">19</td>
+          <td class="first-half">7</td><td class="second-half">6</td>
+          <td class="first-half">9</td><td class="second-half">9</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+        <tr>
+          <td class="name-cell">郭紳鴻</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">126</td><td class="second-half">117</td>
+          <td class="first-half">23</td><td class="second-half">21</td>
+          <td class="first-half">9</td><td class="second-half">8</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">10</td><td class="second-half">9</td>
+          <td class="first-half">7</td><td class="second-half">6</td>
+          <td class="first-half">19</td><td class="second-half">18</td>
+          <td class="first-half">7</td><td class="second-half">6</td>
+          <td class="first-half">9</td><td class="second-half">8</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+        <tr>
+          <td class="name-cell">蔡冠廷</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">94</td><td class="second-half">86</td>
+          <td class="first-half">17</td><td class="second-half">16</td>
+          <td class="first-half">6</td><td class="second-half">6</td>
+          <td class="first-half">6</td><td class="second-half">5</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">5</td><td class="second-half">5</td>
+          <td class="first-half">14</td><td class="second-half">13</td>
+          <td class="first-half">5</td><td class="second-half">4</td>
+          <td class="first-half">6</td><td class="second-half">6</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+      </tbody>
+    </table></div>
   </div>
 
   <!-- ===== 凱旋店 ===== -->
@@ -760,88 +630,139 @@
       <div class="store-name">凱旋店</div>
       <div class="store-line"></div>
     </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr class="col-headers">
-            <th rowspan="2" style="min-width:60px;">姓名</th>
-            <th colspan="2">AQ點數</th>
-            <th colspan="2">RT點數</th>
-            <th colspan="2">RT件</th>
-            <th colspan="2">升轉</th>
-            <th colspan="2">特維</th>
-            <th colspan="2">RT999</th>
-            <th colspan="2">RT1399</th>
-            <th colspan="2">Device</th>
-            <th colspan="2">5G</th>
-            <th colspan="2">保險</th>
-            <th colspan="2">配件</th>
-          </tr>
-          <tr class="sub-headers">
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-            <th class="sub-first">上半場</th><th class="sub-second">下半場</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="name-cell">石佳穎</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">132</td><td class="second-half">122</td>
-            <td class="first-half">24</td><td class="second-half">22</td>
-            <td class="first-half">9</td><td class="second-half">9</td>
-            <td class="first-half">7</td><td class="second-half">7</td>
-            <td class="first-half">10</td><td class="second-half">9</td>
-            <td class="first-half">6</td><td class="second-half">6</td>
-            <td class="first-half">19</td><td class="second-half">18</td>
-            <td class="first-half">7</td><td class="second-half">6</td>
-            <td class="first-half">9</td><td class="second-half">8</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-          <tr>
-            <td class="name-cell">高薇萱</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">124</td><td class="second-half">114</td>
-            <td class="first-half">22</td><td class="second-half">21</td>
-            <td class="first-half">8</td><td class="second-half">8</td>
-            <td class="first-half">7</td><td class="second-half">6</td>
-            <td class="first-half">9</td><td class="second-half">9</td>
-            <td class="first-half">5</td><td class="second-half">5</td>
-            <td class="first-half">18</td><td class="second-half">17</td>
-            <td class="first-half">7</td><td class="second-half">6</td>
-            <td class="first-half">8</td><td class="second-half">8</td>
-            <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-          </tr>
-          <tr>
-            <td class="name-cell">林庭逸</td>
-            <td class="first-half">19</td><td class="second-half">19</td>
-            <td class="first-half">87</td><td class="second-half">80</td>
-            <td class="first-half">16</td><td class="second-half">14</td>
-            <td class="first-half">6</td><td class="second-half">6</td>
-            <td class="first-half">5</td><td class="second-half">4</td>
-            <td class="first-half">7</td><td class="second-half">8</td>
-            <td class="first-half">4</td><td class="second-half">3</td>
-            <td class="first-half">12</td><td class="second-half">12</td>
-            <td class="first-half">5</td><td class="second-half">4</td>
-            <td class="first-half">8</td><td class="second-half">8</td>
-            <td class="first-half big-num">6761</td><td class="second-half big-num">6241</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="table-wrap"><table>
+      <thead>
+        <tr class="col-headers">
+          <th rowspan="2" style="min-width:64px;">姓名</th>
+          <th colspan="2">AQ點數</th><th colspan="2">RT點數</th><th colspan="2">RT件</th>
+          <th colspan="2">升轉</th><th colspan="2">特維</th><th colspan="2">RT999</th>
+          <th colspan="2">RT1399</th><th colspan="2">Device</th><th colspan="2">5G</th>
+          <th colspan="2">保險</th><th colspan="2">配件</th>
+        </tr>
+        <tr class="sub-headers">
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name-cell">陳宛姍</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">150</td><td class="second-half">138</td>
+          <td class="first-half">27</td><td class="second-half">25</td>
+          <td class="first-half">10</td><td class="second-half">10</td>
+          <td class="first-half">8</td><td class="second-half">8</td>
+          <td class="first-half">11</td><td class="second-half">11</td>
+          <td class="first-half">6</td><td class="second-half">6</td>
+          <td class="first-half">22</td><td class="second-half">20</td>
+          <td class="first-half">8</td><td class="second-half">7</td>
+          <td class="first-half">10</td><td class="second-half">9</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+        <tr>
+          <td class="name-cell">石佳穎</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">132</td><td class="second-half">122</td>
+          <td class="first-half">24</td><td class="second-half">22</td>
+          <td class="first-half">9</td><td class="second-half">9</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">10</td><td class="second-half">9</td>
+          <td class="first-half">6</td><td class="second-half">5</td>
+          <td class="first-half">19</td><td class="second-half">18</td>
+          <td class="first-half">7</td><td class="second-half">6</td>
+          <td class="first-half">9</td><td class="second-half">8</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+        <tr>
+          <td class="name-cell">高琦茗</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">124</td><td class="second-half">114</td>
+          <td class="first-half">22</td><td class="second-half">21</td>
+          <td class="first-half">8</td><td class="second-half">8</td>
+          <td class="first-half">7</td><td class="second-half">6</td>
+          <td class="first-half">9</td><td class="second-half">9</td>
+          <td class="first-half">5</td><td class="second-half">5</td>
+          <td class="first-half">18</td><td class="second-half">17</td>
+          <td class="first-half">7</td><td class="second-half">6</td>
+          <td class="first-half">8</td><td class="second-half">8</td>
+          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
+        </tr>
+        <tr>
+          <td class="name-cell">林庭逸</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">87</td><td class="second-half">80</td>
+          <td class="first-half">16</td><td class="second-half">14</td>
+          <td class="first-half">6</td><td class="second-half">6</td>
+          <td class="first-half">5</td><td class="second-half">4</td>
+          <td class="first-half">7</td><td class="second-half">6</td>
+          <td class="first-half">4</td><td class="second-half">3</td>
+          <td class="first-half">12</td><td class="second-half">12</td>
+          <td class="first-half">5</td><td class="second-half">4</td>
+          <td class="first-half">6</td><td class="second-half">5</td>
+          <td class="first-half big-num">6761</td><td class="second-half big-num">6241</td>
+        </tr>
+      </tbody>
+    </table></div>
   </div>
 
-  <div class="footer">
-    倚盟通訊 · 2025年3月 · 業績目標一覽
+  <!-- ===== 區督導 ===== -->
+  <div class="store-section">
+    <div class="store-header">
+      <div class="store-name" style="color:#6d28d9; border-left-color:#7c3aed; background:linear-gradient(90deg,rgba(124,58,237,0.1),transparent);">區督導</div>
+      <div class="store-line" style="background:linear-gradient(90deg,rgba(124,58,237,0.25),transparent);"></div>
+    </div>
+    <div class="table-wrap"><table>
+      <thead>
+        <tr class="col-headers">
+          <th rowspan="2" style="min-width:64px;">姓名</th>
+          <th colspan="2">AQ點數</th><th colspan="2">RT點數</th><th colspan="2">RT件</th>
+          <th colspan="2">升轉</th><th colspan="2">特維</th><th colspan="2">RT999</th>
+          <th colspan="2">RT1399</th><th colspan="2">Device</th><th colspan="2">5G</th>
+          <th colspan="2">保險</th><th colspan="2">配件</th>
+        </tr>
+        <tr class="sub-headers">
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+          <th class="sub-first">上</th><th class="sub-second">下</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(124,58,237,0.04);">
+          <td class="name-cell" style="color:#6d28d9;">黃庭鈞</td>
+          <td class="first-half">19</td><td class="second-half">19</td>
+          <td class="first-half">100</td><td class="second-half">93</td>
+          <td class="first-half">18</td><td class="second-half">17</td>
+          <td class="first-half">7</td><td class="second-half">6</td>
+          <td class="first-half">6</td><td class="second-half">5</td>
+          <td class="first-half">7</td><td class="second-half">7</td>
+          <td class="first-half">5</td><td class="second-half">4</td>
+          <td class="first-half">15</td><td class="second-half">13</td>
+          <td class="first-half">5</td><td class="second-half">5</td>
+          <td class="first-half">7</td><td class="second-half">6</td>
+          <td class="first-half big-num">4226</td><td class="second-half big-num">3901</td>
+        </tr>
+      </tbody>
+    </table></div>
   </div>
+
+  <div class="footer">倚盟通訊 ｜ 上半場 52%　下半場 48% ｜ 2026年3月</div>
 
 </div>
 </body>
