@@ -3,767 +3,439 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3月份個人業績目標</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<title>3月份業績目標查詢</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --dark: #1a1a2e;
-    --card: #f8f9fc;
-    --border: #dde3f0;
-    --accent1: #00c6ff;
-    --accent2: #f97316;
-    --header-bg: #eef1f8;
-    --text: #1e293b;
-    --muted: #64748b;
-    --gold: #d97706;
-    --teal: #14b8a6;
-  }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: #f0f4f8;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
 
-  body {
-    background: linear-gradient(135deg, #e8edf8 0%, #f0e8f8 50%, #e8f4f8 100%);
-    color: var(--text);
-    font-family: 'Noto Sans TC', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+/* ── Header ── */
+.hero {
+  background: linear-gradient(135deg, #2d4a8a 0%, #3d6cb5 60%, #4a7fd4 100%);
+  padding: 36px 20px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 30%, rgba(255,255,255,0.08) 0%, transparent 60%);
+}
+.hero-icon { font-size: 36px; margin-bottom: 8px; }
+.hero h1 {
+  color: #fff;
+  font-size: clamp(20px, 5vw, 28px);
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.hero p {
+  color: rgba(255,255,255,0.75);
+  font-size: 14px;
+}
 
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at 20% 20%, rgba(99,102,241,0.08) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 80%, rgba(249,115,22,0.06) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-  }
+/* ── Selector Card ── */
+.selector-card {
+  background: #fff;
+  margin: -1px 0 0;
+  padding: 24px 20px;
+  border-bottom: 1px solid #e5eaf2;
+}
+.selector-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 480px) { .selector-inner { grid-template-columns: 1fr; } }
 
-  .page-wrapper {
-    position: relative;
-    z-index: 1;
-    padding: 24px 16px 60px;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
+.field-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: inherit;
+  color: #1e293b;
+  background: #fff;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+select:focus { outline: none; border-color: #3d6cb5; }
 
-  .header {
-    text-align: center;
-    margin-bottom: 36px;
-    animation: fadeDown 0.7s ease both;
-  }
+/* ── Main content ── */
+.content {
+  max-width: 760px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
 
-  .header-tag {
-    display: inline-block;
-    background: linear-gradient(90deg, #6366f1, #a855f7);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    padding: 4px 16px;
-    border-radius: 20px;
-    margin-bottom: 14px;
-    text-transform: uppercase;
-  }
+/* ── Empty state ── */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #94a3b8;
+}
+.empty-state .big-icon { font-size: 52px; margin-bottom: 12px; }
+.empty-state p { font-size: 15px; }
 
-  .header h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(28px, 6vw, 56px);
-    letter-spacing: 4px;
-    background: linear-gradient(135deg, #1e293b 30%, #6366f1 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.1;
-  }
+/* ── Profile card ── */
+.profile-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(45,74,138,0.08);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.avatar {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2d4a8a, #4a7fd4);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.profile-info h2 {
+  font-size: 20px;
+  font-weight: 900;
+  color: #1e293b;
+  margin-bottom: 6px;
+}
+.badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.badge-store { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.badge-supervisor { background: #fdf4ff; color: #7e22ce; border: 1px solid #e9d5ff; }
 
-  .ratio-badges {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 16px;
-    flex-wrap: wrap;
-  }
+/* ── Period buttons ── */
+.period-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.period-btn {
+  border-radius: 12px;
+  padding: 14px 10px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #fff;
+}
+.period-btn .period-label { font-size: 17px; margin-bottom: 3px; }
+.period-btn .period-date { font-size: 12px; opacity: 0.88; }
+.btn-first { background: linear-gradient(135deg, #22c55e, #16a34a); }
+.btn-second { background: linear-gradient(135deg, #f97316, #ea580c); }
 
-  .ratio-badge {
-    padding: 8px 24px;
-    border-radius: 40px;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 1px;
-  }
+/* ── Section title ── */
+.section-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 4px;
+  border-left: 3px solid #3d6cb5;
+  padding-left: 10px;
+}
 
-  .badge-first {
-    background: linear-gradient(135deg, #dbeafe, #eff6ff);
-    border: 1.5px solid #3b82f6;
-    color: #1d4ed8;
-  }
+/* ── Metric grid ── */
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+@media (min-width: 560px) { .metric-grid { grid-template-columns: repeat(3, 1fr); } }
 
-  .badge-second {
-    background: linear-gradient(135deg, #ffedd5, #fff7ed);
-    border: 1.5px solid #f97316;
-    color: #c2410c;
-  }
+.metric-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 12px;
+  box-shadow: 0 2px 10px rgba(45,74,138,0.07);
+}
+.metric-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.metric-values {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.metric-val {
+  border-radius: 8px;
+  padding: 6px 4px;
+  text-align: center;
+}
+.val-label {
+  font-size: 10px;
+  font-weight: 600;
+  margin-bottom: 3px;
+  opacity: 0.85;
+}
+.val-num {
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+}
+.val-total { background: #1e3a6e; color: #fff; }
+.val-first { background: #22c55e; color: #fff; }
+.val-second { background: #f97316; color: #fff; }
 
-  .store-section {
-    margin-bottom: 32px;
-    animation: fadeUp 0.6s ease both;
-  }
+/* small numbers for 配件 */
+.val-num.small { font-size: 13px; }
 
-  .store-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
-  }
+/* ── Supervisor note ── */
+.supervisor-note {
+  background: #fdf4ff;
+  border: 1px solid #e9d5ff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #7e22ce;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-  .store-name {
-    font-size: 13px;
-    font-weight: 900;
-    letter-spacing: 3px;
-    color: #92400e;
-    background: linear-gradient(90deg, rgba(217,119,6,0.12), transparent);
-    border-left: 3px solid #d97706;
-    padding: 6px 16px 6px 12px;
-    border-radius: 0 20px 20px 0;
-  }
-
-  .store-line {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(217,119,6,0.25), transparent);
-  }
-
-  .table-wrap {
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 24px rgba(99,102,241,0.08), 0 1px 4px rgba(0,0,0,0.04);
-    overflow-x: auto;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 900px;
-  }
-
-  thead tr.col-headers th {
-    background: #1e293b;
-    color: #94a3b8;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 10px 6px;
-    text-align: center;
-    border-bottom: 1px solid #334155;
-    border-right: 1px solid #334155;
-    white-space: nowrap;
-  }
-
-  thead tr.sub-headers th {
-    background: #1e293b;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 6px 4px;
-    text-align: center;
-    border-bottom: 2px solid #334155;
-    border-right: 1px solid #2d3f55;
-    letter-spacing: 0.5px;
-  }
-
-  .sub-first { color: #60a5fa; }
-  .sub-second { color: #fb923c; }
-
-  tbody tr { transition: background 0.2s; }
-  tbody tr:hover { background: rgba(99,102,241,0.05); }
-  tbody tr:nth-child(even) { background: #f8fafc; }
-  tbody tr:nth-child(even):hover { background: rgba(99,102,241,0.05); }
-
-  tbody td {
-    padding: 9px 6px;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 500;
-    border-bottom: 1px solid #f1f5f9;
-    border-right: 1px solid #f1f5f9;
-    color: #334155;
-  }
-
-  td.name-cell {
-    font-weight: 700;
-    color: #0f172a;
-    font-size: 13px;
-    text-align: left;
-    padding-left: 16px;
-    white-space: nowrap;
-    background: #f8fafc;
-  }
-
-  td.first-half { color: #1d4ed8; font-weight: 600; }
-  td.second-half { color: #c2410c; font-weight: 600; }
-  td.big-num { font-size: 12px; }
-  td.big-num.first-half { color: #0369a1; }
-  td.big-num.second-half { color: #b45309; }
-
-  tr.supervisor td { background: rgba(217,119,6,0.04); }
-  tr.supervisor td.name-cell { color: #92400e; font-style: italic; }
-
-  .legend {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 14px;
-    flex-wrap: wrap;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: #64748b;
-  }
-
-  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
-
-  .footer {
-    text-align: center;
-    color: #94a3b8;
-    font-size: 12px;
-    margin-top: 40px;
-    letter-spacing: 2px;
-    opacity: 0.7;
-  }
-
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .store-section:nth-child(1) { animation-delay: 0.1s; }
-  .store-section:nth-child(2) { animation-delay: 0.2s; }
-  .store-section:nth-child(3) { animation-delay: 0.3s; }
-  .store-section:nth-child(4) { animation-delay: 0.4s; }
-  .store-section:nth-child(5) { animation-delay: 0.5s; }
-
-  ::-webkit-scrollbar { height: 6px; width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--dark); }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
-  @media (max-width: 600px) {
-    .page-wrapper { padding: 16px 8px 40px; }
-    tbody td { font-size: 11px; padding: 7px 4px; }
-    td.name-cell { font-size: 12px; padding-left: 10px; }
-    thead tr.col-headers th { font-size: 9px; }
-    thead tr.sub-headers th { font-size: 9px; }
-  }
+/* ── Footer ── */
+.page-footer {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 12px;
+  margin-top: 32px;
+  letter-spacing: 1px;
+}
 </style>
 </head>
 <body>
-<div class="page-wrapper">
 
-  <div class="header">
-    <div class="header-tag">倚盟電訊</div>
-    <h1>3月份個人業績目標</h1>
-    <div class="ratio-badges">
-      <div class="ratio-badge badge-first">🏁 上半場 52%</div>
-      <div class="ratio-badge badge-second">🔥 下半場 48%</div>
-    </div>
-  </div>
-
-  <div style="display:flex;justify-content:center;margin-bottom:24px;">
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#1d4ed8"></div>上半場數值</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#c2410c"></div>下半場數值</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#92400e"></div>區督導</div>
-    </div>
-  </div>
-
-  <!-- 共用 thead macro -->
-  <style>
-    .std-thead tr.col-headers th { background:#0d1b2e; color:var(--muted); font-size:10px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; padding:10px 6px; text-align:center; border-bottom:1px solid var(--border); border-right:1px solid var(--border); white-space:nowrap; }
-  </style>
-
-  <!-- ===== 鼎山店 ===== -->
-  <div class="store-section">
-    <div class="store-header">
-      <div class="store-name">鼎山店</div>
-      <div class="store-line"></div>
-    </div>
-    <div class="table-wrap"><table>
-      <thead>
-        <tr class="col-headers">
-          <th rowspan="2" style="min-width:64px;">姓名</th>
-          <th colspan="2">AQ點數</th><th colspan="2">RT點數</th><th colspan="2">RT件</th>
-          <th colspan="2">升轉</th><th colspan="2">特維</th><th colspan="2">RT999</th>
-          <th colspan="2">RT1399</th><th colspan="2">Device</th><th colspan="2">5G</th>
-          <th colspan="2">保險</th><th colspan="2">配件</th>
-        </tr>
-        <tr class="sub-headers">
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="name-cell">劉家妘</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">139</td><td class="second-half">129</td>
-          <td class="first-half">25</td><td class="second-half">24</td>
-          <td class="first-half">10</td><td class="second-half">9</td>
-          <td class="first-half">9</td><td class="second-half">8</td>
-          <td class="first-half">11</td><td class="second-half">10</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">21</td><td class="second-half">20</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">9</td><td class="second-half">9</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-        <tr>
-          <td class="name-cell">黃子珊</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">118</td><td class="second-half">109</td>
-          <td class="first-half">21</td><td class="second-half">20</td>
-          <td class="first-half">8</td><td class="second-half">8</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">9</td><td class="second-half">9</td>
-          <td class="first-half">6</td><td class="second-half">6</td>
-          <td class="first-half">18</td><td class="second-half">17</td>
-          <td class="first-half">6</td><td class="second-half">6</td>
-          <td class="first-half">8</td><td class="second-half">8</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-        <tr>
-          <td class="name-cell">陳亭安</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">137</td><td class="second-half">127</td>
-          <td class="first-half">25</td><td class="second-half">23</td>
-          <td class="first-half">9</td><td class="second-half">9</td>
-          <td class="first-half">8</td><td class="second-half">8</td>
-          <td class="first-half">11</td><td class="second-half">10</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">21</td><td class="second-half">20</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">9</td><td class="second-half">9</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-        <tr>
-          <td class="name-cell">彥州</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">91</td><td class="second-half">84</td>
-          <td class="first-half">17</td><td class="second-half">15</td>
-          <td class="first-half">6</td><td class="second-half">6</td>
-          <td class="first-half">6</td><td class="second-half">5</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">5</td><td class="second-half">4</td>
-          <td class="first-half">14</td><td class="second-half">13</td>
-          <td class="first-half">5</td><td class="second-half">4</td>
-          <td class="first-half">6</td><td class="second-half">6</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-      </tbody>
-    </table></div>
-  </div>
-
-  <!-- ===== 陽明店 ===== -->
-  <div class="store-section">
-    <div class="store-header">
-      <div class="store-name">陽明店</div>
-      <div class="store-line"></div>
-    </div>
-    <div class="table-wrap"><table>
-      <thead>
-        <tr class="col-headers">
-          <th rowspan="2" style="min-width:64px;">姓名</th>
-          <th colspan="2">AQ點數</th><th colspan="2">RT點數</th><th colspan="2">RT件</th>
-          <th colspan="2">升轉</th><th colspan="2">特維</th><th colspan="2">RT999</th>
-          <th colspan="2">RT1399</th><th colspan="2">Device</th><th colspan="2">5G</th>
-          <th colspan="2">保險</th><th colspan="2">配件</th>
-        </tr>
-        <tr class="sub-headers">
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="name-cell">方若帆</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">151</td><td class="second-half">139</td>
-          <td class="first-half">28</td><td class="second-half">25</td>
-          <td class="first-half">10</td><td class="second-half">10</td>
-          <td class="first-half">9</td><td class="second-half">8</td>
-          <td class="first-half">10</td><td class="second-half">10</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">23</td><td class="second-half">21</td>
-          <td class="first-half">8</td><td class="second-half">8</td>
-          <td class="first-half">10</td><td class="second-half">9</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-        <tr>
-          <td class="name-cell">劉芳廷</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">153</td><td class="second-half">142</td>
-          <td class="first-half">28</td><td class="second-half">26</td>
-          <td class="first-half">10</td><td class="second-half">10</td>
-          <td class="first-half">9</td><td class="second-half">8</td>
-          <td class="first-half">10</td><td class="second-half">10</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">23</td><td class="second-half">21</td>
-          <td class="first-half">8</td><td class="second-half">8</td>
-          <td class="first-half">10</td><td class="second-half">10</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-        <tr>
-          <td class="name-cell">林瑞獻</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">107</td><td class="second-half">99</td>
-          <td class="first-half">19</td><td class="second-half">18</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">6</td><td class="second-half">6</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">5</td><td class="second-half">5</td>
-          <td class="first-half">16</td><td class="second-half">15</td>
-          <td class="first-half">6</td><td class="second-half">5</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-      </tbody>
-    </table></div>
-  </div>
-
-  <!-- ===== 後昌店 ===== -->
-  <div class="store-section">
-    <div class="store-header">
-      <div class="store-name">後昌店</div>
-      <div class="store-line"></div>
-    </div>
-    <div class="table-wrap"><table>
-      <thead>
-        <tr class="col-headers">
-          <th rowspan="2" style="min-width:64px;">姓名</th>
-          <th colspan="2">AQ點數</th><th colspan="2">RT點數</th><th colspan="2">RT件</th>
-          <th colspan="2">升轉</th><th colspan="2">特維</th><th colspan="2">RT999</th>
-          <th colspan="2">RT1399</th><th colspan="2">Device</th><th colspan="2">5G</th>
-          <th colspan="2">保險</th><th colspan="2">配件</th>
-        </tr>
-        <tr class="sub-headers">
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="name-cell">郭家維</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">138</td><td class="second-half">128</td>
-          <td class="first-half">25</td><td class="second-half">23</td>
-          <td class="first-half">9</td><td class="second-half">9</td>
-          <td class="first-half">8</td><td class="second-half">7</td>
-          <td class="first-half">10</td><td class="second-half">10</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">20</td><td class="second-half">18</td>
-          <td class="first-half">8</td><td class="second-half">7</td>
-          <td class="first-half">9</td><td class="second-half">8</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-        <tr>
-          <td class="name-cell">邱雨蔚</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">138</td><td class="second-half">128</td>
-          <td class="first-half">25</td><td class="second-half">23</td>
-          <td class="first-half">9</td><td class="second-half">9</td>
-          <td class="first-half">8</td><td class="second-half">7</td>
-          <td class="first-half">10</td><td class="second-half">10</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">20</td><td class="second-half">18</td>
-          <td class="first-half">8</td><td class="second-half">7</td>
-          <td class="first-half">9</td><td class="second-half">8</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-        <tr>
-          <td class="name-cell">秦曼芯</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">108</td><td class="second-half">100</td>
-          <td class="first-half">20</td><td class="second-half">18</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">6</td><td class="second-half">6</td>
-          <td class="first-half">8</td><td class="second-half">8</td>
-          <td class="first-half">6</td><td class="second-half">5</td>
-          <td class="first-half">16</td><td class="second-half">14</td>
-          <td class="first-half">6</td><td class="second-half">6</td>
-          <td class="first-half">7</td><td class="second-half">6</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-      </tbody>
-    </table></div>
-  </div>
-
-  <!-- ===== 仁雄店 ===== -->
-  <div class="store-section">
-    <div class="store-header">
-      <div class="store-name">仁雄店</div>
-      <div class="store-line"></div>
-    </div>
-    <div class="table-wrap"><table>
-      <thead>
-        <tr class="col-headers">
-          <th rowspan="2" style="min-width:64px;">姓名</th>
-          <th colspan="2">AQ點數</th><th colspan="2">RT點數</th><th colspan="2">RT件</th>
-          <th colspan="2">升轉</th><th colspan="2">特維</th><th colspan="2">RT999</th>
-          <th colspan="2">RT1399</th><th colspan="2">Device</th><th colspan="2">5G</th>
-          <th colspan="2">保險</th><th colspan="2">配件</th>
-        </tr>
-        <tr class="sub-headers">
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="name-cell">黃傑稜</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">132</td><td class="second-half">122</td>
-          <td class="first-half">24</td><td class="second-half">22</td>
-          <td class="first-half">9</td><td class="second-half">9</td>
-          <td class="first-half">8</td><td class="second-half">7</td>
-          <td class="first-half">10</td><td class="second-half">10</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">20</td><td class="second-half">19</td>
-          <td class="first-half">7</td><td class="second-half">6</td>
-          <td class="first-half">9</td><td class="second-half">8</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-        <tr>
-          <td class="name-cell">黃閔聖</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">134</td><td class="second-half">124</td>
-          <td class="first-half">24</td><td class="second-half">23</td>
-          <td class="first-half">9</td><td class="second-half">9</td>
-          <td class="first-half">8</td><td class="second-half">7</td>
-          <td class="first-half">10</td><td class="second-half">10</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">20</td><td class="second-half">19</td>
-          <td class="first-half">7</td><td class="second-half">6</td>
-          <td class="first-half">9</td><td class="second-half">9</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-        <tr>
-          <td class="name-cell">郭紳鴻</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">126</td><td class="second-half">117</td>
-          <td class="first-half">23</td><td class="second-half">21</td>
-          <td class="first-half">9</td><td class="second-half">8</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">10</td><td class="second-half">9</td>
-          <td class="first-half">7</td><td class="second-half">6</td>
-          <td class="first-half">19</td><td class="second-half">18</td>
-          <td class="first-half">7</td><td class="second-half">6</td>
-          <td class="first-half">9</td><td class="second-half">8</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-        <tr>
-          <td class="name-cell">蔡冠廷</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">94</td><td class="second-half">86</td>
-          <td class="first-half">17</td><td class="second-half">16</td>
-          <td class="first-half">6</td><td class="second-half">6</td>
-          <td class="first-half">6</td><td class="second-half">5</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">5</td><td class="second-half">5</td>
-          <td class="first-half">14</td><td class="second-half">13</td>
-          <td class="first-half">5</td><td class="second-half">4</td>
-          <td class="first-half">6</td><td class="second-half">6</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-      </tbody>
-    </table></div>
-  </div>
-
-  <!-- ===== 凱旋店 ===== -->
-  <div class="store-section">
-    <div class="store-header">
-      <div class="store-name">凱旋店</div>
-      <div class="store-line"></div>
-    </div>
-    <div class="table-wrap"><table>
-      <thead>
-        <tr class="col-headers">
-          <th rowspan="2" style="min-width:64px;">姓名</th>
-          <th colspan="2">AQ點數</th><th colspan="2">RT點數</th><th colspan="2">RT件</th>
-          <th colspan="2">升轉</th><th colspan="2">特維</th><th colspan="2">RT999</th>
-          <th colspan="2">RT1399</th><th colspan="2">Device</th><th colspan="2">5G</th>
-          <th colspan="2">保險</th><th colspan="2">配件</th>
-        </tr>
-        <tr class="sub-headers">
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="name-cell">陳宛姍</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">150</td><td class="second-half">138</td>
-          <td class="first-half">27</td><td class="second-half">25</td>
-          <td class="first-half">10</td><td class="second-half">10</td>
-          <td class="first-half">8</td><td class="second-half">8</td>
-          <td class="first-half">11</td><td class="second-half">11</td>
-          <td class="first-half">6</td><td class="second-half">6</td>
-          <td class="first-half">22</td><td class="second-half">20</td>
-          <td class="first-half">8</td><td class="second-half">7</td>
-          <td class="first-half">10</td><td class="second-half">9</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-        <tr>
-          <td class="name-cell">石佳穎</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">132</td><td class="second-half">122</td>
-          <td class="first-half">24</td><td class="second-half">22</td>
-          <td class="first-half">9</td><td class="second-half">9</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">10</td><td class="second-half">9</td>
-          <td class="first-half">6</td><td class="second-half">5</td>
-          <td class="first-half">19</td><td class="second-half">18</td>
-          <td class="first-half">7</td><td class="second-half">6</td>
-          <td class="first-half">9</td><td class="second-half">8</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-        <tr>
-          <td class="name-cell">高琦茗</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">124</td><td class="second-half">114</td>
-          <td class="first-half">22</td><td class="second-half">21</td>
-          <td class="first-half">8</td><td class="second-half">8</td>
-          <td class="first-half">7</td><td class="second-half">6</td>
-          <td class="first-half">9</td><td class="second-half">9</td>
-          <td class="first-half">5</td><td class="second-half">5</td>
-          <td class="first-half">18</td><td class="second-half">17</td>
-          <td class="first-half">7</td><td class="second-half">6</td>
-          <td class="first-half">8</td><td class="second-half">8</td>
-          <td class="first-half big-num">8452</td><td class="second-half big-num">7801</td>
-        </tr>
-        <tr>
-          <td class="name-cell">林庭逸</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">87</td><td class="second-half">80</td>
-          <td class="first-half">16</td><td class="second-half">14</td>
-          <td class="first-half">6</td><td class="second-half">6</td>
-          <td class="first-half">5</td><td class="second-half">4</td>
-          <td class="first-half">7</td><td class="second-half">6</td>
-          <td class="first-half">4</td><td class="second-half">3</td>
-          <td class="first-half">12</td><td class="second-half">12</td>
-          <td class="first-half">5</td><td class="second-half">4</td>
-          <td class="first-half">6</td><td class="second-half">5</td>
-          <td class="first-half big-num">6761</td><td class="second-half big-num">6241</td>
-        </tr>
-      </tbody>
-    </table></div>
-  </div>
-
-  <!-- ===== 區督導 ===== -->
-  <div class="store-section">
-    <div class="store-header">
-      <div class="store-name" style="color:#6d28d9; border-left-color:#7c3aed; background:linear-gradient(90deg,rgba(124,58,237,0.1),transparent);">區督導</div>
-      <div class="store-line" style="background:linear-gradient(90deg,rgba(124,58,237,0.25),transparent);"></div>
-    </div>
-    <div class="table-wrap"><table>
-      <thead>
-        <tr class="col-headers">
-          <th rowspan="2" style="min-width:64px;">姓名</th>
-          <th colspan="2">AQ點數</th><th colspan="2">RT點數</th><th colspan="2">RT件</th>
-          <th colspan="2">升轉</th><th colspan="2">特維</th><th colspan="2">RT999</th>
-          <th colspan="2">RT1399</th><th colspan="2">Device</th><th colspan="2">5G</th>
-          <th colspan="2">保險</th><th colspan="2">配件</th>
-        </tr>
-        <tr class="sub-headers">
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-          <th class="sub-first">上</th><th class="sub-second">下</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="background:rgba(124,58,237,0.04);">
-          <td class="name-cell" style="color:#6d28d9;">黃庭鈞</td>
-          <td class="first-half">19</td><td class="second-half">19</td>
-          <td class="first-half">100</td><td class="second-half">93</td>
-          <td class="first-half">18</td><td class="second-half">17</td>
-          <td class="first-half">7</td><td class="second-half">6</td>
-          <td class="first-half">6</td><td class="second-half">5</td>
-          <td class="first-half">7</td><td class="second-half">7</td>
-          <td class="first-half">5</td><td class="second-half">4</td>
-          <td class="first-half">15</td><td class="second-half">13</td>
-          <td class="first-half">5</td><td class="second-half">5</td>
-          <td class="first-half">7</td><td class="second-half">6</td>
-          <td class="first-half big-num">4226</td><td class="second-half big-num">3901</td>
-        </tr>
-      </tbody>
-    </table></div>
-  </div>
-
-  <div class="footer">倚盟通訊 ｜ 上半場 52%　下半場 48% ｜ 2026年3月</div>
-
+<div class="hero">
+  <div class="hero-icon">📊</div>
+  <h1>3月份業績目標查詢</h1>
+  <p>選擇店點和姓名查看目標</p>
 </div>
+
+<div class="selector-card">
+  <div class="selector-inner">
+    <div>
+      <div class="field-label">🏪 店點</div>
+      <select id="storeSelect" onchange="onStoreChange()">
+        <option value="">請選擇店點</option>
+        <option value="鼎山店">鼎山店</option>
+        <option value="陽明店">陽明店</option>
+        <option value="後昌店">後昌店</option>
+        <option value="仁雄店">仁雄店</option>
+        <option value="凱旋店">凱旋店</option>
+        <option value="區督導">區督導</option>
+      </select>
+    </div>
+    <div>
+      <div class="field-label">👤 員工</div>
+      <select id="empSelect" onchange="onEmpChange()">
+        <option value="">請先選擇店點</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="empty-state" id="emptyState">
+    <div class="big-icon">🎯</div>
+    <p>請選擇店點和員工姓名<br>即可查看個人業績目標</p>
+  </div>
+  <div id="resultArea" style="display:none;"></div>
+</div>
+
+<div class="page-footer">倚盟電訊 ｜ 2026年3月 ｜ 上半場 52% / 下半場 48%</div>
+
+<script>
+const DATA = {
+  "鼎山店": {
+    "劉家妘": { aq:[19,19], rt:[139,129], rtc:[25,24], up:[10,9], sp:[9,8], rt999:[11,10], rt1399:[7,7], dev:[21,20], g5:[7,7], ins:[9,9], acc:[8452,7801] },
+    "黃子珊": { aq:[19,19], rt:[118,109], rtc:[21,20], up:[8,8], sp:[7,7], rt999:[9,9], rt1399:[6,6], dev:[18,17], g5:[6,6], ins:[8,8], acc:[8452,7801] },
+    "陳亭安": { aq:[19,19], rt:[137,127], rtc:[25,23], up:[9,9], sp:[8,8], rt999:[11,10], rt1399:[7,7], dev:[21,20], g5:[7,7], ins:[9,9], acc:[8452,7801] },
+    "彥州":   { aq:[19,19], rt:[91,84],   rtc:[17,15], up:[6,6], sp:[6,5], rt999:[7,7],   rt1399:[5,4], dev:[14,13], g5:[5,4], ins:[6,6], acc:[8452,7801] }
+  },
+  "陽明店": {
+    "方若帆": { aq:[19,19], rt:[151,139], rtc:[28,25], up:[10,10], sp:[9,8], rt999:[10,10], rt1399:[7,7], dev:[23,21], g5:[8,8], ins:[10,9], acc:[8452,7801] },
+    "劉芳廷": { aq:[19,19], rt:[153,142], rtc:[28,26], up:[10,10], sp:[9,8], rt999:[10,10], rt1399:[7,7], dev:[23,21], g5:[8,8], ins:[10,10], acc:[8452,7801] },
+    "林瑞獻": { aq:[19,19], rt:[107,99],  rtc:[19,18], up:[7,7],   sp:[6,6], rt999:[7,7],  rt1399:[5,5], dev:[16,15], g5:[6,5], ins:[7,7], acc:[8452,7801] }
+  },
+  "後昌店": {
+    "郭家維": { aq:[19,19], rt:[138,128], rtc:[25,23], up:[9,9], sp:[8,7], rt999:[10,10], rt1399:[7,7], dev:[20,18], g5:[8,7], ins:[9,8], acc:[8452,7801] },
+    "邱雨蔚": { aq:[19,19], rt:[138,128], rtc:[25,23], up:[9,9], sp:[8,7], rt999:[10,10], rt1399:[7,7], dev:[20,18], g5:[8,7], ins:[9,8], acc:[8452,7801] },
+    "秦曼芯": { aq:[19,19], rt:[108,100], rtc:[20,18], up:[7,7], sp:[6,6], rt999:[8,8],   rt1399:[6,5], dev:[16,14], g5:[6,6], ins:[7,6], acc:[8452,7801] }
+  },
+  "仁雄店": {
+    "黃傑稜": { aq:[19,19], rt:[132,122], rtc:[24,22], up:[9,9], sp:[8,7], rt999:[10,10], rt1399:[7,7], dev:[20,19], g5:[7,6], ins:[9,8], acc:[8452,7801] },
+    "黃閔聖": { aq:[19,19], rt:[134,124], rtc:[24,23], up:[9,9], sp:[8,7], rt999:[10,10], rt1399:[7,7], dev:[20,19], g5:[7,6], ins:[9,9], acc:[8452,7801] },
+    "郭紳鴻": { aq:[19,19], rt:[126,117], rtc:[23,21], up:[9,8], sp:[7,7], rt999:[10,9],  rt1399:[7,6], dev:[19,18], g5:[7,6], ins:[9,8], acc:[8452,7801] },
+    "蔡冠廷": { aq:[19,19], rt:[94,86],   rtc:[17,16], up:[6,6], sp:[6,5], rt999:[7,7],   rt1399:[5,5], dev:[14,13], g5:[5,4], ins:[6,6], acc:[8452,7801] }
+  },
+  "凱旋店": {
+    "陳宛姍": { aq:[19,19], rt:[150,138], rtc:[27,25], up:[10,10], sp:[8,8], rt999:[11,11], rt1399:[6,6], dev:[22,20], g5:[8,7], ins:[10,9], acc:[8452,7801] },
+    "石佳穎": { aq:[19,19], rt:[132,122], rtc:[24,22], up:[9,9],   sp:[7,7], rt999:[10,9],  rt1399:[6,5], dev:[19,18], g5:[7,6], ins:[9,8], acc:[8452,7801] },
+    "高琦茗": { aq:[19,19], rt:[124,114], rtc:[22,21], up:[8,8],   sp:[7,6], rt999:[9,9],   rt1399:[5,5], dev:[18,17], g5:[7,6], ins:[8,8], acc:[8452,7801] },
+    "林庭逸": { aq:[19,19], rt:[87,80],   rtc:[16,14], up:[6,6],   sp:[5,4], rt999:[7,6],   rt1399:[4,3], dev:[12,12], g5:[5,4], ins:[6,5], acc:[6761,6241] }
+  },
+  "區督導": {
+    "黃庭鈞": { aq:[19,19], rt:[100,93], rtc:[18,17], up:[7,6], sp:[6,5], rt999:[7,7], rt1399:[5,4], dev:[15,13], g5:[5,5], ins:[7,6], acc:[4226,3901] }
+  }
+};
+
+const METRICS = [
+  { key:'aq',     label:'AQ點數',  icon:'🎯' },
+  { key:'rt',     label:'RT點數',  icon:'📋' },
+  { key:'rtc',    label:'RT件數',  icon:'📦' },
+  { key:'up',     label:'升轉',    icon:'⬆️' },
+  { key:'sp',     label:'特維',    icon:'🔧' },
+  { key:'rt999',  label:'RT999',   icon:'💎' },
+  { key:'rt1399', label:'RT1399',  icon:'💠' },
+  { key:'dev',    label:'Device',  icon:'📱' },
+  { key:'g5',     label:'5G',      icon:'📶' },
+  { key:'ins',    label:'保險',    icon:'🛡️' },
+  { key:'acc',    label:'配件',    icon:'🎒' }
+];
+
+function onStoreChange() {
+  const store = document.getElementById('storeSelect').value;
+  const empSel = document.getElementById('empSelect');
+  empSel.innerHTML = '<option value="">請選擇員工</option>';
+  if (store && DATA[store]) {
+    Object.keys(DATA[store]).forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name; opt.textContent = name;
+      empSel.appendChild(opt);
+    });
+  }
+  clearResult();
+}
+
+function onEmpChange() {
+  const store = document.getElementById('storeSelect').value;
+  const emp   = document.getElementById('empSelect').value;
+  if (!store || !emp) { clearResult(); return; }
+  renderResult(store, emp);
+}
+
+function clearResult() {
+  document.getElementById('emptyState').style.display = '';
+  document.getElementById('resultArea').style.display = 'none';
+  document.getElementById('resultArea').innerHTML = '';
+}
+
+function renderResult(store, emp) {
+  const d = DATA[store][emp];
+  const isSupervisor = (store === '區督導');
+  document.getElementById('emptyState').style.display = 'none';
+  const area = document.getElementById('resultArea');
+  area.style.display = '';
+
+  let html = `
+    <div class="profile-card">
+      <div class="avatar">${emp[0]}</div>
+      <div class="profile-info">
+        <h2>${emp}</h2>
+        <div class="badges">
+          <span class="badge badge-store">🏪 ${isSupervisor ? '區督導' : store}</span>
+          ${isSupervisor ? '<span class="badge badge-supervisor">⭐ 區督導</span>' : ''}
+        </div>
+      </div>
+    </div>`;
+
+  if (isSupervisor) {
+    html += `<div class="supervisor-note">👑 區督導配額，配件目標以區域標準計算</div>`;
+  }
+
+  html += `
+    <div class="period-row">
+      <div class="period-btn btn-first">
+        <div class="period-label">🟢 上半場</div>
+        <div class="period-date">3/1 - 3/16（52%）</div>
+      </div>
+      <div class="period-btn btn-second">
+        <div class="period-label">🟠 下半場</div>
+        <div class="period-date">3/17 - 3/31（48%）</div>
+      </div>
+    </div>
+
+    <div class="section-title">📈 業績目標</div>
+    <div class="metric-grid">`;
+
+  METRICS.forEach(m => {
+    const first  = d[m.key][0];
+    const second = d[m.key][1];
+    const total  = first + second;
+    const isLarge = total >= 1000;
+    html += `
+      <div class="metric-card">
+        <div class="metric-title">${m.icon} ${m.label}</div>
+        <div class="metric-values">
+          <div class="metric-val val-total">
+            <div class="val-label">總目標</div>
+            <div class="val-num${isLarge?' small':''}">${total.toLocaleString()}</div>
+          </div>
+          <div class="metric-val val-first">
+            <div class="val-label">上半場</div>
+            <div class="val-num${isLarge?' small':''}">${first.toLocaleString()}</div>
+          </div>
+          <div class="metric-val val-second">
+            <div class="val-label">下半場</div>
+            <div class="val-num${isLarge?' small':''}">${second.toLocaleString()}</div>
+          </div>
+        </div>
+      </div>`;
+  });
+
+  html += `</div>`;
+  area.innerHTML = html;
+}
+</script>
 </body>
 </html>
