@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0122)file:///C:/Users/eason/Downloads/%E5%80%9A%E7%9B%9F%E6%88%B0%E5%A0%B1_%E9%9C%93%E8%99%B9%E8%A1%97%E6%A9%9F%E7%89%88_1.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +6,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Bungee+Shade&family=Fredoka:wght@500;600;700&display=swap');
         :root {
-            /* 🕹️ Neon Arcade Palette */
             --neon-cyan: #00F5FF; --neon-cyan-deep: #00BCD4; --neon-cyan-glow: rgba(0,245,255,0.25);
             --neon-pink: #FF2D78; --neon-pink-deep: #D81B60; --neon-pink-glow: rgba(255,45,120,0.25);
             --neon-lime: #76FF03; --neon-lime-deep: #64DD17; --neon-lime-glow: rgba(118,255,3,0.2);
@@ -15,7 +13,6 @@
             --neon-orange: #FF6D00; --neon-orange-deep: #E65100;
             --neon-red: #FF1744; --neon-red-deep: #D50000;
             --neon-purple: #D500F9; --neon-purple-deep: #AA00FF;
-            /* 🌌 Deep Space Background — NOT black, rich indigo */
             --bg-space: #0C1033; --bg-mid: #131848; --bg-card: rgba(20,28,75,0.85);
             --bg-card-solid: #161D55; --bg-input: rgba(10,15,50,0.9);
             --text-1: #ECEEFF; --text-2: #9BA3D2; --text-3: #6670A8;
@@ -32,7 +29,6 @@
                 radial-gradient(ellipse 60% 40% at 50% 40%, rgba(118,255,3,0.03) 0%, transparent 50%);
             min-height: 100vh; overflow-x: hidden; color: var(--text-1);
         }
-        /* Animated grid overlay for tech feel */
         body::before {
             content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
             background-image:
@@ -43,8 +39,6 @@
         .coin { position: fixed; font-size: 24px; animation: coinFall linear forwards; pointer-events: none; z-index: 1000; }
         @keyframes coinFall { 0% { transform: translateY(-50px) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
         .container { max-width: 520px; margin: 0 auto; padding: 15px; position: relative; z-index: 1; }
-
-        /* ======= HEADER ======= */
         .header { text-align: center; padding: 32px 20px 22px; }
         .header h1 {
             font-family: 'Bungee Shade', sans-serif; font-size: 1.6em; letter-spacing: 2px;
@@ -57,8 +51,6 @@
             50% { text-shadow: 0 0 30px rgba(0,245,255,0.4), 0 0 80px rgba(0,245,255,0.15); }
         }
         .header p { color: var(--text-2); margin-top: 10px; font-size: 0.85em; font-weight: 600; letter-spacing: 1px; }
-
-        /* ======= TABS ======= */
         .tab-container { display: flex; gap: 10px; margin-bottom: 20px; }
         .tab-btn {
             flex: 1; padding: 13px; border: 2px solid var(--border); border-radius: 16px;
@@ -76,8 +68,6 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* ======= SELECT AREA ======= */
         .select-area {
             background: var(--bg-card); backdrop-filter: blur(14px);
             border-radius: 20px; padding: 20px; margin-bottom: 15px;
@@ -94,8 +84,6 @@
             font-family: 'Fredoka', sans-serif;
         }
         .select-group select:focus { outline: none; border-color: var(--neon-cyan); box-shadow: 0 0 20px var(--neon-cyan-glow); }
-
-        /* ======= PERIOD REMINDER ======= */
         .period-reminder {
             background: var(--bg-card); backdrop-filter: blur(14px);
             border-radius: 20px; padding: 15px; margin-bottom: 15px;
@@ -122,8 +110,6 @@
         .period-current-info { flex: 1; }
         .period-current-label { color: var(--neon-cyan); font-size: 0.85em; margin-bottom: 3px; font-weight: 700; }
         .period-current-date { font-family: 'Baloo 2', sans-serif; font-size: 1.5em; color: #fff; font-weight: 800; }
-
-        /* ======= STATS ======= */
         .stats-summary { margin-bottom: 15px; }
         .stats-hero {
             background: linear-gradient(135deg, var(--neon-pink-deep), var(--neon-purple), #6200EA);
@@ -148,8 +134,6 @@
         .stats-sub-item .value { font-family: 'Baloo 2', sans-serif; font-size: 1.15em; color: var(--text-1); font-weight: 800; }
         .stats-sub-item .label { color: var(--text-3); font-size: 0.7em; margin-top: 5px; font-weight: 600; }
         .stats-sub-item.green-accent .value { color: var(--neon-lime); text-shadow: 0 0 10px var(--neon-lime-glow); }
-
-        /* ======= DISTRIBUTION ======= */
         .bonus-distribution {
             background: var(--bg-card); backdrop-filter: blur(14px);
             border-radius: 20px; padding: 16px; margin-bottom: 15px;
@@ -173,8 +157,6 @@
         .dist-fill.effort { background: linear-gradient(90deg, var(--neon-pink-deep), var(--neon-pink)); }
         .dist-count { color: var(--text-1); font-size: 0.9em; text-align: center; font-weight: 800; }
         .dist-percent { color: var(--text-3); font-size: 0.75em; text-align: center; font-weight: 600; }
-
-        /* ======= STORE STATS ======= */
         .store-stats {
             background: var(--bg-card); backdrop-filter: blur(14px);
             border-radius: 20px; padding: 16px; margin-bottom: 15px;
@@ -189,8 +171,6 @@
         .store-data { display: flex; gap: 10px; color: var(--text-3); font-size: 0.75em; font-weight: 600; }
         .store-bonus { font-family: 'Baloo 2', sans-serif; color: var(--neon-lime); font-size: 1em; font-weight: 800; text-shadow: 0 0 8px var(--neon-lime-glow); }
         .store-item.top-store .store-bonus { color: var(--neon-yellow); text-shadow: 0 0 10px rgba(255,234,0,0.4); }
-
-        /* ======= RANK TOGGLE ======= */
         .rank-toggle { display: flex; gap: 8px; margin-bottom: 15px; }
         .rank-toggle-btn {
             flex: 1; padding: 11px; border: 2px solid var(--border); border-radius: 14px;
@@ -200,8 +180,6 @@
         }
         .rank-toggle-btn.active { border-color: var(--neon-cyan); color: var(--neon-cyan); background: rgba(0,245,255,0.08); box-shadow: 0 0 15px var(--neon-cyan-glow); }
         .rank-toggle-btn.kpi-active { border-color: var(--neon-purple); color: var(--neon-purple); background: rgba(213,0,249,0.08); box-shadow: 0 0 15px rgba(213,0,249,0.2); }
-
-        /* ======= LEADERBOARD ======= */
         .leaderboard {
             background: var(--bg-card); backdrop-filter: blur(14px);
             border-radius: 22px; overflow: hidden;
@@ -231,22 +209,16 @@
         .rank-amount .value { color: var(--neon-lime); font-family: 'Baloo 2', sans-serif; font-size: 1.1em; font-weight: 800; }
         .rank-amount .value.negative { color: var(--neon-red); }
         .rank-amount .label { color: var(--text-3); font-size: 0.7em; font-weight: 600; }
-
-        /* ======= KPI STATUS BADGES ======= */
         .kpi-status { display: inline-flex; align-items: center; gap: 4px; padding: 3px 12px; border-radius: 20px; font-size: 0.72em; font-weight: 700; }
         .kpi-status.purple { background: linear-gradient(135deg, #7B1FA2, var(--neon-purple)); color: #fff; box-shadow: 0 0 10px rgba(213,0,249,0.2); }
         .kpi-status.green { background: linear-gradient(135deg, var(--neon-lime-deep), var(--neon-lime)); color: #1B3A00; }
         .kpi-status.red { background: linear-gradient(135deg, var(--neon-red-deep), var(--neon-red)); color: #fff; animation: redPulse 1.5s ease-in-out infinite; }
         @keyframes redPulse { 0%, 100% { box-shadow: 0 0 5px rgba(255,23,68,0.2); } 50% { box-shadow: 0 0 18px rgba(255,23,68,0.45); } }
-
-        /* ======= POWER BADGE ======= */
         .power-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 0.7em; font-weight: 700; }
         .power-badge.L3 { background: linear-gradient(135deg, var(--neon-orange-deep), var(--neon-orange)); color: #fff; box-shadow: 0 0 12px rgba(255,109,0,0.3); animation: l3glow 2s ease-in-out infinite; }
         @keyframes l3glow { 0%,100% { box-shadow: 0 0 8px rgba(255,109,0,0.3); } 50% { box-shadow: 0 0 18px rgba(255,109,0,0.5); } }
         .power-badge.L2 { background: linear-gradient(135deg, #1565C0, #42A5F5); color: #fff; }
         .power-badge.L1 { background: rgba(255,255,255,0.06); color: var(--text-2); border: 1.5px solid rgba(255,255,255,0.12); }
-
-        /* ======= RESULT CARD ======= */
         .result-card { display: none; }
         .result-card.active { display: block; animation: slideUp 0.5s ease; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -271,8 +243,6 @@
         .badge { padding: 4px 12px; border-radius: 15px; font-size: 0.72em; font-weight: 700; }
         .badge.store { background: rgba(0,245,255,0.1); color: var(--neon-cyan); border: 1.5px solid rgba(0,245,255,0.25); }
         .badge.rank { background: rgba(255,234,0,0.1); color: var(--neon-yellow); border: 1.5px solid rgba(255,234,0,0.25); }
-
-        /* ======= KPI DASHBOARD ======= */
         .kpi-dashboard {
             background: var(--bg-card); backdrop-filter: blur(14px);
             border-radius: 22px; padding: 16px; margin-bottom: 15px;
@@ -298,8 +268,6 @@
         .kpi-warning { background: rgba(255,23,68,0.08); border: 1.5px solid rgba(255,23,68,0.25); border-radius: 14px; padding: 12px; margin-top: 10px; text-align: center; }
         .kpi-warning .icon { font-size: 1.5em; }
         .kpi-warning .text { color: var(--neon-red); font-size: 0.85em; margin-top: 5px; font-weight: 700; }
-
-        /* ======= TOTAL BONUS CARD ======= */
         .total-bonus-card {
             background: linear-gradient(135deg, #1a237e, #283593, #3F51B5);
             border-radius: 24px; padding: 28px 20px; text-align: center; margin-bottom: 15px;
@@ -318,8 +286,6 @@
         .total-bonus-card .amount { font-family: 'Baloo 2', sans-serif; font-size: 2.8em; color: #fff; font-weight: 800; text-shadow: 0 0 30px rgba(0,245,255,0.2); position: relative; z-index: 1; }
         .total-bonus-card .amount.negative { color: #ff8a80; }
         .total-bonus-card .rank-badge { display: inline-block; margin-top: 12px; padding: 7px 22px; background: rgba(0,245,255,0.15); border: 1px solid rgba(0,245,255,0.3); backdrop-filter: blur(5px); border-radius: 25px; color: var(--neon-cyan); font-weight: 700; font-size: 0.95em; position: relative; z-index: 1; }
-
-        /* ======= RANKING CARD (3 boxes) ======= */
         .ranking-card {
             background: var(--bg-card); backdrop-filter: blur(14px);
             border-radius: 20px; padding: 18px 12px; margin-bottom: 15px;
@@ -330,8 +296,6 @@
         .ranking-item .medal { font-size: 2em; margin-bottom: 3px; }
         .ranking-item .number { font-family: 'Baloo 2', sans-serif; font-size: 1.6em; color: var(--neon-cyan); font-weight: 800; }
         .ranking-item .label { color: var(--text-2); font-size: 0.75em; margin-top: 3px; font-weight: 600; }
-
-        /* ======= ACHIEVEMENTS ======= */
         .achievement-section {
             background: var(--bg-card); backdrop-filter: blur(14px);
             border-radius: 20px; padding: 16px; margin-bottom: 15px;
@@ -346,8 +310,6 @@
         .achievement.green { background: linear-gradient(135deg, var(--neon-lime-deep), var(--neon-lime)); color: #1B3A00; }
         .achievement.red-hot { background: linear-gradient(135deg, var(--neon-red-deep), var(--neon-red)); color: #fff; }
         .achievement.silver { background: rgba(255,255,255,0.08); color: var(--text-1); border: 1.5px solid rgba(255,255,255,0.15); }
-
-        /* ======= BONUS DETAIL ======= */
         .bonus-detail-section {
             background: var(--bg-card); backdrop-filter: blur(14px);
             border-radius: 20px; padding: 16px; margin-bottom: 15px;
@@ -366,8 +328,6 @@
         }
         .subtotal-bar .label { color: #002040; font-weight: 800; font-size: 0.9em; }
         .subtotal-bar .value { font-family: 'Baloo 2', sans-serif; color: #002040; font-size: 1.2em; font-weight: 800; }
-
-        /* ======= HOMERUN SECTION ======= */
         .homerun-section {
             background: var(--bg-card); backdrop-filter: blur(14px);
             border-radius: 20px; padding: 16px; margin-bottom: 15px;
@@ -380,8 +340,6 @@
         .homerun-item .label { color: var(--neon-yellow); font-size: 0.72em; margin-bottom: 6px; font-weight: 700; }
         .homerun-item .value { font-family: 'Baloo 2', sans-serif; color: var(--text-1); font-size: 1.2em; font-weight: 800; }
         .homerun-item .value.negative { color: var(--neon-red); }
-
-        /* ======= PROFIT ======= */
         .profit-section {
             background: linear-gradient(135deg, #1B5E20, #2E7D32, #43A047);
             border-radius: 20px; padding: 16px; margin-bottom: 15px;
@@ -391,11 +349,7 @@
         }
         .profit-section .label { color: rgba(255,255,255,0.95); font-size: 0.95em; font-weight: 700; }
         .profit-section .value { font-family: 'Baloo 2', sans-serif; color: var(--neon-lime); font-size: 1.5em; font-weight: 800; text-shadow: 0 0 12px var(--neon-lime-glow); }
-
-        /* ======= FOOTER ======= */
         .footer { text-align: center; padding: 25px 20px; color: var(--text-3); font-size: 0.75em; font-weight: 600; }
-
-        /* ======= NAV LINK ======= */
         .nav-link-btn {
             display: flex; align-items: center; justify-content: space-between;
             background: linear-gradient(135deg, #1a237e, #283593);
@@ -410,8 +364,6 @@
         .nav-link-btn .nav-title { color: #fff; font-weight: 800; font-size: 0.95em; }
         .nav-link-btn .nav-desc { color: rgba(255,255,255,0.7); font-size: 0.75em; margin-top: 2px; font-weight: 600; }
         .nav-link-btn .nav-arrow { color: var(--neon-cyan); font-size: 1.2em; }
-
-        /* ======= RESPONSIVE ======= */
         @media (max-width: 400px) {
             .total-bonus-card .amount { font-size: 2.2em; }
             .bonus-list { grid-template-columns: repeat(2, 1fr); }
@@ -428,64 +380,68 @@
     <div class="container">
         <div class="header">
             <h1>💰 倚盟戰報</h1>
-            <p>2026/02/13</p>
+            <p>2026/03/15</p>
         </div>
         <div class="tab-container">
-            <button class="tab-btn active" onclick="switchTab(&#39;personal&#39;)">💰 查詢我的獎金</button>
-            <button class="tab-btn" onclick="switchTab(&#39;ranking&#39;)">🏆 排行榜</button>
+            <button class="tab-btn active" onclick="switchTab('personal')">💰 查詢我的獎金</button>
+            <button class="tab-btn" onclick="switchTab('ranking')">🏆 排行榜</button>
         </div>
         <div class="tab-content active" id="personalTab">
             <div class="select-area">
                 <div class="select-row">
                     <div class="select-group"><label>🏪 店點</label><select id="storeSelect" onchange="updateEmployeeList()"><option value="">選擇店點</option><option value="鼎山店">鼎山店</option><option value="陽明店">陽明店</option><option value="後昌店">後昌店</option><option value="仁雄店">仁雄店</option><option value="凱旋店">凱旋店</option></select></div>
-                    <div class="select-group"><label>👤 員工</label><select id="employeeSelect" onchange="showResult()"><option value="">選擇員工</option><option value="陳亭安">陳亭安</option><option value="劉家妘">劉家妘</option><option value="黃子珊">黃子珊</option><option value="彥州">彥州</option></select></div>
+                    <div class="select-group"><label>👤 員工</label><select id="employeeSelect" onchange="showResult()"><option value="">選擇員工</option></select></div>
                 </div>
             </div>
             <div class="period-reminder" style="display: none;">
                 <div class="period-content-optimized">
                     <div class="days-left-box"><div class="days-left-label">剩下</div><div class="days-left-number" id="daysLeft">0</div><div class="days-left-unit">天</div></div>
-                    <div class="period-current-large"><div class="period-current-icon">📅</div><div class="period-current-info"><div class="period-current-label">上半場</div><div class="period-current-date">2/27-3/14</div></div></div>
+                    <div class="period-current-large"><div class="period-current-icon">📅</div><div class="period-current-info"><div class="period-current-label">下半場</div><div class="period-current-date">3/15-3/29</div></div></div>
                 </div>
             </div>
-            <div class="stats-summary" style="display: none;">
-                <div class="stats-hero"><div class="label">💰 全隊總獎金</div><div class="amount">$398,925</div></div>
+            <div class="stats-summary">
+                <div class="stats-hero">
+                    <div class="label">💰 全團隊 3月累計總獎金</div>
+                    <div class="amount">$455,008</div>
+                </div>
                 <div class="stats-sub">
-                    <div class="stats-sub-item"><div class="value">$20,996</div><div class="label">📊 平均獎金</div></div>
-                    <div class="stats-sub-item green-accent"><div class="value">$52,486</div><div class="label">🏆 最高獎金</div></div>
-                    <div class="stats-sub-item"><div class="value">333</div><div class="label">🎯 AQ累計點數</div></div>
+                    <div class="stats-sub-item green-accent"><div class="value">$23,947</div><div class="label">人均獎金</div></div>
+                    <div class="stats-sub-item"><div class="value">$45,272</div><div class="label">最高獎金</div></div>
+                    <div class="stats-sub-item"><div class="value">370</div><div class="label">總AQ點數</div></div>
                 </div>
             </div>
-            <div class="bonus-distribution" style="display: none;">
+            <div class="bonus-distribution">
                 <div class="section-header">🎖️ 獎金等級分布</div>
                 <div class="dist-list">
-                    <div class="dist-item"><span class="dist-rank top">🏆🏆 頂尖</span><div class="dist-bar-wrap"><div class="dist-fill top" style="width:100%">$14,000↑</div></div><span class="dist-count">13人</span><span class="dist-percent">68%</span></div>
-                    <div class="dist-item"><span class="dist-rank star">🏆 明星</span><div class="dist-bar-wrap"><div class="dist-fill star" style="width:15%">$10,000-$14,000</div></div><span class="dist-count">2人</span><span class="dist-percent">11%</span></div>
-                    <div class="dist-item"><span class="dist-rank good">💪 優秀</span><div class="dist-bar-wrap"><div class="dist-fill good" style="width:31%">$7,000-$10,000</div></div><span class="dist-count">4人</span><span class="dist-percent">21%</span></div>
-                    <div class="dist-item"><span class="dist-rank pass">✅ 合格</span><div class="dist-bar-wrap"><div class="dist-fill pass" style="width:0%"></div></div><span class="dist-count">0人</span><span class="dist-percent">0%</span></div>
-                    <div class="dist-item"><span class="dist-rank effort">📈 加油</span><div class="dist-bar-wrap"><div class="dist-fill effort" style="width:0%"></div></div><span class="dist-count">0人</span><span class="dist-percent">0%</span></div>
-                </div>
-            </div>
-            <div class="store-stats" style="display: none;">
+<div class="dist-item"><span class="dist-rank top">🏆🏆 頂尖</span><div class="dist-bar-wrap"><div class="dist-fill top" style="width:84.2%">$14,000↑</div></div><span class="dist-count">16人</span><span class="dist-percent">84.2%</span></div>
+<div class="dist-item"><span class="dist-rank star">🏆 明星</span><div class="dist-bar-wrap"><div class="dist-fill star" style="width:15.8%">$10,000-$14,000</div></div><span class="dist-count">3人</span><span class="dist-percent">15.8%</span></div>
+<div class="dist-item"><span class="dist-rank good">💪 優秀</span><div class="dist-bar-wrap"><div class="dist-fill good" style="width:0.0%">$7,000-$10,000</div></div><span class="dist-count">0人</span><span class="dist-percent">0.0%</span></div>
+<div class="dist-item"><span class="dist-rank pass">✅ 合格</span><div class="dist-bar-wrap"><div class="dist-fill pass" style="width:0.0%">$4,000-$7,000</div></div><span class="dist-count">0人</span><span class="dist-percent">0.0%</span></div>
+<div class="dist-item"><span class="dist-rank effort">📈 加油</span><div class="dist-bar-wrap"><div class="dist-fill effort" style="width:0.0%">$4,000以下</div></div><span class="dist-count">0人</span><span class="dist-percent">0.0%</span></div>
+</div>
+</div>
+<div class="store-stats">
                 <div class="section-header">🏪 各店業績統計</div>
                 <div class="store-list">
-                    <div class="store-item top-store"><div class="store-name">🏆 凱旋店</div><div class="store-data"><span>👥4人</span><span>AQ 100</span><span>📱82台</span></div><div class="store-bonus">$106,286</div></div>
-                    <div class="store-item second-store"><div class="store-name">🥈 仁雄店</div><div class="store-data"><span>👥4人</span><span>AQ 65</span><span>📱72台</span></div><div class="store-bonus">$101,456</div></div>
-                    <div class="store-item "><div class="store-name">🥉 鼎山店</div><div class="store-data"><span>👥4人</span><span>AQ 72</span><span>📱69台</span></div><div class="store-bonus">$94,811</div></div>
-                    <div class="store-item "><div class="store-name">　 後昌店</div><div class="store-data"><span>👥3人</span><span>AQ 44</span><span>📱48台</span></div><div class="store-bonus">$58,561</div></div>
-                    <div class="store-item "><div class="store-name">　 陽明店</div><div class="store-data"><span>👥4人</span><span>AQ 52</span><span>📱38台</span></div><div class="store-bonus">$37,811</div></div>
-                </div>
-            </div>
-            <div class="result-card" id="resultCard"></div>
+<div class="store-item top-store"><div class="store-name">🥇 凱旋店</div><div class="store-data"><span>4人</span><span>AQ 102</span><span>RT 635件</span></div><div class="store-bonus">$111,533</div></div>
+<div class="store-item second-store"><div class="store-name">🥈 仁雄店</div><div class="store-data"><span>4人</span><span>AQ 76</span><span>RT 703件</span></div><div class="store-bonus">$109,822</div></div>
+<div class="store-item "><div class="store-name">🥉 鼎山店</div><div class="store-data"><span>4人</span><span>AQ 82</span><span>RT 607件</span></div><div class="store-bonus">$96,591</div></div>
+<div class="store-item "><div class="store-name">　  後昌店</div><div class="store-data"><span>3人</span><span>AQ 55</span><span>RT 466件</span></div><div class="store-bonus">$62,764</div></div>
+<div class="store-item "><div class="store-name">　  陽明店</div><div class="store-data"><span>4人</span><span>AQ 55</span><span>RT 419件</span></div><div class="store-bonus">$44,421</div></div>
+</div>
+</div>
+</div>
+<div class="result-card" id="resultCard"></div>
         </div>
         <div class="tab-content" id="rankingTab">
             <div class="rank-toggle">
-                <button class="rank-toggle-btn" onclick="toggleRanking(&#39;bonus&#39;)">💰 獎金排行</button>
-                <button class="rank-toggle-btn kpi-active" onclick="toggleRanking(&#39;kpi&#39;)">🎯 KPI排行</button>
+                <button class="rank-toggle-btn" onclick="toggleRanking('bonus')">💰 獎金排行</button>
+                <button class="rank-toggle-btn kpi-active" onclick="toggleRanking('kpi')">🎯 KPI排行</button>
             </div>
             <div id="bonusRanking" style="display: none;"><div class="leaderboard"><div class="leaderboard-header"><h3>🏆 總獎金排行榜</h3><span class="total">共19人</span></div><div id="rankingList"></div></div></div>
             <div id="kpiRanking" style="display: block;"><div class="leaderboard"><div class="leaderboard-header kpi-header"><h3>🎯 KPI 貢獻度排行</h3><span class="total">共19人</span></div><div id="kpiRankingList"></div></div></div>
         </div>
-        <a href="https://emotwm-bit.github.io/t/" class="nav-link-btn" target="_blank">
+        <a href="march-targets.html" class="nav-link-btn" target="_blank">
             <div class="nav-left">
                 <div class="nav-icon">📊</div>
                 <div>
@@ -495,23 +451,26 @@
             </div>
             <div class="nav-arrow">→</div>
         </a>
-        <div class="footer"><p>© 2026 倚盟電訊 | 數據截至 2/13，最終以實際發放為準</p></div>
+        
+        <div class="footer"><p>© 2026 倚盟電訊 | 數據截至 3/15，最終以實際發放為準</p></div>
     </div>
     <script>
-        const employeeData=[{店點:"鼎山店",姓名:"陳亭安",職級:"銅級",戰力:"L3",AQ:3070,AQ999:600,RT升轉:1400,RT999:1900,RT1399:1500,特維:1200,手機台獎:6200,寬頻:500,OP:0,基礎獎金:16370,毛利分潤:25116,全壘打分數:17.77,全壘打獎金:11000,KPI淨獎金:-1000,總獎金:52486,KPI分數:6.59,總積分:857063},{店點:"仁雄店",姓名:"郭紳鴻",職級:"石頭",戰力:"L3",AQ:2650,AQ999:600,RT升轉:1200,RT999:1800,RT1399:900,特維:1100,手機台獎:5000,寬頻:1625,OP:0,基礎獎金:14875,毛利分潤:16702,全壘打分數:14.74,全壘打獎金:8000,KPI淨獎金:-1500,總獎金:39577,KPI分數:4.93,總積分:641539},{店點:"凱旋店",姓名:"陳宛姍",職級:"白金級",戰力:"L3",AQ:2150,AQ999:900,RT升轉:2100,RT999:1300,RT1399:900,特維:1200,手機台獎:4400,寬頻:2125,OP:0,基礎獎金:15075,毛利分潤:12516,全壘打分數:14.81,全壘打獎金:8000,KPI淨獎金:-2000,總獎金:35591,KPI分數:4.28,總積分:556315},{店點:"仁雄店",姓名:"黃傑稜",職級:"金級",戰力:"L3",AQ:1500,AQ999:600,RT升轉:1600,RT999:1300,RT1399:1000,特維:1400,手機台獎:1800,寬頻:2000,OP:0,基礎獎金:11200,毛利分潤:12535,全壘打分數:14.74,全壘打獎金:8000,KPI淨獎金:-3000,總獎金:31735,KPI分數:3.80,總積分:494195},{店點:"凱旋店",姓名:"高琦茗",職級:"銅級",戰力:"L3",AQ:4100,AQ999:1500,RT升轉:1000,RT999:1000,RT1399:700,特維:600,手機台獎:2800,寬頻:2750,OP:500,基礎獎金:14950,毛利分潤:10030,全壘打分數:11.25,全壘打獎金:5900,KPI淨獎金:-3500,總獎金:30880,KPI分數:3.67,總積分:476601},{店點:"凱旋店",姓名:"石佳穎",職級:"銅級",戰力:"L2",AQ:950,AQ999:300,RT升轉:1100,RT999:600,RT1399:400,特維:700,手機台獎:3600,寬頻:0,OP:0,基礎獎金:7650,毛利分潤:12365,全壘打分數:9.99,全壘打獎金:4500,KPI淨獎金:-1500,總獎金:24515,KPI分數:3.15,總積分:409052},{店點:"後昌店",姓名:"邱雨蔚",職級:"銅級",戰力:"L3",AQ:2700,AQ999:900,RT升轉:600,RT999:1000,RT1399:600,特維:1400,手機台獎:3600,寬頻:375,OP:0,基礎獎金:11175,毛利分潤:10093,全壘打分數:10.96,全壘打獎金:5200,KPI淨獎金:-1500,總獎金:26468,KPI分數:3.35,總積分:435102},{店點:"後昌店",姓名:"秦曼芯",職級:"石頭",戰力:"L2",AQ:850,AQ999:300,RT升轉:700,RT999:1100,RT1399:500,特維:600,手機台獎:3000,寬頻:625,OP:500,基礎獎金:8175,毛利分潤:9468,全壘打分數:10.59,全壘打獎金:5200,KPI淨獎金:-2500,總獎金:22843,KPI分數:2.72,總積分:353860},{店點:"區督導",姓名:"黃庭鈞",職級:"黃金級",戰力:"L2",AQ:4000,AQ999:1200,RT升轉:1100,RT999:1000,RT1399:400,特維:500,手機台獎:1400,寬頻:0,OP:0,基礎獎金:9600,毛利分潤:5684,全壘打分數:12.53,全壘打獎金:6600,KPI淨獎金:-2000,總獎金:21884,KPI分數:2.50,總積分:324686},{店點:"仁雄店",姓名:"黃閔聖",職級:"銀級",戰力:"L2",AQ:1250,AQ999:600,RT升轉:900,RT999:1000,RT1399:800,特維:700,手機台獎:3600,寬頻:2375,OP:0,基礎獎金:11225,毛利分潤:6820,全壘打分數:9.71,全壘打獎金:4500,KPI淨獎金:-1500,總獎金:22545,KPI分數:2.67,總積分:347393},{店點:"鼎山店",姓名:"劉家妘",職級:"白金級",戰力:"L2",AQ:2550,AQ999:900,RT升轉:800,RT999:900,RT1399:500,特維:900,手機台獎:3000,寬頻:625,OP:1000,基礎獎金:11175,毛利分潤:5701,全壘打分數:9.56,全壘打獎金:4500,KPI淨獎金:-3500,總獎金:21376,KPI分數:2.55,總積分:332014},{店點:"陽明店",姓名:"方若帆",職級:"金級",戰力:"L2",AQ:550,AQ999:300,RT升轉:900,RT999:800,RT1399:300,特維:700,手機台獎:1600,寬頻:875,OP:0,基礎獎金:6025,毛利分潤:7461,全壘打分數:8.83,全壘打獎金:4000,KPI淨獎金:-5000,總獎金:17486,KPI分數:2.13,總積分:276716},{店點:"凱旋店",姓名:"林庭逸",職級:"石頭",戰力:"L1",AQ:1200,AQ999:600,RT升轉:400,RT999:700,RT1399:500,特維:700,手機台獎:2000,寬頻:1000,OP:0,基礎獎金:7100,毛利分潤:3000,全壘打分數:10.19,全壘打獎金:5200,KPI淨獎金:-3000,總獎金:15300,KPI分數:1.53,總積分:199000},{店點:"陽明店",姓名:"劉芳廷",職級:"銀級",戰力:"L1",AQ:1200,AQ999:0,RT升轉:300,RT999:800,RT1399:600,特維:700,手機台獎:900,寬頻:1000,OP:500,基礎獎金:6000,毛利分潤:0,全壘打分數:7.74,全壘打獎金:3500,KPI淨獎金:-3500,總獎金:9500,KPI分數:1.00,總積分:130500},{店點:"鼎山店",姓名:"黃子珊",職級:"銀級",戰力:"L1",AQ:1150,AQ999:300,RT升轉:600,RT999:1000,RT1399:700,特維:900,手機台獎:3200,寬頻:0,OP:0,基礎獎金:7850,毛利分潤:0,全壘打分數:10.43,全壘打獎金:5200,KPI淨獎金:-4000,總獎金:13050,KPI分數:1.33,總積分:172750},{店點:"陽明店",姓名:"林瑞獻",職級:"石頭",戰力:"L1",AQ:850,AQ999:300,RT升轉:400,RT999:600,RT1399:400,特維:300,手機台獎:600,寬頻:1375,OP:0,基礎獎金:4825,毛利分潤:3000,全壘打分數:6.44,全壘打獎金:3000,KPI淨獎金:-5000,總獎金:10825,KPI分數:1.19,總積分:155000},{店點:"仁雄店",姓名:"蔡冠廷",職級:"石頭",戰力:"L1",AQ:1000,AQ999:0,RT升轉:500,RT999:600,RT1399:300,特維:400,手機台獎:800,寬頻:1000,OP:0,基礎獎金:4600,毛利分潤:0,全壘打分數:6.30,全壘打獎金:3000,KPI淨獎金:-5500,總獎金:7600,KPI分數:0.78,總積分:101000},{店點:"鼎山店",姓名:"彥州",職級:"石頭",戰力:"L1",AQ:200,AQ999:0,RT升轉:700,RT999:500,RT1399:100,特維:1000,手機台獎:1400,寬頻:0,OP:0,基礎獎金:3900,毛利分潤:0,全壘打分數:8.58,全壘打獎金:4000,KPI淨獎金:-3500,總獎金:7900,KPI分數:0.73,總積分:95000},{店點:"後昌店",姓名:"郭家維",職級:"銅級",戰力:"L1",AQ:200,AQ999:0,RT升轉:700,RT999:800,RT1399:300,特維:800,手機台獎:2200,寬頻:750,OP:0,基礎獎金:5750,毛利分潤:0,全壘打分數:7.06,全壘打獎金:3500,KPI淨獎金:-4000,總獎金:9250,KPI分數:0.95,總積分:123500}];
-        const totalPeople=19;const avgBonus=Math.round(employeeData.reduce((s,e)=>s+e.總獎金,0)/totalPeople);
+        const employeeData=[{"店點": "鼎山店", "姓名": "陳亭安", "職級": "銅級", "AQ": 3070, "AQ999": 600, "RT升轉": 1400, "RT999": 1900, "RT1399": 1500, "特維": 1200, "手機台獎": 6200, "寬頻": 500, "OP": 0, "基礎獎金": 16370, "毛利分潤": 17902, "KPI分數": 5.48, "全壘打分數": 17.47, "全壘打獎金": 11000, "KPI淨獎金": -1000, "總獎金": 45272, "總積分": 712790, "戰力": "L3"}, {"店點": "仁雄店", "姓名": "郭紳鴻", "職級": "石頭", "AQ": 2650, "AQ999": 600, "RT升轉": 1200, "RT999": 1800, "RT1399": 900, "特維": 1100, "手機台獎": 5500, "寬頻": 1625, "OP": 0, "基礎獎金": 15375, "毛利分潤": 15575, "KPI分數": 4.82, "全壘打分數": 16.81, "全壘打獎金": 10000, "KPI淨獎金": -1500, "總獎金": 40950, "總積分": 626508, "戰力": "L3"}, {"店點": "凱旋店", "姓名": "陳宛姍", "職級": "白金級", "AQ": 2150, "AQ999": 900, "RT升轉": 2200, "RT999": 1300, "RT1399": 900, "特維": 1300, "手機台獎": 4400, "寬頻": 2125, "OP": 0, "基礎獎金": 15275, "毛利分潤": 11330, "KPI分數": 4.14, "全壘打分數": 15.35, "全壘打獎金": 9000, "KPI淨獎金": -2000, "總獎金": 35605, "總積分": 538596, "戰力": "L3"}, {"店點": "凱旋店", "姓名": "高琦茗", "職級": "銅級", "AQ": 4100, "AQ999": 1500, "RT升轉": 1100, "RT999": 1200, "RT1399": 900, "特維": 700, "手機台獎": 3400, "寬頻": 3500, "OP": 500, "基礎獎金": 16900, "毛利分潤": 10925, "KPI分數": 4.07, "全壘打分數": 13.59, "全壘打獎金": 7300, "KPI淨獎金": -3500, "總獎金": 35125, "總積分": 528996, "戰力": "L3"}, {"店點": "仁雄店", "姓名": "黃傑稜", "職級": "金級", "AQ": 1500, "AQ999": 600, "RT升轉": 1600, "RT999": 1300, "RT1399": 1000, "特維": 1400, "手機台獎": 2000, "寬頻": 2000, "OP": 0, "基礎獎金": 11400, "毛利分潤": 12513, "KPI分數": 3.82, "全壘打分數": 16.3, "全壘打獎金": 10000, "KPI淨獎金": -3500, "總獎金": 33913, "總積分": 496752, "戰力": "L2"}, {"店點": "後昌店", "姓名": "邱雨蔚", "職級": "銅級", "AQ": 2700, "AQ999": 900, "RT升轉": 700, "RT999": 1300, "RT1399": 600, "特維": 1400, "手機台獎": 4100, "寬頻": 375, "OP": 0, "基礎獎金": 12075, "毛利分潤": 11016, "KPI分數": 3.64, "全壘打分數": 12.31, "全壘打獎金": 6600, "KPI淨獎金": -1000, "總獎金": 29691, "總積分": 473070, "戰力": "L2"}, {"店點": "區督導", "姓名": "黃庭鈞", "職級": "黃金級", "AQ": 4350, "AQ999": 1200, "RT升轉": 1100, "RT999": 1100, "RT1399": 500, "特維": 700, "手機台獎": 3500, "寬頻": 0, "OP": 0, "基礎獎金": 12450, "毛利分潤": 7426, "KPI分數": 3.17, "全壘打分數": 16.2, "全壘打獎金": 10000, "KPI淨獎金": 0, "總獎金": 29876, "總積分": 411776, "戰力": "L2"}, {"店點": "凱旋店", "姓名": "石佳穎", "職級": "銅級", "AQ": 1150, "AQ999": 300, "RT升轉": 1200, "RT999": 600, "RT1399": 400, "特維": 700, "手機台獎": 3500, "寬頻": 0, "OP": 0, "基礎獎金": 7850, "毛利分潤": 11004, "KPI分數": 2.99, "全壘打分數": 10.27, "全壘打獎金": 5200, "KPI淨獎金": -1500, "總獎金": 24054, "總積分": 388322, "戰力": "L2"}, {"店點": "仁雄店", "姓名": "黃閔聖", "職級": "銀級", "AQ": 1250, "AQ999": 600, "RT升轉": 1000, "RT999": 1100, "RT1399": 900, "特維": 900, "手機台獎": 4000, "寬頻": 2375, "OP": 0, "基礎獎金": 12125, "毛利分潤": 6684, "KPI分數": 2.81, "全壘打分數": 10.48, "全壘打獎金": 5200, "KPI淨獎金": -1500, "總獎金": 24009, "總積分": 365679, "戰力": "L2"}, {"店點": "鼎山店", "姓名": "劉家妘", "職級": "白金級", "AQ": 2550, "AQ999": 900, "RT升轉": 900, "RT999": 1100, "RT1399": 600, "特維": 1000, "手機台獎": 3400, "寬頻": 625, "OP": 1000, "基礎獎金": 12075, "毛利分潤": 5744, "KPI分數": 2.72, "全壘打分數": 10.76, "全壘打獎金": 5200, "KPI淨獎金": -2000, "總獎金": 23019, "總積分": 353889, "戰力": "L2"}, {"店點": "陽明店", "姓名": "方若帆", "職級": "金級", "AQ": 550, "AQ999": 300, "RT升轉": 900, "RT999": 800, "RT1399": 300, "特維": 700, "手機台獎": 3200, "寬頻": 875, "OP": 0, "基礎獎金": 7625, "毛利分潤": 6371, "KPI分數": 2.15, "全壘打分數": 8.36, "全壘打獎金": 4000, "KPI淨獎金": -4000, "總獎金": 17996, "總積分": 278920, "戰力": "L1"}, {"店點": "後昌店", "姓名": "秦曼芯", "職級": "石頭", "AQ": 850, "AQ999": 300, "RT升轉": 700, "RT999": 1100, "RT1399": 500, "特維": 600, "手機台獎": 3000, "寬頻": 625, "OP": 500, "基礎獎金": 8175, "毛利分潤": 5448, "KPI分數": 2.1, "全壘打分數": 10.34, "全壘打獎金": 5200, "KPI淨獎金": -3000, "總獎金": 18823, "總積分": 273460, "戰力": "L1"}, {"店點": "鼎山店", "姓名": "黃子珊", "職級": "銀級", "AQ": 1150, "AQ999": 300, "RT升轉": 700, "RT999": 1000, "RT1399": 700, "特維": 1000, "手機台獎": 3500, "寬頻": 0, "OP": 0, "基礎獎金": 8350, "毛利分潤": 3000, "KPI分數": 1.87, "全壘打分數": 12.35, "全壘打獎金": 6600, "KPI淨獎金": -3500, "總獎金": 17950, "總積分": 243250, "戰力": "L1"}, {"店點": "陽明店", "姓名": "劉芳廷", "職級": "銀級", "AQ": 1200, "AQ999": 0, "RT升轉": 300, "RT999": 1000, "RT1399": 800, "特維": 700, "手機台獎": 2200, "寬頻": 1000, "OP": 500, "基礎獎金": 7700, "毛利分潤": 3000, "KPI分數": 1.71, "全壘打分數": 8.12, "全壘打獎金": 4000, "KPI淨獎金": -2000, "總獎金": 14700, "總積分": 222000, "戰力": "L1"}, {"店點": "後昌店", "姓名": "郭家維", "職級": "銅級", "AQ": 1000, "AQ999": 0, "RT升轉": 700, "RT999": 900, "RT1399": 400, "特維": 900, "手機台獎": 2600, "寬頻": 750, "OP": 0, "基礎獎金": 7250, "毛利分潤": 3000, "KPI分數": 1.68, "全壘打分數": 8.74, "全壘打獎金": 4000, "KPI淨獎金": -4000, "總獎金": 14250, "總積分": 218500, "戰力": "L1"}, {"店點": "凱旋店", "姓名": "林庭逸", "職級": "石頭", "AQ": 1200, "AQ999": 600, "RT升轉": 400, "RT999": 700, "RT1399": 500, "特維": 700, "手機台獎": 2000, "寬頻": 1750, "OP": 0, "基礎獎金": 7850, "毛利分潤": 3000, "KPI分數": 1.59, "全壘打分數": 11.01, "全壘打獎金": 5900, "KPI淨獎金": -3000, "總獎金": 16750, "總積分": 206500, "戰力": "L1"}, {"店點": "陽明店", "姓名": "林瑞獻", "職級": "石頭", "AQ": 850, "AQ999": 300, "RT升轉": 400, "RT999": 600, "RT1399": 400, "特維": 400, "手機台獎": 900, "寬頻": 1375, "OP": 0, "基礎獎金": 5225, "毛利分潤": 3000, "KPI分數": 1.25, "全壘打分數": 7.32, "全壘打獎金": 3500, "KPI淨獎金": -5000, "總獎金": 11725, "總積分": 162500, "戰力": "L1"}, {"店點": "仁雄店", "姓名": "蔡冠廷", "職級": "石頭", "AQ": 2050, "AQ999": 300, "RT升轉": 500, "RT999": 600, "RT1399": 300, "特維": 400, "手機台獎": 800, "寬頻": 2000, "OP": 0, "基礎獎金": 6950, "毛利分潤": 0, "KPI分數": 1.06, "全壘打分數": 8.02, "全壘打獎金": 4000, "KPI淨獎金": -5000, "總獎金": 10950, "總積分": 137250, "戰力": "L1"}, {"店點": "鼎山店", "姓名": "彥州", "職級": "石頭", "AQ": 200, "AQ999": 0, "RT升轉": 800, "RT999": 500, "RT1399": 100, "特維": 1000, "手機台獎": 1800, "寬頻": 750, "OP": 0, "基礎獎金": 5150, "毛利分潤": 0, "KPI分數": 0.86, "全壘打分數": 10.42, "全壘打獎金": 5200, "KPI淨獎金": -3500, "總獎金": 10350, "總積分": 111500, "戰力": "L1"}];
+        const totalPeople=19;const avgBonus=23947;
         document.addEventListener('DOMContentLoaded',function(){initStoreSelect();renderRankingList();renderKpiRankingList();calculateDaysLeft();});
         function calculateDaysLeft(){const end=new Date('2026-03-29');const today=new Date();const d=Math.ceil((end-today)/(1000*60*60*24));document.getElementById('daysLeft').textContent=d>0?d:0;}
         function switchTab(t){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));if(t==='personal'){document.querySelectorAll('.tab-btn')[0].classList.add('active');document.getElementById('personalTab').classList.add('active');}else{document.querySelectorAll('.tab-btn')[1].classList.add('active');document.getElementById('rankingTab').classList.add('active');}}
         function toggleRanking(t){const b=document.querySelectorAll('.rank-toggle-btn');b.forEach(x=>x.classList.remove('active','kpi-active'));if(t==='bonus'){b[0].classList.add('active');document.getElementById('bonusRanking').style.display='block';document.getElementById('kpiRanking').style.display='none';}else{b[1].classList.add('kpi-active');document.getElementById('bonusRanking').style.display='none';document.getElementById('kpiRanking').style.display='block';}}
+        function fmtKPI(v){return Number(v).toFixed(2);}
+        function fmtHR(v){return Number(v).toFixed(1);}
         function getKpiStatus(k){if(k>=4.0)return{class:'purple',text:'💜 表現頂尖',color:'purple'};if(k>=2.5)return{class:'green',text:'💚 在進度內',color:'green'};return{class:'red',text:'❤️ 狀況不佳',color:'red'};}
         function getKpiStatusBadge(k){const s=getKpiStatus(k);return`<span class="kpi-status ${s.class}">${s.text}</span>`;}
         function getPowerBadgeHTML(p){if(p==='L3')return`<span class="power-badge L3">🔥 L3</span>`;if(p==='L2')return`<span class="power-badge L2">⚡ L2</span>`;return`<span class="power-badge L1">💫 L1</span>`;}
-        function renderRankingList(){const sorted=[...employeeData].sort((a,b)=>b.總獎金-a.總獎金);document.getElementById('rankingList').innerHTML=sorted.map((e,i)=>{const r=i+1;let rc=r<=3?`top${r}`:'';let rd=r===1?'🥇':r===2?'🥈':r===3?'🥉':r;return`<div class="rank-item ${rc}"><span class="rank-number ${r<=3?'medal':''}">${rd}</span><div class="rank-info"><div class="rank-name-row"><span class="rank-name">${e.姓名}</span>${getKpiStatusBadge(e.KPI分數)}</div><div class="rank-store">${e.店點} · ${e.職級} · KPI ${e.KPI分數}</div></div><div class="rank-amount"><div class="value ${e.總獎金<0?'negative':''}">${formatMoney(e.總獎金)}</div><div class="label">總獎金</div></div></div>`;}).join('');}
-        function renderKpiRankingList(){const sorted=[...employeeData].sort((a,b)=>b.KPI分數-a.KPI分數);document.getElementById('kpiRankingList').innerHTML=sorted.map((e,i)=>{const r=i+1;let rc=r<=3?`top${r}`:'';let rd=r===1?'🥇':r===2?'🥈':r===3?'🥉':r;const s=getKpiStatus(e.KPI分數);return`<div class="rank-item ${rc}"><span class="rank-number ${r<=3?'medal':''}">${rd}</span><div class="rank-info"><div class="rank-name-row"><span class="rank-name">${e.姓名}</span>${getKpiStatusBadge(e.KPI分數)}</div><div class="rank-store">${e.店點} · 總積分 ${e.總積分.toLocaleString()}</div></div><div class="rank-amount"><div class="value" style="color:${s.color==='purple'?'#D500F9':s.color==='green'?'#76FF03':'#FF1744'}">${e.KPI分數}</div><div class="label">KPI分數</div></div></div>`;}).join('');}
-        function initStoreSelect(){const stores=['鼎山店','陽明店','後昌店','仁雄店','凱旋店','區督導'];document.getElementById('storeSelect').innerHTML='<option value="">選擇店點</option>'+stores.map(s=>`<option value="${s}">${s}</option>`).join('');}
+        function renderRankingList(){const sorted=[...employeeData].sort((a,b)=>b.總獎金-a.總獎金);document.getElementById('rankingList').innerHTML=sorted.map((e,i)=>{const r=i+1;let rc=r<=3?`top${r}`:'';let rd=r===1?'🥇':r===2?'🥈':r===3?'🥉':r;return`<div class="rank-item ${rc}"><span class="rank-number ${r<=3?'medal':''}">${rd}</span><div class="rank-info"><div class="rank-name-row"><span class="rank-name">${e.姓名}</span>${getKpiStatusBadge(e.KPI分數)}</div><div class="rank-store">${e.店點} · ${e.職級} · KPI ${fmtKPI(e.KPI分數)}</div></div><div class="rank-amount"><div class="value ${e.總獎金<0?'negative':''}">${formatMoney(e.總獎金)}</div><div class="label">總獎金</div></div></div>`;}).join('');}
+        function renderKpiRankingList(){const sorted=[...employeeData].sort((a,b)=>b.KPI分數-a.KPI分數);document.getElementById('kpiRankingList').innerHTML=sorted.map((e,i)=>{const r=i+1;let rc=r<=3?`top${r}`:'';let rd=r===1?'🥇':r===2?'🥈':r===3?'🥉':r;const s=getKpiStatus(e.KPI分數);return`<div class="rank-item ${rc}"><span class="rank-number ${r<=3?'medal':''}">${rd}</span><div class="rank-info"><div class="rank-name-row"><span class="rank-name">${e.姓名}</span>${getKpiStatusBadge(e.KPI分數)}</div><div class="rank-store">${e.店點} · 總積分 ${e.總積分.toLocaleString()}</div></div><div class="rank-amount"><div class="value" style="color:${s.color==='purple'?'#D500F9':s.color==='green'?'#76FF03':'#FF1744'}">${fmtKPI(e.KPI分數)}</div><div class="label">KPI分數</div></div></div>`;}).join('');}
+        function initStoreSelect(){const stores=['仁雄店','凱旋店','後昌店','陽明店','鼎山店'];document.getElementById('storeSelect').innerHTML='<option value="">選擇店點</option>'+stores.map(s=>`<option value="${s}">${s}</option>`).join('');}
         function updateEmployeeList(){const store=document.getElementById('storeSelect').value;const sel=document.getElementById('employeeSelect');sel.innerHTML='<option value="">選擇員工</option>';if(!store)return;employeeData.filter(e=>e.店點===store).forEach(e=>{sel.innerHTML+=`<option value="${e.姓名}">${e.姓名}</option>`;});}
-        function formatMoney(n){if(n===0)return'$0';return n<0?`-$${Math.abs(n).toLocaleString()}`:`$${n.toLocaleString()}`;}
+        function formatMoney(n){n=Math.round(n);if(n===0)return'$0';return n<0?`-$${Math.abs(n).toLocaleString()}`:`$${n.toLocaleString()}`;}
         function getRankMedal(r){return r===1?'🥇':r===2?'🥈':r===3?'🥉':'💰';}
         function getRankTitle(r){if(r<=3)return'🏆 頂尖王者';if(r<=6)return'⭐ 超級明星';if(r<=10)return'💪 實力選手';if(r<=15)return'📈 穩定成長';return'🌱 持續加油';}
         function getKpiRank(e){return[...employeeData].sort((a,b)=>b.KPI分數-a.KPI分數).findIndex(x=>x.姓名===e.姓名)+1;}
@@ -519,8 +478,7 @@
         function getAchievements(e){const a=[];const ks=getKpiStatus(e.KPI分數);const br=getBonusRank(e);const kr=getKpiRank(e);if(ks.class==='purple')a.push({text:'💜 KPI頂尖',class:'purple'});if(e.戰力==='L3')a.push({text:'🔥 L3戰神',class:'purple'});else if(e.戰力==='L2')a.push({text:'⚡ L2精英',class:'blue'});if(br===1)a.push({text:'👑 獎金王',class:'purple'});if(br<=3)a.push({text:'🏆 TOP 3',class:'purple'});else if(br<=5)a.push({text:'⭐ TOP 5',class:'blue'});if(kr===1)a.push({text:'🎯 KPI王',class:'purple'});if(e.全壘打分數>=15)a.push({text:'⚾ 全壘打王',class:'red-hot'});else if(e.全壘打分數>=10)a.push({text:'⚾ 長打高手',class:'blue'});if(e.總獎金>=40000)a.push({text:'💰 4萬俱樂部',class:'purple'});else if(e.總獎金>=30000)a.push({text:'💵 3萬達成',class:'green'});else if(e.總獎金>=20000)a.push({text:'💴 2萬達成',class:'silver'});return a;}
         function createCoins(){const emojis=['💰','💵','💴','🪙','✨'];for(let i=0;i<12;i++){setTimeout(()=>{const c=document.createElement('div');c.className='coin';c.textContent=emojis[Math.floor(Math.random()*emojis.length)];c.style.left=Math.random()*100+'vw';c.style.animationDuration=(2+Math.random()*2)+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),4000);},i*80);}}
         function showResult(){const store=document.getElementById('storeSelect').value;const name=document.getElementById('employeeSelect').value;const statsEls=document.querySelectorAll('.period-reminder,.stats-summary,.bonus-distribution,.store-stats');if(!name){document.getElementById('resultCard').classList.remove('active');statsEls.forEach(el=>el.style.display='block');return;}const emp=employeeData.find(e=>e.店點===store&&e.姓名===name);if(!emp)return;createCoins();statsEls.forEach(el=>el.style.display='none');const achievements=getAchievements(emp);const achievementHTML=achievements.map((a,i)=>`<div class="achievement ${a.class}" style="animation-delay:${i*0.1}s">${a.text}</div>`).join('');const beatAvg=emp.總獎金>avgBonus;const diffAvg=Math.abs(emp.總獎金-avgBonus);const kpiStatus=getKpiStatus(emp.KPI分數);const kpiRank=getKpiRank(emp);const bonusRank=getBonusRank(emp);const progressPercent=Math.min((emp.KPI分數/5)*100,100);let kpiWarningHTML='';if(kpiStatus.class==='red'){kpiWarningHTML=`<div class="kpi-warning"><div class="icon">⚠️</div><div class="text">KPI 狀況不佳，需要加油衝刺！</div></div>`;}
-        document.getElementById('resultCard').innerHTML=`<div class="profile-card ${emp.戰力==='L3'?'L3-border':''}"><div class="profile-row"><div class="avatar">${emp.姓名.slice(-2)}</div><div class="profile-info"><h2>${emp.姓名}</h2><div class="profile-badges"><span class="badge store">${emp.店點}</span><span class="badge rank">${emp.職級}</span>${getPowerBadgeHTML(emp.戰力)}</div></div></div></div><div class="kpi-dashboard ${kpiStatus.class}-border"><div class="kpi-dashboard-title"><h3>🎯 你的 KPI 狀態</h3>${getKpiStatusBadge(emp.KPI分數)}</div><div class="kpi-main"><div class="kpi-main-item"><div class="number ${kpiStatus.class}">${emp.KPI分數}</div><div class="label">KPI 分數</div></div><div class="kpi-main-item"><div class="number" style="color:#ECEEFF;font-size:1.5em;">${emp.總積分.toLocaleString()}</div><div class="label">總積分</div></div></div><div class="kpi-progress"><div class="kpi-progress-bar ${kpiStatus.class}" style="width:${progressPercent}%"></div></div><div class="kpi-rank-info"><span>📊 KPI 排名：第 ${kpiRank} 名 / 19人</span><span>目標 5.0 分</span></div>${kpiWarningHTML}</div><div class="total-bonus-card"><div class="label">💰 3月份累計總獎金</div><div class="amount ${emp.總獎金<0?'negative':''}">${formatMoney(emp.總獎金)}</div><div class="rank-badge">${getRankTitle(bonusRank)}</div></div><div class="ranking-card"><div class="ranking-item"><div class="medal">${getRankMedal(bonusRank)}</div><div class="number">${bonusRank}</div><div class="label">獎金排名 / ${totalPeople}人</div></div><div class="ranking-item"><div class=\"medal\">🎯</div><div class=\"number\" style=\"color:#00F5FF\">${formatMoney(emp.AQ)}</div><div class=\"label\">我的AQ</div></div><div class="ranking-item"><div class="medal">⚾</div><div class="number">${emp.全壘打分數}</div><div class="label">全壘打分數</div></div></div>${achievements.length>0?`<div class="achievement-section"><div class="achievement-title">🏅 獲得成就</div><div class="achievement-grid">${achievementHTML}</div></div>`:''}<div class="bonus-detail-section"><div class="detail-title">📋 基礎獎金明細</div><div class="bonus-list"><div class="bonus-item"><div class="name">AQ點數</div><div class="value ${emp.AQ===0?'zero':''}">${formatMoney(emp.AQ)}</div></div><div class="bonus-item"><div class="name">AQ999+</div><div class="value ${emp.AQ999===0?'zero':''}">${formatMoney(emp.AQ999)}</div></div><div class="bonus-item"><div class="name">RT升轉</div><div class="value ${emp.RT升轉===0?'zero':''}">${formatMoney(emp.RT升轉)}</div></div><div class="bonus-item"><div class="name">RT999+</div><div class="value ${emp.RT999===0?'zero':''}">${formatMoney(emp.RT999)}</div></div><div class="bonus-item"><div class="name">RT1399+</div><div class="value ${emp.RT1399===0?'zero':''}">${formatMoney(emp.RT1399)}</div></div><div class="bonus-item"><div class="name">特維</div><div class="value ${emp.特維===0?'zero':''}">${formatMoney(emp.特維)}</div></div><div class="bonus-item"><div class="name">手機台獎</div><div class="value ${emp.手機台獎===0?'zero':''}">${formatMoney(emp.手機台獎)}</div></div><div class="bonus-item"><div class="name">寬頻</div><div class="value ${emp.寬頻===0?'zero':''}">${formatMoney(emp.寬頻)}</div></div><div class="bonus-item"><div class="name">OP案</div><div class="value ${emp.OP===0?'zero':''}">${formatMoney(emp.OP)}</div></div></div><div class="subtotal-bar"><span class="label">基礎獎金小計</span><span class="value">${formatMoney(emp.基礎獎金)}</span></div></div><div class="profit-section"><div class="label">📈 毛利分潤獎金</div><div class="value">${formatMoney(emp.毛利分潤)}</div></div><div class="homerun-section"><div class="homerun-title">⚾ 全壘打獎金</div><div class="homerun-grid"><div class="homerun-item"><div class="label">得分</div><div class="value">${emp.全壘打分數}</div></div><div class="homerun-item"><div class="label">全壘打獎金</div><div class="value">${formatMoney(emp.全壘打獎金)}</div></div><div class="homerun-item"><div class="label">KPI淨獎金</div><div class="value ${emp.KPI淨獎金<0?'negative':''}">${formatMoney(emp.KPI淨獎金)}</div></div></div></div>`;document.getElementById('resultCard').classList.add('active');}
+        document.getElementById('resultCard').innerHTML=`<div class="profile-card ${emp.戰力==='L3'?'L3-border':''}"><div class="profile-row"><div class="avatar">${emp.姓名.slice(-1)}</div><div class="profile-info"><h2>${emp.姓名}</h2><div class="profile-badges"><span class="badge store">${emp.店點}</span><span class="badge rank">${emp.職級}</span>${getPowerBadgeHTML(emp.戰力)}</div></div></div></div><div class="kpi-dashboard ${kpiStatus.class}-border"><div class="kpi-dashboard-title"><h3>🎯 你的 KPI 狀態</h3>${getKpiStatusBadge(emp.KPI分數)}</div><div class="kpi-main"><div class="kpi-main-item"><div class="number ${kpiStatus.class}">${fmtKPI(emp.KPI分數)}</div><div class="label">KPI 分數</div></div><div class="kpi-main-item"><div class="number" style="color:#ECEEFF;font-size:1.5em;">${emp.總積分.toLocaleString()}</div><div class="label">總積分</div></div></div><div class="kpi-progress"><div class="kpi-progress-bar ${kpiStatus.class}" style="width:${progressPercent}%"></div></div><div class="kpi-rank-info"><span>📊 KPI 排名：第 ${kpiRank} 名 / 19人</span><span>目標 5.0 分</span></div>${kpiWarningHTML}</div><div class="total-bonus-card"><div class="label">💰 3月份累計總獎金</div><div class="amount ${emp.總獎金<0?'negative':''}">${formatMoney(emp.總獎金)}</div><div class="rank-badge">${getRankTitle(bonusRank)}</div></div><div class="ranking-card"><div class="ranking-item"><div class="medal">${getRankMedal(bonusRank)}</div><div class="number">${bonusRank}</div><div class="label">獎金排名 / ${totalPeople}人</div></div><div class="ranking-item"><div class="medal">🎯</div><div class="number" style="color:#00F5FF">${formatMoney(emp.AQ)}</div><div class="label">我的AQ</div></div><div class="ranking-item"><div class="medal">⚾</div><div class="number">${fmtHR(emp.全壘打分數)}</div><div class="label">全壘打分數</div></div></div>${achievements.length>0?`<div class="achievement-section"><div class="achievement-title">🏅 獲得成就</div><div class="achievement-grid">${achievementHTML}</div></div>`:''}<div class="bonus-detail-section"><div class="detail-title">📋 基礎獎金明細</div><div class="bonus-list"><div class="bonus-item"><div class="name">AQ點數</div><div class="value ${emp.AQ===0?'zero':''}">${formatMoney(emp.AQ)}</div></div><div class="bonus-item"><div class="name">AQ999+</div><div class="value ${emp.AQ999===0?'zero':''}">${formatMoney(emp.AQ999)}</div></div><div class="bonus-item"><div class="name">RT升轉</div><div class="value ${emp.RT升轉===0?'zero':''}">${formatMoney(emp.RT升轉)}</div></div><div class="bonus-item"><div class="name">RT999+</div><div class="value ${emp.RT999===0?'zero':''}">${formatMoney(emp.RT999)}</div></div><div class="bonus-item"><div class="name">RT1399+</div><div class="value ${emp.RT1399===0?'zero':''}">${formatMoney(emp.RT1399)}</div></div><div class="bonus-item"><div class="name">特維</div><div class="value ${emp.特維===0?'zero':''}">${formatMoney(emp.特維)}</div></div><div class="bonus-item"><div class="name">手機台獎</div><div class="value ${emp.手機台獎===0?'zero':''}">${formatMoney(emp.手機台獎)}</div></div><div class="bonus-item"><div class="name">寬頻</div><div class="value ${emp.寬頻===0?'zero':''}">${formatMoney(emp.寬頻)}</div></div><div class="bonus-item"><div class="name">OP案</div><div class="value ${emp.OP===0?'zero':''}">${formatMoney(emp.OP)}</div></div></div><div class="subtotal-bar"><span class="label">基礎獎金小計</span><span class="value">${formatMoney(emp.基礎獎金)}</span></div></div><div class="profit-section"><div class="label">📈 毛利分潤獎金</div><div class="value">${formatMoney(emp.毛利分潤)}</div></div><div class="homerun-section"><div class="homerun-title">⚾ 全壘打獎金</div><div class="homerun-grid"><div class="homerun-item"><div class="label">得分</div><div class="value">${fmtHR(emp.全壘打分數)}</div></div><div class="homerun-item"><div class="label">全壘打獎金</div><div class="value">${formatMoney(emp.全壘打獎金)}</div></div><div class="homerun-item"><div class="label">KPI淨獎金</div><div class="value ${emp.KPI淨獎金<0?'negative':''}">${formatMoney(emp.KPI淨獎金)}</div></div></div></div>`;document.getElementById('resultCard').classList.add('active');}
     </script>
-
 
 </body></html>
