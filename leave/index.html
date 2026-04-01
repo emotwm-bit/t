@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>倚盟電訊　連休申請系統</title>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #f5f0e8;
+    --surface: #ede6d9;
+    --surface2: #e5ddd0;
+    --border: #d4cabb;
+    --accent: #4a7c59;
+    --accent2: #3a6b8a;
+    --warn: #b07d2a;
+    --danger: #b54040;
+    --text: #3d2e18;
+    --text2: #7a6648;
+    --text3: #a8956e;
+    --pending: #b07d2a;
+    --approved: #4a7c59;
+    --rejected: #b54040;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(74,124,89,0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -200px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(180,150,100,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(245,240,232,0.96);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .header-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 700; font-size: 16px; letter-spacing: 1px;
+  }
+  .logo-dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(74,124,89,0.5);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.5; transform:scale(0.8); }
+  }
+  .header-tabs {
+    display: flex; gap: 4px;
+  }
+  .tab-btn {
+    padding: 6px 16px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text2);
+    font-size: 13px;
+    font-family: 'Noto Sans TC', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { color: var(--text); background: var(--surface2); }
+  .tab-btn.active {
+    border-color: var(--border);
+    background: var(--surface);
+    color: var(--accent);
+  }
+  .header-right {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sync-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    transition: background 0.3s;
+  }
+  .sync-dot.online { background: #4ade80; box-shadow: 0 0 6px rgba(74,222,128,0.6); }
+  .sync-dot.offline { background: #f87171; box-shadow: 0 0 6px rgba(248,113,113,0.6); }
+  .sync-dot.loading { background: #fbbf24; box-shadow: 0 0 6px rgba(251,191,36,0.6); animation: pulse 1s infinite; }
+  .role-badge {
+    display: flex; align-items: center; gap: 6px;
+    padding: 4px 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .role-badge:hover { border-color: var(--accent2); color: var(--accent2); }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px; position: relative; z-index: 1; }
+
+  .page { display: none; animation: fadeIn 0.3s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .card-title {
+    font-size: 14px; font-weight: 500;
+    color: var(--text2);
+    text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-title::before {
+    content: '';
+    display: block; width: 3px; height: 14px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group.full { grid-column: 1/-1; }
+  label { font-size: 12px; color: var(--text2); letter-spacing: 0.5px; }
+  select, input, textarea {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 14px;
+    padding: 10px 14px;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  select:focus, input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  select option { background: var(--surface2); }
+  textarea { resize: vertical; min-height: 80px; }
+
+  .conflict-box {
+    background: rgba(181,64,64,0.07);
+    border: 1px solid rgba(181,64,64,0.25);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #dc2626;
+    display: none;
+    margin-top: 8px;
+  }
+  .conflict-box.show { display: block; }
+  .ok-box {
+    background: rgba(74,124,89,0.08);
+    border: 1px solid rgba(74,124,89,0.25);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--accent);
+    display: none;
+    margin-top: 8px;
+  }
+  .ok-box.show { display: block; }
+
+  .btn {
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #ffffff;
+  }
+  .btn-primary:hover { background: #5a9c6a; transform: translateY(-1px); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text2);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { border-color: var(--text2); color: var(--text); }
+  .btn-danger {
+    background: rgba(248,113,113,0.1);
+    color: var(--danger);
+    border: 1px solid rgba(181,64,64,0.25);
+  }
+  .btn-danger:hover { background: rgba(248,113,113,0.2); }
+  .btn-approve {
+    background: rgba(74,222,128,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(74,124,89,0.25);
+  }
+  .btn-approve:hover { background: rgba(74,222,128,0.2); }
+  .btn-sm { padding: 5px 12px; font-size: 12px; }
+
+  .request-item {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .request-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+  }
+  .request-item.pending::before { background: var(--pending); }
+  .request-item.approved::before { background: var(--approved); }
+  .request-item.rejected::before { background: var(--rejected); }
+  .request-item:hover { border-color: var(--text3); }
+
+  .req-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .req-info { flex: 1; }
+  .req-name { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+  .req-meta {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    font-size: 12px; color: var(--text2);
+  }
+  .req-tag {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+  }
+  .tag-store { background: rgba(34,211,238,0.1); color: var(--accent2); }
+  .tag-days { background: rgba(74,222,128,0.1); color: var(--accent); }
+  .tag-reason { background: var(--surface2); color: var(--text2); }
+
+  .status-badge {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .badge-pending { background: rgba(176,125,42,0.12); color: #8a5e18; border: 1px solid rgba(176,125,42,0.3); }
+  .badge-approved { background: rgba(74,222,128,0.15); color: var(--approved); border: 1px solid rgba(74,124,89,0.25); }
+  .badge-rejected { background: rgba(248,113,113,0.15); color: var(--rejected); border: 1px solid rgba(181,64,64,0.25); }
+
+  .req-actions { display: flex; gap: 8px; margin-top: 12px; }
+  .conflict-warn {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: rgba(181,64,64,0.07);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--danger);
+  }
+
+  .cal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .cal-month { font-size: 18px; font-weight: 700; }
+  .cal-nav { display: flex; gap: 8px; }
+  .cal-nav button {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  .cal-nav button:hover { border-color: var(--accent); color: var(--accent); }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+  .cal-dow {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text3);
+    padding: 4px;
+    font-family: 'DM Mono', monospace;
+  }
+  .cal-day {
+    min-height: 72px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .cal-day:hover { border-color: var(--text3); }
+  .cal-day.today { border-color: var(--accent2); }
+  .cal-day.other-month { opacity: 0.3; }
+  .cal-day.weekend .day-num { color: var(--warn); }
+  .day-num {
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 4px;
+  }
+  .day-leaves {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .day-leave-chip {
+    font-size: 10px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .c0 { background: rgba(74,222,128,0.2); color: #4ade80; }
+  .c1 { background: rgba(34,211,238,0.2); color: #22d3ee; }
+  .c2 { background: rgba(251,191,36,0.2); color: #fbbf24; }
+  .c3 { background: rgba(248,113,113,0.2); color: #f87171; }
+  .c4 { background: rgba(167,139,250,0.2); color: #a78bfa; }
+  .c5 { background: rgba(251,113,133,0.2); color: #fb7185; }
+  .c6 { background: rgba(52,211,153,0.2); color: #34d399; }
+  .c7 { background: rgba(251,146,60,0.2); color: #fb923c; }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-num { font-size: 28px; font-weight: 900; font-family: 'DM Mono', monospace; }
+  .stat-num.green { color: #2e5c3a; }
+  .stat-num.yellow { color: #8a5e18; }
+  .stat-num.red { color: #8a2020; }
+  .stat-label { font-size: 11px; color: var(--text2); margin-top: 4px; }
+
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none; align-items: center; justify-content: center;
+    z-index: 200;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    width: 360px;
+    max-width: 90vw;
+  }
+  .modal-title { font-size: 16px; font-weight: 700; margin-bottom: 20px; }
+  .role-option {
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .role-option:hover { border-color: var(--accent); background: rgba(74,222,128,0.05); }
+  .role-option.selected { border-color: var(--accent); background: rgba(74,124,89,0.08); }
+  .role-icon { font-size: 20px; }
+  .role-name { font-size: 14px; font-weight: 500; }
+  .role-desc { font-size: 11px; color: var(--text2); margin-top: 2px; }
+
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 14px;
+    z-index: 300;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s;
+    max-width: 300px;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.success { border-color: rgba(74,222,128,0.4); color: var(--accent); }
+  .toast.error { border-color: rgba(248,113,113,0.4); color: var(--danger); }
+
+  .empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--text3);
+  }
+  .empty-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.4; }
+  .empty-text { font-size: 14px; }
+
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .hint { font-size: 12px; color: var(--text3); margin-top: 4px; }
+
+  /* 設定提示 */
+  .setup-banner {
+    background: rgba(251,191,36,0.1);
+    border: 1px solid rgba(176,125,42,0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .setup-banner h3 { color: #8a5e18; margin-bottom: 8px; }
+  .setup-banner p { font-size: 13px; color: var(--text2); line-height: 1.8; }
+
+  @media (max-width: 600px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .cal-day { min-height: 56px; }
+    .header-tabs .tab-btn { padding: 6px 10px; font-size: 12px; }
+    .header-logo { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-logo">
+    <div class="logo-dot"></div>
+    倚盟電訊　連休申請系統
+  </div>
+  <div class="header-tabs">
+    <button class="tab-btn active" onclick="showPage('apply', this)">申請連休</button>
+    <button class="tab-btn" onclick="showPage('calendar', this)">休假日曆</button>
+    <button class="tab-btn" onclick="showPage('manage', this)">審核管理</button>
+  </div>
+  <div class="header-right">
+    <div class="sync-dot loading" id="syncDot" title="連線中..."></div>
+    <div class="role-badge" onclick="showRoleModal()">
+      <span id="roleIcon">👤</span>
+      <span id="roleName">員工</span>
+    </div>
+  </div>
+</div>
+
+<!-- 角色切換Modal -->
+<div class="modal-overlay" id="roleModal">
+  <div class="modal">
+    <div class="modal-title">選擇身份</div>
+    <div class="role-option selected" onclick="selectRole('employee')" id="role-employee">
+      <span class="role-icon">👤</span>
+      <div>
+        <div class="role-name">一般員工</div>
+        <div class="role-desc">申請連休、查看他人休假</div>
+      </div>
+    </div>
+    <div class="role-option" onclick="askAdminPassword()" id="role-admin">
+      <span class="role-icon">👑</span>
+      <div>
+        <div class="role-name">老闆 / 主管</div>
+        <div class="role-desc">審核申請、查看人力衝突</div>
+      </div>
+    </div>
+    <div style="margin-top:16px; text-align:right;">
+      <button class="btn btn-secondary" onclick="closeRoleModal()">關閉</button>
+    </div>
+  </div>
+</div>
+
+<!-- 密碼驗證Modal -->
+<div class="modal-overlay" id="pwModal">
+  <div class="modal">
+    <div class="modal-title">🔒 請輸入主管密碼</div>
+    <div class="form-group" style="margin-bottom:16px;">
+      <label>密碼</label>
+      <input type="password" id="admin-pw-input" placeholder="請輸入密碼"
+        onkeydown="if(event.key==='Enter') verifyAdminPw()"
+        style="letter-spacing:4px; font-size:18px;">
+      <div id="pw-error" style="color:var(--danger);font-size:12px;margin-top:6px;display:none;">⚠️ 密碼錯誤，請再試一次</div>
+    </div>
+    <div style="display:flex; gap:10px; justify-content:flex-end;">
+      <button class="btn btn-secondary" onclick="closePwModal()">取消</button>
+      <button class="btn btn-primary" onclick="verifyAdminPw()">確認</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- 主容器 -->
+<div class="container">
+
+  <!-- Firebase 未設定提示 -->
+  <div class="setup-banner" id="setupBanner" style="display:none;">
+    <h3>⚠️ Firebase 尚未設定</h3>
+    <p>系統目前使用本機暫存模式，資料無法跨裝置同步。<br>請依照說明設定 Firebase 後重新上傳。</p>
+  </div>
+
+  <!-- ===== 申請連休 ===== -->
+  <div class="page active" id="page-apply">
+    <div class="card">
+      <div class="card-title">提交連休申請</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>員工姓名</label>
+          <select id="emp-name" onchange="checkConflict()">
+            <option value="">請選擇姓名</option>
+            <option>劉家妘</option><option>黃子珊</option><option>凃彥州</option><option>陳亭安</option>
+            <option>方若帆</option><option>劉芳廷</option><option>林瑞献</option>
+            <option>郭家維</option><option>邱雨蔚</option><option>秦曼芯</option>
+            <option>黃傑稜</option><option>黃閔聖</option><option>郭紳鴻</option><option>蔡冠廷</option>
+            <option>陳宛姍</option><option>高琦茗</option><option>石佳穎</option><option>林庭逸</option>
+            <option>黃庭鈞</option><option>蔡宏澤</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>所屬分店</label>
+          <select id="emp-store" onchange="checkConflict()">
+            <option value="">請選擇分店</option>
+            <option>鼎山店</option><option>陽明店</option><option>後昌店</option>
+            <option>仁雄店</option><option>凱旋店</option><option>MST</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>請假開始日期</label>
+          <input type="date" id="leave-start" onchange="checkConflict()">
+        </div>
+        <div class="form-group">
+          <label>請假結束日期</label>
+          <input type="date" id="leave-end" onchange="checkConflict()">
+        </div>
+        <div class="form-group">
+          <label>請假類型</label>
+          <select id="leave-type">
+            <option>年假</option><option>特休</option><option>事假</option>
+            <option>病假</option><option>生日假</option><option>其他</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>出遊/事由（選填）</label>
+          <input type="text" id="leave-reason" placeholder="例：露營、出國旅遊…">
+        </div>
+        <div class="form-group full">
+          <div class="conflict-box" id="conflict-box"></div>
+          <div class="ok-box" id="ok-box"></div>
+        </div>
+      </div>
+      <div style="display:flex; gap:10px; margin-top:4px;">
+        <button class="btn btn-primary" id="submitBtn" onclick="submitRequest()">提交申請</button>
+        <button class="btn btn-secondary" onclick="clearForm()">清除</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">我的申請記錄</div>
+      <div id="my-requests"></div>
+    </div>
+  </div>
+
+  <!-- ===== 休假日曆 ===== -->
+  <div class="page" id="page-calendar">
+    <div class="card">
+      <div class="cal-header">
+        <div class="cal-month" id="cal-month-label"></div>
+        <div class="cal-nav">
+          <button onclick="changeMonth(-1)">‹</button>
+          <button onclick="changeMonth(1)">›</button>
+        </div>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">圖例說明</div>
+      <div style="display:flex; flex-wrap:wrap; gap:10px;">
+        <div id="legend-list" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 審核管理 ===== -->
+  <div class="page" id="page-manage">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num yellow" id="stat-pending">0</div>
+        <div class="stat-label">待審核</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num green" id="stat-approved">0</div>
+        <div class="stat-label">已核准</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num red" id="stat-rejected">0</div>
+        <div class="stat-label">已拒絕</div>
+      </div>
+    </div>
+
+    <div class="card" id="admin-notice" style="display:none; background:rgba(251,191,36,0.05); border-color:rgba(176,125,42,0.2);">
+      <div style="font-size:13px; color:#8a5e18;">⚠️ 目前為員工身份，切換為「老闆/主管」身份才可審核申請。</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">所有申請</div>
+      <div id="all-requests"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// =====================================================
+// Firebase 設定（請替換為你的 Firebase 專案設定）
+// =====================================================
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDOJ5Z1gDnt-HtkAffdefpoVlFvIvU1E4Y",
+  authDomain: "emo-holiday.firebaseapp.com",
+  databaseURL: "https://emo-holiday-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "emo-holiday",
+  storageBucket: "emo-holiday.firebasestorage.app",
+  messagingSenderId: "1087300063306",
+  appId: "1:1087300063306:web:dbaecadd213b62833a16b3",
+  measurementId: "G-6F3BWLQ4LZ"
+};
+
+// =====================================================
+// 判斷 Firebase 是否已設定
+// =====================================================
+const FIREBASE_READY = FIREBASE_CONFIG.apiKey !== 'YOUR_API_KEY';
+let db = null;
+let dbRef = null;
+
+if (FIREBASE_READY) {
+  firebase.initializeApp(FIREBASE_CONFIG);
+  db = firebase.database();
+  dbRef = db.ref('leaveRequests');
+}
+
+// =====================================================
+// 資料層（Firebase 即時同步 + localStorage 備援）
+// =====================================================
+// 各店設定：total=總人數, min=最少上班人數
+const STORE_CONFIG = {
+  '鼎山店': { total: 4, min: 2 },
+  '陽明店': { total: 3, min: 2 },
+  '後昌店': { total: 3, min: 2 },
+  '仁雄店': { total: 4, min: 3 },
+  '凱旋店': { total: 4, min: 3 }
+};
+
+// 各店正副店長（不可同日休假，除非黃庭鈞沒休假可支援）
+const STORE_LEADERS = {
+  '鼎山店': ['劉家妘', '陳亭安'],
+  '陽明店': ['方若帆', '劉芳廷'],
+  '後昌店': ['郭家維', '邱雨蔚'],
+  '仁雄店': ['黃傑稜', '郭紳鴻'],
+  '凱旋店': ['陳宛姍', '高琦茗']
+};
+
+// 幹部互斥：這些人不可同日休假
+const KEY_MANAGERS = ['黃庭鈞', '劉家妘', '郭家維', '黃傑稜', '陳宛姍'];
+
+// 機動支援人員
+const FLOAT_MANAGER = '黃庭鈞';
+
+const EMP_COLORS = {};
+const COLOR_CLASSES = ['c0','c1','c2','c3','c4','c5','c6','c7'];
+const ALL_EMPS = ['劉家妘','黃子珊','凃彥州','陳亭安','方若帆','劉芳廷','林瑞献',
+  '郭家維','邱雨蔚','秦曼芯','黃傑稜','黃閔聖','郭紳鴻','蔡冠廷',
+  '陳宛姍','高琦茗','石佳穎','林庭逸','黃庭鈞','蔡宏澤'];
+ALL_EMPS.forEach((e,i) => EMP_COLORS[e] = COLOR_CLASSES[i % COLOR_CLASSES.length]);
+
+let currentRole = 'employee';
+let calYear = new Date().getFullYear();
+let calMonth = new Date().getMonth();
+
+// 本地快取（由 Firebase onValue 即時更新，或 localStorage 備援）
+let allRequests = [];
+
+function getRequests() {
+  return allRequests;
+}
+
+// localStorage 備援（Firebase 未設定時使用）
+function localGet() {
+  try { return JSON.parse(localStorage.getItem('leaveRequests') || '[]'); }
+  catch(e) { return []; }
+}
+function localSave(reqs) {
+  localStorage.setItem('leaveRequests', JSON.stringify(reqs));
+}
+
+// Firebase 寫入
+function saveToFirebase(reqs) {
+  if (FIREBASE_READY && dbRef) {
+    dbRef.set(reqs);
+  } else {
+    localSave(reqs);
+    allRequests = reqs;
+    refreshAll();
+  }
+}
+
+// 新增一筆申請
+function addRequest(newReq) {
+  if (FIREBASE_READY && dbRef) {
+    const reqs = [...allRequests];
+    reqs.unshift(newReq);
+    dbRef.set(reqs);
+  } else {
+    allRequests.unshift(newReq);
+    localSave(allRequests);
+    refreshAll();
+  }
+}
+
+// 更新狀態
+function updateRequestStatus(id, status) {
+  const reqs = [...allRequests];
+  const idx = reqs.findIndex(r => r.id === id);
+  if (idx >= 0) {
+    reqs[idx].status = status;
+    if (FIREBASE_READY && dbRef) {
+      dbRef.set(reqs);
+    } else {
+      allRequests = reqs;
+      localSave(reqs);
+      refreshAll();
+    }
+    showToast(status === 'approved' ? '已核准申請' : '已拒絕申請', status === 'approved' ? 'success' : 'error');
+  }
+}
+
+// 重新渲染所有頁面
+function refreshAll() {
+  renderMyRequests();
+  renderManage();
+  renderCalendar();
+}
+
+// =====================================================
+// Firebase 即時監聽（核心：所有人即時同步）
+// =====================================================
+function initFirebaseListener() {
+  const dot = document.getElementById('syncDot');
+
+  if (!FIREBASE_READY) {
+    // 未設定 Firebase，使用 localStorage
+    document.getElementById('setupBanner').style.display = 'block';
+    dot.className = 'sync-dot offline';
+    dot.title = '離線模式（僅本機）';
+    allRequests = localGet();
+    refreshAll();
+    return;
+  }
+
+  // 連線狀態
+  db.ref('.info/connected').on('value', snap => {
+    if (snap.val() === true) {
+      dot.className = 'sync-dot online';
+      dot.title = '已連線・即時同步中';
+    } else {
+      dot.className = 'sync-dot offline';
+      dot.title = '離線中';
+    }
+  });
+
+  // 即時監聽資料變化 → 自動更新所有畫面
+  dbRef.on('value', snap => {
+    const data = snap.val();
+    allRequests = Array.isArray(data) ? data : [];
+    refreshAll();
+    dot.className = 'sync-dot online';
+  });
+}
+
+// =====================================================
+// 頁面切換
+// =====================================================
+function showPage(name, btnEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  if (btnEl) btnEl.classList.add('active');
+  if (name === 'calendar') renderCalendar();
+  if (name === 'manage') renderManage();
+  if (name === 'apply') renderMyRequests();
+}
+
+// =====================================================
+// 角色切換
+// =====================================================
+function showRoleModal() {
+  document.getElementById('roleModal').classList.add('show');
+}
+function closeRoleModal() {
+  document.getElementById('roleModal').classList.remove('show');
+}
+function selectRole(role) {
+  currentRole = role;
+  document.querySelectorAll('.role-option').forEach(el => el.classList.remove('selected'));
+  document.getElementById('role-' + role).classList.add('selected');
+  document.getElementById('roleIcon').textContent = role === 'admin' ? '👑' : '👤';
+  document.getElementById('roleName').textContent = role === 'admin' ? '老闆/主管' : '員工';
+  closeRoleModal();
+  renderManage();
+  showToast(role === 'admin' ? '已切換為主管身份' : '已切換為員工身份', 'success');
+}
+function askAdminPassword() {
+  closeRoleModal();
+  document.getElementById('admin-pw-input').value = '';
+  document.getElementById('pw-error').style.display = 'none';
+  document.getElementById('pwModal').classList.add('show');
+  setTimeout(() => document.getElementById('admin-pw-input').focus(), 100);
+}
+function closePwModal() {
+  document.getElementById('pwModal').classList.remove('show');
+}
+function verifyAdminPw() {
+  const pw = document.getElementById('admin-pw-input').value;
+  if (pw === '09860986') {
+    closePwModal();
+    selectRole('admin');
+  } else {
+    document.getElementById('pw-error').style.display = 'block';
+    document.getElementById('admin-pw-input').value = '';
+    document.getElementById('admin-pw-input').focus();
+  }
+}
+
+// =====================================================
+// 日期工具
+// =====================================================
+function dateDiff(start, end) {
+  const s = new Date(start), e = new Date(end);
+  return Math.round((e - s) / 86400000) + 1;
+}
+function dateRange(start, end) {
+  const dates = [], s = new Date(start), e = new Date(end);
+  for(let d = new Date(s); d <= e; d.setDate(d.getDate()+1))
+    dates.push(d.toISOString().slice(0,10));
+  return dates;
+}
+function fmtDate(d) {
+  const dt = new Date(d);
+  return `${dt.getMonth()+1}/${dt.getDate()}`;
+}
+
+// =====================================================
+// 衝突檢查（核心邏輯）
+// =====================================================
+function getConflicts(name, store, start, end) {
+  const allReqs = getRequests();
+  const myDates = dateRange(start, end);
+  const hardConflicts = [];
+  const softInfos = [];
+
+  // 規則 1：同一人不可重複申請
+  const dupDates = myDates.filter(date =>
+    allReqs.some(r =>
+      r.name === name &&
+      r.status !== 'rejected' &&
+      dateRange(r.start, r.end).includes(date)
+    )
+  );
+  if (dupDates.length > 0) {
+    hardConflicts.push(`❌ <strong>重複申請：</strong>${name} 在 ${dupDates.map(fmtDate).join('、')} 已有申請記錄`);
+  }
+
+  // 規則 2：同店人力不足
+  const cfg = STORE_CONFIG[store];
+  if (cfg) {
+    const storeBadDates = myDates.filter(date => {
+      const offCount = allReqs.filter(r =>
+        r.store === store &&
+        r.name !== name &&
+        r.status !== 'rejected' &&
+        dateRange(r.start, r.end).includes(date)
+      ).length;
+      return (cfg.total - offCount - 1) < cfg.min;
+    });
+    if (storeBadDates.length > 0) {
+      hardConflicts.push(`❌ <strong>人力不足：</strong>${storeBadDates.map(fmtDate).join('、')} ${store}上班人數將低於最低 ${cfg.min} 人`);
+    }
+  }
+
+  // 規則 3：正副店長不可同日休假（除非黃庭鈞沒休假）
+  const leaderPair = STORE_LEADERS[store];
+  if (leaderPair && leaderPair.includes(name)) {
+    const partner = leaderPair.find(n => n !== name);
+    const partnerOffDates = myDates.filter(date =>
+      allReqs.some(r =>
+        r.name === partner &&
+        r.status !== 'rejected' &&
+        dateRange(r.start, r.end).includes(date)
+      )
+    );
+    if (partnerOffDates.length > 0) {
+      // 檢查黃庭鈞是否也在休假
+      const floatAlsoOff = partnerOffDates.filter(date =>
+        allReqs.some(r =>
+          r.name === FLOAT_MANAGER &&
+          r.status !== 'rejected' &&
+          dateRange(r.start, r.end).includes(date)
+        )
+      );
+      if (floatAlsoOff.length > 0) {
+        hardConflicts.push(`❌ <strong>正副店長衝突：</strong>${floatAlsoOff.map(fmtDate).join('、')} ${partner}已請假，且${FLOAT_MANAGER}也已請假無法支援`);
+      }
+      const floatCanCover = partnerOffDates.filter(d => !floatAlsoOff.includes(d));
+      if (floatCanCover.length > 0) {
+        softInfos.push(`ℹ️ ${floatCanCover.map(fmtDate).join('、')} ${partner}也請假，${FLOAT_MANAGER}可支援`);
+      }
+    }
+  }
+
+  // 規則 3b：黃庭鈞申請時，檢查是否有店正副店長同時請假
+  if (name === FLOAT_MANAGER) {
+    for (const [storeName, pair] of Object.entries(STORE_LEADERS)) {
+      const bothOffDates = myDates.filter(date => {
+        const leaderOff = allReqs.some(r => r.name === pair[0] && r.status !== 'rejected' && dateRange(r.start, r.end).includes(date));
+        const viceOff = allReqs.some(r => r.name === pair[1] && r.status !== 'rejected' && dateRange(r.start, r.end).includes(date));
+        return leaderOff && viceOff;
+      });
+      if (bothOffDates.length > 0) {
+        hardConflicts.push(`❌ <strong>需支援：</strong>${bothOffDates.map(fmtDate).join('、')} ${storeName} ${pair[0]}和${pair[1]}同時請假，需您支援無法休假`);
+      }
+    }
+  }
+
+  // 規則 4：幹部互斥（黃庭鈞、劉家妘、郭家維、黃傑稜、陳宛姍 不可同日休假）
+  if (KEY_MANAGERS.includes(name)) {
+    const otherKeys = KEY_MANAGERS.filter(n => n !== name);
+    let keyConflicts = {};
+    myDates.forEach(date => {
+      const conflicting = allReqs.filter(r =>
+        otherKeys.includes(r.name) &&
+        r.status !== 'rejected' &&
+        dateRange(r.start, r.end).includes(date)
+      );
+      if (conflicting.length > 0) {
+        keyConflicts[fmtDate(date)] = [...new Set(conflicting.map(r => r.name))];
+      }
+    });
+    const keyDays = Object.keys(keyConflicts);
+    if (keyDays.length > 0) {
+      const detail = keyDays.map(d => `${d}：${keyConflicts[d].join('、')}`).join('；');
+      hardConflicts.push(`❌ <strong>幹部衝突：</strong>${detail} 已請假，幹部不可同日休假`);
+    }
+  }
+
+  // 同日其他人資訊（僅提示）
+  let otherLeaves = {};
+  myDates.forEach(date => {
+    const others = allReqs.filter(r =>
+      r.name !== name &&
+      r.status !== 'rejected' &&
+      dateRange(r.start, r.end).includes(date)
+    );
+    if (others.length > 0) {
+      otherLeaves[fmtDate(date)] = [...new Set(others.map(r => r.name + '(' + r.store + ')'))];
+    }
+  });
+
+  return { hardConflicts, softInfos, otherLeaves };
+}
+
+function checkConflict() {
+  const name = document.getElementById('emp-name').value;
+  const store = document.getElementById('emp-store').value;
+  const start = document.getElementById('leave-start').value;
+  const end = document.getElementById('leave-end').value;
+  const cbox = document.getElementById('conflict-box');
+  const obox = document.getElementById('ok-box');
+  cbox.classList.remove('show');
+  obox.classList.remove('show');
+
+  if (!name || !store || !start || !end) return;
+  if (new Date(end) < new Date(start)) {
+    cbox.textContent = '⚠️ 結束日期不能早於開始日期';
+    cbox.classList.add('show'); return;
+  }
+
+  const days = dateDiff(start, end);
+  const { hardConflicts, softInfos, otherLeaves } = getConflicts(name, store, start, end);
+
+  const otherDays = Object.keys(otherLeaves);
+  let infoText = '';
+  if (softInfos.length > 0) {
+    infoText += '<br>' + softInfos.map(s => `<span style="font-size:12px;color:var(--accent2);">${s}</span>`).join('<br>');
+  }
+  if (otherDays.length > 0) {
+    const detail = otherDays.map(d => `${d}：${otherLeaves[d].join('、')}`).join('；');
+    infoText += `<br><span style="font-size:12px;color:var(--text2);">ℹ️ 同日已有人申請：${detail}</span>`;
+  }
+
+  if (hardConflicts.length > 0) {
+    cbox.innerHTML = hardConflicts.join('<br><br>');
+    cbox.classList.add('show');
+    cbox.dataset.blocked = 'true';
+  } else {
+    obox.innerHTML = `✅ 共 <strong>${days}</strong> 天，無衝突，可以提交申請。${infoText}`;
+    obox.classList.add('show');
+    cbox.dataset.blocked = 'false';
+  }
+}
+
+// =====================================================
+// 提交申請
+// =====================================================
+function submitRequest() {
+  const name = document.getElementById('emp-name').value;
+  const store = document.getElementById('emp-store').value;
+  const start = document.getElementById('leave-start').value;
+  const end = document.getElementById('leave-end').value;
+  const type = document.getElementById('leave-type').value;
+  const reason = document.getElementById('leave-reason').value;
+
+  if (!name || !store || !start || !end) {
+    showToast('請填寫所有必填欄位', 'error'); return;
+  }
+  if (new Date(end) < new Date(start)) {
+    showToast('結束日期不能早於開始日期', 'error'); return;
+  }
+
+  // 提交前再次驗證（使用統一規則）
+  const { hardConflicts } = getConflicts(name, store, start, end);
+  if (hardConflicts.length > 0) {
+    showToast(hardConflicts[0].replace(/<[^>]*>/g, ''), 'error');
+    return;
+  }
+
+  // 防止連點
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '提交中...';
+
+  const newReq = {
+    id: Date.now(),
+    name, store, start, end, type, reason,
+    days: dateDiff(start, end),
+    status: 'pending',
+    submitTime: new Date().toLocaleString('zh-TW')
+  };
+
+  addRequest(newReq);
+  clearForm();
+  showToast('申請已提交，等待審核中', 'success');
+
+  setTimeout(() => {
+    btn.disabled = false;
+    btn.textContent = '提交申請';
+  }, 1500);
+}
+
+function clearForm() {
+  ['emp-name','emp-store','leave-start','leave-end','leave-type','leave-reason'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el.tagName === 'SELECT') el.selectedIndex = 0;
+    else el.value = '';
+  });
+  document.getElementById('conflict-box').classList.remove('show');
+  document.getElementById('ok-box').classList.remove('show');
+}
+
+// =====================================================
+// 渲染：我的申請
+// =====================================================
+function renderMyRequests() {
+  const container = document.getElementById('my-requests');
+  const reqs = getRequests();
+  if (reqs.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">尚無申請記錄</div></div>';
+    return;
+  }
+  container.innerHTML = reqs.map(r => `
+    <div class="request-item ${r.status}">
+      <div class="req-header">
+        <div class="req-info">
+          <div class="req-name">${r.name}</div>
+          <div class="req-meta">
+            <span class="req-tag tag-store">${r.store}</span>
+            <span class="req-tag tag-days">${fmtDate(r.start)} ~ ${fmtDate(r.end)}（${r.days}天）</span>
+            <span class="req-tag tag-reason">${r.type}${r.reason ? '・'+r.reason : ''}</span>
+          </div>
+          <div style="font-size:11px; color:var(--text3); margin-top:6px;">提交：${r.submitTime}</div>
+        </div>
+        <span class="status-badge badge-${r.status}">${r.status==='pending'?'待審核':r.status==='approved'?'✓ 已核准':'✗ 已拒絕'}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+// =====================================================
+// 渲染：審核管理
+// =====================================================
+function renderManage() {
+  const reqs = getRequests();
+  const pending = reqs.filter(r => r.status === 'pending').length;
+  const approved = reqs.filter(r => r.status === 'approved').length;
+  const rejected = reqs.filter(r => r.status === 'rejected').length;
+  document.getElementById('stat-pending').textContent = pending;
+  document.getElementById('stat-approved').textContent = approved;
+  document.getElementById('stat-rejected').textContent = rejected;
+
+  const notice = document.getElementById('admin-notice');
+  notice.style.display = currentRole !== 'admin' ? 'block' : 'none';
+
+  const container = document.getElementById('all-requests');
+  if (reqs.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">尚無任何申請</div></div>';
+    return;
+  }
+
+  container.innerHTML = reqs.map(r => {
+    const actionBtns = currentRole === 'admin' && r.status === 'pending' ? `
+      <div class="req-actions">
+        <button class="btn btn-approve btn-sm" onclick="updateRequestStatus(${r.id},'approved')">✓ 核准</button>
+        <button class="btn btn-danger btn-sm" onclick="updateRequestStatus(${r.id},'rejected')">✗ 拒絕</button>
+      </div>` : '';
+
+    let conflictWarn = '';
+    if (currentRole === 'admin' && r.status === 'pending') {
+      const { hardConflicts, softInfos } = getConflicts(r.name, r.store, r.start, r.end);
+      // 排除「重複申請」（因為是自己跟自己比，pending 狀態會自衝）
+      const realConflicts = hardConflicts.filter(c => !c.includes('重複申請'));
+      if (realConflicts.length > 0) {
+        conflictWarn = `<div class="conflict-warn">${realConflicts.map(c => '⚠️ ' + c.replace(/<[^>]*>/g, '')).join('<br>')}</div>`;
+      } else if (softInfos.length > 0) {
+        conflictWarn = `<div class="conflict-warn" style="background:rgba(58,107,138,0.07);border-color:rgba(58,107,138,0.2);color:var(--accent2);">${softInfos.join('<br>')}</div>`;
+      }
+    }
+
+    return `
+      <div class="request-item ${r.status}">
+        <div class="req-header">
+          <div class="req-info">
+            <div class="req-name">${r.name}</div>
+            <div class="req-meta">
+              <span class="req-tag tag-store">${r.store}</span>
+              <span class="req-tag tag-days">${fmtDate(r.start)} ~ ${fmtDate(r.end)}（${r.days}天）</span>
+              <span class="req-tag tag-reason">${r.type}${r.reason ? '・'+r.reason : ''}</span>
+            </div>
+            <div style="font-size:11px; color:var(--text3); margin-top:6px;">提交：${r.submitTime}</div>
+          </div>
+          <span class="status-badge badge-${r.status}">${r.status==='pending'?'待審核':r.status==='approved'?'✓ 已核准':'✗ 已拒絕'}</span>
+        </div>
+        ${conflictWarn}
+        ${actionBtns}
+      </div>`;
+  }).join('');
+}
+
+// =====================================================
+// 渲染：日曆
+// =====================================================
+function renderCalendar() {
+  const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  document.getElementById('cal-month-label').textContent = `${calYear} 年 ${monthNames[calMonth]}`;
+
+  const reqs = getRequests().filter(r => r.status === 'approved');
+  const grid = document.getElementById('cal-grid');
+
+  const dows = ['日','一','二','三','四','五','六'];
+  let html = dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
+
+  const firstDay = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  const prevDays = new Date(calYear, calMonth, 0).getDate();
+  const today = new Date().toISOString().slice(0,10);
+
+  for(let i = firstDay-1; i >= 0; i--) {
+    html += `<div class="cal-day other-month"><div class="day-num">${prevDays-i}</div></div>`;
+  }
+
+  for(let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isToday = dateStr === today;
+    const dow = new Date(calYear, calMonth, d).getDay();
+    const isWeekend = dow === 0 || dow === 6;
+    const leaves = reqs.filter(r => dateRange(r.start, r.end).includes(dateStr));
+
+    const chipsHtml = leaves.slice(0,3).map(r =>
+      `<div class="day-leave-chip ${EMP_COLORS[r.name] || 'c0'}" title="${r.name} ${r.type}">${r.name}</div>`
+    ).join('');
+    const more = leaves.length > 3 ? `<div style="font-size:9px;color:var(--text3)">+${leaves.length-3}人</div>` : '';
+
+    html += `<div class="cal-day${isToday?' today':''}${isWeekend?' weekend':''}">
+      <div class="day-num">${d}</div>
+      <div class="day-leaves">${chipsHtml}${more}</div>
+    </div>`;
+  }
+
+  const totalCells = firstDay + daysInMonth;
+  const remaining = (7 - totalCells % 7) % 7;
+  for(let d = 1; d <= remaining; d++) {
+    html += `<div class="cal-day other-month"><div class="day-num">${d}</div></div>`;
+  }
+
+  grid.innerHTML = html;
+
+  const legendList = document.getElementById('legend-list');
+  const usedEmps = [...new Set(reqs.map(r => r.name))];
+  legendList.innerHTML = usedEmps.length === 0
+    ? '<div style="font-size:13px;color:var(--text3)">本月尚無核准的休假</div>'
+    : usedEmps.map(e => `<span class="day-leave-chip ${EMP_COLORS[e]||'c0'}" style="padding:3px 10px;">${e}</span>`).join('');
+}
+
+function changeMonth(dir) {
+  calMonth += dir;
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  renderCalendar();
+}
+
+// =====================================================
+// Toast
+// =====================================================
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// =====================================================
+// 初始化
+// =====================================================
+const today = new Date();
+document.getElementById('leave-start').value = today.toISOString().slice(0,10);
+document.getElementById('leave-end').value = today.toISOString().slice(0,10);
+
+// 啟動 Firebase 即時同步
+initFirebaseListener();
+</script>
+</body>
+</html>
