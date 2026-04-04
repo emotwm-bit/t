@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4月份業績目標查詢</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: #f0f4f8;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+/* ── Header ── */
+.hero {
+  background: linear-gradient(135deg, #2d4a8a 0%, #3d6cb5 60%, #4a7fd4 100%);
+  padding: 36px 20px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 30%, rgba(255,255,255,0.08) 0%, transparent 60%);
+}
+.hero-icon { font-size: 36px; margin-bottom: 8px; }
+.hero h1 {
+  color: #fff;
+  font-size: clamp(20px, 5vw, 28px);
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.hero p {
+  color: rgba(255,255,255,0.75);
+  font-size: 14px;
+}
+
+/* ── Selector Card ── */
+.selector-card {
+  background: #fff;
+  margin: -1px 0 0;
+  padding: 24px 20px;
+  border-bottom: 1px solid #e5eaf2;
+}
+.selector-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 480px) { .selector-inner { grid-template-columns: 1fr; } }
+
+.field-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: inherit;
+  color: #1e293b;
+  background: #fff;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+select:focus { outline: none; border-color: #3d6cb5; }
+
+/* ── Main content ── */
+.content {
+  max-width: 760px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+/* ── Empty state ── */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #94a3b8;
+}
+.empty-state .big-icon { font-size: 52px; margin-bottom: 12px; }
+.empty-state p { font-size: 15px; }
+
+/* ── Profile card ── */
+.profile-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(45,74,138,0.08);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.avatar {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2d4a8a, #4a7fd4);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.profile-info h2 {
+  font-size: 20px;
+  font-weight: 900;
+  color: #1e293b;
+  margin-bottom: 6px;
+}
+.badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.badge-store { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.badge-supervisor { background: #fdf4ff; color: #7e22ce; border: 1px solid #e9d5ff; }
+
+/* ── Period buttons ── */
+.period-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.period-btn {
+  border-radius: 12px;
+  padding: 14px 10px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #fff;
+}
+.period-btn .period-label { font-size: 17px; margin-bottom: 3px; }
+.period-btn .period-date { font-size: 12px; opacity: 0.88; }
+.btn-first { background: linear-gradient(135deg, #22c55e, #16a34a); }
+.btn-second { background: linear-gradient(135deg, #f97316, #ea580c); }
+
+/* ── Section title ── */
+.section-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 4px;
+  border-left: 3px solid #3d6cb5;
+  padding-left: 10px;
+}
+
+/* ── Metric grid ── */
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+@media (min-width: 560px) { .metric-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.metric-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 12px;
+  box-shadow: 0 2px 10px rgba(45,74,138,0.07);
+}
+.metric-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.metric-values {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.metric-val {
+  border-radius: 8px;
+  padding: 6px 4px;
+  text-align: center;
+}
+.val-label {
+  font-size: 10px;
+  font-weight: 600;
+  margin-bottom: 3px;
+  opacity: 0.85;
+}
+.val-num {
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+}
+.val-total { background: #1e3a6e; color: #fff; }
+.val-first { background: #22c55e; color: #fff; }
+.val-second { background: #f97316; color: #fff; }
+
+/* small numbers for 配件 */
+.val-num.small { font-size: 13px; }
+
+/* ── Supervisor note ── */
+.supervisor-note {
+  background: #fdf4ff;
+  border: 1px solid #e9d5ff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #7e22ce;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Footer ── */
+.page-footer {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 12px;
+  margin-top: 32px;
+  letter-spacing: 1px;
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-icon">📊</div>
+  <h1>4月份業績目標查詢</h1>
+  <p>選擇店點和姓名查看目標</p>
+</div>
+
+<div class="selector-card">
+  <div class="selector-inner">
+    <div>
+      <div class="field-label">🏪 店點</div>
+      <select id="storeSelect" onchange="onStoreChange()">
+        <option value="">請選擇店點</option>
+        <option value="鼎山店">鼎山店</option>
+        <option value="陽明店">陽明店</option>
+        <option value="後昌店">後昌店</option>
+        <option value="仁雄店">仁雄店</option>
+        <option value="凱旋店">凱旋店</option>
+        <option value="區督導">區督導</option>
+      </select>
+    </div>
+    <div>
+      <div class="field-label">👤 員工</div>
+      <select id="empSelect" onchange="onEmpChange()">
+        <option value="">請先選擇店點</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="empty-state" id="emptyState">
+    <div class="big-icon">🎯</div>
+    <p>請選擇店點和員工姓名<br>即可查看個人業績目標</p>
+  </div>
+  <div id="resultArea" style="display:none;"></div>
+</div>
+
+<div class="page-footer">倚盟電訊 ｜ 2026年4月 ｜ 上半場 52% / 下半場 48%</div>
+
+<script>
+const DATA = {
+  "鼎山店": {
+    "劉家妘": { aq:[19,19], rt:[159,145], rtc:[29,26], up:[11,10], sp:[10,9], rt999:[13,11], rt1399:[8,7], dev:[25,22], g5:[9,7], ins:[11,9], acc:[8452,7801] },
+    "黃子珊": { aq:[19,19], rt:[134,123], rtc:[25,22], up:[10,8], sp:[9,7], rt999:[11,10], rt1399:[7,6], dev:[21,19], g5:[7,6], ins:[9,8], acc:[8452,7801] },
+    "陳亭安": { aq:[19,19], rt:[156,144], rtc:[29,25], up:[11,10], sp:[10,9], rt999:[13,11], rt1399:[8,7], dev:[24,22], g5:[9,7], ins:[10,9], acc:[8452,7801] },
+    "涂彥州": { aq:[19,19], rt:[104,95], rtc:[19,17], up:[8,6], sp:[7,6], rt999:[9,7], rt1399:[6,4], dev:[17,14], g5:[6,4], ins:[7,6], acc:[8452,7801] }
+  },
+  "陽明店": {
+    "方若帆": { aq:[19,19], rt:[116,106], rtc:[21,19], up:[8,7], sp:[7,5], rt999:[8,7], rt1399:[6,4], dev:[19,17], g5:[7,6], ins:[8,7], acc:[8452,7801] },
+    "劉芳廷": { aq:[19,19], rt:[118,108], rtc:[22,19], up:[9,7], sp:[7,6], rt999:[9,7], rt1399:[6,4], dev:[20,17], g5:[7,6], ins:[9,7], acc:[8452,7801] },
+    "林瑞獻": { aq:[19,19], rt:[82,75], rtc:[16,13], up:[6,5], sp:[5,4], rt999:[6,5], rt1399:[4,3], dev:[14,12], g5:[5,4], ins:[6,5], acc:[8452,7801] }
+  },
+  "後昌店": {
+    "郭家維": { aq:[19,19], rt:[125,114], rtc:[23,20], up:[9,8], sp:[8,7], rt999:[10,8], rt1399:[7,5], dev:[19,17], g5:[8,6], ins:[8,7], acc:[8452,7801] },
+    "邱雨蔚": { aq:[19,19], rt:[140,128], rtc:[26,23], up:[10,9], sp:[9,8], rt999:[11,9], rt1399:[7,6], dev:[21,19], g5:[8,7], ins:[9,8], acc:[8452,7801] },
+    "秦曼芯": { aq:[19,19], rt:[110,100], rtc:[20,18], up:[8,6], sp:[7,6], rt999:[9,7], rt1399:[6,4], dev:[17,14], g5:[7,5], ins:[7,6], acc:[8452,7801] }
+  },
+  "仁雄店": {
+    "黃傑稜": { aq:[19,19], rt:[163,149], rtc:[30,27], up:[12,10], sp:[10,9], rt999:[13,12], rt1399:[9,7], dev:[26,23], g5:[9,8], ins:[11,10], acc:[8452,7801] },
+    "黃閔聖": { aq:[19,19], rt:[153,140], rtc:[28,25], up:[11,9], sp:[10,8], rt999:[12,11], rt1399:[8,7], dev:[24,22], g5:[9,7], ins:[11,9], acc:[8452,7801] },
+    "郭紳鴻": { aq:[19,19], rt:[142,131], rtc:[26,24], up:[10,9], sp:[9,8], rt999:[12,10], rt1399:[8,6], dev:[23,20], g5:[8,7], ins:[10,8], acc:[8452,7801] },
+    "蔡冠廷": { aq:[19,19], rt:[107,97], rtc:[20,17], up:[8,6], sp:[7,5], rt999:[9,7], rt1399:[6,4], dev:[17,15], g5:[6,5], ins:[8,6], acc:[8452,7801] }
+  },
+  "凱旋店": {
+    "陳宛姍": { aq:[19,19], rt:[141,130], rtc:[26,23], up:[10,9], sp:[8,7], rt999:[10,9], rt1399:[6,5], dev:[22,20], g5:[8,6], ins:[10,8], acc:[8452,7801] },
+    "石佳穎": { aq:[19,19], rt:[125,114], rtc:[23,20], up:[9,8], sp:[7,6], rt999:[9,8], rt1399:[6,4], dev:[20,17], g5:[7,6], ins:[9,7], acc:[8452,7801] },
+    "高琦茗": { aq:[19,19], rt:[117,107], rtc:[22,19], up:[8,7], sp:[7,5], rt999:[9,7], rt1399:[5,4], dev:[18,16], g5:[7,5], ins:[8,7], acc:[8452,7801] },
+    "林庭逸": { aq:[15,15], rt:[82,75], rtc:[16,13], up:[6,5], sp:[5,4], rt999:[6,5], rt1399:[4,2], dev:[13,11], g5:[5,3], ins:[6,4], acc:[6761,6241] }
+  },
+  "區督導": {
+    "黃庭鈞": { aq:[19,19], rt:[111,101], rtc:[21,18], up:[8,7], sp:[7,5], rt999:[8,7], rt1399:[6,4], dev:[18,15], g5:[7,5], ins:[8,6], acc:[4226,3901] }
+  }
+};
+
+const METRICS = [
+  { key:'aq',     label:'AQ點數',  icon:'🎯' },
+  { key:'rt',     label:'RT點數',  icon:'📋' },
+  { key:'rtc',    label:'RT件數',  icon:'📦' },
+  { key:'up',     label:'升轉',    icon:'⬆️' },
+  { key:'sp',     label:'特維',    icon:'🔧' },
+  { key:'rt999',  label:'RT999',   icon:'💎' },
+  { key:'rt1399', label:'RT1399',  icon:'💠' },
+  { key:'dev',    label:'Device',  icon:'📱' },
+  { key:'g5',     label:'5G',      icon:'📶' },
+  { key:'ins',    label:'保險',    icon:'🛡️' },
+  { key:'acc',    label:'配件',    icon:'🎒' }
+];
+
+function onStoreChange() {
+  const store = document.getElementById('storeSelect').value;
+  const empSel = document.getElementById('empSelect');
+  empSel.innerHTML = '<option value="">請選擇員工</option>';
+  if (store && DATA[store]) {
+    Object.keys(DATA[store]).forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name; opt.textContent = name;
+      empSel.appendChild(opt);
+    });
+  }
+  clearResult();
+}
+
+function onEmpChange() {
+  const store = document.getElementById('storeSelect').value;
+  const emp   = document.getElementById('empSelect').value;
+  if (!store || !emp) { clearResult(); return; }
+  renderResult(store, emp);
+}
+
+function clearResult() {
+  document.getElementById('emptyState').style.display = '';
+  document.getElementById('resultArea').style.display = 'none';
+  document.getElementById('resultArea').innerHTML = '';
+}
+
+function renderResult(store, emp) {
+  const d = DATA[store][emp];
+  const isSupervisor = (store === '區督導');
+  document.getElementById('emptyState').style.display = 'none';
+  const area = document.getElementById('resultArea');
+  area.style.display = '';
+
+  let html = `
+    <div class="profile-card">
+      <div class="avatar">${emp[0]}</div>
+      <div class="profile-info">
+        <h2>${emp}</h2>
+        <div class="badges">
+          <span class="badge badge-store">🏪 ${isSupervisor ? '區督導' : store}</span>
+          ${isSupervisor ? '<span class="badge badge-supervisor">⭐ 區督導</span>' : ''}
+        </div>
+      </div>
+    </div>`;
+
+  if (isSupervisor) {
+    html += `<div class="supervisor-note">👑 區督導配額，配件目標以區域標準計算</div>`;
+  }
+
+  html += `
+    <div class="period-row">
+      <div class="period-btn btn-first">
+        <div class="period-label">🟢 上半場</div>
+        <div class="period-date">3/27 - 4/14（52%）</div>
+      </div>
+      <div class="period-btn btn-second">
+        <div class="period-label">🟠 下半場</div>
+        <div class="period-date">4/15 - 4/29（48%）</div>
+      </div>
+    </div>
+
+    <div class="section-title">📈 業績目標</div>
+    <div class="metric-grid">`;
+
+  METRICS.forEach(m => {
+    const first  = d[m.key][0];
+    const second = d[m.key][1];
+    const total  = first + second;
+    const isLarge = total >= 1000;
+    html += `
+      <div class="metric-card">
+        <div class="metric-title">${m.icon} ${m.label}</div>
+        <div class="metric-values">
+          <div class="metric-val val-total">
+            <div class="val-label">總目標</div>
+            <div class="val-num${isLarge?' small':''}">${total.toLocaleString()}</div>
+          </div>
+          <div class="metric-val val-first">
+            <div class="val-label">上半場</div>
+            <div class="val-num${isLarge?' small':''}">${first.toLocaleString()}</div>
+          </div>
+          <div class="metric-val val-second">
+            <div class="val-label">下半場</div>
+            <div class="val-num${isLarge?' small':''}">${second.toLocaleString()}</div>
+          </div>
+        </div>
+      </div>`;
+  });
+
+  html += `</div>`;
+  area.innerHTML = html;
+}
+</script>
+</body>
+</html>
