@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>4月份業績目標查詢</title>
+<title>5月份業績目標查詢</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -101,34 +101,132 @@ select:focus { outline: none; border-color: #3d6cb5; }
 .empty-state .big-icon { font-size: 52px; margin-bottom: 12px; }
 .empty-state p { font-size: 15px; }
 
-/* ── Profile card ── */
+/* ── Profile card (重新設計：尊榮感 + 戰力卡) ── */
 .profile-card {
-  background: #fff;
-  border-radius: 16px;
-  padding: 20px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 20px;
+  padding: 22px 20px;
   margin-bottom: 16px;
-  box-shadow: 0 2px 12px rgba(45,74,138,0.08);
+  box-shadow: 0 4px 20px rgba(45,74,138,0.10);
+  position: relative;
+  overflow: hidden;
+}
+.profile-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #2d4a8a 0%, #3d6cb5 50%, #4a7fd4 100%);
+}
+.profile-main {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 .avatar {
-  width: 56px; height: 56px;
+  width: 64px; height: 64px;
   border-radius: 50%;
   background: linear-gradient(135deg, #2d4a8a, #4a7fd4);
   color: #fff;
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 900;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(45,74,138,0.28);
+  border: 3px solid #fff;
+  outline: 1px solid rgba(45,74,138,0.15);
 }
-.profile-info h2 {
-  font-size: 20px;
+.profile-info {
+  flex: 1;
+  min-width: 0;
+}
+.profile-name {
+  font-size: 24px;
   font-weight: 900;
-  color: #1e293b;
-  margin-bottom: 6px;
+  color: #0f172a;
+  letter-spacing: 2px;
+  line-height: 1.1;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+.profile-name::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 32px;
+  height: 3px;
+  background: linear-gradient(90deg, #3d6cb5 0%, #4a7fd4 60%, transparent 100%);
+  border-radius: 2px;
+}
+
+/* 戰力等級卡（尊榮感大徽章） */
+.power-card {
+  width: 64px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  padding: 12px 6px 10px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  color: #fff;
+}
+.power-card-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: rgba(255,255,255,0.45);
+}
+.power-card-level {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  line-height: 1;
+  margin-top: 4px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  font-family: 'SF Pro Display', -apple-system, sans-serif;
+}
+.power-card-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-top: 6px;
+  opacity: 0.95;
+}
+.power-card-stars {
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-top: 4px;
+  color: rgba(255,255,255,0.95);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* 戰力等級配色 */
+.power-card-l1 {
+  background: linear-gradient(135deg, #94a3b8 0%, #64748b 60%, #475569 100%);
+  border: 2px solid #475569;
+}
+.power-card-l2 {
+  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 60%, #1d4ed8 100%);
+  border: 2px solid #1e40af;
+}
+.power-card-l3 {
+  background: linear-gradient(135deg, #c084fc 0%, #9333ea 50%, #7c3aed 100%);
+  border: 2px solid #6d28d9;
+}
+.power-card-l4 {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 40%, #dc2626 100%);
+  border: 2px solid #b91c1c;
+  animation: l4-pulse 2.4s ease-in-out infinite;
+}
+@keyframes l4-pulse {
+  0%, 100% { box-shadow: 0 4px 14px rgba(220,38,38,0.35); }
+  50% { box-shadow: 0 4px 20px rgba(220,38,38,0.65); }
 }
 .badges { display: flex; gap: 6px; flex-wrap: wrap; }
 .badge {
@@ -148,20 +246,76 @@ select:focus { outline: none; border-color: #3d6cb5; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 .period-btn {
-  border-radius: 12px;
-  padding: 14px 10px;
+  border-radius: 14px;
+  padding: 14px 12px;
   text-align: center;
-  font-weight: 700;
-  font-size: 15px;
   color: #fff;
+  position: relative;
+  overflow: hidden;
 }
-.period-btn .period-label { font-size: 17px; margin-bottom: 3px; }
-.period-btn .period-date { font-size: 12px; opacity: 0.88; }
-.btn-first { background: linear-gradient(135deg, #22c55e, #16a34a); }
-.btn-second { background: linear-gradient(135deg, #f97316, #ea580c); }
+.period-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 60px;
+  background: radial-gradient(circle at 100% 50%, rgba(255,255,255,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.period-btn .period-label {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+.period-btn .period-date {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.95;
+  margin-bottom: 8px;
+}
+.period-btn .period-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.22);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.period-btn .period-meta .dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.7);
+}
+.btn-first  { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); }
+.btn-second { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
+
+/* ── Cutoff banner ── */
+.cutoff-banner {
+  background: linear-gradient(90deg, #eff6ff 0%, #fef3c7 50%, #ffedd5 100%);
+  border: 1px solid #fde68a;
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #78350f;
+  margin-bottom: 20px;
+}
+.cutoff-banner .cutoff-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245,158,11,0.25);
+}
 
 /* ── Section title ── */
 .section-title {
@@ -172,7 +326,6 @@ select:focus { outline: none; border-color: #3d6cb5; }
   display: flex;
   align-items: center;
   gap: 6px;
-  padding-left: 4px;
   border-left: 3px solid #3d6cb5;
   padding-left: 10px;
 }
@@ -222,11 +375,9 @@ select:focus { outline: none; border-color: #3d6cb5; }
   font-weight: 900;
   line-height: 1;
 }
-.val-total { background: #1e3a6e; color: #fff; }
-.val-first { background: #22c55e; color: #fff; }
+.val-total  { background: #1e3a6e; color: #fff; }
+.val-first  { background: #22c55e; color: #fff; }
 .val-second { background: #f97316; color: #fff; }
-
-/* small numbers for 配件 */
 .val-num.small { font-size: 13px; }
 
 /* ── Supervisor note ── */
@@ -251,13 +402,213 @@ select:focus { outline: none; border-color: #3d6cb5; }
   margin-top: 32px;
   letter-spacing: 1px;
 }
+
+/* ── Period overview (empty state) ── */
+.period-overview {
+  max-width: 480px;
+  margin: 36px auto 0;
+  padding: 20px 18px 18px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(45,74,138,0.08);
+}
+.period-overview-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 14px;
+  letter-spacing: 0.5px;
+}
+.period-overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.period-overview-card {
+  border-radius: 12px;
+  padding: 14px 10px;
+  color: #fff;
+  text-align: center;
+}
+.po-first  { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); }
+.po-second { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
+.po-label {
+  font-size: 14px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.po-date {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.95;
+  margin-bottom: 8px;
+}
+.po-days {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(255,255,255,0.22);
+  padding: 3px 12px;
+  border-radius: 999px;
+}
+.period-overview-cutoff {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #78350f;
+  background: linear-gradient(90deg, #fef3c7 0%, #ffedd5 100%);
+  border-radius: 10px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.po-cutoff-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245,158,11,0.25);
+}
+
+
+/* ── Rank badges ── */
+.badge-rank {
+  font-weight: 800;
+  padding: 4px 12px;
+  font-size: 13px;
+}
+.rank-gold-leader { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+.rank-platinum    { background: #ede9fe; color: #5b21b6; border: 1px solid #c4b5fd; }
+.rank-gold        { background: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
+.rank-silver      { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+.rank-bronze      { background: #fed7aa; color: #9a3412; border: 1px solid #fdba74; }
+.rank-stone       { background: #e7e5e4; color: #44403c; border: 1px solid #d6d3d1; }
+.rank-rookie      { background: #ecfccb; color: #3f6212; border: 1px solid #bef264; }
+
+/* ── Cheer tag (鼓勵語) ── */
+.cheer-tag {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+}
+.cheer-gold-leader { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.cheer-platinum    { background: linear-gradient(135deg, #a78bfa, #7c3aed); }
+.cheer-gold        { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+.cheer-silver      { background: linear-gradient(135deg, #94a3b8, #64748b); }
+.cheer-bronze      { background: linear-gradient(135deg, #fb923c, #ea580c); }
+.cheer-stone       { background: linear-gradient(135deg, #38bdf8, #0284c7); }
+.cheer-rookie      { background: linear-gradient(135deg, #84cc16, #65a30d); }
+
+/* profile-info layout 微調 */
+.profile-info {
+  flex: 1;
+  min-width: 0;
+}
+.profile-info .badges {
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+
+/* ── Rank/Power 雙卡組合 ── */
+.rank-power-stack {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.rank-card {
+  width: 60px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  padding: 10px 4px 9px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  color: #fff;
+}
+.rank-card-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: rgba(255,255,255,0.45);
+}
+.rank-card-icon {
+  font-size: 18px;
+  line-height: 1;
+  margin-top: 2px;
+  margin-bottom: 4px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25));
+}
+.rank-card-name {
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.rank-card-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-top: 6px;
+  opacity: 0.92;
+}
+
+/* 各職級配色 */
+.rank-card-gold-leader {
+  background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 50%, #b45309 100%);
+  border: 2px solid #92400e;
+}
+.rank-card-platinum {
+  background: linear-gradient(135deg, #c4b5fd 0%, #8b5cf6 50%, #6d28d9 100%);
+  border: 2px solid #5b21b6;
+}
+.rank-card-gold {
+  background: linear-gradient(135deg, #fde68a 0%, #eab308 50%, #a16207 100%);
+  border: 2px solid #854d0e;
+}
+.rank-card-silver {
+  background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 50%, #475569 100%);
+  border: 2px solid #334155;
+}
+.rank-card-bronze {
+  background: linear-gradient(135deg, #fdba74 0%, #ea580c 50%, #9a3412 100%);
+  border: 2px solid #7c2d12;
+}
+.rank-card-stone {
+  background: linear-gradient(135deg, #a8a29e 0%, #78716c 50%, #44403c 100%);
+  border: 2px solid #292524;
+}
+.rank-card-rookie {
+  background: linear-gradient(135deg, #d9f99d 0%, #84cc16 50%, #4d7c0f 100%);
+  border: 2px solid #365314;
+}
+
+/* profile-card 寬度自適應微調 */
+.profile-main {
+  flex-wrap: nowrap;
+}
+@media (max-width: 380px) {
+  .rank-card, .power-card { width: 54px; }
+  .rank-card-name, .power-card-level { font-size: 13px; }
+}
+
 </style>
 </head>
 <body>
 
 <div class="hero">
   <div class="hero-icon">📊</div>
-  <h1>4月份業績目標查詢</h1>
+  <h1>5月份業績目標查詢</h1>
   <p>選擇店點和姓名查看目標</p>
 </div>
 
@@ -288,44 +639,804 @@ select:focus { outline: none; border-color: #3d6cb5; }
   <div class="empty-state" id="emptyState">
     <div class="big-icon">🎯</div>
     <p>請選擇店點和員工姓名<br>即可查看個人業績目標</p>
+
+    <div class="period-overview">
+      <div class="period-overview-title">📅 5月份業績期間</div>
+      <div class="period-overview-grid">
+        <div class="period-overview-card po-first">
+          <div class="po-label">🟢 上半場 60%</div>
+          <div class="po-date">4/29 - 5/14</div>
+          <div class="po-days">16 天</div>
+        </div>
+        <div class="period-overview-card po-second">
+          <div class="po-label">🟠 下半場 40%</div>
+          <div class="po-date">5/15 - 5/29</div>
+          <div class="po-days">15 天</div>
+        </div>
+      </div>
+      <div class="period-overview-cutoff">
+        <span class="po-cutoff-dot"></span>切點：5/14 24:00
+      </div>
+    </div>
   </div>
   <div id="resultArea" style="display:none;"></div>
 </div>
 
-<div class="page-footer">倚盟電訊 ｜ 2026年4月 ｜ 上半場 52% / 下半場 48%</div>
+<div class="page-footer">倚盟電訊 ｜ 2026年5月（4/29 - 5/29）｜ 上半場 60% / 下半場 40%</div>
 
 <script>
 const DATA = {
   "鼎山店": {
-    "劉家妘": { aq:[19,19], rt:[159,145], rtc:[29,26], up:[11,10], sp:[10,9], rt999:[13,11], rt1399:[8,7], dev:[25,22], g5:[9,7], ins:[11,9], acc:[7702,7110] },
-    "黃子珊": { aq:[19,19], rt:[134,123], rtc:[25,22], up:[10,8], sp:[9,7], rt999:[11,10], rt1399:[7,6], dev:[21,19], g5:[7,6], ins:[9,8], acc:[7702,7110] },
-    "陳亭安": { aq:[19,19], rt:[156,144], rtc:[29,25], up:[11,10], sp:[10,9], rt999:[13,11], rt1399:[8,7], dev:[24,22], g5:[9,7], ins:[10,9], acc:[7702,7110] },
-    "涂彥州": { aq:[19,19], rt:[104,95], rtc:[19,17], up:[8,6], sp:[7,6], rt999:[9,7], rt1399:[6,4], dev:[17,14], g5:[6,4], ins:[7,6], acc:[7702,7110] }
+    "劉家妘": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        159,
+        106
+      ],
+      "rtc": [
+        29,
+        19
+      ],
+      "up": [
+        11,
+        7
+      ],
+      "sp": [
+        9,
+        6
+      ],
+      "rt999": [
+        13,
+        8
+      ],
+      "rt1399": [
+        8,
+        5
+      ],
+      "dev": [
+        24,
+        16
+      ],
+      "ins": [
+        10,
+        7
+      ],
+      "rank": "白金級",
+      "power": "L1"
+    },
+    "黃子珊": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        134,
+        90
+      ],
+      "rtc": [
+        25,
+        16
+      ],
+      "up": [
+        10,
+        6
+      ],
+      "sp": [
+        8,
+        5
+      ],
+      "rt999": [
+        11,
+        7
+      ],
+      "rt1399": [
+        7,
+        4
+      ],
+      "dev": [
+        20,
+        14
+      ],
+      "ins": [
+        9,
+        6
+      ],
+      "rank": "銀級",
+      "power": "L1"
+    },
+    "陳亭安": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        157,
+        104
+      ],
+      "rtc": [
+        28,
+        19
+      ],
+      "up": [
+        11,
+        7
+      ],
+      "sp": [
+        9,
+        6
+      ],
+      "rt999": [
+        13,
+        8
+      ],
+      "rt1399": [
+        8,
+        5
+      ],
+      "dev": [
+        24,
+        16
+      ],
+      "ins": [
+        10,
+        7
+      ],
+      "rank": "銅級",
+      "power": "L3"
+    },
+    "涂彥州": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        104,
+        69
+      ],
+      "rtc": [
+        19,
+        13
+      ],
+      "up": [
+        7,
+        5
+      ],
+      "sp": [
+        6,
+        4
+      ],
+      "rt999": [
+        8,
+        6
+      ],
+      "rt1399": [
+        5,
+        4
+      ],
+      "dev": [
+        16,
+        10
+      ],
+      "ins": [
+        7,
+        4
+      ],
+      "rank": "石頭",
+      "power": "L1"
+    }
   },
   "陽明店": {
-    "方若帆": { aq:[19,19], rt:[116,106], rtc:[21,19], up:[8,7], sp:[7,5], rt999:[8,7], rt1399:[6,4], dev:[19,17], g5:[7,6], ins:[8,7], acc:[7702,7110] },
-    "劉芳廷": { aq:[19,19], rt:[118,108], rtc:[22,19], up:[9,7], sp:[7,6], rt999:[9,7], rt1399:[6,4], dev:[20,17], g5:[7,6], ins:[9,7], acc:[7702,7110] },
-    "林瑞獻": { aq:[19,19], rt:[82,75], rtc:[16,13], up:[6,5], sp:[5,4], rt999:[6,5], rt1399:[4,3], dev:[14,12], g5:[5,4], ins:[6,5], acc:[7702,7110] }
+    "方若帆": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        144,
+        96
+      ],
+      "rtc": [
+        26,
+        17
+      ],
+      "up": [
+        10,
+        6
+      ],
+      "sp": [
+        7,
+        4
+      ],
+      "rt999": [
+        11,
+        7
+      ],
+      "rt1399": [
+        7,
+        4
+      ],
+      "dev": [
+        22,
+        15
+      ],
+      "ins": [
+        10,
+        6
+      ],
+      "rank": "金級",
+      "power": "L1"
+    },
+    "劉芳廷": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        146,
+        98
+      ],
+      "rtc": [
+        26,
+        18
+      ],
+      "up": [
+        10,
+        7
+      ],
+      "sp": [
+        7,
+        4
+      ],
+      "rt999": [
+        11,
+        7
+      ],
+      "rt1399": [
+        7,
+        4
+      ],
+      "dev": [
+        22,
+        15
+      ],
+      "ins": [
+        10,
+        6
+      ],
+      "rank": "銀級",
+      "power": "L2"
+    },
+    "林瑞獻": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        102,
+        68
+      ],
+      "rtc": [
+        19,
+        12
+      ],
+      "up": [
+        7,
+        5
+      ],
+      "sp": [
+        5,
+        3
+      ],
+      "rt999": [
+        8,
+        5
+      ],
+      "rt1399": [
+        5,
+        3
+      ],
+      "dev": [
+        16,
+        10
+      ],
+      "ins": [
+        7,
+        4
+      ],
+      "rank": "石頭",
+      "power": "L1"
+    }
   },
   "後昌店": {
-    "郭家維": { aq:[19,19], rt:[125,114], rtc:[23,20], up:[9,8], sp:[8,7], rt999:[10,8], rt1399:[7,5], dev:[19,17], g5:[8,6], ins:[8,7], acc:[7702,7110] },
-    "邱雨蔚": { aq:[19,19], rt:[140,128], rtc:[26,23], up:[10,9], sp:[9,8], rt999:[11,9], rt1399:[7,6], dev:[21,19], g5:[8,7], ins:[9,8], acc:[7702,7110] },
-    "秦曼芯": { aq:[19,19], rt:[110,100], rtc:[20,18], up:[8,6], sp:[7,6], rt999:[9,7], rt1399:[6,4], dev:[17,14], g5:[7,5], ins:[7,6], acc:[7702,7110] }
+    "郭家維": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        143,
+        95
+      ],
+      "rtc": [
+        26,
+        17
+      ],
+      "up": [
+        10,
+        6
+      ],
+      "sp": [
+        7,
+        5
+      ],
+      "rt999": [
+        11,
+        8
+      ],
+      "rt1399": [
+        7,
+        5
+      ],
+      "dev": [
+        20,
+        14
+      ],
+      "ins": [
+        9,
+        6
+      ],
+      "rank": "銅級",
+      "power": "L2"
+    },
+    "邱雨蔚": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        160,
+        107
+      ],
+      "rtc": [
+        29,
+        20
+      ],
+      "up": [
+        11,
+        8
+      ],
+      "sp": [
+        8,
+        6
+      ],
+      "rt999": [
+        13,
+        8
+      ],
+      "rt1399": [
+        8,
+        6
+      ],
+      "dev": [
+        23,
+        16
+      ],
+      "ins": [
+        10,
+        6
+      ],
+      "rank": "銅級",
+      "power": "L3"
+    },
+    "秦曼芯": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        125,
+        83
+      ],
+      "rtc": [
+        23,
+        15
+      ],
+      "up": [
+        8,
+        6
+      ],
+      "sp": [
+        7,
+        4
+      ],
+      "rt999": [
+        10,
+        6
+      ],
+      "rt1399": [
+        7,
+        4
+      ],
+      "dev": [
+        18,
+        12
+      ],
+      "ins": [
+        8,
+        5
+      ],
+      "rank": "石頭",
+      "power": "L2"
+    }
   },
   "仁雄店": {
-    "黃傑稜": { aq:[19,19], rt:[163,149], rtc:[30,27], up:[12,10], sp:[10,9], rt999:[13,12], rt1399:[9,7], dev:[26,23], g5:[9,8], ins:[11,10], acc:[7702,7110] },
-    "黃閔聖": { aq:[19,19], rt:[153,140], rtc:[28,25], up:[11,9], sp:[10,8], rt999:[12,11], rt1399:[8,7], dev:[24,22], g5:[9,7], ins:[11,9], acc:[7702,7110] },
-    "郭紳鴻": { aq:[19,19], rt:[142,131], rtc:[26,24], up:[10,9], sp:[9,8], rt999:[12,10], rt1399:[8,6], dev:[23,20], g5:[8,7], ins:[10,8], acc:[7702,7110] },
-    "蔡冠廷": { aq:[19,19], rt:[107,97], rtc:[20,17], up:[8,6], sp:[7,5], rt999:[9,7], rt1399:[6,4], dev:[17,15], g5:[6,5], ins:[8,6], acc:[7702,7110] }
+    "黃傑稜": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        165,
+        110
+      ],
+      "rtc": [
+        30,
+        20
+      ],
+      "up": [
+        11,
+        8
+      ],
+      "sp": [
+        8,
+        6
+      ],
+      "rt999": [
+        13,
+        9
+      ],
+      "rt1399": [
+        8,
+        6
+      ],
+      "dev": [
+        25,
+        17
+      ],
+      "ins": [
+        11,
+        7
+      ],
+      "rank": "金級",
+      "power": "L1"
+    },
+    "黃閔聖": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        167,
+        112
+      ],
+      "rtc": [
+        31,
+        20
+      ],
+      "up": [
+        11,
+        8
+      ],
+      "sp": [
+        9,
+        6
+      ],
+      "rt999": [
+        13,
+        9
+      ],
+      "rt1399": [
+        8,
+        6
+      ],
+      "dev": [
+        26,
+        17
+      ],
+      "ins": [
+        11,
+        7
+      ],
+      "rank": "銀級",
+      "power": "L2"
+    },
+    "郭紳鴻": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        157,
+        104
+      ],
+      "rtc": [
+        29,
+        19
+      ],
+      "up": [
+        11,
+        7
+      ],
+      "sp": [
+        8,
+        6
+      ],
+      "rt999": [
+        13,
+        8
+      ],
+      "rt1399": [
+        8,
+        5
+      ],
+      "dev": [
+        24,
+        16
+      ],
+      "ins": [
+        10,
+        7
+      ],
+      "rank": "銅級",
+      "power": "L2"
+    },
+    "蔡冠廷": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        117,
+        78
+      ],
+      "rtc": [
+        21,
+        14
+      ],
+      "up": [
+        8,
+        5
+      ],
+      "sp": [
+        6,
+        4
+      ],
+      "rt999": [
+        10,
+        6
+      ],
+      "rt1399": [
+        6,
+        4
+      ],
+      "dev": [
+        18,
+        12
+      ],
+      "ins": [
+        8,
+        5
+      ],
+      "rank": "石頭",
+      "power": "L1"
+    }
   },
   "凱旋店": {
-    "陳宛姍": { aq:[19,19], rt:[141,130], rtc:[26,23], up:[10,9], sp:[8,7], rt999:[10,9], rt1399:[6,5], dev:[22,20], g5:[8,6], ins:[10,8], acc:[7702,7110] },
-    "石佳穎": { aq:[19,19], rt:[125,114], rtc:[23,20], up:[9,8], sp:[7,6], rt999:[9,8], rt1399:[6,4], dev:[20,17], g5:[7,6], ins:[9,7], acc:[7702,7110] },
-    "高琦茗": { aq:[19,19], rt:[117,107], rtc:[22,19], up:[8,7], sp:[7,5], rt999:[9,7], rt1399:[5,4], dev:[18,16], g5:[7,5], ins:[8,7], acc:[7702,7110] },
-    "林庭逸": { aq:[15,15], rt:[82,75], rtc:[16,13], up:[6,5], sp:[5,4], rt999:[6,5], rt1399:[4,2], dev:[13,11], g5:[5,3], ins:[6,4], acc:[3851,3555] }
+    "陳宛姍": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        170,
+        113
+      ],
+      "rtc": [
+        31,
+        20
+      ],
+      "up": [
+        11,
+        8
+      ],
+      "sp": [
+        8,
+        5
+      ],
+      "rt999": [
+        13,
+        9
+      ],
+      "rt1399": [
+        8,
+        5
+      ],
+      "dev": [
+        25,
+        16
+      ],
+      "ins": [
+        10,
+        7
+      ],
+      "rank": "白金級",
+      "power": "L2"
+    },
+    "石佳穎": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        150,
+        100
+      ],
+      "rtc": [
+        27,
+        18
+      ],
+      "up": [
+        10,
+        7
+      ],
+      "sp": [
+        7,
+        4
+      ],
+      "rt999": [
+        12,
+        8
+      ],
+      "rt1399": [
+        7,
+        5
+      ],
+      "dev": [
+        22,
+        14
+      ],
+      "ins": [
+        9,
+        6
+      ],
+      "rank": "銀級",
+      "power": "L2"
+    },
+    "高琦茗": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        140,
+        93
+      ],
+      "rtc": [
+        25,
+        17
+      ],
+      "up": [
+        10,
+        6
+      ],
+      "sp": [
+        7,
+        4
+      ],
+      "rt999": [
+        11,
+        7
+      ],
+      "rt1399": [
+        7,
+        4
+      ],
+      "dev": [
+        20,
+        14
+      ],
+      "ins": [
+        8,
+        6
+      ],
+      "rank": "銅級",
+      "power": "L2"
+    },
+    "林庭逸": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        104,
+        70
+      ],
+      "rtc": [
+        19,
+        13
+      ],
+      "up": [
+        7,
+        5
+      ],
+      "sp": [
+        5,
+        3
+      ],
+      "rt999": [
+        8,
+        6
+      ],
+      "rt1399": [
+        5,
+        3
+      ],
+      "dev": [
+        15,
+        10
+      ],
+      "ins": [
+        7,
+        4
+      ],
+      "rank": "石頭",
+      "power": "L1"
+    }
   },
   "區督導": {
-    "黃庭鈞": { aq:[19,19], rt:[111,101], rtc:[21,18], up:[8,7], sp:[7,5], rt999:[8,7], rt1399:[6,4], dev:[18,15], g5:[7,5], ins:[8,6], acc:[6162,5688] }
+    "黃庭鈞": {
+      "aq": [
+        19,
+        19
+      ],
+      "rt": [
+        127,
+        84
+      ],
+      "rtc": [
+        23,
+        15
+      ],
+      "up": [
+        8,
+        6
+      ],
+      "sp": [
+        6,
+        4
+      ],
+      "rt999": [
+        10,
+        6
+      ],
+      "rt1399": [
+        6,
+        4
+      ],
+      "dev": [
+        19,
+        12
+      ],
+      "ins": [
+        8,
+        5
+      ],
+      "rank": "黃金級",
+      "power": "L1"
+    }
   }
 };
 
@@ -338,10 +1449,49 @@ const METRICS = [
   { key:'rt999',  label:'RT999',   icon:'💎' },
   { key:'rt1399', label:'RT1399',  icon:'💠' },
   { key:'dev',    label:'Device',  icon:'📱' },
-  { key:'g5',     label:'5G',      icon:'📶' },
-  { key:'ins',    label:'保險',    icon:'🛡️' },
-  { key:'acc',    label:'配件',    icon:'🎒' }
+  { key:'ins',    label:'保險',    icon:'🛡️' }
 ];
+
+
+
+
+function rankIcon(rank) {
+  const icons = {
+    '黃金級':'👑','白金級':'💎','金級':'⭐','銀級':'🥈',
+    '銅級':'🥉','石頭':'🪨','小石頭M6':'🌱','小石頭':'🌱'
+  };
+  return icons[rank] || '⭐';
+}
+
+function powerStars(power) {
+  const n = parseInt(power.replace('L','')) || 1;
+  return '★'.repeat(n) + '☆'.repeat(4-n);
+}
+
+function rankKey(rank) {
+  const map = {'黃金級':'gold-leader','白金級':'platinum','金級':'gold','銀級':'silver','銅級':'bronze','石頭':'stone','小石頭M6':'rookie','小石頭':'rookie'};
+  return map[rank] || 'stone';
+}
+
+function cheerText(rank, power) {
+  // 鼓勵語：依職級給出年輕活潑的標語
+  const cheerByRank = {
+    '黃金級': ['👑 督導之光', '🌟 領頭羊'],
+    '白金級': ['✨ 業績王牌', '💎 業績扛霸子'],
+    '金級':   ['🔥 衝刺擔當', '🚀 火力全開'],
+    '銀級':   ['⚡ 穩定輸出', '💪 黃金預備軍'],
+    '銅級':   ['🌱 突破中', '🎯 蓄勢待發'],
+    '石頭':   ['🌟 潛力新星', '📈 成長加速'],
+    '小石頭M6':['🌿 養成中', '🎒 學習衝刺'],
+    '小石頭': ['🌿 養成中', '🎒 學習衝刺']
+  };
+  // 戰力 L3 / L4 額外加燃料
+  const powerBoost = {'L3':' 🔥', 'L4':' 🔥🔥'};
+  const list = cheerByRank[rank] || ['🌟 一起加油'];
+  // 用戰力等級當索引（L1=0, L2=0, L3=1, L4=1）讓 L3/L4 拿到第二個鼓勵語
+  const idx = (power === 'L3' || power === 'L4') ? 1 : 0;
+  return list[idx % list.length] + (powerBoost[power] || '');
+}
 
 function onStoreChange() {
   const store = document.getElementById('storeSelect').value;
@@ -379,30 +1529,53 @@ function renderResult(store, emp) {
 
   let html = `
     <div class="profile-card">
-      <div class="avatar">${emp[0]}</div>
-      <div class="profile-info">
-        <h2>${emp}</h2>
-        <div class="badges">
-          <span class="badge badge-store">🏪 ${isSupervisor ? '區督導' : store}</span>
-          ${isSupervisor ? '<span class="badge badge-supervisor">⭐ 區督導</span>' : ''}
+      <div class="profile-main">
+        <div class="avatar">${emp[0]}</div>
+        <div class="profile-info">
+          <h2 class="profile-name">${emp}</h2>
+          <div class="badges">
+            <span class="badge badge-store">🏪 ${isSupervisor ? '區督導' : store}</span>
+          </div>
+          <div class="cheer-tag cheer-${rankKey(d.rank)}">${cheerText(d.rank, d.power)}</div>
+        </div>
+        <div class="rank-power-stack">
+          <div class="rank-card rank-card-${rankKey(d.rank)}">
+            <div class="rank-card-top"></div>
+            <div class="rank-card-icon">${rankIcon(d.rank)}</div>
+            <div class="rank-card-name">${d.rank}</div>
+            <div class="rank-card-label">職級</div>
+          </div>
+          <div class="power-card power-card-${d.power.toLowerCase()}">
+            <div class="power-card-top"></div>
+            <div class="power-card-level">${d.power}</div>
+            <div class="power-card-label">戰力</div>
+            <div class="power-card-stars">${powerStars(d.power)}</div>
+          </div>
         </div>
       </div>
     </div>`;
 
   if (isSupervisor) {
-    html += `<div class="supervisor-note">👑 區督導配額，配件目標以區域標準計算</div>`;
+    html += `<div class="supervisor-note">👑 區督導目標 ＝ 督導區原始店平均 × 23% 投入係數</div>`;
   }
 
   html += `
     <div class="period-row">
       <div class="period-btn btn-first">
-        <div class="period-label">🟢 上半場</div>
-        <div class="period-date">3/30 - 4/13（52%）</div>
+        <div class="period-label">🟢 上半場 60%</div>
+        <div class="period-date">4/29 - 5/14</div>
+        <div class="period-meta">📅 16 天<span class="dot"></span>權重 60%</div>
       </div>
       <div class="period-btn btn-second">
-        <div class="period-label">🟠 下半場</div>
-        <div class="period-date">4/14 - 4/28（48%）</div>
+        <div class="period-label">🟠 下半場 40%</div>
+        <div class="period-date">5/15 - 5/29</div>
+        <div class="period-meta">📅 15 天<span class="dot"></span>權重 40%</div>
       </div>
+    </div>
+
+    <div class="cutoff-banner">
+      <span class="cutoff-dot"></span>
+      上下半場切點：<strong style="margin-left:2px;">5/14 24:00</strong>
     </div>
 
     <div class="section-title">📈 業績目標</div>
@@ -418,7 +1591,7 @@ function renderResult(store, emp) {
         <div class="metric-title">${m.icon} ${m.label}</div>
         <div class="metric-values">
           <div class="metric-val val-total">
-            <div class="val-label">總目標</div>
+            <div class="val-label">全月</div>
             <div class="val-num${isLarge?' small':''}">${total.toLocaleString()}</div>
           </div>
           <div class="metric-val val-first">
