@@ -745,6 +745,38 @@ select:focus { outline: none; border-color: #3d6cb5; }
 <div class="page-footer">倚盟電訊 ｜ 2026年5月（4/29 - 5/29）｜ 上半場 60% / 下半場 40%</div>
 
 <script>
+// ── 從 index.html 自動讀取實際業績數字 ──────────────────
+let actualFromIndex = {};
+
+async function loadActualData() {
+  try {
+    const res  = await fetch('index.html');
+    const text = await res.text();
+    const m    = text.match(/const employeeData=(\[[\s\S]+?\]);/);
+    if (!m) return;
+    const empData = JSON.parse(m[1]);
+    empData.forEach(e => {
+      actualFromIndex[e['姓名']] = {
+        aq:    e['AQ累計']     ?? 0,
+        rt:    e['RT點數累計'] ?? 0,
+        rtc:   e['RT件數累計'] ?? 0,
+        up:    e['RT升轉累計'] ?? 0,
+        sp:    e['特維累計']   ?? 0,
+        rt999: e['RT999累計']  ?? 0,
+        rt1399:e['RT1399累計'] ?? 0,
+        ins:   e['寬頻累計']   ?? 0,
+        acc:   e['手機案累計'] ?? 0,
+      };
+    });
+    console.log('✅ 實際業績已從 index.html 載入');
+  } catch(err) {
+    console.warn('⚠️ 無法載入 index.html，使用內建數字', err);
+  }
+}
+
+// 啟動時載入
+loadActualData();
+
 const DATA = {
   "鼎山店": {
     "劉家妘": {
@@ -2175,7 +2207,9 @@ function renderResult(store, emp) {
     const second = d[m.key][1];
     const total  = first + second;
     const isLarge = total >= 1000;
-    const actualVal = (d.actual && d.actual[m.key] != null) ? d.actual[m.key] : 0;
+    const _liveActual = actualFromIndex[emp];
+    const _actual = (_liveActual && Object.keys(_liveActual).length > 0) ? _liveActual : (d.actual || {});
+    const actualVal = (_actual[m.key] != null) ? _actual[m.key] : 0;
     const progressHTML = renderProgressBlock(m, first, second, actualVal);
     html += `
       <div class="metric-card">
