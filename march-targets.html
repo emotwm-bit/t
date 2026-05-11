@@ -764,8 +764,10 @@ async function loadActualData() {
         sp:    e['特維累計']   ?? 0,
         rt999: e['RT999累計']  ?? 0,
         rt1399:e['RT1399累計'] ?? 0,
+        dev:   e['手機案累計'] ?? 0,
         ins:   e['寬頻累計']   ?? 0,
-        acc:   e['手機案累計'] ?? 0,
+        fg:    e['5G累計']     ?? 0,
+        acc:   0,
       };
     });
     console.log('✅ 實際業績已從 index.html 載入');
