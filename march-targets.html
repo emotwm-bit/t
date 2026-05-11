@@ -776,8 +776,8 @@ async function loadActualData() {
   }
 }
 
-// 啟動時載入
-loadActualData();
+// 啟動時載入，儲存 promise 供後續 await
+const dataReadyPromise = loadActualData();
 
 const DATA = {
   "鼎山店": {
@@ -1984,10 +1984,11 @@ function onStoreChange() {
   clearResult();
 }
 
-function onEmpChange() {
+async function onEmpChange() {
   const store = document.getElementById('storeSelect').value;
   const emp   = document.getElementById('empSelect').value;
   if (!store || !emp) { clearResult(); return; }
+  await dataReadyPromise;
   renderResult(store, emp);
 }
 
