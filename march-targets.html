@@ -745,39 +745,9 @@ select:focus { outline: none; border-color: #3d6cb5; }
 <div class="page-footer">倚盟電訊 ｜ 2026年5月（4/29 - 5/29）｜ 上半場 60% / 下半場 40%</div>
 
 <script>
-// ── 從 index.html 自動讀取實際業績數字 ──────────────────
-let actualFromIndex = {};
-
-async function loadActualData() {
-  try {
-    const res  = await fetch('index.html');
-    const text = await res.text();
-    const m    = text.match(/const employeeData=(\[[\s\S]+?\]);/);
-    if (!m) return;
-    const empData = JSON.parse(m[1]);
-    empData.forEach(e => {
-      actualFromIndex[e['姓名']] = {
-        aq:    e['AQ累計']     ?? 0,
-        rt:    e['RT點數累計'] ?? 0,
-        rtc:   e['RT件數累計'] ?? 0,
-        up:    e['RT升轉累計'] ?? 0,
-        sp:    e['特維累計']   ?? 0,
-        rt999: e['RT999累計']  ?? 0,
-        rt1399:e['RT1399累計'] ?? 0,
-        dev:   e['手機案累計'] ?? 0,
-        ins:   e['寬頻累計']   ?? 0,
-        fg:    e['5G累計']     ?? 0,
-        acc:   0,
-      };
-    });
-    console.log('✅ 實際業績已從 index.html 載入');
-  } catch(err) {
-    console.warn('⚠️ 無法載入 index.html，使用內建數字', err);
-  }
-}
-
-// 啟動時載入，儲存 promise 供後續 await
-const dataReadyPromise = loadActualData();
+// ── 實際業績數字直接 embed 在每位員工的 d.actual 裡 ────
+// （不再從 index.html fetch，避免 file:// 失敗 / cache / 舊檔覆蓋等問題）
+const dataReadyPromise = Promise.resolve();
 
 const DATA = {
   "鼎山店": {
@@ -829,14 +799,16 @@ const DATA = {
         5980
       ],
       "actual": {
-        "aq": 22.0,
-        "rt": 62.5,
-        "rtc": 8,
-        "up": 5,
-        "sp": 3,
-        "rt999": 5,
-        "rt1399": 4,
-        "ins": 0.0,
+        "aq": 55,
+        "rt": 89,
+        "rtc": 14,
+        "up": 7,
+        "sp": 6,
+        "rt999": 7,
+        "rt1399": 5,
+        "dev": 17,
+        "ins": 10,
+        "fg": 12,
         "acc": 10
       }
     },
@@ -888,14 +860,16 @@ const DATA = {
         5980
       ],
       "actual": {
-        "aq": 16.5,
-        "rt": 61.0,
-        "rtc": 12,
-        "up": 5,
-        "sp": 9,
-        "rt999": 4,
-        "rt1399": 1,
-        "ins": 0.0,
+        "aq": 22,
+        "rt": 92.8,
+        "rtc": 18,
+        "up": 6,
+        "sp": 12,
+        "rt999": 7,
+        "rt1399": 2,
+        "dev": 12,
+        "ins": 5,
+        "fg": 3,
         "acc": 9
       }
     },
@@ -947,14 +921,16 @@ const DATA = {
         5980
       ],
       "actual": {
-        "aq": 21.5,
-        "rt": 71.8,
-        "rtc": 11,
-        "up": 6,
-        "sp": 2,
-        "rt999": 6,
-        "rt1399": 4,
-        "ins": 0.0,
+        "aq": 28,
+        "rt": 114.5,
+        "rtc": 20,
+        "up": 8,
+        "sp": 8,
+        "rt999": 8,
+        "rt1399": 5,
+        "dev": 15,
+        "ins": 12.5,
+        "fg": 7,
         "acc": 10
       }
     },
@@ -1006,14 +982,16 @@ const DATA = {
         5980
       ],
       "actual": {
-        "aq": 6.0,
-        "rt": 24.2,
-        "rtc": 5,
+        "aq": 16.5,
+        "rt": 48.2,
+        "rtc": 8,
         "up": 2,
         "sp": 1,
-        "rt999": 1,
-        "rt1399": 1,
-        "ins": 0.0,
+        "rt999": 4,
+        "rt1399": 4,
+        "dev": 7,
+        "ins": 4,
+        "fg": 6,
         "acc": 3
       }
     }
@@ -1068,13 +1046,15 @@ const DATA = {
       ],
       "actual": {
         "aq": 3.5,
-        "rt": 105.0,
-        "rtc": 11,
+        "rt": 122,
+        "rtc": 13,
         "up": 4,
-        "sp": 5,
-        "rt999": 10,
-        "rt1399": 9,
-        "ins": 0.0,
+        "sp": 6,
+        "rt999": 12,
+        "rt1399": 11,
+        "dev": 14,
+        "ins": 10.5,
+        "fg": 1,
         "acc": 12
       }
     },
@@ -1126,14 +1106,16 @@ const DATA = {
         5980
       ],
       "actual": {
-        "aq": 14.0,
-        "rt": 126.3,
-        "rtc": 23,
-        "up": 5,
-        "sp": 9,
-        "rt999": 9,
-        "rt1399": 6,
-        "ins": 0.0,
+        "aq": 14,
+        "rt": 194.6,
+        "rtc": 32,
+        "up": 8,
+        "sp": 12,
+        "rt999": 16,
+        "rt1399": 9,
+        "dev": 26,
+        "ins": 12.5,
+        "fg": 6,
         "acc": 17
       }
     },
@@ -1185,14 +1167,16 @@ const DATA = {
         5980
       ],
       "actual": {
-        "aq": 4.0,
-        "rt": 38.0,
-        "rtc": 9,
-        "up": 2,
+        "aq": 4,
+        "rt": 41.5,
+        "rtc": 10,
+        "up": 3,
         "sp": 2,
         "rt999": 2,
         "rt1399": 0,
-        "ins": 2.5,
+        "dev": 5,
+        "ins": 4,
+        "fg": 2,
         "acc": 4
       }
     }
@@ -1246,14 +1230,16 @@ const DATA = {
         5980
       ],
       "actual": {
-        "aq": 18.0,
-        "rt": 45.5,
-        "rtc": 9,
-        "up": 2,
-        "sp": 5,
-        "rt999": 3,
-        "rt1399": 1,
-        "ins": 1.2,
+        "aq": 25.5,
+        "rt": 98.2,
+        "rtc": 17,
+        "up": 3,
+        "sp": 7,
+        "rt999": 9,
+        "rt1399": 5,
+        "dev": 13,
+        "ins": 6,
+        "fg": 6,
         "acc": 7
       }
     },
@@ -1305,14 +1291,16 @@ const DATA = {
         5980
       ],
       "actual": {
-        "aq": 18.5,
-        "rt": 60.2,
-        "rtc": 16,
-        "up": 5,
-        "sp": 7,
-        "rt999": 3,
-        "rt1399": 0,
-        "ins": 0.0,
+        "aq": 21.5,
+        "rt": 102.7,
+        "rtc": 23,
+        "up": 9,
+        "sp": 11,
+        "rt999": 6,
+        "rt1399": 1,
+        "dev": 18,
+        "ins": 10,
+        "fg": 9,
         "acc": 12
       }
     },
@@ -1364,14 +1352,16 @@ const DATA = {
         5980
       ],
       "actual": {
-        "aq": 13.5,
-        "rt": 38.5,
-        "rtc": 10,
-        "up": 1,
-        "sp": 2,
-        "rt999": 3,
-        "rt1399": 1,
-        "ins": 0.0,
+        "aq": 22,
+        "rt": 78.2,
+        "rtc": 16,
+        "up": 4,
+        "sp": 4,
+        "rt999": 5,
+        "rt1399": 2,
+        "dev": 14,
+        "ins": 7,
+        "fg": 3,
         "acc": 6
       }
     }
@@ -1426,13 +1416,15 @@ const DATA = {
       ],
       "actual": {
         "aq": 14.5,
-        "rt": 63.2,
-        "rtc": 8,
-        "up": 3,
-        "sp": 1,
-        "rt999": 6,
-        "rt1399": 4,
-        "ins": 1.5,
+        "rt": 132.2,
+        "rtc": 13,
+        "up": 7,
+        "sp": 2,
+        "rt999": 11,
+        "rt1399": 9,
+        "dev": 16,
+        "ins": 3,
+        "fg": 3,
         "acc": 9
       }
     },
@@ -1484,14 +1476,16 @@ const DATA = {
         5980
       ],
       "actual": {
-        "aq": 14.5,
-        "rt": 145.0,
-        "rtc": 20,
-        "up": 8,
-        "sp": 8,
-        "rt999": 12,
-        "rt1399": 8,
-        "ins": 1.5,
+        "aq": 24,
+        "rt": 179,
+        "rtc": 26,
+        "up": 11,
+        "sp": 11,
+        "rt999": 15,
+        "rt1399": 9,
+        "dev": 22,
+        "ins": 10,
+        "fg": 13,
         "acc": 16
       }
     },
@@ -1544,13 +1538,15 @@ const DATA = {
       ],
       "actual": {
         "aq": 14.5,
-        "rt": 59.5,
-        "rtc": 10,
-        "up": 4,
-        "sp": 3,
-        "rt999": 6,
-        "rt1399": 1,
-        "ins": 0.0,
+        "rt": 82,
+        "rtc": 13,
+        "up": 5,
+        "sp": 4,
+        "rt999": 8,
+        "rt1399": 2,
+        "dev": 11,
+        "ins": 7,
+        "fg": 7,
         "acc": 9
       }
     },
@@ -1602,14 +1598,16 @@ const DATA = {
         5980
       ],
       "actual": {
-        "aq": 2.0,
-        "rt": 43.0,
-        "rtc": 7,
-        "up": 2,
-        "sp": 6,
-        "rt999": 3,
-        "rt1399": 3,
-        "ins": 1.5,
+        "aq": 4,
+        "rt": 77,
+        "rtc": 14,
+        "up": 4,
+        "sp": 9,
+        "rt999": 5,
+        "rt1399": 5,
+        "dev": 6,
+        "ins": 1,
+        "fg": 2,
         "acc": 4
       }
     }
@@ -1663,14 +1661,16 @@ const DATA = {
         5980
       ],
       "actual": {
-        "aq": 0.0,
+        "aq": 0,
         "rt": 116.2,
         "rtc": 20,
         "up": 8,
         "sp": 8,
         "rt999": 8,
         "rt1399": 6,
-        "ins": 2.8,
+        "dev": 9,
+        "ins": 8.5,
+        "fg": 2,
         "acc": 9
       }
     },
@@ -1723,13 +1723,15 @@ const DATA = {
       ],
       "actual": {
         "aq": 8.5,
-        "rt": 33.2,
-        "rtc": 9,
-        "up": 4,
-        "sp": 3,
-        "rt999": 1,
+        "rt": 64,
+        "rtc": 15,
+        "up": 7,
+        "sp": 4,
+        "rt999": 3,
         "rt1399": 0,
-        "ins": 0.0,
+        "dev": 16,
+        "ins": 7,
+        "fg": 9,
         "acc": 10
       }
     },
@@ -1781,14 +1783,16 @@ const DATA = {
         5980
       ],
       "actual": {
-        "aq": 15.0,
-        "rt": 58.2,
-        "rtc": 7,
-        "up": 6,
-        "sp": 3,
-        "rt999": 5,
+        "aq": 15,
+        "rt": 83.7,
+        "rtc": 12,
+        "up": 9,
+        "sp": 7,
+        "rt999": 6,
         "rt1399": 2,
-        "ins": 0.0,
+        "dev": 12,
+        "ins": 10,
+        "fg": 5,
         "acc": 9
       }
     },
@@ -1840,14 +1844,16 @@ const DATA = {
         5980
       ],
       "actual": {
-        "aq": 9.5,
-        "rt": 52.5,
-        "rtc": 9,
-        "up": 5,
-        "sp": 3,
-        "rt999": 4,
-        "rt1399": 1,
-        "ins": 0.0,
+        "aq": 16,
+        "rt": 77,
+        "rtc": 12,
+        "up": 7,
+        "sp": 4,
+        "rt999": 6,
+        "rt1399": 2,
+        "dev": 12,
+        "ins": 9,
+        "fg": 9,
         "acc": 9
       }
     }
@@ -1901,14 +1907,16 @@ const DATA = {
         2990
       ],
       "actual": {
-        "aq": 21.0,
-        "rt": 42.5,
-        "rtc": 6,
-        "up": 3,
-        "sp": 1,
-        "rt999": 3,
+        "aq": 21,
+        "rt": 58.5,
+        "rtc": 9,
+        "up": 5,
+        "sp": 3,
+        "rt999": 4,
         "rt1399": 2,
-        "ins": 1.5,
+        "dev": 13,
+        "ins": 8,
+        "fg": 7,
         "acc": 9
       }
     }
@@ -2004,7 +2012,7 @@ const PERIOD_FIRST_END = new Date(2026, 4, 16);   // 上半場結束 5/16 (month
 const PERIOD_SECOND_END = new Date(2026, 4, 29);  // 下半場結束 5/29
 const PERIOD_FIRST_DAYS = 18;
 const PERIOD_SECOND_DAYS = 13;
-const DATA_DATE = new Date(2026, 4, 4);  // 資料截止日 5/4 (從 Excel 抽出時是 5/4 為止累計)
+const DATA_DATE = new Date(2026, 4, 11); // 資料截止日 5/11 (從 Excel 抽出時是 5/11 為止累計)
 
 function getTodayMidnight() {
   const t = new Date();
@@ -2210,8 +2218,7 @@ function renderResult(store, emp) {
     const second = d[m.key][1];
     const total  = first + second;
     const isLarge = total >= 1000;
-    const _liveActual = actualFromIndex[emp];
-    const _actual = (_liveActual && Object.keys(_liveActual).length > 0) ? _liveActual : (d.actual || {});
+    const _actual = d.actual || {};
     const actualVal = (_actual[m.key] != null) ? _actual[m.key] : 0;
     const progressHTML = renderProgressBlock(m, first, second, actualVal);
     html += `
