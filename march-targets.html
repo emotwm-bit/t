@@ -837,7 +837,7 @@ const DATA = {
         "dev": 17,
         "fg": 7,
         "ins": 7.5,
-        "acc": 9416
+        "acc": 9900
       }
     },
     "黃子珊": {
@@ -889,7 +889,7 @@ const DATA = {
       ],
       "actual": {
         "aq": 16.5,
-        "rt": 116.95,
+        "rt": 117.0,
         "rtc": 19,
         "up": 9,
         "sp": 7,
@@ -898,7 +898,7 @@ const DATA = {
         "dev": 15,
         "fg": 6,
         "ins": 6,
-        "acc": 9846
+        "acc": 10800
       }
     },
     "陳亭安": {
@@ -950,7 +950,7 @@ const DATA = {
       ],
       "actual": {
         "aq": 22.5,
-        "rt": 125.25,
+        "rt": 125.2,
         "rtc": 15,
         "up": 8,
         "sp": 6,
@@ -1074,7 +1074,7 @@ const DATA = {
       ],
       "actual": {
         "aq": 23.5,
-        "rt": 94.45,
+        "rt": 94.5,
         "rtc": 17,
         "up": 5,
         "sp": 3,
@@ -1196,7 +1196,7 @@ const DATA = {
       ],
       "actual": {
         "aq": 18,
-        "rt": 51.25,
+        "rt": 51.2,
         "rtc": 11,
         "up": 1,
         "sp": 3,
@@ -1205,7 +1205,7 @@ const DATA = {
         "dev": 10,
         "fg": 4,
         "ins": 4,
-        "acc": 4911
+        "acc": 5806
       }
     }
   },
@@ -1329,7 +1329,7 @@ const DATA = {
         "dev": 13,
         "fg": 8,
         "ins": 8,
-        "acc": 5928
+        "acc": 7281
       }
     },
     "秦曼芯": {
@@ -1505,7 +1505,7 @@ const DATA = {
       ],
       "actual": {
         "aq": 13.5,
-        "rt": 116.25,
+        "rt": 116.2,
         "rtc": 19,
         "up": 8,
         "sp": 10,
@@ -1514,7 +1514,7 @@ const DATA = {
         "dev": 19,
         "fg": 6,
         "ins": 8,
-        "acc": 10103
+        "acc": 10368
       }
     },
     "郭紳鴻": {
@@ -1566,13 +1566,13 @@ const DATA = {
       ],
       "actual": {
         "aq": 13,
-        "rt": 91.25,
-        "rtc": 15,
+        "rt": 93.5,
+        "rtc": 16,
         "up": 4,
-        "sp": 6,
+        "sp": 7,
         "rt999": 9,
         "rt1399": 6,
-        "dev": 14,
+        "dev": 15,
         "fg": 7,
         "ins": 1,
         "acc": 1867
@@ -1627,7 +1627,7 @@ const DATA = {
       ],
       "actual": {
         "aq": 27,
-        "rt": 41.25,
+        "rt": 41.2,
         "rtc": 8,
         "up": 3,
         "sp": 4,
@@ -1690,7 +1690,7 @@ const DATA = {
       ],
       "actual": {
         "aq": 17,
-        "rt": 132.25,
+        "rt": 132.2,
         "rtc": 23,
         "up": 8,
         "sp": 4,
@@ -1699,7 +1699,7 @@ const DATA = {
         "dev": 16,
         "fg": 7,
         "ins": 10,
-        "acc": 5559
+        "acc": 5706
       }
     },
     "石佳穎": {
@@ -1724,8 +1724,8 @@ const DATA = {
         4
       ],
       "rt999": [
-        11,
-        7
+        12,
+        8
       ],
       "rt1399": [
         7,
@@ -1751,7 +1751,7 @@ const DATA = {
       ],
       "actual": {
         "aq": 16,
-        "rt": 81.75,
+        "rt": 81.8,
         "rtc": 19,
         "up": 7,
         "sp": 8,
@@ -1760,7 +1760,7 @@ const DATA = {
         "dev": 22,
         "fg": 12,
         "ins": 6.5,
-        "acc": 4245
+        "acc": 5629
       }
     },
     "高琦茗": {
@@ -1785,8 +1785,8 @@ const DATA = {
         4
       ],
       "rt999": [
-        12,
-        8
+        11,
+        7
       ],
       "rt1399": [
         7,
@@ -1821,7 +1821,7 @@ const DATA = {
         "dev": 8,
         "fg": 5,
         "ins": 6,
-        "acc": 1448
+        "acc": 1595
       }
     },
     "林庭逸": {
@@ -1882,7 +1882,7 @@ const DATA = {
         "dev": 10,
         "fg": 3,
         "ins": 4,
-        "acc": 970
+        "acc": 1557
       }
     }
   },
@@ -1936,7 +1936,7 @@ const DATA = {
       ],
       "actual": {
         "aq": 24.5,
-        "rt": 117.75,
+        "rt": 117.8,
         "rtc": 17,
         "up": 6,
         "sp": 3,
@@ -1957,7 +1957,7 @@ const METRICS = [
   { key:'rtc',    label:'RT件數',  icon:'📦' },
   { key:'up',     label:'升轉',    icon:'⬆️' },
   { key:'sp',     label:'特維',    icon:'🔧' },
-  { key:'rt999',  label:'RT999',   icon:'💎' },
+  { key:'rt999',  label:'RT999',   icon:'💎', hidden:true },  /* RT999 暫不列入業績獎金計算，先隱藏；若要恢復顯示，移除本行的 hidden:true 即可 */
   { key:'rt1399', label:'RT1399',  icon:'💠' },
   { key:'dev',    label:'Device',  icon:'📱' },
   { key:'fg',     label:'5G',      icon:'📶' },
@@ -2042,7 +2042,6 @@ const PERIOD_SECOND_DAYS = 13;
 const DATA_DATE = new Date(2026, 4, 29);  // 資料截止日 5/29
 
 function getTodayMidnight() {
-  // 月底檔：資料截止 5/29，錨定為下半場最後一日，確保進度條完整顯示
   const t = new Date(2026, 4, 29);
   t.setHours(0,0,0,0);
   return t;
@@ -2242,6 +2241,7 @@ function renderResult(store, emp) {
     <div class="metric-grid">`;
 
   METRICS.forEach(m => {
+    if (m.hidden) return;   // 隱藏的指標(如 RT999)不顯示卡片
     const first  = d[m.key][0];
     const second = d[m.key][1];
     const total  = first + second;
