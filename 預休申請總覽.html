@@ -7,202 +7,60 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --ding: #B5D4F4; --ding-text: #0C447C;
     --yang: #C0DD97; --yang-text: #27500A;
-    --hou: #FAC775;  --hou-text: #633806;
-    --ren: #CECBF6;  --ren-text: #3C3489;
-    --kai: #F4C0D1;  --kai-text: #72243E;
-    --bg: #F7F5F2;
-    --card: #FFFFFF;
-    --text: #1A1A1A;
-    --muted: #888;
-    --border: #E5E2DC;
+    --hou:  #FAC775; --hou-text:  #633806;
+    --ren:  #CECBF6; --ren-text:  #3C3489;
+    --kai:  #F4C0D1; --kai-text:  #72243E;
+    --bg: #F7F5F2; --card: #FFFFFF;
+    --text: #1A1A1A; --muted: #888; --border: #E5E2DC;
   }
+  body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 40px 20px; }
 
-  body {
-    font-family: 'Noto Sans TC', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 48px 24px;
-  }
+  .page-header { max-width: 860px; margin: 0 auto 32px; display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 1.5px solid var(--text); padding-bottom: 14px; }
+  .page-header h1 { font-size: 24px; font-weight: 700; letter-spacing: 0.04em; }
+  .page-header h1 span { font-weight: 300; font-size: 13px; display: block; color: var(--muted); margin-bottom: 4px; letter-spacing: 0.1em; }
+  .page-header .updated { font-size: 12px; color: var(--muted); }
 
-  .page-header {
-    max-width: 760px;
-    margin: 0 auto 40px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    border-bottom: 1.5px solid var(--text);
-    padding-bottom: 16px;
-  }
+  .summary-row { max-width: 860px; margin: 0 auto 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .summary-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; text-align: center; }
+  .summary-card .num { font-size: 28px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+  .summary-card .label { font-size: 12px; color: var(--muted); letter-spacing: 0.08em; }
 
-  .page-header h1 {
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-  }
+  .legend { max-width: 860px; margin: 0 auto 20px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
 
-  .page-header h1 span {
-    font-weight: 300;
-    font-size: 14px;
-    display: block;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    margin-bottom: 4px;
-  }
+  .month-section { max-width: 860px; margin: 0 auto 40px; }
+  .month-title { font-size: 11px; font-weight: 500; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 10px; padding-left: 2px; }
 
-  .page-header .updated {
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
+  .calendar { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .cal-head { display: grid; grid-template-columns: repeat(7, 1fr); border-bottom: 1px solid var(--border); }
+  .cal-head-cell { text-align: center; font-size: 12px; font-weight: 500; padding: 10px 0; color: var(--muted); }
+  .cal-head-cell.sun { color: #A32D2D; }
+  .cal-head-cell.sat { color: #185FA5; }
 
-  .summary-row {
-    max-width: 760px;
-    margin: 0 auto 32px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-  }
+  .cal-body { display: grid; grid-template-columns: repeat(7, 1fr); }
+  .cal-cell { min-height: 80px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 8px 8px 6px; display: flex; flex-direction: column; gap: 4px; }
+  .cal-cell:nth-child(7n) { border-right: none; }
+  .cal-cell.empty { background: #FAFAF8; }
+  .cal-cell.sun-col { background: #FFF8F8; }
+  .cal-cell.sat-col { background: #F5F8FF; }
+  .cal-date { font-size: 13px; font-weight: 500; line-height: 1; color: var(--text); }
+  .cal-cell.sun-col .cal-date { color: #A32D2D; }
+  .cal-cell.sat-col .cal-date { color: #185FA5; }
 
-  .summary-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 20px;
-    text-align: center;
-  }
+  .leave-chip { font-size: 10px; padding: 3px 6px; border-radius: 5px; line-height: 1.5; font-weight: 500; white-space: normal; }
+  .status-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; margin-right: 3px; vertical-align: middle; }
 
-  .summary-card .num {
-    font-size: 28px;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
+  footer { max-width: 860px; margin: 48px auto 0; text-align: center; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 20px; }
 
-  .summary-card .label {
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-  }
-
-  .cards { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
-
-  .leave-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px 24px;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 20px;
-    transition: box-shadow 0.2s;
-  }
-
-  .leave-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
-
-  .store-pill {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    font-size: 15px;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-
-  .card-main .person {
-    font-size: 17px;
-    font-weight: 500;
-    margin-bottom: 6px;
-  }
-
-  .card-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    font-size: 13px;
-    color: var(--muted);
-  }
-
-  .card-meta .tag {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .card-meta .tag svg { flex-shrink: 0; }
-
-  .card-right { text-align: right; flex-shrink: 0; }
-
-  .status-badge {
-    display: inline-block;
-    padding: 5px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    margin-bottom: 6px;
-  }
-
-  .status-approved { background: #E6F4E8; color: #1E6B2E; }
-  .status-pending   { background: #FFF3E0; color: #B45309; }
-
-  .days-count {
-    font-size: 22px;
-    font-weight: 700;
-    display: block;
-  }
-
-  .days-label { font-size: 11px; color: var(--muted); }
-
-  .section-month {
-    max-width: 760px;
-    margin: 0 auto 10px;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    color: var(--muted);
-    text-transform: uppercase;
-    padding-left: 2px;
-  }
-
-  .progress-bar-wrap {
-    max-width: 760px;
-    margin: 0 auto 40px;
-    background: var(--border);
-    border-radius: 4px;
-    height: 4px;
-    overflow: hidden;
-  }
-
-  .progress-bar {
-    height: 100%;
-    background: var(--text);
-    border-radius: 4px;
-  }
-
-  footer {
-    max-width: 760px;
-    margin: 48px auto 0;
-    text-align: center;
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.06em;
-    border-top: 1px solid var(--border);
-    padding-top: 20px;
-  }
-
-  @media (max-width: 520px) {
-    .leave-card { grid-template-columns: auto 1fr; }
-    .card-right { grid-column: 1 / -1; text-align: left; display: flex; align-items: center; gap: 12px; }
-    .page-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  @media (max-width: 600px) {
+    .cal-cell { min-height: 60px; padding: 5px 4px; }
+    .leave-chip { font-size: 9px; padding: 2px 4px; }
+    .cal-date { font-size: 12px; }
+    .page-header { flex-direction: column; align-items: flex-start; gap: 6px; }
   }
 </style>
 </head>
@@ -215,103 +73,175 @@
 
 <div class="summary-row">
   <div class="summary-card">
-    <div class="num">3</div>
+    <div class="num">4</div>
     <div class="label">申請總件數</div>
   </div>
   <div class="summary-card">
-    <div class="num" style="color:#1E6B2E;">1</div>
+    <div class="num" style="color:#1E6B2E;">4</div>
     <div class="label">已核准</div>
   </div>
   <div class="summary-card">
-    <div class="num" style="color:#B45309;">2</div>
+    <div class="num" style="color:#B45309;">0</div>
     <div class="label">申請中</div>
   </div>
 </div>
 
-<!-- 7月 -->
-<div class="section-month">7月</div>
-<div class="progress-bar-wrap" style="margin-bottom:16px;">
-  <div class="progress-bar" style="width:100%;"></div>
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#F4C0D1;"></div>凱旋－林庭逸</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#B5D4F4;"></div>鼎山－陳亭安</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#CECBF6;"></div>仁雄－黃閔聖</div>
+  <div class="legend-item" style="margin-left:8px;"><div style="width:8px;height:8px;border-radius:50%;background:#1E6B2E;flex-shrink:0;display:inline-block;margin-right:4px;"></div>已核准</div>
 </div>
 
-<div class="cards">
-
-  <div class="leave-card">
-    <div class="store-pill" style="background:var(--kai);color:var(--kai-text);">庭逸</div>
-    <div class="card-main">
-      <div class="person">凱旋－林庭逸</div>
-      <div class="card-meta">
-        <span class="tag">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          7／16（四）～ 7／20（一）
-        </span>
-        <span class="tag">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          日本 🇯🇵
-        </span>
-      </div>
+<!-- 7月：7/1=三，空日一二 -->
+<div class="month-section">
+  <div class="month-title">2026年 7月</div>
+  <div class="calendar">
+    <div class="cal-head">
+      <div class="cal-head-cell sun">日</div><div class="cal-head-cell">一</div><div class="cal-head-cell">二</div><div class="cal-head-cell">三</div><div class="cal-head-cell">四</div><div class="cal-head-cell">五</div><div class="cal-head-cell sat">六</div>
     </div>
-    <div class="card-right">
-      <div><span class="status-badge status-approved">已核准</span></div>
-      <span class="days-count">5</span>
-      <span class="days-label">天</span>
+    <div class="cal-body">
+      <div class="cal-cell empty sun-col"></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div>
+      <div class="cal-cell"><div class="cal-date">1</div></div>
+      <div class="cal-cell"><div class="cal-date">2</div></div>
+      <div class="cal-cell"><div class="cal-date">3</div></div>
+      <div class="cal-cell sat-col"><div class="cal-date">4</div></div>
+
+      <div class="cal-cell sun-col"><div class="cal-date">5</div></div>
+      <div class="cal-cell"><div class="cal-date">6</div></div>
+      <div class="cal-cell"><div class="cal-date">7</div></div>
+      <div class="cal-cell"><div class="cal-date">8</div></div>
+      <div class="cal-cell"><div class="cal-date">9</div></div>
+      <div class="cal-cell"><div class="cal-date">10</div></div>
+      <div class="cal-cell sat-col"><div class="cal-date">11</div></div>
+
+      <div class="cal-cell sun-col"><div class="cal-date">12</div></div>
+      <div class="cal-cell"><div class="cal-date">13</div></div>
+      <div class="cal-cell"><div class="cal-date">14</div></div>
+      <div class="cal-cell"><div class="cal-date">15</div></div>
+      <div class="cal-cell"><div class="cal-date">16</div><div class="leave-chip" style="background:#F4C0D1;color:#72243E;"><span class="status-dot" style="background:#1E6B2E;"></span>凱旋<br>庭逸</div></div>
+      <div class="cal-cell"><div class="cal-date">17</div><div class="leave-chip" style="background:#F4C0D1;color:#72243E;"><span class="status-dot" style="background:#1E6B2E;"></span>凱旋<br>庭逸</div></div>
+      <div class="cal-cell sat-col"><div class="cal-date">18</div><div class="leave-chip" style="background:#F4C0D1;color:#72243E;"><span class="status-dot" style="background:#1E6B2E;"></span>凱旋<br>庭逸</div></div>
+
+      <div class="cal-cell sun-col"><div class="cal-date">19</div><div class="leave-chip" style="background:#F4C0D1;color:#72243E;"><span class="status-dot" style="background:#1E6B2E;"></span>凱旋<br>庭逸</div></div>
+      <div class="cal-cell"><div class="cal-date">20</div><div class="leave-chip" style="background:#F4C0D1;color:#72243E;"><span class="status-dot" style="background:#1E6B2E;"></span>凱旋<br>庭逸</div></div>
+      <div class="cal-cell"><div class="cal-date">21</div></div>
+      <div class="cal-cell"><div class="cal-date">22</div></div>
+      <div class="cal-cell"><div class="cal-date">23</div></div>
+      <div class="cal-cell"><div class="cal-date">24</div></div>
+      <div class="cal-cell sat-col"><div class="cal-date">25</div></div>
+
+      <div class="cal-cell sun-col"><div class="cal-date">26</div><div class="leave-chip" style="background:#B5D4F4;color:#0C447C;"><span class="status-dot" style="background:#1E6B2E;"></span>鼎山<br>亭安</div></div>
+      <div class="cal-cell"><div class="cal-date">27</div><div class="leave-chip" style="background:#B5D4F4;color:#0C447C;"><span class="status-dot" style="background:#1E6B2E;"></span>鼎山<br>亭安</div></div>
+      <div class="cal-cell"><div class="cal-date">28</div><div class="leave-chip" style="background:#B5D4F4;color:#0C447C;"><span class="status-dot" style="background:#1E6B2E;"></span>鼎山<br>亭安</div></div>
+      <div class="cal-cell"><div class="cal-date">29</div></div>
+      <div class="cal-cell"><div class="cal-date">30</div></div>
+      <div class="cal-cell"><div class="cal-date">31</div></div>
+      <div class="cal-cell sat-col empty"></div>
     </div>
   </div>
-
-  <div class="leave-card">
-    <div class="store-pill" style="background:var(--ding);color:var(--ding-text);">亭安</div>
-    <div class="card-main">
-      <div class="person">鼎山－陳亭安</div>
-      <div class="card-meta">
-        <span class="tag">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          7／26（日）～ 7／28（二）
-        </span>
-        <span class="tag">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          蘭嶼 🏝️
-        </span>
-      </div>
-    </div>
-    <div class="card-right">
-      <div><span class="status-badge status-pending">申請中</span></div>
-      <span class="days-count">3</span>
-      <span class="days-label">天</span>
-    </div>
-  </div>
-
 </div>
 
-<!-- 12月 -->
-<div class="section-month" style="margin-top:32px;">12月</div>
-<div class="progress-bar-wrap" style="margin-bottom:16px;">
-  <div class="progress-bar" style="width:33%;"></div>
-</div>
-
-<div class="cards">
-
-  <div class="leave-card">
-    <div class="store-pill" style="background:var(--ren);color:var(--ren-text);">閔聖</div>
-    <div class="card-main">
-      <div class="person">仁雄－黃閔聖</div>
-      <div class="card-meta">
-        <span class="tag">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          12／21（一）～ 12／25（五）
-        </span>
-        <span class="tag">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          日本 🇯🇵
-        </span>
-      </div>
+<!-- 11月：11/1=日 -->
+<div class="month-section">
+  <div class="month-title">2026年 11月</div>
+  <div class="calendar">
+    <div class="cal-head">
+      <div class="cal-head-cell sun">日</div><div class="cal-head-cell">一</div><div class="cal-head-cell">二</div><div class="cal-head-cell">三</div><div class="cal-head-cell">四</div><div class="cal-head-cell">五</div><div class="cal-head-cell sat">六</div>
     </div>
-    <div class="card-right">
-      <div><span class="status-badge status-pending">申請中</span></div>
-      <span class="days-count">5</span>
-      <span class="days-label">天</span>
+    <div class="cal-body">
+      <div class="cal-cell sun-col"><div class="cal-date">1</div></div>
+      <div class="cal-cell"><div class="cal-date">2</div></div>
+      <div class="cal-cell"><div class="cal-date">3</div></div>
+      <div class="cal-cell"><div class="cal-date">4</div></div>
+      <div class="cal-cell"><div class="cal-date">5</div></div>
+      <div class="cal-cell"><div class="cal-date">6</div></div>
+      <div class="cal-cell sat-col"><div class="cal-date">7</div></div>
+
+      <div class="cal-cell sun-col"><div class="cal-date">8</div></div>
+      <div class="cal-cell"><div class="cal-date">9</div></div>
+      <div class="cal-cell"><div class="cal-date">10</div></div>
+      <div class="cal-cell"><div class="cal-date">11</div></div>
+      <div class="cal-cell"><div class="cal-date">12</div></div>
+      <div class="cal-cell"><div class="cal-date">13</div></div>
+      <div class="cal-cell sat-col"><div class="cal-date">14</div></div>
+
+      <div class="cal-cell sun-col"><div class="cal-date">15</div></div>
+      <div class="cal-cell"><div class="cal-date">16</div><div class="leave-chip" style="background:#B5D4F4;color:#0C447C;"><span class="status-dot" style="background:#1E6B2E;"></span>鼎山<br>亭安</div></div>
+      <div class="cal-cell"><div class="cal-date">17</div><div class="leave-chip" style="background:#B5D4F4;color:#0C447C;"><span class="status-dot" style="background:#1E6B2E;"></span>鼎山<br>亭安</div></div>
+      <div class="cal-cell"><div class="cal-date">18</div><div class="leave-chip" style="background:#B5D4F4;color:#0C447C;"><span class="status-dot" style="background:#1E6B2E;"></span>鼎山<br>亭安</div></div>
+      <div class="cal-cell"><div class="cal-date">19</div><div class="leave-chip" style="background:#B5D4F4;color:#0C447C;"><span class="status-dot" style="background:#1E6B2E;"></span>鼎山<br>亭安</div></div>
+      <div class="cal-cell"><div class="cal-date">20</div></div>
+      <div class="cal-cell sat-col"><div class="cal-date">21</div></div>
+
+      <div class="cal-cell sun-col"><div class="cal-date">22</div></div>
+      <div class="cal-cell"><div class="cal-date">23</div></div>
+      <div class="cal-cell"><div class="cal-date">24</div></div>
+      <div class="cal-cell"><div class="cal-date">25</div></div>
+      <div class="cal-cell"><div class="cal-date">26</div></div>
+      <div class="cal-cell"><div class="cal-date">27</div></div>
+      <div class="cal-cell sat-col"><div class="cal-date">28</div></div>
+
+      <div class="cal-cell sun-col"><div class="cal-date">29</div></div>
+      <div class="cal-cell"><div class="cal-date">30</div></div>
+      <div class="cal-cell empty"></div>
+      <div class="cal-cell empty"></div>
+      <div class="cal-cell empty"></div>
+      <div class="cal-cell empty"></div>
+      <div class="cal-cell sat-col empty"></div>
     </div>
   </div>
+</div>
 
+<!-- 12月：12/1=二，空日一 -->
+<div class="month-section">
+  <div class="month-title">2026年 12月</div>
+  <div class="calendar">
+    <div class="cal-head">
+      <div class="cal-head-cell sun">日</div><div class="cal-head-cell">一</div><div class="cal-head-cell">二</div><div class="cal-head-cell">三</div><div class="cal-head-cell">四</div><div class="cal-head-cell">五</div><div class="cal-head-cell sat">六</div>
+    </div>
+    <div class="cal-body">
+      <div class="cal-cell empty sun-col"></div>
+      <div class="cal-cell empty"></div>
+      <div class="cal-cell"><div class="cal-date">1</div></div>
+      <div class="cal-cell"><div class="cal-date">2</div></div>
+      <div class="cal-cell"><div class="cal-date">3</div></div>
+      <div class="cal-cell"><div class="cal-date">4</div></div>
+      <div class="cal-cell sat-col"><div class="cal-date">5</div></div>
+
+      <div class="cal-cell sun-col"><div class="cal-date">6</div></div>
+      <div class="cal-cell"><div class="cal-date">7</div></div>
+      <div class="cal-cell"><div class="cal-date">8</div></div>
+      <div class="cal-cell"><div class="cal-date">9</div></div>
+      <div class="cal-cell"><div class="cal-date">10</div></div>
+      <div class="cal-cell"><div class="cal-date">11</div></div>
+      <div class="cal-cell sat-col"><div class="cal-date">12</div></div>
+
+      <div class="cal-cell sun-col"><div class="cal-date">13</div></div>
+      <div class="cal-cell"><div class="cal-date">14</div></div>
+      <div class="cal-cell"><div class="cal-date">15</div></div>
+      <div class="cal-cell"><div class="cal-date">16</div></div>
+      <div class="cal-cell"><div class="cal-date">17</div></div>
+      <div class="cal-cell"><div class="cal-date">18</div></div>
+      <div class="cal-cell sat-col"><div class="cal-date">19</div></div>
+
+      <div class="cal-cell sun-col"><div class="cal-date">20</div></div>
+      <div class="cal-cell"><div class="cal-date">21</div><div class="leave-chip" style="background:#CECBF6;color:#3C3489;"><span class="status-dot" style="background:#1E6B2E;"></span>仁雄<br>閔聖</div></div>
+      <div class="cal-cell"><div class="cal-date">22</div><div class="leave-chip" style="background:#CECBF6;color:#3C3489;"><span class="status-dot" style="background:#1E6B2E;"></span>仁雄<br>閔聖</div></div>
+      <div class="cal-cell"><div class="cal-date">23</div><div class="leave-chip" style="background:#CECBF6;color:#3C3489;"><span class="status-dot" style="background:#1E6B2E;"></span>仁雄<br>閔聖</div></div>
+      <div class="cal-cell"><div class="cal-date">24</div><div class="leave-chip" style="background:#CECBF6;color:#3C3489;"><span class="status-dot" style="background:#1E6B2E;"></span>仁雄<br>閔聖</div></div>
+      <div class="cal-cell"><div class="cal-date">25</div><div class="leave-chip" style="background:#CECBF6;color:#3C3489;"><span class="status-dot" style="background:#1E6B2E;"></span>仁雄<br>閔聖</div></div>
+      <div class="cal-cell sat-col"><div class="cal-date">26</div></div>
+
+      <div class="cal-cell sun-col"><div class="cal-date">27</div></div>
+      <div class="cal-cell"><div class="cal-date">28</div></div>
+      <div class="cal-cell"><div class="cal-date">29</div></div>
+      <div class="cal-cell"><div class="cal-date">30</div></div>
+      <div class="cal-cell"><div class="cal-date">31</div></div>
+      <div class="cal-cell empty"></div>
+      <div class="cal-cell sat-col empty"></div>
+    </div>
+  </div>
 </div>
 
 <footer>E-MO 倚盟電訊｜2026 預休申請追蹤</footer>
