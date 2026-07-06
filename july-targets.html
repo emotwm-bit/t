@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7月份業績目標查詢</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: #f0f4f8;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+/* ── Header ── */
+.hero {
+  background: linear-gradient(135deg, #2d4a8a 0%, #3d6cb5 60%, #4a7fd4 100%);
+  padding: 36px 20px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 30%, rgba(255,255,255,0.08) 0%, transparent 60%);
+}
+.hero-icon { font-size: 36px; margin-bottom: 8px; }
+.hero h1 {
+  color: #fff;
+  font-size: clamp(20px, 5vw, 28px);
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.hero p {
+  color: rgba(255,255,255,0.75);
+  font-size: 14px;
+}
+
+/* ── Selector Card ── */
+.selector-card {
+  background: #fff;
+  margin: -1px 0 0;
+  padding: 24px 20px;
+  border-bottom: 1px solid #e5eaf2;
+}
+.selector-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 480px) { .selector-inner { grid-template-columns: 1fr; } }
+
+.field-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: inherit;
+  color: #1e293b;
+  background: #fff;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+select:focus { outline: none; border-color: #3d6cb5; }
+
+/* ── Main content ── */
+.content {
+  max-width: 760px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+/* ── Empty state ── */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #94a3b8;
+}
+.empty-state .big-icon { font-size: 52px; margin-bottom: 12px; }
+.empty-state p { font-size: 15px; }
+
+/* ── Profile card (重新設計：尊榮感 + 戰力卡) ── */
+.profile-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 20px;
+  padding: 22px 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 20px rgba(45,74,138,0.10);
+  position: relative;
+  overflow: hidden;
+}
+.profile-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #2d4a8a 0%, #3d6cb5 50%, #4a7fd4 100%);
+}
+.profile-main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2d4a8a, #4a7fd4);
+  color: #fff;
+  font-size: 26px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(45,74,138,0.28);
+  border: 3px solid #fff;
+  outline: 1px solid rgba(45,74,138,0.15);
+}
+.profile-info {
+  flex: 1;
+  min-width: 0;
+}
+.profile-name {
+  font-size: 24px;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: 2px;
+  line-height: 1.1;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+.profile-name::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 32px;
+  height: 3px;
+  background: linear-gradient(90deg, #3d6cb5 0%, #4a7fd4 60%, transparent 100%);
+  border-radius: 2px;
+}
+
+/* 戰力等級卡（尊榮感大徽章） */
+.power-card {
+  width: 64px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  padding: 12px 6px 10px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  color: #fff;
+}
+.power-card-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: rgba(255,255,255,0.45);
+}
+.power-card-level {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  line-height: 1;
+  margin-top: 4px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  font-family: 'SF Pro Display', -apple-system, sans-serif;
+}
+.power-card-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-top: 6px;
+  opacity: 0.95;
+}
+.power-card-stars {
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-top: 4px;
+  color: rgba(255,255,255,0.95);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* 戰力等級配色 */
+.power-card-l1 {
+  background: linear-gradient(135deg, #94a3b8 0%, #64748b 60%, #475569 100%);
+  border: 2px solid #475569;
+}
+.power-card-l2 {
+  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 60%, #1d4ed8 100%);
+  border: 2px solid #1e40af;
+}
+.power-card-l3 {
+  background: linear-gradient(135deg, #c084fc 0%, #9333ea 50%, #7c3aed 100%);
+  border: 2px solid #6d28d9;
+}
+.power-card-l4 {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 40%, #dc2626 100%);
+  border: 2px solid #b91c1c;
+  animation: l4-pulse 2.4s ease-in-out infinite;
+}
+@keyframes l4-pulse {
+  0%, 100% { box-shadow: 0 4px 14px rgba(220,38,38,0.35); }
+  50% { box-shadow: 0 4px 20px rgba(220,38,38,0.65); }
+}
+.badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.badge-store { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.badge-supervisor { background: #fdf4ff; color: #7e22ce; border: 1px solid #e9d5ff; }
+
+/* ── Period buttons ── */
+.period-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.period-btn {
+  border-radius: 14px;
+  padding: 14px 12px;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.period-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 60px;
+  background: radial-gradient(circle at 100% 50%, rgba(255,255,255,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.period-btn .period-label {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+.period-btn .period-date {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.95;
+  margin-bottom: 8px;
+}
+.period-btn .period-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.22);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.period-btn .period-meta .dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.7);
+}
+.btn-first  { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); }
+.btn-second { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
+
+/* ── Cutoff banner ── */
+.cutoff-banner {
+  background: linear-gradient(90deg, #eff6ff 0%, #fef3c7 50%, #ffedd5 100%);
+  border: 1px solid #fde68a;
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #78350f;
+  margin-bottom: 20px;
+}
+.cutoff-banner .cutoff-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245,158,11,0.25);
+}
+
+/* ── Section title ── */
+.section-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-left: 3px solid #3d6cb5;
+  padding-left: 10px;
+}
+
+/* ── Metric grid ── */
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+@media (min-width: 560px) { .metric-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.metric-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 12px;
+  box-shadow: 0 2px 10px rgba(45,74,138,0.07);
+}
+.metric-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.metric-values {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.metric-val {
+  border-radius: 8px;
+  padding: 6px 4px;
+  text-align: center;
+}
+.val-label {
+  font-size: 10px;
+  font-weight: 600;
+  margin-bottom: 3px;
+  opacity: 0.85;
+}
+.val-num {
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+}
+.val-total  { background: #1e3a6e; color: #fff; }
+.val-first  { background: #22c55e; color: #fff; }
+.val-second { background: #f97316; color: #fff; }
+.val-num.small { font-size: 13px; }
+
+/* ── Supervisor note ── */
+.supervisor-note {
+  background: #fdf4ff;
+  border: 1px solid #e9d5ff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #7e22ce;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+/* ── Progress Section ── */
+.progress-section {
+  margin-top: 10px;
+  border-radius: 8px;
+  padding: 9px 10px;
+  border: 1px solid;
+  font-size: 12px;
+}
+.progress-section.behind { background: #fef9f9; border-color: #F09595; }
+.progress-section.ontrack { background: #f0f9ff; border-color: #B5D4F4; }
+.progress-section.achieved { background: #f0fdf4; border-color: #9FE1CB; }
+.progress-section.severe { background: #f5f5f4; border-color: #d6d3d1; }
+
+.progress-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 5px;
+  font-size: 11px; color: #64748b;
+}
+.progress-header strong { color: #1e293b; font-weight: 700; }
+
+.progress-bar-bg {
+  height: 7px; background: #f1f5f9; border-radius: 999px; overflow: hidden;
+  margin-bottom: 6px;
+}
+.progress-bar-fill { height: 100%; border-radius: 999px; transition: width 0.6s; }
+.progress-section.behind .progress-bar-fill { background: #DC2626; }
+.progress-section.ontrack .progress-bar-fill { background: #2563eb; }
+.progress-section.achieved .progress-bar-fill { background: #1D9E75; }
+.progress-section.severe .progress-bar-fill { background: #44403c; }
+
+.progress-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 4px;
+}
+.progress-gap { font-size: 11px; color: #64748b; }
+.progress-gap strong { font-size: 16px; font-weight: 800; }
+.progress-section.behind .progress-gap strong { color: #DC2626; }
+.progress-section.ontrack .progress-gap strong { color: #2563eb; }
+.progress-section.achieved .progress-gap { color: #04342C; }
+.progress-section.achieved .progress-gap strong { color: #1D9E75; }
+
+.progress-pace {
+  font-size: 10px; padding: 2px 7px; border-radius: 6px; font-weight: 600;
+}
+.progress-section.behind .progress-pace { color: #92400e; background: #FAEEDA; }
+.progress-section.ontrack .progress-pace { color: #0C447C; background: #E6F1FB; }
+.progress-section.achieved .progress-pace { color: #04342C; background: #E1F5EE; }
+
+.progress-warn {
+  display: flex; align-items: center; gap: 7px; padding: 2px 0;
+  font-size: 11px; color: #44403c; line-height: 1.4;
+}
+.progress-warn .icon { font-size: 14px; }
+
+.status-badge {
+  font-size: 10px; padding: 2px 7px; border-radius: 999px;
+  margin-left: 6px; font-weight: 600;
+}
+.status-badge.behind { background: #FCEBEB; color: #791F1F; }
+.status-badge.ontrack { background: #E6F1FB; color: #0C447C; }
+.status-badge.achieved { background: #E1F5EE; color: #04342C; }
+.status-badge.severe { background: #44403c; color: white; }
+
+/* ── Today banner ── */
+.today-banner {
+  background: linear-gradient(135deg, #2d4a8a 0%, #3d5ba0 100%);
+  border-radius: 12px;
+  padding: 11px 16px;
+  margin-bottom: 12px;
+  color: white;
+  display: flex; justify-content: center; align-items: center; gap: 14px;
+  font-size: 13px;
+  box-shadow: 0 2px 8px rgba(45,74,138,0.15);
+  flex-wrap: wrap;
+}
+.today-banner .today-icon { font-size: 16px; }
+.today-banner .today-divider { opacity: 0.4; }
+.today-banner strong { font-weight: 700; color: #fef3c7; }
+
+/* ── Footer ── */
+.page-footer {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 12px;
+  margin-top: 32px;
+  letter-spacing: 1px;
+}
+
+/* ── Period overview (empty state) ── */
+.period-overview {
+  max-width: 480px;
+  margin: 36px auto 0;
+  padding: 20px 18px 18px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(45,74,138,0.08);
+}
+.period-overview-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 14px;
+  letter-spacing: 0.5px;
+}
+.period-overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.period-overview-card {
+  border-radius: 12px;
+  padding: 14px 10px;
+  color: #fff;
+  text-align: center;
+}
+.po-first  { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); }
+.po-second { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
+.po-label {
+  font-size: 14px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.po-date {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.95;
+  margin-bottom: 8px;
+}
+.po-days {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(255,255,255,0.22);
+  padding: 3px 12px;
+  border-radius: 999px;
+}
+.period-overview-cutoff {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #78350f;
+  background: linear-gradient(90deg, #fef3c7 0%, #ffedd5 100%);
+  border-radius: 10px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.po-cutoff-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245,158,11,0.25);
+}
+
+
+/* ── Rank badges ── */
+.badge-rank {
+  font-weight: 800;
+  padding: 4px 12px;
+  font-size: 13px;
+}
+.rank-gold-leader { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+.rank-platinum    { background: #ede9fe; color: #5b21b6; border: 1px solid #c4b5fd; }
+.rank-gold        { background: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
+.rank-silver      { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+.rank-bronze      { background: #fed7aa; color: #9a3412; border: 1px solid #fdba74; }
+.rank-stone       { background: #e7e5e4; color: #44403c; border: 1px solid #d6d3d1; }
+.rank-rookie      { background: #ecfccb; color: #3f6212; border: 1px solid #bef264; }
+
+/* ── Cheer tag (鼓勵語) ── */
+.cheer-tag {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+}
+.cheer-gold-leader { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.cheer-platinum    { background: linear-gradient(135deg, #a78bfa, #7c3aed); }
+.cheer-gold        { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+.cheer-silver      { background: linear-gradient(135deg, #94a3b8, #64748b); }
+.cheer-bronze      { background: linear-gradient(135deg, #fb923c, #ea580c); }
+.cheer-stone       { background: linear-gradient(135deg, #38bdf8, #0284c7); }
+.cheer-rookie      { background: linear-gradient(135deg, #84cc16, #65a30d); }
+
+/* profile-info layout 微調 */
+.profile-info {
+  flex: 1;
+  min-width: 0;
+}
+.profile-info .badges {
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+
+/* ── Rank/Power 雙卡組合 ── */
+.rank-power-stack {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.rank-card {
+  width: 60px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  padding: 10px 4px 9px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  color: #fff;
+}
+.rank-card-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: rgba(255,255,255,0.45);
+}
+.rank-card-icon {
+  font-size: 18px;
+  line-height: 1;
+  margin-top: 2px;
+  margin-bottom: 4px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25));
+}
+.rank-card-name {
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.rank-card-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-top: 6px;
+  opacity: 0.92;
+}
+
+/* 各職級配色 */
+.rank-card-gold-leader {
+  background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 50%, #b45309 100%);
+  border: 2px solid #92400e;
+}
+.rank-card-platinum {
+  background: linear-gradient(135deg, #c4b5fd 0%, #8b5cf6 50%, #6d28d9 100%);
+  border: 2px solid #5b21b6;
+}
+.rank-card-gold {
+  background: linear-gradient(135deg, #fde68a 0%, #eab308 50%, #a16207 100%);
+  border: 2px solid #854d0e;
+}
+.rank-card-silver {
+  background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 50%, #475569 100%);
+  border: 2px solid #334155;
+}
+.rank-card-bronze {
+  background: linear-gradient(135deg, #fdba74 0%, #ea580c 50%, #9a3412 100%);
+  border: 2px solid #7c2d12;
+}
+.rank-card-stone {
+  background: linear-gradient(135deg, #a8a29e 0%, #78716c 50%, #44403c 100%);
+  border: 2px solid #292524;
+}
+.rank-card-rookie {
+  background: linear-gradient(135deg, #d9f99d 0%, #84cc16 50%, #4d7c0f 100%);
+  border: 2px solid #365314;
+}
+
+/* profile-card 寬度自適應微調 */
+.profile-main {
+  flex-wrap: nowrap;
+}
+@media (max-width: 380px) {
+  .rank-card, .power-card { width: 54px; }
+  .rank-card-name, .power-card-level { font-size: 13px; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-icon">📊</div>
+  <h1>7月份業績目標查詢</h1>
+  <p>選擇店點和姓名查看目標</p>
+</div>
+
+<div class="selector-card">
+  <div class="selector-inner">
+    <div>
+      <div class="field-label">🏪 店點</div>
+      <select id="storeSelect" onchange="onStoreChange()">
+        <option value="">請選擇店點</option>
+        <option value="鼎山店">鼎山店</option>
+        <option value="陽明店">陽明店</option>
+        <option value="後昌店">後昌店</option>
+        <option value="仁雄店">仁雄店</option>
+        <option value="凱旋店">凱旋店</option>
+        <option value="區督導">區督導</option>
+      </select>
+    </div>
+    <div>
+      <div class="field-label">👤 員工</div>
+      <select id="empSelect" onchange="onEmpChange()">
+        <option value="">請先選擇店點</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="empty-state" id="emptyState">
+    <div class="big-icon">🎯</div>
+    <p>請選擇店點和員工姓名<br>即可查看個人業績目標</p>
+
+    <div class="period-overview">
+      <div class="period-overview-title">📅 7月份業績期間</div>
+      <div class="period-overview-grid">
+        <div class="period-overview-card po-first">
+          <div class="po-label">🟢 上半場 55%</div>
+          <div class="po-date">6/29 - 7/13</div>
+          <div class="po-days">15 天</div>
+        </div>
+        <div class="period-overview-card po-second">
+          <div class="po-label">🟠 下半場 45%</div>
+          <div class="po-date">7/14 - 7/28</div>
+          <div class="po-days">15 天</div>
+        </div>
+      </div>
+      <div class="period-overview-cutoff">
+        <span class="po-cutoff-dot"></span>切點：7/13 24:00
+      </div>
+    </div>
+  </div>
+  <div id="resultArea" style="display:none;"></div>
+</div>
+
+<div class="page-footer">倚盟電訊 ｜ 2026年7月（6/29 - 7/28）｜ 上半場 55% / 下半場 45%</div>
+
+<script>
+// ── 從 index.html 自動讀取實際業績數字 ──────────────────
+let actualFromIndex = {};
+
+async function loadActualData() {
+  try {
+    const res  = await fetch('index.html');
+    const text = await res.text();
+    const m    = text.match(/const employeeData=(\[[\s\S]+?\]);/);
+    if (!m) return;
+    const empData = JSON.parse(m[1]);
+    empData.forEach(e => {
+      actualFromIndex[e['姓名']] = {
+        aq:    e['AQ累計']     ?? 0,
+        rt:    e['RT點數累計'] ?? 0,
+        rtc:   e['RT件數累計'] ?? 0,
+        up:    e['RT升轉累計'] ?? 0,
+        sp:    e['特維累計']   ?? 0,
+        rt999: e['RT999累計']  ?? 0,
+        rt1399:e['RT1399累計'] ?? 0,
+        ins:   e['寬頻累計']   ?? 0,
+        acc:   e['手機案累計'] ?? 0,
+      };
+    });
+    console.log('✅ 實際業績已從 index.html 載入');
+  } catch(err) {
+    console.warn('⚠️ 無法載入 index.html，使用內建數字', err);
+  }
+}
+
+// 啟動時載入
+loadActualData();
+
+const DATA = {
+  "鼎山店": {
+    "劉家妘": {
+      "aq": [19, 19],
+      "rt": [161, 132],
+      "rtc": [29, 24],
+      "up": [11, 9],
+      "sp": [9, 8],
+      "rt999": [13, 11],
+      "rt1399": [8, 6],
+      "dev": [21, 18],
+      "fg": [8, 6],
+      "ins": [10, 8],
+      "rank": "白金級",
+      "power": "L1",
+      "acc": [8248, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    },
+    "陳亭安": {
+      "aq": [19, 19],
+      "rt": [151, 124],
+      "rtc": [28, 22],
+      "up": [10, 9],
+      "sp": [9, 7],
+      "rt999": [12, 10],
+      "rt1399": [8, 6],
+      "dev": [20, 17],
+      "fg": [7, 6],
+      "ins": [9, 8],
+      "rank": "銀級",
+      "power": "L2",
+      "acc": [8248, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    },
+    "高琦茗": {
+      "aq": [19, 19],
+      "rt": [141, 115],
+      "rtc": [26, 21],
+      "up": [10, 8],
+      "sp": [8, 7],
+      "rt999": [12, 9],
+      "rt1399": [7, 6],
+      "dev": [19, 16],
+      "fg": [7, 6],
+      "ins": [8, 7],
+      "rank": "銅級",
+      "power": "L2",
+      "acc": [8248, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    },
+    "涂彥州": {
+      "aq": [19, 19],
+      "rt": [105, 86],
+      "rtc": [19, 16],
+      "up": [7, 6],
+      "sp": [7, 5],
+      "rt999": [9, 7],
+      "rt1399": [5, 4],
+      "dev": [14, 12],
+      "fg": [5, 4],
+      "ins": [7, 5],
+      "rank": "石頭",
+      "power": "L1",
+      "acc": [8248, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    }
+  },
+  "陽明店": {
+    "劉芳廷": {
+      "aq": [19, 19],
+      "rt": [135, 110],
+      "rtc": [25, 20],
+      "up": [9, 8],
+      "sp": [7, 6],
+      "rt999": [10, 9],
+      "rt1399": [6, 5],
+      "dev": [21, 17],
+      "fg": [8, 7],
+      "ins": [9, 8],
+      "rank": "銀級",
+      "power": "L2",
+      "acc": [8248, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    },
+    "邱雨蔚": {
+      "aq": [19, 19],
+      "rt": [135, 110],
+      "rtc": [24, 20],
+      "up": [9, 8],
+      "sp": [7, 6],
+      "rt999": [10, 8],
+      "rt1399": [6, 5],
+      "dev": [20, 17],
+      "fg": [8, 7],
+      "ins": [9, 8],
+      "rank": "銀級",
+      "power": "L2",
+      "acc": [8248, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    },
+    "林庭逸": {
+      "aq": [19, 19],
+      "rt": [94, 77],
+      "rtc": [17, 14],
+      "up": [7, 5],
+      "sp": [5, 4],
+      "rt999": [7, 6],
+      "rt1399": [4, 4],
+      "dev": [14, 12],
+      "fg": [6, 5],
+      "ins": [7, 5],
+      "rank": "石頭",
+      "power": "L1",
+      "acc": [8248, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    }
+  },
+  "後昌店": {
+    "郭家維": {
+      "aq": [19, 19],
+      "rt": [122, 99],
+      "rtc": [22, 18],
+      "up": [8, 7],
+      "sp": [8, 6],
+      "rt999": [9, 8],
+      "rt1399": [6, 5],
+      "dev": [18, 15],
+      "fg": [8, 6],
+      "ins": [8, 7],
+      "rank": "銅級",
+      "power": "L2",
+      "acc": [8248, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    },
+    "黃閔聖": {
+      "aq": [19, 19],
+      "rt": [130, 106],
+      "rtc": [24, 19],
+      "up": [9, 7],
+      "sp": [8, 7],
+      "rt999": [10, 8],
+      "rt1399": [7, 5],
+      "dev": [19, 16],
+      "fg": [8, 6],
+      "ins": [9, 7],
+      "rank": "銀級",
+      "power": "L2",
+      "acc": [8248, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    },
+    "秦曼芯": {
+      "aq": [19, 19],
+      "rt": [106, 87],
+      "rtc": [19, 16],
+      "up": [8, 6],
+      "sp": [7, 5],
+      "rt999": [8, 7],
+      "rt1399": [5, 4],
+      "dev": [16, 13],
+      "fg": [7, 5],
+      "ins": [7, 6],
+      "rank": "石頭",
+      "power": "L2",
+      "acc": [8248, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    }
+  },
+  "仁雄店": {
+    "黃傑稜": {
+      "aq": [19, 19],
+      "rt": [154, 126],
+      "rtc": [28, 23],
+      "up": [10, 9],
+      "sp": [8, 7],
+      "rt999": [12, 10],
+      "rt1399": [7, 6],
+      "dev": [20, 17],
+      "fg": [7, 6],
+      "ins": [9, 8],
+      "rank": "金級",
+      "power": "L1",
+      "acc": [8248, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    },
+    "郭紳鴻": {
+      "aq": [19, 19],
+      "rt": [164, 134],
+      "rtc": [30, 24],
+      "up": [11, 9],
+      "sp": [9, 7],
+      "rt999": [13, 10],
+      "rt1399": [8, 6],
+      "dev": [22, 18],
+      "fg": [8, 6],
+      "ins": [10, 8],
+      "rank": "銅級",
+      "power": "L3",
+      "acc": [8248, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    },
+    "石佳穎": {
+      "aq": [19, 19],
+      "rt": [156, 128],
+      "rtc": [29, 23],
+      "up": [11, 9],
+      "sp": [8, 7],
+      "rt999": [12, 10],
+      "rt1399": [8, 6],
+      "dev": [21, 17],
+      "fg": [8, 6],
+      "ins": [9, 8],
+      "rank": "銀級",
+      "power": "L2",
+      "acc": [8248, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    },
+    "蔡冠廷": {
+      "aq": [19, 19],
+      "rt": [109, 89],
+      "rtc": [20, 16],
+      "up": [8, 6],
+      "sp": [6, 5],
+      "rt999": [9, 7],
+      "rt1399": [5, 4],
+      "dev": [15, 12],
+      "fg": [6, 4],
+      "ins": [7, 5],
+      "rank": "石頭",
+      "power": "L1",
+      "acc": [8247, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    }
+  },
+  "凱旋店": {
+    "陳宛姍": {
+      "aq": [19, 19],
+      "rt": [131, 108],
+      "rtc": [24, 19],
+      "up": [9, 8],
+      "sp": [7, 5],
+      "rt999": [10, 8],
+      "rt1399": [6, 5],
+      "dev": [19, 16],
+      "fg": [8, 6],
+      "ins": [9, 7],
+      "rank": "白金級",
+      "power": "L2",
+      "acc": [8247, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    },
+    "黃子珊": {
+      "aq": [19, 19],
+      "rt": [105, 86],
+      "rtc": [19, 16],
+      "up": [7, 6],
+      "sp": [6, 4],
+      "rt999": [8, 7],
+      "rt1399": [5, 4],
+      "dev": [15, 13],
+      "fg": [6, 5],
+      "ins": [7, 5],
+      "rank": "銀級",
+      "power": "L1",
+      "acc": [8247, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    },
+    "方若帆": {
+      "aq": [19, 19],
+      "rt": [114, 94],
+      "rtc": [21, 17],
+      "up": [8, 6],
+      "sp": [6, 5],
+      "rt999": [9, 7],
+      "rt1399": [5, 4],
+      "dev": [17, 13],
+      "fg": [7, 5],
+      "ins": [7, 6],
+      "rank": "金級",
+      "power": "L1",
+      "acc": [8247, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    },
+    "林瑞獻": {
+      "aq": [19, 19],
+      "rt": [81, 66],
+      "rtc": [15, 12],
+      "up": [6, 4],
+      "sp": [4, 4],
+      "rt999": [6, 5],
+      "rt1399": [4, 3],
+      "dev": [12, 9],
+      "fg": [4, 4],
+      "ins": [6, 4],
+      "rank": "石頭",
+      "power": "L1",
+      "acc": [8247, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    },
+    "劉宗翰": {
+      "aq": [8, 8],
+      "rt": [48, 39],
+      "rtc": [9, 7],
+      "up": [3, 3],
+      "sp": [2, 2],
+      "rt999": [4, 3],
+      "rt1399": [2, 2],
+      "dev": [7, 6],
+      "fg": [3, 2],
+      "ins": [3, 3],
+      "rank": "小石頭M1",
+      "power": "L1",
+      "acc": [4124, 3374],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    }
+  },
+  "區督導": {
+    "黃庭鈞": {
+      "aq": [19, 19],
+      "rt": [97, 80],
+      "rtc": [18, 14],
+      "up": [7, 5],
+      "sp": [6, 4],
+      "rt999": [8, 6],
+      "rt1399": [4, 4],
+      "dev": [14, 12],
+      "fg": [6, 5],
+      "ins": [7, 5],
+      "rank": "黃金級",
+      "power": "L1",
+      "acc": [8247, 6748],
+      "actual": {"aq": 0, "rt": 0, "rtc": 0, "up": 0, "sp": 0, "rt999": 0, "rt1399": 0, "dev": 0, "fg": 0, "ins": 0, "acc": 0}
+    }
+  }
+};
+
+
+
+const METRICS = [
+  { key:'aq',     label:'AQ點數',  icon:'🎯' },
+  { key:'rt',     label:'RT點數',  icon:'📋' },
+  { key:'rtc',    label:'RT件數',  icon:'📦' },
+  { key:'up',     label:'升轉',    icon:'⬆️' },
+  { key:'sp',     label:'特維',    icon:'🔧' },
+  { key:'rt999',  label:'RT999',   icon:'💎', hidden:true },  /* RT999 暫不列入業績獎金計算，先隱藏；若要恢復顯示，移除本行的 hidden:true 即可 */
+  { key:'rt1399', label:'RT1399',  icon:'💠' },
+  { key:'dev',    label:'Device',  icon:'📱' },
+  { key:'fg',     label:'5G',      icon:'📶' },
+  { key:'ins',    label:'保險',    icon:'🛡️' },
+  { key:'acc',    label:'配件',    icon:'🎁' }
+];
+
+
+
+
+function rankIcon(rank) {
+  const icons = {
+    '黃金級':'👑','白金級':'💎','金級':'⭐','銀級':'🥈',
+    '銅級':'🥉','石頭':'🪨','小石頭M6':'🌱','小石頭':'🌱'
+  };
+  return icons[rank] || '⭐';
+}
+
+function powerStars(power) {
+  const n = parseInt(power.replace('L','')) || 1;
+  return '★'.repeat(n) + '☆'.repeat(4-n);
+}
+
+function rankKey(rank) {
+  const map = {'黃金級':'gold-leader','白金級':'platinum','金級':'gold','銀級':'silver','銅級':'bronze','石頭':'stone','小石頭M6':'rookie','小石頭':'rookie'};
+  return map[rank] || 'stone';
+}
+
+function cheerText(rank, power) {
+  // 鼓勵語：依職級給出年輕活潑的標語
+  const cheerByRank = {
+    '黃金級': ['👑 督導之光', '🌟 領頭羊'],
+    '白金級': ['✨ 業績王牌', '💎 業績扛霸子'],
+    '金級':   ['🔥 衝刺擔當', '🚀 火力全開'],
+    '銀級':   ['⚡ 穩定輸出', '💪 黃金預備軍'],
+    '銅級':   ['🌱 突破中', '🎯 蓄勢待發'],
+    '石頭':   ['🌟 潛力新星', '📈 成長加速'],
+    '小石頭M6':['🌿 養成中', '🎒 學習衝刺'],
+    '小石頭': ['🌿 養成中', '🎒 學習衝刺']
+  };
+  // 戰力 L3 / L4 額外加燃料
+  const powerBoost = {'L3':' 🔥', 'L4':' 🔥🔥'};
+  const list = cheerByRank[rank] || ['🌟 一起加油'];
+  // 用戰力等級當索引（L1=0, L2=0, L3=1, L4=1）讓 L3/L4 拿到第二個鼓勵語
+  const idx = (power === 'L3' || power === 'L4') ? 1 : 0;
+  return list[idx % list.length] + (powerBoost[power] || '');
+}
+
+function onStoreChange() {
+  const store = document.getElementById('storeSelect').value;
+  const empSel = document.getElementById('empSelect');
+  empSel.innerHTML = '<option value="">請選擇員工</option>';
+  if (store && DATA[store]) {
+    Object.keys(DATA[store]).forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name; opt.textContent = name;
+      empSel.appendChild(opt);
+    });
+  }
+  clearResult();
+}
+
+function onEmpChange() {
+  const store = document.getElementById('storeSelect').value;
+  const emp   = document.getElementById('empSelect').value;
+  if (!store || !emp) { clearResult(); return; }
+  renderResult(store, emp);
+}
+
+function clearResult() {
+  document.getElementById('emptyState').style.display = '';
+  document.getElementById('resultArea').style.display = 'none';
+  document.getElementById('resultArea').innerHTML = '';
+}
+
+
+/* ─── Progress helpers ─────────────────────── */
+const PERIOD_FIRST_END = new Date(2026, 6, 13);   // 上半場結束 7/13 (month index 6 = July)
+const PERIOD_SECOND_END = new Date(2026, 6, 28);  // 下半場結束 7/28
+const PERIOD_FIRST_DAYS = 15;
+const PERIOD_SECOND_DAYS = 15;
+const DATA_DATE = new Date(2026, 6, 28); // 資料截止日 7/28（下半場，累計至 7/28）
+
+function getTodayMidnight() {
+  // 以 DATA_DATE（資料截止日）作為「今日」，這樣頁面顯示與資料對齊
+  const t = new Date(DATA_DATE);
+  t.setHours(0,0,0,0);
+  return t;
+}
+
+function getCurrentPeriod() {
+  const today = getTodayMidnight();
+  const firstEnd = new Date(2026, 6, 13); firstEnd.setHours(0,0,0,0);
+  const secondEnd = new Date(2026, 6, 28); secondEnd.setHours(0,0,0,0);
+  if (today.getTime() <= firstEnd.getTime()) return 'first';
+  if (today.getTime() <= secondEnd.getTime()) return 'second';
+  return 'ended';
+}
+
+function getDaysLeftInclusive() {
+  const today = getTodayMidnight();
+  const period = getCurrentPeriod();
+  let endDate;
+  if (period === 'first') { endDate = new Date(2026, 6, 13); }
+  else if (period === 'second') { endDate = new Date(2026, 6, 28); }
+  else return 0;
+  endDate.setHours(0,0,0,0);
+  // 含今天的剩餘天數 = (endDate - today)/86400000 + 1
+  const days = Math.round((endDate - today) / (1000*60*60*24)) + 1;
+  return Math.max(0, days);
+}
+
+function fmtNum(v) {
+  if (typeof v !== 'number') return v;
+  if (Number.isInteger(v)) return v.toLocaleString();
+  return (Math.round(v * 10) / 10).toLocaleString();
+}
+
+function renderProgressBlock(m, first, second, actual) {
+  const period = getCurrentPeriod();
+  if (period === 'ended') {
+    return { html: '', state: 'none' };
+  }
+  const target = (period === 'first') ? first : second;
+  const totalDays = (period === 'first') ? PERIOD_FIRST_DAYS : PERIOD_SECOND_DAYS;
+  const daysLeft = getDaysLeftInclusive();
+  const periodLabel = (period === 'first') ? '上半場進度' : '下半場進度';
+
+  if (target <= 0) {
+    return { html: '', state: 'none' };
+  }
+
+  const remain = target - actual;
+  const pctRaw = (actual / target) * 100;
+  const pctFill = Math.min(100, Math.max(0, pctRaw));
+  let state, gapHTML, paceHTML;
+
+  if (remain <= 0) {
+    state = 'achieved';
+    const over = Math.abs(remain);
+    gapHTML = `<div class="progress-gap">✅ 已超標 <strong>+${fmtNum(over)}</strong></div>`;
+    paceHTML = `<div class="progress-pace">🌟 維持就好</div>`;
+  } else if (daysLeft <= 0) {
+    state = 'severe';
+    gapHTML = `<div class="progress-warn"><span class="icon">⏰</span><span>本場次已結束</span></div>`;
+    paceHTML = '';
+  } else {
+    const perDay = remain / daysLeft;
+    const avgPerDay = target / totalDays;
+    const isSevere = perDay > avgPerDay * 2.5;
+    if (isSevere) {
+      state = 'severe';
+      gapHTML = `<div class="progress-warn"><span class="icon">⚠️</span><span>進度落後較多，建議找店長討論衝刺策略</span></div>`;
+      paceHTML = '';
+    } else {
+      // 判斷 落後 vs. 在進度內
+      const elapsed = totalDays - daysLeft + 1;
+      const expectedNow = (elapsed / totalDays) * target;
+      if (actual >= expectedNow) {
+        state = 'ontrack';
+      } else {
+        state = 'behind';
+      }
+      gapHTML = `<div class="progress-gap"><span>還差</span> <strong>${fmtNum(remain)}</strong></div>`;
+      const paceTxt = (perDay >= 10 || Number.isInteger(perDay)) ? Math.round(perDay).toLocaleString() : (Math.round(perDay*10)/10).toLocaleString();
+      const paceIcon = (state === 'behind') ? '💪' : '📈';
+      paceHTML = `<div class="progress-pace">${paceIcon} 每日需 ${paceTxt}</div>`;
+    }
+  }
+
+  const html = `
+    <div class="progress-section ${state}">
+      <div class="progress-header">
+        <span>${periodLabel}</span>
+        <span>已 <strong>${fmtNum(actual)}</strong> / ${fmtNum(target)}</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" style="width: ${pctFill}%"></div>
+      </div>
+      <div class="progress-footer">
+        ${gapHTML}
+        ${paceHTML}
+      </div>
+    </div>`;
+  return { html, state };
+}
+
+function getStatusBadge(state) {
+  if (!state || state === 'none') return '';
+  const map = {
+    behind: ['落後', 'behind'],
+    ontrack: ['在進度內', 'ontrack'],
+    achieved: ['已達標 🎉', 'achieved'],
+    severe: ['嚴重落後', 'severe']
+  };
+  const [text, cls] = map[state] || ['', ''];
+  if (!text) return '';
+  return `<span class="status-badge ${cls}">${text}</span>`;
+}
+
+function renderTodayBanner() {
+  const today = getTodayMidnight();
+  const m = today.getMonth() + 1;
+  const d = today.getDate();
+  const period = getCurrentPeriod();
+  const daysLeft = getDaysLeftInclusive();
+  let periodTxt = '';
+  if (period === 'first') periodTxt = `上半場還有 <strong>${daysLeft}</strong> 天`;
+  else if (period === 'second') periodTxt = `下半場還有 <strong>${daysLeft}</strong> 天`;
+  else periodTxt = '本月業績期間已結束';
+  return `
+    <div class="today-banner">
+      <span class="today-icon">📅</span>
+      <span>今日 <strong>${m}/${d}</strong></span>
+      <span class="today-divider">|</span>
+      <span>${periodTxt}</span>
+    </div>`;
+}
+
+
+function renderResult(store, emp) {
+  const d = DATA[store][emp];
+  const isSupervisor = (store === '區督導');
+  document.getElementById('emptyState').style.display = 'none';
+  const area = document.getElementById('resultArea');
+  area.style.display = '';
+
+  let html = `
+    <div class="profile-card">
+      <div class="profile-main">
+        <div class="avatar">${emp[0]}</div>
+        <div class="profile-info">
+          <h2 class="profile-name">${emp}</h2>
+          <div class="badges">
+            <span class="badge badge-store">🏪 ${isSupervisor ? '區督導' : store}</span>
+          </div>
+          <div class="cheer-tag cheer-${rankKey(d.rank)}">${cheerText(d.rank, d.power)}</div>
+        </div>
+        <div class="rank-power-stack">
+          <div class="rank-card rank-card-${rankKey(d.rank)}">
+            <div class="rank-card-top"></div>
+            <div class="rank-card-icon">${rankIcon(d.rank)}</div>
+            <div class="rank-card-name">${d.rank}</div>
+            <div class="rank-card-label">職級</div>
+          </div>
+          <div class="power-card power-card-${d.power.toLowerCase()}">
+            <div class="power-card-top"></div>
+            <div class="power-card-level">${d.power}</div>
+            <div class="power-card-label">戰力</div>
+            <div class="power-card-stars">${powerStars(d.power)}</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  if (isSupervisor) {
+    html += `<div class="supervisor-note">👑 區督導目標 ＝ 督導區原始店平均 × 23% 投入係數</div>`;
+  }
+
+  html += `
+    <div class="period-row">
+      <div class="period-btn btn-first">
+        <div class="period-label">🟢 上半場 55%</div>
+        <div class="period-date">6/29 - 7/13</div>
+        <div class="period-meta">📅 15 天<span class="dot"></span>權重 55%</div>
+      </div>
+      <div class="period-btn btn-second">
+        <div class="period-label">🟠 下半場 45%</div>
+        <div class="period-date">7/14 - 7/28</div>
+        <div class="period-meta">📅 15 天<span class="dot"></span>權重 45%</div>
+      </div>
+    </div>
+
+    <div class="cutoff-banner">
+      <span class="cutoff-dot"></span>
+      上下半場切點：<strong style="margin-left:2px;">7/13 24:00</strong>
+    </div>
+
+    ${renderTodayBanner()}
+
+    <div class="section-title">📈 業績目標</div>
+    <div class="metric-grid">`;
+
+  METRICS.forEach(m => {
+    if (m.hidden) return;   // 隱藏的指標(如 RT999)不顯示卡片
+    const first  = d[m.key][0];
+    const second = d[m.key][1];
+    const total  = first + second;
+    const isLarge = total >= 1000;
+    const _liveActual = actualFromIndex[emp];
+    const _dataActual = d.actual || {};
+    const _actual = {};
+    METRICS.forEach(mm => {
+      if (_liveActual && _liveActual[mm.key] != null && _liveActual[mm.key] !== 0) {
+        _actual[mm.key] = _liveActual[mm.key];
+      } else {
+        _actual[mm.key] = _dataActual[mm.key] ?? 0;
+      }
+    });
+    const actualVal = _actual[m.key];
+    const progressHTML = renderProgressBlock(m, first, second, actualVal);
+    html += `
+      <div class="metric-card">
+        <div class="metric-title">${m.icon} ${m.label}${getStatusBadge(progressHTML.state)}</div>
+        <div class="metric-values">
+          <div class="metric-val val-total">
+            <div class="val-label">全月</div>
+            <div class="val-num${isLarge?' small':''}">${total.toLocaleString()}</div>
+          </div>
+          <div class="metric-val val-first">
+            <div class="val-label">上半場</div>
+            <div class="val-num${isLarge?' small':''}">${first.toLocaleString()}</div>
+          </div>
+          <div class="metric-val val-second">
+            <div class="val-label">下半場</div>
+            <div class="val-num${isLarge?' small':''}">${second.toLocaleString()}</div>
+          </div>
+        </div>
+        ${progressHTML.html}
+      </div>`;
+  });
+
+  html += `</div>`;
+  area.innerHTML = html;
+}
+</script>
+</body>
+</html>
