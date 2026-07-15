@@ -379,6 +379,8 @@ select:focus { outline: none; border-color: #3d6cb5; }
 .val-first  { background: #22c55e; color: #fff; }
 .val-second { background: #f97316; color: #fff; }
 .val-num.small { font-size: 13px; }
+.workleft-line{margin-top:8px;padding:7px 10px;border-radius:9px;background:#eef2ff;border:1px solid #c7d2fe;color:#3730a3;font-size:12px;font-weight:700;text-align:center;}
+.workleft-line strong{font-size:15px;color:#4f46e5;margin:0 2px;}
 .metric-sub {
   margin-top: 8px;
   font-size: 11px;
@@ -802,6 +804,7 @@ const DATA = {
       ],
       "rank": "銀級",
       "power": "L2",
+      "offUp": [702, 707, 710, 713],
       "actual": {
         "aq": 15,
         "rt": 180.4,
@@ -863,6 +866,7 @@ const DATA = {
       ],
       "rank": "銅級",
       "power": "L2",
+      "offUp": [703, 704, 708, 712],
       "actual": {
         "aq": 14,
         "rt": 68.7,
@@ -924,6 +928,7 @@ const DATA = {
       ],
       "rank": "石頭",
       "power": "L2",
+      "offUp": [629, 701, 705, 709, 714],
       "actual": {
         "aq": 13.5,
         "rt": 106.95,
@@ -987,6 +992,7 @@ const DATA = {
       ],
       "rank": "白金級",
       "power": "L2",
+      "offUp": [701, 703, 707, 710],
       "actual": {
         "aq": 9.5,
         "rt": 184.09999999999997,
@@ -1048,6 +1054,7 @@ const DATA = {
       ],
       "rank": "石頭",
       "power": "L1",
+      "offUp": [630, 704, 709, 710, 714],
       "actual": {
         "aq": 15.5,
         "rt": 112.5,
@@ -1109,6 +1116,7 @@ const DATA = {
       ],
       "rank": "銀級",
       "power": "L1",
+      "offUp": [630, 704, 705, 708, 712, 713],
       "actual": {
         "aq": 18,
         "rt": 57.2,
@@ -1170,6 +1178,7 @@ const DATA = {
       ],
       "rank": "金級",
       "power": "L1",
+      "offUp": [702, 706, 707, 711, 712],
       "actual": {
         "aq": 16.5,
         "rt": 72.5,
@@ -1231,6 +1240,7 @@ const DATA = {
       ],
       "rank": "小石頭",
       "power": "L1",
+      "offUp": [701, 705, 708, 711],
       "actual": {
         "aq": 1.5,
         "rt": 92.95,
@@ -1294,6 +1304,7 @@ const DATA = {
       ],
       "rank": "金級",
       "power": "L1",
+      "offUp": [630, 701, 704, 708, 712],
       "actual": {
         "aq": 10.5,
         "rt": 127.5,
@@ -1355,6 +1366,7 @@ const DATA = {
       ],
       "rank": "銀級",
       "power": "L2",
+      "offUp": [629, 701, 702, 707, 711],
       "actual": {
         "aq": 12.5,
         "rt": 135.45,
@@ -1416,6 +1428,7 @@ const DATA = {
       ],
       "rank": "銅級",
       "power": "L3",
+      "offUp": [629, 703, 705, 706, 710, 714],
       "actual": {
         "aq": 12,
         "rt": 165,
@@ -1477,6 +1490,7 @@ const DATA = {
       ],
       "rank": "石頭",
       "power": "L1",
+      "offUp": [629, 702, 705, 706, 709, 713],
       "actual": {
         "aq": 11.5,
         "rt": 90.45,
@@ -1540,6 +1554,7 @@ const DATA = {
       ],
       "rank": "黃金級",
       "power": "L1",
+      "offUp": [702, 705, 706, 709, 713],
       "actual": {
         "aq": 9.5,
         "rt": 104.60000000000001,
@@ -1603,6 +1618,7 @@ const DATA = {
       ],
       "rank": "白金級",
       "power": "L1",
+      "offUp": [701, 704, 708, 712],
       "actual": {
         "aq": 22.5,
         "rt": 152.95,
@@ -1664,6 +1680,7 @@ const DATA = {
       ],
       "rank": "銅級",
       "power": "L2",
+      "offUp": [701, 704, 707, 708, 711],
       "actual": {
         "aq": 8.5,
         "rt": 104.5,
@@ -1725,6 +1742,7 @@ const DATA = {
       ],
       "rank": "石頭",
       "power": "L1",
+      "offUp": [703, 707, 710, 714],
       "actual": {
         "aq": 4.5,
         "rt": 97.25,
@@ -1786,6 +1804,7 @@ const DATA = {
       ],
       "rank": "銀級",
       "power": "L2",
+      "offUp": [629, 702, 705, 706, 709, 713],
       "actual": {
         "aq": 3,
         "rt": 133.7,
@@ -1849,6 +1868,7 @@ const DATA = {
       ],
       "rank": "銀級",
       "power": "L2",
+      "offUp": [629, 702, 707, 708, 711],
       "actual": {
         "aq": 13,
         "rt": 140.4,
@@ -1910,6 +1930,7 @@ const DATA = {
       ],
       "rank": "銀級",
       "power": "L2",
+      "offUp": [701, 705, 706, 710, 714],
       "actual": {
         "aq": 13,
         "rt": 131.4,
@@ -1971,6 +1992,7 @@ const DATA = {
       ],
       "rank": "石頭",
       "power": "L1",
+      "offUp": [630, 704, 709, 712],
       "actual": {
         "aq": 20,
         "rt": 94.75,
@@ -2087,6 +2109,14 @@ function getTodayMidnight() {
   return t;
 }
 
+function upperWorkdaysLeft(d){
+  // 上半場 6/29-7/14(MMDD)，扣此人休假，只算資料日(含)之後的上班日
+  const upDates=[629,630,701,702,703,704,705,706,707,708,709,710,711,712,713,714];
+  const t=getTodayMidnight();
+  const tm=(t.getMonth()+1)*100+t.getDate();
+  const off=new Set(d.offUp||[]);
+  return upDates.filter(x=> x>=tm && !off.has(x)).length;
+}
 function getCurrentPeriod() {
   const today = getTodayMidnight();
   const firstEnd = new Date(2026, 6, 14); firstEnd.setHours(0,0,0,0);
@@ -2219,6 +2249,8 @@ function renderTodayBanner() {
 
 function renderResult(store, emp) {
   const d = DATA[store][emp];
+  const _workLeft = upperWorkdaysLeft(d);
+  const _isFirstHalf = getCurrentPeriod() === 'first';
   const isSupervisor = (store === '區督導');
   document.getElementById('emptyState').style.display = 'none';
   const area = document.getElementById('resultArea');
@@ -2311,6 +2343,7 @@ function renderResult(store, emp) {
           </div>
         </div>
         ${pb.html}
+        ${_isFirstHalf ? `<div class="workleft-line">🗓️ 上半場上班還剩 <strong>${_workLeft}</strong> 天</div>` : ''}
         <div class="metric-sub">全月 ${total.toLocaleString()} ｜ 下半場 ${second.toLocaleString()}</div>
       </div>`;
   });
