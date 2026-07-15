@@ -379,8 +379,11 @@ select:focus { outline: none; border-color: #3d6cb5; }
 .val-first  { background: #22c55e; color: #fff; }
 .val-second { background: #f97316; color: #fff; }
 .val-num.small { font-size: 13px; }
-.workleft-line{margin-top:8px;padding:7px 10px;border-radius:9px;background:#eef2ff;border:1px solid #c7d2fe;color:#3730a3;font-size:12px;font-weight:700;text-align:center;}
-.workleft-line strong{font-size:15px;color:#4f46e5;margin:0 2px;}
+.workleft-line{margin-top:8px;padding:7px 10px;border-radius:9px;background:#eef2ff;border:1px solid #c7d2fe;color:#3730a3;font-size:12px;font-weight:700;text-align:center;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;}
+.workleft-line strong{font-size:15px;color:#4f46e5;margin:0 1px;}
+.workleft-line .wl-b{color:#0f766e;}
+.workleft-line .wl-b strong{color:#0d9488;}
+.workleft-line .wl-sep{color:#a5b4fc;margin:0 2px;}
 .metric-sub {
   margin-top: 8px;
   font-size: 11px;
@@ -2250,6 +2253,7 @@ function renderTodayBanner() {
 function renderResult(store, emp) {
   const d = DATA[store][emp];
   const _workLeft = upperWorkdaysLeft(d);
+  const _calLeft = getDaysLeftInclusive();
   const _isFirstHalf = getCurrentPeriod() === 'first';
   const isSupervisor = (store === '區督導');
   document.getElementById('emptyState').style.display = 'none';
@@ -2343,7 +2347,7 @@ function renderResult(store, emp) {
           </div>
         </div>
         ${pb.html}
-        ${_isFirstHalf ? `<div class="workleft-line">🗓️ 上半場上班還剩 <strong>${_workLeft}</strong> 天</div>` : ''}
+        ${_isFirstHalf ? `<div class="workleft-line"><span class="wl-a">🗓️ 距上半場結束 <strong>${_calLeft}</strong> 天</span><span class="wl-sep">｜</span><span class="wl-b">上班還剩 <strong>${_workLeft}</strong> 天</span></div>` : ''}
         <div class="metric-sub">全月 ${total.toLocaleString()} ｜ 下半場 ${second.toLocaleString()}</div>
       </div>`;
   });
