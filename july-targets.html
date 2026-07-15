@@ -2347,7 +2347,7 @@ function renderResult(store, emp) {
           </div>
         </div>
         ${pb.html}
-        ${_isFirstHalf ? `<div class="workleft-line"><span class="wl-a">🗓️ 距上半場結束 <strong>${_calLeft}</strong> 天</span><span class="wl-sep">｜</span><span class="wl-b">上班還剩 <strong>${_workLeft}</strong> 天</span></div>` : ''}
+        ${_isFirstHalf ? `<div class="workleft-line"><span class="wl-a">🗓️ 距上半場結束 <strong>${_calLeft}</strong> 天</span><span class="wl-sep">｜</span><span class="wl-b">上半場上班還剩 <strong>${_workLeft}</strong> 天</span></div>` : ''}
         <div class="metric-sub">全月 ${total.toLocaleString()} ｜ 下半場 ${second.toLocaleString()}</div>
       </div>`;
   });
