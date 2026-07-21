@@ -376,9 +376,10 @@ select:focus { outline: none; border-color: #3d6cb5; }
   line-height: 1;
 }
 .val-total  { background: #1e3a6e; color: #fff; }
-.val-first  { background: #22c55e; color: #fff; }
-.val-second { background: #f97316; color: #fff; }
+.val-first  { background: #15803d; color: #fff; }
+.val-second { background: #fce7f3; color: #be185d; }
 .val-num.small { font-size: 13px; }
+.today-work{font-weight:800;}
 .workleft-line{margin-top:8px;padding:7px 10px;border-radius:9px;background:#eef2ff;border:1px solid #c7d2fe;color:#3730a3;font-size:12px;font-weight:700;text-align:center;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;}
 .workleft-line strong{font-size:15px;color:#4f46e5;margin:0 1px;}
 .workleft-line .wl-b{color:#0f766e;}
@@ -465,10 +466,10 @@ select:focus { outline: none; border-color: #3d6cb5; }
   font-size: 10px; padding: 2px 7px; border-radius: 999px;
   margin-left: 6px; font-weight: 600;
 }
-.status-badge.behind { background: #FCEBEB; color: #791F1F; }
-.status-badge.ontrack { background: #E6F1FB; color: #0C447C; }
+.status-badge.behind { background: #FEE2E2; color: #dc2626; }
+.status-badge.ontrack { background: #DCFCE7; color: #16a34a; }
 .status-badge.achieved { background: #E1F5EE; color: #04342C; }
-.status-badge.severe { background: #44403c; color: white; }
+.status-badge.severe { background: #FEE2E2; color: #b91c1c; }
 
 /* ── Today banner ── */
 .today-banner {
@@ -2820,7 +2821,7 @@ function getStatusBadge(state) {
   return `<span class="status-badge ${cls}">${text}</span>`;
 }
 
-function renderTodayBanner() {
+function renderTodayBanner(extra) {
   const today = getTodayMidnight();
   const m = today.getMonth() + 1;
   const d = today.getDate();
@@ -2836,6 +2837,7 @@ function renderTodayBanner() {
       <span>今日 <strong>${m}/${d}</strong></span>
       <span class="today-divider">|</span>
       <span>${periodTxt}</span>
+      ${extra ? `<span class="today-divider">|</span><span class="today-work">${extra}</span>` : ''}
     </div>`;
 }
 
@@ -2862,7 +2864,7 @@ function renderStoreResult(store){
         </div>
       </div>
     </div>
-    ${renderTodayBanner()}
+    ${renderTodayBanner(_monthLeft > 0 ? `距全月結束 <strong>${_monthLeft}</strong> 天` : '')}
     <div class="section-title">📈 全店業績目標 ｜ 全月 (6/29-7/29) 累計進度</div>
     <div class="metric-grid">`;
 
@@ -2899,7 +2901,7 @@ function renderStoreResult(store){
           </div>
         </div>
         ${pb.html}
-        ${_monthLeft > 0 ? `<div class="workleft-line"><span class="wl-a">🗓️ 距全月結束 <strong>${_monthLeft}</strong> 天</span></div>` : ''}
+        
         <div class="metric-sub">上半場 ${sumFirst.toLocaleString()} ｜ 下半場 ${sumSecond.toLocaleString()}</div>
       </div>`;
   });
@@ -2973,7 +2975,7 @@ function renderResult(store, emp) {
       上下半場切點：<strong style="margin-left:2px;">7/14 24:00</strong>
     </div>
 
-    ${renderTodayBanner()}
+    ${renderTodayBanner(_showWork ? `${_pName}上班還剩 <strong>${_workLeft}</strong> 天` : '')}
 
     <div class="section-title">📈 業績目標 ｜ ${_pName} (${_pRange}) 衝刺進度</div>
     <div class="metric-grid">`;
@@ -3012,7 +3014,7 @@ function renderResult(store, emp) {
           </div>
         </div>
         ${pb.html}
-        ${_showWork ? `<div class="workleft-line"><span class="wl-a">🗓️ 距${_pName}結束 <strong>${_calLeft}</strong> 天</span><span class="wl-sep">｜</span><span class="wl-b">${_pName}上班還剩 <strong>${_workLeft}</strong> 天</span></div>` : ''}
+        
         <div class="metric-sub">全月 ${total.toLocaleString()} ｜ ${otherName} ${otherTarget.toLocaleString()}</div>
       </div>`;
   });
