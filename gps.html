@@ -243,7 +243,7 @@
     <div class="tab" data-page="kpi">
       <span class="t1">📟 3大KPI分數</span>
       <span class="t2">三大KPI・補分機會</span>
-      <span class="badge b-red">✅ 五店RT全數過領獎線</span>
+      <span class="badge b-red">🔴 後昌差0.03%掉出領獎線</span>
     </div>
   </div>
 
@@ -316,7 +316,7 @@
         <div class="sec">
       <div class="sec-head">
         <h2>🎰 RT KPI獎勵（RT加權總分 → 每門單價）</h2>
-        <span class="dest">先過 26.5% 領獎線，之後 KPI 每跨一檔、全店每一門單價跟著跳</span>
+        <span class="dest">先過 27.0% 領獎線（官方Y26/07新制），之後 KPI 每跨一檔、全店每一門單價跟著跳</span>
       </div>
       <div class="panel">
         <div class="tbl-scroll">
@@ -325,7 +325,7 @@
           <tbody><!-- 由 JS 依 LADDER + KPI.rtScore 自動生成 --></tbody>
         </table>
         </div>
-        <div class="rule-note">💡 讀法：<b>五店今天全數過 26.5% 領獎線了 🎉</b>凱旋 41.73%、陽明 40.67% 同在 $390/門；仁雄 36.41% $360；鼎山 28.59%、後昌 26.97% 剛過線 $230/門——往上每跨一檔，全月每一門都跟著加價。</div>
+        <div class="rule-note">💡 讀法：<b>官方 Y26/07 新制：領獎線由 26.5% 上調到 27.0%，各檔門檻同步調高。</b>凱旋 41.73%、陽明 40.67% → $390/門；仁雄 36.41% → $360；鼎山 28.59% → $230。<b style="color:var(--red)">後昌 26.97% 差 0.03% 掉出領獎線 → $0</b>，補回來是今天第一優先。</div>
       </div>
 
   </div>
@@ -517,7 +517,7 @@ const SEASON = [
     vals:{ g5:{gap:-4,u:"件",pct:108.5,t:47}, rt:{gap:205,u:"點",pct:79.1,t:982}, rz:{rate:51.6,pct:132,t:39}, aq:{gap:32,u:"點",pct:74.6,t:126}, hs:{gap:-1,u:"點",pct:133.3,t:3} },
     detail:[
       {k:"🎉 AQ 衝過 70% 解折線", v:"74.6%（昨 66.7%）", s:"94／126｜昨天還在折半，今天分數全額計算——這一步等於白賺回一半AQ分"},
-      {k:"✅ RT月獎金過線了", v:"RT KPI 28.59%", s:"昨天差 0.04% 飲恨，今天已過 26.5%！單價 $230/門，月底預估約 39%"},
+      {k:"✅ RT月獎金過線", v:"RT KPI 28.59%", s:"已過新制 27.0% 領獎線！單價 $230/門｜再 +2.91pp 到 31.5% 就跳 $310"},
       {k:"RT點數缺口", v:"205 點", s:"每天要 26 點（776.75／982・剩8天）｜原始 79.1%"},
     ]},
   { name:"陽明", color:"#4DA3FF",
@@ -531,7 +531,7 @@ const SEASON = [
     vals:{ g5:{gap:2,u:"件",pct:95.2,t:42}, rt:{gap:140,u:"點",pct:79.6,t:686}, rz:{rate:41.8,pct:107,t:39}, aq:{gap:54,u:"點",pct:28.6,t:126}, hs:{gap:0.25,u:"點",pct:75,t:1} },
     detail:[
       {k:"🔴 AQ 破口（全區唯一折半）", v:"缺 54 點", s:"72／126（57.1%）｜補 16.2 點回 70% 就解折線，分數立刻翻倍——今天最大單筆機會"},
-      {k:"✅ RT月獎金過線了", v:"RT KPI 26.97%", s:"從 23.9% 衝過 26.5%！單價 $230/門，月底預估約 36%"},
+      {k:"🔴 RT領獎差 0.03%", v:"26.97% vs 27.0%", s:"官方新制領獎線上調到 27.0%，就差這一點點！過線後每門 $230——今天第一優先衝 RT｜月底預估約 36%"},
       {k:"RT點數缺口", v:"140 點", s:"每天要 18 點（546／686・剩8天）｜原始 79.6%"},
     ]},
   { name:"仁雄", color:"#FF6B8A",
@@ -556,7 +556,7 @@ const KPI = [
     opps:[{k:"特維續約",gap:"27 件",add:4.7},{k:"TTL AQ點數",gap:"32 點",add:4.3},{k:"RT上線點數",gap:"205 點",add:4.2}] },
   { name:"陽明", color:"#4DA3FF", majors:{aq:88.6, rt:86.8, va:120.3}, rtScore:40.67, rtPrice:"$390/門",
     opps:[{k:"RT上線點數",gap:"96 點",add:2.8},{k:"AQ 999+",gap:"3 件",add:2.5},{k:"TTL AQ點數",gap:"14.5 點",add:2.0}] },
-  { name:"後昌", color:"#34D2A0", majors:{aq:31.7, rt:56.4, va:71.7}, rtScore:26.97, rtPrice:"$230/門",
+  { name:"後昌", color:"#34D2A0", majors:{aq:31.7, rt:56.4, va:71.7}, rtScore:26.97, rtPrice:"$0（差 0.03%）",
     opps:[{k:"TTL AQ點數",gap:"54 點",add:7.3},{k:"AQ 999+",gap:"7 件",add:5.8},{k:"特維續約",gap:"20 件",add:4.7}] },
   { name:"仁雄", color:"#FF6B8A", majors:{aq:62.1, rt:76.2, va:76.4}, rtScore:36.41, rtPrice:"$360/門",
     opps:[{k:"AQ 999+",gap:"6 件",add:5.0},{k:"TTL AQ點數",gap:"36 點",add:4.9},{k:"RT上線點數",gap:"162 點",add:3.2}] },
@@ -702,16 +702,16 @@ const RZ_TIERS = [
 /* ===== RT KPI獎勵級距表 ===== */
 
 const LADDER = [
-  {lo:0,    hi:26.5, label:"< 26.5%",        price:"$0 ❌", danger:true},
-  {lo:26.5, hi:31.0, label:"26.5% ~ 31.0%",  price:"$230"},
-  {lo:31.0, hi:35.5, label:"31.0% ~ 35.5%",  price:"$310"},
-  {lo:35.5, hi:40.0, label:"35.5% ~ 40.0%",  price:"$360"},
-  {lo:40.0, hi:42.5, label:"40.0% ~ 42.5%",  price:"$390"},
-  {lo:42.5, hi:44.5, label:"42.5% ~ 44.5%",  price:"$420"},
-  {lo:44.5, hi:47.0, label:"44.5% ~ 47.0%",  price:"$460"},
-  {lo:47.0, hi:49.5, label:"47.0% ~ 49.5%",  price:"$500"},
-  {lo:49.5, hi:51.5, label:"49.5% ~ 51.5%",  price:"$525"},
-  {lo:51.5, hi:999,  label:"51.5% 以上",      price:"$550"},
+  {lo:0,    hi:27.0, label:"< 27.0%",        price:"$0 ❌", danger:true},
+  {lo:27.0, hi:31.5, label:"27.0% ~ 31.5%",  price:"$230"},
+  {lo:31.5, hi:36.0, label:"31.5% ~ 36.0%",  price:"$310"},
+  {lo:36.0, hi:40.5, label:"36.0% ~ 40.5%",  price:"$360"},
+  {lo:40.5, hi:43.0, label:"40.5% ~ 43.0%",  price:"$390"},
+  {lo:43.0, hi:45.5, label:"43.0% ~ 45.5%",  price:"$420"},
+  {lo:45.5, hi:48.0, label:"45.5% ~ 48.0%",  price:"$460"},
+  {lo:48.0, hi:50.5, label:"48.0% ~ 50.5%",  price:"$500"},
+  {lo:50.5, hi:52.5, label:"50.5% ~ 52.5%",  price:"$525"},
+  {lo:52.5, hi:999,  label:"52.5% 以上",      price:"$550"},
 ];
 const ladderBody = document.querySelector("#ladderTbl tbody"); ladderBody.innerHTML="";
 LADDER.forEach(t=>{
@@ -750,7 +750,7 @@ KPI.forEach(s=>{
     </div>
     <div class="opp-title">🔧 最大補分機會</div>
     ${s.opps.map(o=>`<div class="opp"><span class="ok1">${o.k}</span><span class="ok2">缺 ${o.gap}</span><span class="ok3 num">補回 +${o.add.toFixed(1)}分</span></div>`).join("")}
-    <div class="rt-chip">🎰 RT加權總分 <b class="num">${s.rtScore}%</b>（領獎線26.5%）→ RT KPI獎勵單價 <span class="price num">${s.rtPrice}</span></div>
+    <div class="rt-chip">🎰 RT加權總分 <b class="num">${s.rtScore}%</b>（領獎線27.0%）→ RT KPI獎勵單價 <span class="price num">${s.rtPrice}</span></div>
   `;
   card.dataset.store = s.name;
   kpiGrid.appendChild(card);
