@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<!-- saved from url=(0102)file:///C:/Users/eason/Downloads/%E5%80%9A%E7%9B%9FGPS_%E7%BC%BA%E5%8F%A3%E5%B0%8E%E8%88%AA%20(9).html -->
+<html lang="zh-Hant"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>倚盟GPS｜缺口導航</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./gps_files/css2" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0D1321; --surface:#161F36; --surface-2:#1C2740; --lane:#2E3A5C;
+    --text:#E8EEFB; --dim:#8B98B8;
+    --green:#34D2A0; --yellow:#FFC24D; --red:#FF6B6B; --purple:#B48CFF; --blue:#4DA3FF;
+    --gold:#FFD166; --radius:16px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Noto Sans TC',sans-serif;min-height:100vh;
+    background-image:
+      radial-gradient(ellipse 900px 500px at 85% -10%, rgba(255,209,102,.07), transparent 60%),
+      radial-gradient(ellipse 700px 420px at 0% 110%, rgba(77,163,255,.08), transparent 60%);
+  }
+  .num{font-family:'Chakra Petch','Noto Sans TC',sans-serif;font-variant-numeric:tabular-nums;}
+  .site-nav{max-width:1000px;margin:26px auto 0;padding:0 16px;}
+  .site-nav-title{font-size:13px;font-weight:900;color:var(--dim);margin-bottom:10px;letter-spacing:.5px;}
+  .site-nav-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .site-card{display:flex;align-items:center;gap:11px;padding:14px 15px;border-radius:14px;
+    background:var(--surface);border:1.5px solid var(--lane);text-decoration:none;color:var(--text);
+    transition:border-color .15s,transform .15s,box-shadow .15s;}
+  .site-card:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 6px 20px rgba(77,163,255,.15);}
+  .sc-emoji{font-size:22px;flex-shrink:0;}
+  .sc-text{display:flex;flex-direction:column;line-height:1.35;flex:1;min-width:0;}
+  .sc-text b{font-size:14px;font-weight:900;}
+  .sc-text i{font-style:normal;font-size:11px;color:var(--dim);}
+  .sc-arrow{color:var(--blue);font-weight:900;font-size:16px;flex-shrink:0;}
+  @media(max-width:640px){.site-nav-grid{grid-template-columns:1fr;}}
+  .wrap{max-width:1100px;margin:0 auto;padding:20px 16px 70px;}
+
+  header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  .logo{display:flex;align-items:center;gap:12px;}
+  .pin{width:44px;height:44px;border-radius:50% 50% 50% 4px;background:linear-gradient(135deg,#4DA3FF,#B48CFF);
+    transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(77,163,255,.35);flex-shrink:0;}
+  .pin span{transform:rotate(45deg);font-weight:900;font-size:15px;color:#0D1321;font-family:'Chakra Petch',sans-serif;}
+  .logo h1{font-size:clamp(21px,4.5vw,28px);font-weight:900;letter-spacing:1px;}
+  .logo h1 em{font-style:normal;font-family:'Chakra Petch',sans-serif;background:linear-gradient(90deg,#4DA3FF,#B48CFF);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .logo .sub{font-size:12px;color:var(--dim);margin-top:2px;}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;}
+  .chip{background:var(--surface);border:1px solid var(--lane);border-radius:999px;padding:6px 13px;font-size:12px;color:var(--dim);}
+  .chip b{color:var(--text);}
+  .chip.alert{border-color:rgba(255,194,77,.5);color:var(--yellow);}
+  .chip.alert b{color:var(--yellow);}
+
+  /* ===== Tab bar ===== */
+  .tabbar{
+    position:sticky;top:0;z-index:20;
+    display:flex;gap:8px;margin:20px -16px 0;padding:12px 16px;
+    background:rgba(13,19,33,.92);backdrop-filter:blur(8px);
+    overflow-x:auto;scrollbar-width:none;
+  }
+  .tabbar::-webkit-scrollbar{display:none;}
+  .tab{
+    flex:1;min-width:150px;
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    padding:12px 14px;border-radius:14px;cursor:pointer;
+    background:var(--tc);border:2px solid transparent;
+    opacity:.52;filter:saturate(.85);
+    transition:all .18s ease;user-select:none;
+  }
+  .tab .t1{font-size:15px;font-weight:900;letter-spacing:.5px;color:#0D1321;}
+  .tab .t2{font-size:10.5px;color:rgba(13,19,33,.78);font-weight:700;}
+  .tab .badge{font-size:10.5px;font-weight:700;padding:1px 9px;border-radius:999px;margin-top:1px;}
+  .tab .badge.b-red{background:rgba(13,19,33,.4);color:#fff;}
+  .tab .badge.b-gold{background:rgba(13,19,33,.4);color:#fff;}
+  .tab .badge.b-green{background:rgba(13,19,33,.4);color:#fff;}
+  .tab:hover{opacity:.8;}
+  .tab[data-page="season"]{--tc:#FFD166;}
+  .tab[data-page="toll"]{--tc:#34D2A0;}
+  .tab[data-page="kpi"]{--tc:#4DA3FF;}
+  .tab.active{opacity:1;filter:none;border-color:rgba(255,255,255,.45);box-shadow:0 8px 24px rgba(0,0,0,.5);transform:translateY(-2px);}
+
+  .page{display:none;animation:fadeIn .25s ease;}
+  .page.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+  /* ===== Reminders ===== */
+  .remind-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:16px 0;}
+  .remind{
+    background:var(--surface);border:1px solid var(--lane);border-left:4px solid var(--rc,#4DA3FF);
+    border-radius:12px;padding:10px 13px;font-size:11px;line-height:1.7;color:var(--dim);
+  }
+  .remind b{color:var(--text);}
+  .remind .rt1{font-size:11.5px;font-weight:900;color:var(--text);display:block;margin-bottom:2px;}
+
+  .tap-hint{margin:0 0 10px;padding:8px 14px;border-radius:10px;font-size:12px;font-weight:700;
+    background:rgba(255,209,102,.1);border:1px dashed rgba(255,209,102,.45);color:var(--gold);text-align:center;}
+  .tap-hint b{color:#fff;}
+  .sec{margin-top:14px;}
+  .sec-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+  .sec-head h2{font-size:19px;font-weight:900;letter-spacing:1px;}
+  .sec-head .dest{font-size:11px;color:var(--dim);background:var(--surface);border:1px solid var(--lane);border-radius:999px;padding:3px 12px;}
+
+  .panel{background:var(--surface);border:1px solid var(--lane);border-radius:var(--radius);overflow:hidden;}
+  .tbl-scroll{overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;min-width:640px;}
+  th,td{padding:12px 10px;text-align:center;font-size:14px;border-bottom:1px solid rgba(46,58,92,.4);}
+  th{font-size:12px;color:var(--dim);font-weight:700;background:var(--surface-2);white-space:nowrap;}
+  th:first-child,td:first-child{text-align:left;padding-left:16px;}
+  .store-name{font-weight:900;font-size:15px;display:flex;align-items:center;gap:6px;white-space:nowrap;flex-wrap:nowrap;}
+  .dot{width:9px;height:9px;border-radius:3px;display:inline-block;}
+  .cell{font-weight:700;border-radius:8px;padding:4px 0;display:block;}
+  .c-ok{color:var(--green);background:rgba(52,210,160,.1);}
+  .c-warn{color:var(--yellow);background:rgba(255,194,77,.1);}
+  .c-bad{color:var(--red);background:rgba(255,107,107,.1);}
+  .detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+  .fuel{background:var(--surface);border:1px solid var(--lane);border-radius:12px;padding:12px 14px;}
+  .fuel .k{font-size:11px;color:var(--dim);}
+  .fuel .v{font-size:17px;font-weight:700;color:var(--text);margin-top:3px;}
+  .rule-note{padding:8px 16px;font-size:11px;color:var(--dim);background:rgba(255,209,102,.05);border-top:1px solid rgba(255,209,102,.15);line-height:1.8;}
+  .rule-note b{color:var(--gold);}
+
+  .toll-status{font-size:13px;font-weight:900;padding:4px 0;border-radius:8px;display:block;}
+  .accessory-row td{background:rgba(180,140,255,.07);}
+  .accessory-row td:first-child{color:var(--purple);font-weight:700;}
+  .score-row td{background:var(--surface-2);font-weight:700;}
+  .money-pos{color:var(--green);} .money-neg{color:var(--red);} .money-zero{color:var(--dim);}
+  .flip-box{padding:16px;border-top:1px solid var(--lane);}
+  .flip-box h4{font-size:14px;font-weight:900;color:var(--gold);margin-bottom:10px;}
+  .flip{display:flex;gap:10px;align-items:center;background:var(--surface-2);border-radius:12px;padding:9px 14px;margin-bottom:8px;font-size:12.5px;flex-wrap:wrap;}
+  .flip .roi{margin-left:auto;font-weight:700;color:var(--green);white-space:nowrap;}
+  .flip-total{margin-top:10px;text-align:center;font-size:12.5px;font-weight:900;padding:10px;border-radius:12px;background:rgba(52,210,160,.1);color:var(--green);}
+
+  .store-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .sf{padding:7px 16px;border-radius:999px;font-size:13px;font-weight:900;cursor:pointer;
+    background:var(--surface);border:1.5px solid var(--lane);color:var(--dim);user-select:none;transition:all .15s;}
+  .sf .sd{display:inline-block;width:8px;height:8px;border-radius:3px;margin-right:6px;background:var(--fc,var(--dim));vertical-align:1px;}
+  .sf.on{color:#0D1321;background:var(--fc,var(--blue));border-color:transparent;}
+  .sf.on .sd{background:rgba(13,19,33,.4);}
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
+  .kpi-card{background:var(--surface);border:1px solid var(--lane);border-radius:var(--radius);padding:16px;position:relative;overflow:hidden;}
+  .kpi-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--sc);}
+  .kpi-card h3{font-size:16px;font-weight:900;margin-bottom:12px;}
+  .maj-row{display:flex;gap:6px;margin-bottom:12px;}
+  .maj{flex:1;background:var(--surface-2);border-radius:10px;padding:9px 6px;text-align:center;}
+  .maj.maj-bad{background:rgba(255,107,107,.08);}
+  .maj .mv{font-size:17px;font-weight:700;}
+  .maj .mk{font-size:10px;color:var(--dim);margin-top:2px;}
+  .maj .ml{font-size:9.5px;color:var(--red);margin-top:2px;font-weight:700;}
+  .maj .ml.ok{color:var(--green);}
+  .opp-title{font-size:11.5px;font-weight:900;color:var(--gold);margin:2px 0 6px;}
+  .opp{display:flex;align-items:center;gap:6px;font-size:11px;background:var(--surface-2);border-radius:8px;padding:6px 9px;margin-bottom:5px;}
+  .opp .ok1{font-weight:700;}
+  .opp .ok2{color:var(--dim);margin-left:auto;}
+  .opp .ok3{color:var(--gold);font-weight:700;white-space:nowrap;}
+  .rt-chip{margin-top:8px;background:var(--surface-2);border-radius:10px;padding:7px 10px;font-size:10.5px;color:var(--dim);line-height:1.6;}
+  .rt-chip b{color:var(--text);}
+  .rt-chip .price{color:var(--gold);font-weight:700;}
+
+  .war-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;
+    background:var(--surface-2);margin-bottom:6px;font-size:12px;line-height:1.45;}
+  .war-row .wl{color:var(--dim);font-weight:700;white-space:nowrap;flex-shrink:0;}
+  .war-row .wv{margin-left:auto;text-align:right;font-weight:700;color:var(--text);}
+  .war-row .wv b{font-size:14.5px;}
+  .war-row.w-gold{box-shadow:inset 3px 0 0 var(--gold);}  .war-row.w-gold .wv b{color:var(--gold);}
+  .war-row.w-red{box-shadow:inset 3px 0 0 var(--red);}    .war-row.w-red .wv b{color:var(--red);}
+  .war-row.w-green{box-shadow:inset 3px 0 0 var(--green);} .war-row.w-green .wv{color:var(--green);}
+  .war-warn{margin-top:2px;padding:8px 12px;border-radius:10px;font-size:10.5px;line-height:1.6;
+    background:rgba(255,107,107,.09);border:1px solid rgba(255,107,107,.3);color:var(--dim);}
+  .war-warn b{color:var(--red);}
+  .demo-note{margin-top:30px;font-size:10.5px;color:var(--dim);text-align:center;line-height:1.8;}
+
+  @media (max-width:640px){
+    /* 選單 */
+    .tab{min-width:112px;padding:10px 8px;}
+    .tab .t2{display:none;}
+    .tab .t1{font-size:14px;}
+    /* 表格：主字放大、觸控好點 */
+    th,td{padding:10px 7px;font-size:13px;}
+    .cell{font-size:13.5px;}
+    .cell span{font-size:11px !important;}
+    .store-name{font-size:14px;}
+    .toll-status{font-size:13.5px;}
+    .toll-status span{font-size:11px !important;}
+    /* 提醒與註記：手機最低 11.5px */
+    .tap-hint{font-size:12.5px;}
+    .remind{font-size:12px;}
+    .remind .rt1{font-size:12.5px;}
+    .rule-note{font-size:11.5px;line-height:1.75;}
+    .sec-head .dest{font-size:11px;line-height:1.6;}
+    .sec-head h2{font-size:17.5px;}
+    /* KPI 卡 */
+    .maj .mv{font-size:19px;}
+    .maj .mk{font-size:10.5px;}
+    .maj .ml{font-size:10px;}
+    .opp{font-size:12px;}
+    .rt-chip{font-size:11.5px;}
+    /* 戰情卡：長句允許換行、數值靠左不擠 */
+    .war-row{font-size:12.5px;flex-wrap:wrap;}
+    .war-row .wv{margin-left:0;text-align:left;width:100%;}
+    .war-row .wv b{font-size:15px;}
+    .war-warn{font-size:11.5px;}
+    /* 重點策略行動區 */
+    .flip{font-size:12.5px;}
+    .flip-total{font-size:12.5px;}
+    /* 篩選按鈕加大觸控 */
+    .sf{padding:9px 16px;font-size:13.5px;}
+    /* 頁首 */
+    .chips{width:100%;}
+    .chip{font-size:12px;}
+    .demo-note{font-size:10.5px;}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">
+      <div class="pin"><span>V</span></div>
+      <div>
+        <h1>倚盟<em>GPS</em></h1>
+        <div class="sub">缺口導航｜離目的地還有多遠，走哪條路最快</div>
+      </div>
+    </div>
+    <div class="chips">
+      <div class="chip">📅 <b>2026年7月</b>｜數據至 7/25（官方系統），剩 <b>6</b> 天</div>
+    </div>
+  </header>
+
+  <!-- ===== 三大選單 ===== -->
+  <div class="tabbar">
+    <div class="tab active" data-page="season">
+      <span class="t1">🏆 季獎金</span>
+      <span class="t2">$90,000／店・五項缺口</span>
+      <span class="badge b-red">🔥 陽明AQ差1點・凱旋RT差17點</span>
+    </div>
+    <div class="tab" data-page="toll">
+      <span class="t1">💰 重點策略</span>
+      <span class="t2">五項計分・獎懲試算</span>
+      <span class="badge b-red">🎉 五店合計 +$15,000</span>
+    </div>
+    <div class="tab" data-page="kpi">
+      <span class="t1">📟 3大KPI分數</span>
+      <span class="t2">三大KPI・補分機會</span>
+      <span class="badge b-red">🔴 後昌‧仁雄 AQ999+ 各缺6件</span>
+    </div>
+  </div>
+
+  <!-- ================= 頁1：季獎金導航 ================= -->
+  <div class="page active" id="page-season">
+        <div class="sec">
+      <div class="sec-head">
+        <h2>🏆 季獎金</h2>
+        <span class="dest">🎯 目的地：$90,000／店｜五項（含RT升轉率）季均 ≥100%，缺一不可</span>
+      </div>
+      <div class="tap-hint">單店的細節　請記得點擊 <b>👇</b></div>
+      <div class="panel">
+        <div class="tbl-scroll">
+        <table id="seasonTbl">
+          <thead><tr><th>項目</th>
+  <th class="store-th" data-i="0" style="cursor:pointer" title="點我看明細">
+    <span class="store-name" style="justify-content:center"><i class="dot" style="background:#FFB020"></i>鼎山 <span style="font-size:13px">👇</span></span>
+  </th>
+  <th class="store-th" data-i="1" style="cursor:pointer" title="點我看明細">
+    <span class="store-name" style="justify-content:center"><i class="dot" style="background:#4DA3FF"></i>陽明 <span style="font-size:13px">👇</span></span>
+  </th>
+  <th class="store-th" data-i="2" style="cursor:pointer" title="點我看明細">
+    <span class="store-name" style="justify-content:center"><i class="dot" style="background:#34D2A0"></i>後昌 <span style="font-size:13px">👇</span></span>
+  </th>
+  <th class="store-th" data-i="3" style="cursor:pointer" title="點我看明細">
+    <span class="store-name" style="justify-content:center"><i class="dot" style="background:#FF6B8A"></i>仁雄 <span style="font-size:13px">👇</span></span>
+  </th>
+  <th class="store-th" data-i="4" style="cursor:pointer" title="點我看明細">
+    <span class="store-name" style="justify-content:center"><i class="dot" style="background:#B48CFF"></i>凱旋 <span style="font-size:13px">👇</span></span>
+  </th></tr></thead>
+          <tbody><!-- injected --><tr><td style="font-weight:700">5G</td><td><span class="cell num c-warn">缺 7 件<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 47 件</span></span></td><td><span class="cell num c-warn">缺 6 件<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 42 件</span></span></td><td><span class="cell num c-warn">缺 4 件<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 42 件</span></span></td><td><span class="cell num c-bad">缺 15 件<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 49 件</span></span></td><td><span class="cell num c-warn">缺 4 件<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 49 件</span></span></td></tr><tr><td style="font-weight:700">RT點數</td><td><span class="cell num c-bad">缺 365 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 982 點</span></span></td><td><span class="cell num c-bad">缺 170 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 684 點</span></span></td><td><span class="cell num c-bad">缺 210 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 686 點</span></span></td><td><span class="cell num c-bad">缺 318 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 1026 點</span></span></td><td><span class="cell num c-bad">缺 205 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 858 點</span></span></td></tr><tr><td style="font-weight:700">RT升轉率</td><td><span class="cell num" style="color:var(--text);background:rgba(77,163,255,.08)">50.5%<span style="display:block;font-size:10.5px;color:var(--gold);font-weight:700;margin-top:1px">下一檔 52%</span></span></td><td><span class="cell num" style="color:var(--text);background:rgba(77,163,255,.08)">46.7%<span style="display:block;font-size:10.5px;color:var(--gold);font-weight:700;margin-top:1px">下一檔 47%</span></span></td><td><span class="cell num" style="color:var(--text);background:rgba(77,163,255,.08)">41.4%<span style="display:block;font-size:10.5px;color:var(--gold);font-weight:700;margin-top:1px">下一檔 42%</span></span></td><td><span class="cell num" style="color:var(--text);background:rgba(77,163,255,.08)">40.7%<span style="display:block;font-size:10.5px;color:var(--gold);font-weight:700;margin-top:1px">下一檔 42%</span></span></td><td><span class="cell num" style="color:var(--text);background:rgba(77,163,255,.08)">40.7%<span style="display:block;font-size:10.5px;color:var(--gold);font-weight:700;margin-top:1px">下一檔 42%</span></span></td></tr><tr><td style="font-weight:700">AQ點數</td><td><span class="cell num c-bad">缺 56.5 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 126 點</span></span></td><td><span class="cell num c-bad">缺 57.5 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 126 點</span></span></td><td><span class="cell num c-bad">缺 57 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 126 點</span></span></td><td><span class="cell num c-bad">缺 60 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 126 點</span></span></td><td><span class="cell num c-ok">達標<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">超 22.5 點｜目標 126 點</span></span></td></tr><tr><td style="font-weight:700">好速案</td><td><span class="cell num c-ok">達標<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">超 1 點｜目標 3 點</span></span></td><td><span class="cell num c-ok">達標<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">超 1 點｜目標 2 點</span></span></td><td><span class="cell num c-bad">缺 0.25 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 1 點</span></span></td><td><span class="cell num c-bad">缺 5.5 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 16 點</span></span></td><td><span class="cell num c-bad">缺 7.75 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 16 點</span></span></td></tr></tbody>
+        </table>
+        </div>
+        <div id="seasonDetail" style="display:none;padding:16px 18px;background:var(--surface-2);border-top:1px solid var(--lane)"></div>
+        <div class="rule-note">⚠️ 官方折半規則是<b>逐項設定低標</b>，不是一律 70%：<b>AQ TTL點數低標 60%</b>；AQ 5G／AQ 999+／Prepaid／RT TTL／RT 5G／特維／高高特維／RT 999+／RT 1399+ 低標 70%；<b>好速案、Device、配件營收、手機保險、AQ 1399+、換約淨新增、MyVideo&amp;KKBOX、自退數等標「－」者不折半</b>。達成率低於該項低標時，該項分數 ×50%。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 頁2：重點策略收費站 ================= -->
+  <div class="page" id="page-toll">
+        <div class="sec">
+      <div class="sec-head">
+        <h2>💰 重點策略</h2>
+        <span class="dest">📊 每店總分獎懲：+5分＝2萬 · +4分＝1萬 · +2~3分＝5千 · 0~1分＝0 · −1~2分＝罰5千 · −3~4分＝罰1萬 · −5分＝罰2萬</span>
+      </div>
+      <div class="panel">
+        <div class="tbl-scroll">
+        <table id="tollTbl">
+          <thead>
+            <tr><th>項目</th><th>鼎山</th><th>陽明</th><th>後昌</th><th>仁雄</th><th>凱旋</th></tr>
+          </thead>
+          <tbody><!-- injected --><tr><td>5G AQ+RT</td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 7 件 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">40／47件（85%）</span></span></td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 6 件 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">36／42件（86%）</span></span></td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 4 件 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">38／42件（90%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 5.2 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">34／49件（69%）</span></span></td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 4 件 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">45／49件（92%）</span></span></td></tr><tr><td>好速案</td><td><span class="toll-status c-ok">+1<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">4／3件（133%）</span></span></td><td><span class="toll-status c-ok">+1<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">3／2件（150%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 0.1 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">0.8／1件（75%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 2.3 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">10.5／16件（66%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 4.6 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">8.3／16件（52%）</span></span></td></tr><tr><td>手機保險</td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 10 件 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">50／60件（83%）</span></span></td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 8 件 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">39／47件（83%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 1.8 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">35／46件（76%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 17.6 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">32／62件（52%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 0.3 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">44.5／56件（79%）</span></span></td></tr><tr><td>Device專案</td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 35.4 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">71／133件（53%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 3 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">81／105件（77%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 15.4 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">67／103件（65%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 16.6 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">93／137件（68%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 11 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">89／125件（71%）</span></span></td></tr><tr class="accessory-row"><td>配件出貨金額 🟣</td><td colspan="5" style="text-align:center;font-size:13px">
+  <b class="num" style="color:var(--purple)">70%</b>（19.86／28.3萬）　五店各 −1｜補 <b class="num">2.8萬</b> 達80% → <b>不扣分</b>｜補 <b class="num">8.4萬</b> 達100% → 五店各 <b>+1分</b></td></tr><tr class="score-row"><td>本店得分 → 獎懲</td><td><span class="num">-1分</span><br><span class="money-neg num">−$5,000</span></td><td><span class="num">-1分</span><br><span class="money-neg num">−$5,000</span></td><td><span class="num">-4分</span><br><span class="money-neg num">−$10,000</span></td><td><span class="num">-5分</span><br><span class="money-neg num">−$20,000</span></td><td><span class="num">-4分</span><br><span class="money-neg num">−$10,000</span></td></tr></tbody>
+        </table>
+        </div>
+        <div class="flip-box">
+          <h4>🏎️ 立即追上的行動（官方7/25・剩6天）</h4>
+          <div class="flip">🟢 <b>仁雄・手機保險</b>：補 <b class="num">7.6</b> 點到80%（49.6／62）→ −1翻0、本店 −1→0<span class="roi">省 $5,000</span></div>
+          <div class="flip">🟡 <b>後昌・好速案</b>：補 <b class="num">0.25</b> 點到100% → −1翻+1、本店 +1→+3<span class="roi">+$5,000</span></div>
+          <div class="flip">🟣 <b>配件全區衝100%</b>：再補 <b class="num">4.33萬</b>（23.97／28.3萬）→ 五店各+1，陽明跳 +5 分<span class="roi">+$15,000</span></div>
+          <div class="flip-total">官方7/25 五店合計 <b>+$15,000</b>（鼎山+5千・陽明+1萬・後昌0・仁雄−5千・凱旋+5千）→ 三條全做 → <b>+$40,000</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 頁3：KPI 儀表區 ================= -->
+  <div class="page" id="page-kpi">
+        <div class="sec">
+      <div class="sec-head">
+        <h2>🎰 RT KPI獎勵（RT加權總分 → 每門單價）</h2>
+        <span class="dest">先過 27.0% 領獎線（官方Y26/07新制），之後 KPI 每跨一檔、全店每一門單價跟著跳</span>
+      </div>
+      <div class="panel">
+        <div class="tbl-scroll">
+        <table id="ladderTbl">
+          <thead><tr><th>RT加權總分</th><th>單價／門</th><th>目前在此檔</th></tr></thead>
+          <tbody><!-- 由 JS 依 LADDER + KPI.rtScore 自動生成 --></tbody>
+        </table>
+        </div>
+        <div class="rule-note">⚠️ <b>本表仍為 7/24 分項合計，尚未更新到 7/25</b>（RT加權總分需另一份官方分項報表才能重算）。7/24 現況：凱旋 47.22%、陽明 45.60% 在 <b>$460/門</b>；仁雄 37.01% $360；鼎山 30.75%（差 0.75pp 跳 $310）；後昌 27.55% 剛跨過 27.0% 領獎線（$230/門）。<b>下次拿到分項報表再校正。</b></div>
+      </div>
+
+  </div>
+
+    <div class="sec">
+      <div class="sec-head">
+        <h2>📟 3大KPI分數</h2>
+        <span class="dest">AQ點數／RT點數＝官方 7/25 兩大主項達成率；店內總分＝官方「店內KPI總達成率」｜折半是<b>各項套自己的低標</b>（AQ TTL 60%、多數項 70%）｜補分機會＝該項權重 − 目前加權後分數</span>
+      </div>
+      <div class="store-filter" id="storeFilter"><!-- injected --><div class="sf on" style="--fc: #4DA3FF;"><span class="sd"></span>全覽</div><div class="sf" style="--fc: #FFB020;"><span class="sd"></span>鼎山</div><div class="sf" style="--fc: #4DA3FF;"><span class="sd"></span>陽明</div><div class="sf" style="--fc: #34D2A0;"><span class="sd"></span>後昌</div><div class="sf" style="--fc: #FF6B8A;"><span class="sd"></span>仁雄</div><div class="sf" style="--fc: #B48CFF;"><span class="sd"></span>凱旋</div></div>
+      <div class="kpi-grid" id="kpiGrid"><!-- injected --><div class="kpi-card" style="--sc: #FFB020;" data-store="鼎山">
+    <h3>鼎山</h3>
+    <div class="maj-row">
+      <div class="maj maj-bad">
+          <div class="mv num" style="color:var(--red)">40.4%</div>
+          <div class="mk">AQ KPI</div>
+          <div class="ml">⚠ 達成率偏低，待拉升</div>
+        </div><div class="maj maj-bad">
+          <div class="mv num" style="color:var(--red)">32.2%</div>
+          <div class="mk">RT KPI</div>
+          <div class="ml">⚠ 達成率偏低，待拉升</div>
+        </div><div class="maj ">
+          <div class="mv num" style="color:#FFB020">86.8%</div>
+          <div class="mk">加值 KPI</div>
+          <div class="ml ok">✓ 達成率正常</div>
+        </div>
+    </div>
+    <div class="opp-title">🔧 最大補分機會</div>
+    <div class="opp"><span class="ok1">TTL AQ點數</span><span class="ok2">缺 56.5 點</span><span class="ok3 num">補回 +7.6分</span></div><div class="opp"><span class="ok1">RT上線點數</span><span class="ok2">缺 365 點</span><span class="ok3 num">補回 +7.4分</span></div><div class="opp"><span class="ok1">特維續約</span><span class="ok2">缺 35 件</span><span class="ok3 num">補回 +6.0分</span></div>
+    <div class="rt-chip">🎰 RT加權總分 <b class="num">15.7%</b>（領獎線26.5%）→ RT KPI獎勵單價 <span class="price num">$0（未達26.5%）</span></div>
+  </div><div class="kpi-card" style="--sc: #4DA3FF;" data-store="陽明">
+    <h3>陽明</h3>
+    <div class="maj-row">
+      <div class="maj maj-bad">
+          <div class="mv num" style="color:var(--red)">33.3%</div>
+          <div class="mk">AQ KPI</div>
+          <div class="ml">⚠ 達成率偏低，待拉升</div>
+        </div><div class="maj ">
+          <div class="mv num" style="color:#4DA3FF">71.2%</div>
+          <div class="mk">RT KPI</div>
+          <div class="ml ok">✓ 達成率正常</div>
+        </div><div class="maj ">
+          <div class="mv num" style="color:#4DA3FF">111.4%</div>
+          <div class="mk">加值 KPI</div>
+          <div class="ml ok">✓ 達成率正常</div>
+        </div>
+    </div>
+    <div class="opp-title">🔧 最大補分機會</div>
+    <div class="opp"><span class="ok1">TTL AQ點數</span><span class="ok2">缺 57.5 點</span><span class="ok3 num">補回 +7.8分</span></div><div class="opp"><span class="ok1">AQ 999+</span><span class="ok2">缺 7 件</span><span class="ok3 num">補回 +5.8分</span></div><div class="opp"><span class="ok1">RT上線點數</span><span class="ok2">缺 170 點</span><span class="ok3 num">補回 +5.0分</span></div>
+    <div class="rt-chip">🎰 RT加權總分 <b class="num">32.9%</b>（領獎線26.5%）→ RT KPI獎勵單價 <span class="price num">$310/門</span></div>
+  </div><div class="kpi-card" style="--sc: #34D2A0;" data-store="後昌">
+    <h3>後昌</h3>
+    <div class="maj-row">
+      <div class="maj maj-bad">
+          <div class="mv num" style="color:var(--red)">30.7%</div>
+          <div class="mk">AQ KPI</div>
+          <div class="ml">⚠ 達成率偏低，待拉升</div>
+        </div><div class="maj maj-bad">
+          <div class="mv num" style="color:var(--red)">31.2%</div>
+          <div class="mk">RT KPI</div>
+          <div class="ml">⚠ 達成率偏低，待拉升</div>
+        </div><div class="maj maj-bad">
+          <div class="mv num" style="color:var(--red)">64.9%</div>
+          <div class="mk">加值 KPI</div>
+          <div class="ml">⚠ 達成率偏低，待拉升</div>
+        </div>
+    </div>
+    <div class="opp-title">🔧 最大補分機會</div>
+    <div class="opp"><span class="ok1">TTL AQ點數</span><span class="ok2">缺 57 點</span><span class="ok3 num">補回 +7.7分</span></div><div class="opp"><span class="ok1">RT上線點數</span><span class="ok2">缺 210 點</span><span class="ok3 num">補回 +6.1分</span></div><div class="opp"><span class="ok1">AQ 999+</span><span class="ok2">缺 7 件</span><span class="ok3 num">補回 +5.8分</span></div>
+    <div class="rt-chip">🎰 RT加權總分 <b class="num">15.5%</b>（領獎線26.5%）→ RT KPI獎勵單價 <span class="price num">$0（未達26.5%）</span></div>
+  </div><div class="kpi-card" style="--sc: #FF6B8A;" data-store="仁雄">
+    <h3>仁雄</h3>
+    <div class="maj-row">
+      <div class="maj maj-bad">
+          <div class="mv num" style="color:var(--red)">33.2%</div>
+          <div class="mk">AQ KPI</div>
+          <div class="ml">⚠ 達成率偏低，待拉升</div>
+        </div><div class="maj maj-bad">
+          <div class="mv num" style="color:var(--red)">40.7%</div>
+          <div class="mk">RT KPI</div>
+          <div class="ml">⚠ 達成率偏低，待拉升</div>
+        </div><div class="maj maj-bad">
+          <div class="mv num" style="color:var(--red)">60.8%</div>
+          <div class="mk">加值 KPI</div>
+          <div class="ml">⚠ 達成率偏低，待拉升</div>
+        </div>
+    </div>
+    <div class="opp-title">🔧 最大補分機會</div>
+    <div class="opp"><span class="ok1">TTL AQ點數</span><span class="ok2">缺 60 點</span><span class="ok3 num">補回 +8.1分</span></div><div class="opp"><span class="ok1">AQ 999+</span><span class="ok2">缺 8 件</span><span class="ok3 num">補回 +6.7分</span></div><div class="opp"><span class="ok1">RT上線點數</span><span class="ok2">缺 318 點</span><span class="ok3 num">補回 +6.2分</span></div>
+    <div class="rt-chip">🎰 RT加權總分 <b class="num">18.3%</b>（領獎線26.5%）→ RT KPI獎勵單價 <span class="price num">$0（未達26.5%）</span></div>
+  </div><div class="kpi-card" style="--sc: #B48CFF;" data-store="凱旋">
+    <h3>凱旋</h3>
+    <div class="maj-row">
+      <div class="maj ">
+          <div class="mv num" style="color:#B48CFF">104.3%</div>
+          <div class="mk">AQ KPI</div>
+          <div class="ml ok">✓ 達成率正常</div>
+        </div><div class="maj ">
+          <div class="mv num" style="color:#B48CFF">74.7%</div>
+          <div class="mk">RT KPI</div>
+          <div class="ml ok">✓ 達成率正常</div>
+        </div><div class="maj maj-bad">
+          <div class="mv num" style="color:var(--red)">61.9%</div>
+          <div class="mk">加值 KPI</div>
+          <div class="ml">⚠ 達成率偏低，待拉升</div>
+        </div>
+    </div>
+    <div class="opp-title">🔧 最大補分機會</div>
+    <div class="opp"><span class="ok1">RT上線點數</span><span class="ok2">缺 205 點</span><span class="ok3 num">補回 +4.8分</span></div><div class="opp"><span class="ok1">特維續約</span><span class="ok2">缺 13 件</span><span class="ok3 num">補回 +2.9分</span></div><div class="opp"><span class="ok1">好速案</span><span class="ok2">缺 7.75 點</span><span class="ok3 num">補回 +2.4分</span></div>
+    <div class="rt-chip">🎰 RT加權總分 <b class="num">34.6%</b>（領獎線26.5%）→ RT KPI獎勵單價 <span class="price num">$310/門</span></div>
+  </div></div>
+    </div>
+
+    <div class="rzwar">
+      <div class="sec-head" style="margin-top:26px">
+        <h2>⚔️ 5家升轉率戰情分析</h2>
+        <span class="dest">升轉率 ＝ 升轉件 ÷ RT總件｜數據至 7/25（官方系統）・五店同基準</span>
+      </div>
+      <div class="remind" style="--rc:var(--red);margin-bottom:12px"><span class="rt1">⏳ 檔位以月底結算為準，最後6天（7/26–7/31）定生死</span><b style="color:var(--gold)">要跳檔 → 收純升轉</b>｜<b style="color:var(--red)">要守檔 → 平降轉依指令導流</b></div>
+      <div class="kpi-grid" id="rzWarGrid"><!-- injected --><div class="kpi-card" data-store="鼎山" style="--sc: #FFB020;">
+    <h3>鼎山 <span style="font-size:11px;color:var(--dim);font-weight:700">｜升轉率戰情</span></h3>
+    <div class="maj-row">
+      <div class="maj"><div class="mv num" style="color:#FFB020">50.5%</div><div class="mk">升轉率｜檔位 47~52%</div></div>
+      <div class="maj"><div class="mv num">48<span style="font-size:11px;color:var(--dim)">／95</span></div><div class="mk">升轉件／RT總件</div></div>
+    </div>
+    <div class="war-row"><span class="wl">💰 現在每案</span><span class="wv num">$800 ~ $1,250<span style="display:block;font-size:10px;color:var(--dim);font-weight:500">淨增401↑案件單價，小額案較低</span></span></div>
+    <div class="war-row w-green"><span class="wl">✅ 實質頂檔</span><span class="wv">單價已最高，守住就好</span></div>
+    <div class="war-row w-red"><span class="wl">🛡️ 防守 47%</span><span class="wv">可容 <b class="num">7</b> 件平降轉｜第 8 件掉檔</span></div>
+    
+  </div><div class="kpi-card" data-store="陽明" style="--sc: #4DA3FF;">
+    <h3>陽明 <span style="font-size:11px;color:var(--dim);font-weight:700">｜升轉率戰情</span></h3>
+    <div class="maj-row">
+      <div class="maj"><div class="mv num" style="color:#4DA3FF">46.7%</div><div class="mk">升轉率｜檔位 42~47%</div></div>
+      <div class="maj"><div class="mv num">42<span style="font-size:11px;color:var(--dim)">／90</span></div><div class="mk">升轉件／RT總件</div></div>
+    </div>
+    <div class="war-row"><span class="wl">💰 現在每案</span><span class="wv num">$650 ~ $1,000<span style="display:block;font-size:10px;color:var(--dim);font-weight:500">淨增401↑案件單價，小額案較低</span></span></div>
+    <div class="war-row w-gold"><span class="wl">🚀 跳檔 47%</span><span class="wv">再 <b class="num">1</b> 件純升轉 → <b>全月升轉案</b>每件升為 <b class="num">$800~$1,250</b></span></div>
+    <div class="war-row w-red"><span class="wl">🛡️ 防守 42%</span><span class="wv">可容 <b class="num">10</b> 件平降轉｜第 11 件掉檔</span></div>
+    
+  </div><div class="kpi-card" data-store="後昌" style="--sc: #34D2A0;">
+    <h3>後昌 <span style="font-size:11px;color:var(--dim);font-weight:700">｜升轉率戰情</span></h3>
+    <div class="maj-row">
+      <div class="maj"><div class="mv num" style="color:#34D2A0">41.4%</div><div class="mk">升轉率｜檔位 37~42%</div></div>
+      <div class="maj"><div class="mv num">36<span style="font-size:11px;color:var(--dim)">／87</span></div><div class="mk">升轉件／RT總件</div></div>
+    </div>
+    <div class="war-row"><span class="wl">💰 現在每案</span><span class="wv num">$450 ~ $600<span style="display:block;font-size:10px;color:var(--dim);font-weight:500">淨增401↑案件單價，小額案較低</span></span></div>
+    <div class="war-row w-gold"><span class="wl">🚀 跳檔 42%</span><span class="wv">再 <b class="num">1</b> 件純升轉 → <b>全月升轉案</b>每件升為 <b class="num">$650~$1,000</b></span></div>
+    <div class="war-row w-red"><span class="wl">🛡️ 防守 37%</span><span class="wv">可容 <b class="num">10</b> 件平降轉｜第 11 件掉檔</span></div>
+    <div class="war-warn">⚠️ <b>季目標39%警戒</b>：第 <b>6</b> 件平降轉就跌破季升轉率100% —— 平降轉依當日上線指令導流</div>
+  </div><div class="kpi-card" data-store="仁雄" style="--sc: #FF6B8A;">
+    <h3>仁雄 <span style="font-size:11px;color:var(--dim);font-weight:700">｜升轉率戰情</span></h3>
+    <div class="maj-row">
+      <div class="maj"><div class="mv num" style="color:#FF6B8A">40.7%</div><div class="mk">升轉率｜檔位 37~42%</div></div>
+      <div class="maj"><div class="mv num">44<span style="font-size:11px;color:var(--dim)">／108</span></div><div class="mk">升轉件／RT總件</div></div>
+    </div>
+    <div class="war-row"><span class="wl">💰 現在每案</span><span class="wv num">$450 ~ $600<span style="display:block;font-size:10px;color:var(--dim);font-weight:500">淨增401↑案件單價，小額案較低</span></span></div>
+    <div class="war-row w-gold"><span class="wl">🚀 跳檔 42%</span><span class="wv">再 <b class="num">3</b> 件純升轉 → <b>全月升轉案</b>每件升為 <b class="num">$650~$1,000</b></span></div>
+    <div class="war-row w-red"><span class="wl">🛡️ 防守 37%</span><span class="wv">可容 <b class="num">10</b> 件平降轉｜第 11 件掉檔</span></div>
+    <div class="war-warn">⚠️ <b>季目標39%警戒</b>：第 <b>5</b> 件平降轉就跌破季升轉率100% —— 平降轉依當日上線指令導流</div>
+  </div><div class="kpi-card" data-store="凱旋" style="--sc: #B48CFF;">
+    <h3>凱旋 <span style="font-size:11px;color:var(--dim);font-weight:700">｜升轉率戰情</span></h3>
+    <div class="maj-row">
+      <div class="maj"><div class="mv num" style="color:#B48CFF">40.7%</div><div class="mk">升轉率｜檔位 37~42%</div></div>
+      <div class="maj"><div class="mv num">46<span style="font-size:11px;color:var(--dim)">／113</span></div><div class="mk">升轉件／RT總件</div></div>
+    </div>
+    <div class="war-row"><span class="wl">💰 現在每案</span><span class="wv num">$450 ~ $600<span style="display:block;font-size:10px;color:var(--dim);font-weight:500">淨增401↑案件單價，小額案較低</span></span></div>
+    <div class="war-row w-gold"><span class="wl">🚀 跳檔 42%</span><span class="wv">再 <b class="num">3</b> 件純升轉 → <b>全月升轉案</b>每件升為 <b class="num">$650~$1,000</b></span></div>
+    <div class="war-row w-red"><span class="wl">🛡️ 防守 37%</span><span class="wv">可容 <b class="num">11</b> 件平降轉｜第 12 件掉檔</span></div>
+    <div class="war-warn">⚠️ <b>季目標39%警戒</b>：第 <b>5</b> 件平降轉就跌破季升轉率100% —— 平降轉依當日上線指令導流</div>
+  </div></div>
+    </div>
+  </div>
+
+
+  <div class="demo-note">
+    📸 數據來源：2026/7/26 官方系統「店內KPI達成率」十張報表（資料起迄 7/1–7/25），V姐姐提供。<b>五店季獎金、重點策略、升轉率全數為 7/25 官方值，五店同基準</b>。「RT KPI獎勵級距」的 RT加權總分仍為 7/24，需另一份官方分項報表才能重算。配件出貨金額僅鼎山有目標（23.97／28.3萬＝84.7%，已過80%不扣分）。<br>
+    倚盟GPS｜倚盟電訊有限公司 內部戰情看板
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   數據區 —— 更新看板只要改這裡
+   ========================================================= */
+
+/* ---- 季獎金（gap=缺口數，負值=超標；u=單位；t=目標；pct=官方Y2607達成分數）---- */
+const SEASON = [
+  { name:"鼎山", color:"#FFB020",
+    vals:{ g5:{gap:-7,u:"件",pct:114.9,t:47}, rt:{gap:168,u:"點",pct:82.9,t:982}, rz:{rate:50.78,pct:130.2,t:39}, aq:{gap:32,u:"點",pct:74.6,t:126}, hs:{gap:-1,u:"點",pct:133.3,t:3} },
+    detail:[
+      {k:"RT點數缺口", v:"168 點", s:"每天要 28 點（814／982・剩6天）｜82.9%"},
+      {k:"AQ 缺口", v:"缺 32 點", s:"94／126（74.6%）｜特維 32/58（55.2%）折半中、AQ999+ 8/12（66.7%）折半中"},
+      {k:"✅ 5G／好速案 已達標", v:"54／47・4／3", s:"重點策略這兩項各 +1 分，守住不要掉"},
+    ]},
+  { name:"陽明", color:"#4DA3FF",
+    vals:{ g5:{gap:-4,u:"件",pct:109.5,t:42}, rt:{gap:21,u:"點",pct:96.9,t:684}, rz:{rate:47.86,pct:122.7,t:39}, aq:{gap:1,u:"點",pct:99.2,t:126}, hs:{gap:-1,u:"點",pct:150,t:2} },
+    detail:[
+      {k:"🔥 AQ 差 1 點破百", v:"125／126（99.2%）", s:"一件小AQ就讓季獎金AQ項達標——今天就能收掉"},
+      {k:"RT點數缺口", v:"21 點", s:"每天只要 4 點（663／684・剩6天）｜96.9%"},
+      {k:"🚀 重點策略 +4 分", v:"$10,000", s:"5G／好速案／手機保險／Device 四項全 +1，配件補到100%就跳 +5 分＝$20,000"},
+    ]},
+  { name:"後昌", color:"#34D2A0",
+    vals:{ g5:{gap:-2,u:"件",pct:104.8,t:42}, rt:{gap:87,u:"點",pct:87.4,t:686}, rz:{rate:42.06,pct:107.8,t:39}, aq:{gap:41,u:"點",pct:67.5,t:126}, hs:{gap:0.25,u:"點",pct:75,t:1} },
+    detail:[
+      {k:"🎉 AQ 已解折半", v:"85／126（67.5%）", s:"7/24 是 59.92% 折半、7/25 衝到 67.46% 過低標——加權分 5.09→11.47，總分一天跳 14 分"},
+      {k:"🔴 好速案差 0.25 點", v:"0.75／1（75%）", s:"補 0.25 點 → 重點策略 −1 翻 +1，本店由 $0 跳 $5,000"},
+      {k:"AQ999+ 是最大補分", v:"6／12（50%）", s:"折半中，補 6 件可回 +7.5 分——全區最大單一補分機會"},
+    ]},
+  { name:"仁雄", color:"#FF6B8A",
+    vals:{ g5:{gap:5,u:"件",pct:89.8,t:49}, rt:{gap:116,u:"點",pct:88.7,t:1026}, rz:{rate:37.41,pct:95.9,t:39}, aq:{gap:34,u:"點",pct:73.4,t:126}, hs:{gap:3,u:"點",pct:82.8,t:16} },
+    detail:[
+      {k:"🔴 升轉率 37.41％＋降轉雙扣", v:"加減分 −0.25", s:"1399含以上降轉 48.84%、1399以下 16.67%，兩條扣分線都踩到（各 −0.5）——平降轉全數依當日指令外導"},
+      {k:"🔴 手機保險是唯一扣分項", v:"42／62（67.7%）", s:"補 7.6 點到 80% → −1 翻 0，本店由 −$5,000 變 $0"},
+      {k:"AQ999+ 折半中", v:"6／12（50%）", s:"補 6 件可回 +7.5 分，是本店最大補分"},
+    ]},
+  { name:"凱旋", color:"#B48CFF",
+    vals:{ g5:{gap:-4,u:"件",pct:108.2,t:49}, rt:{gap:17,u:"點",pct:98.1,t:858}, rz:{rate:44.85,pct:115.0,t:39}, aq:{gap:-26,u:"點",pct:121.0,t:126}, hs:{gap:1,u:"點",pct:95.3,t:16} },
+    detail:[
+      {k:"🏆 全區總分第一", v:"106.0%", s:"AQ 152／126（121%）超標 26 點，加權分 20.58 全區最高"},
+      {k:"RT點數最後一哩", v:"缺 17 點", s:"841／858（98.1%）每天 3 點就整月達標"},
+      {k:"升轉率 44.85%", v:"61／136", s:"檔位 42~47%｜再 6 件純升轉跳 47% 檔，全月升轉案每件升為 $800~$1,250"},
+    ]},
+];
+
+/* ---- KPI 儀表（三大類達成率 + 最大補分機會：加分=權重×(100%−達成率)）---- */
+const KPI = [
+  { name:"鼎山", color:"#FFB020", majors:{aq:74.6, rt:82.9, va:77.0}, rtScore:30.75, rtPrice:"$230/門",
+    opps:[{k:"特維續約",gap:"26 件",add:7.2},{k:"AQ 999+",gap:"4 件",add:6.7},{k:"TTL AQ點數",gap:"32 點",add:4.3}] },
+  { name:"陽明", color:"#4DA3FF", majors:{aq:99.2, rt:96.9, va:105.0}, rtScore:45.60, rtPrice:"$460/門",
+    opps:[{k:"AQ 999+",gap:"2 件",add:1.7},{k:"RT 1399+",gap:"6 件",add:1.0},{k:"RT 999+",gap:"10 件",add:1.0}] },
+  { name:"後昌", color:"#34D2A0", majors:{aq:67.5, rt:87.4, va:68.7}, rtScore:27.55, rtPrice:"$230/門",
+    opps:[{k:"AQ 999+",gap:"6 件",add:7.5},{k:"特維續約",gap:"18 件",add:7.1},{k:"TTL AQ點數",gap:"41 點",add:5.5}] },
+  { name:"仁雄", color:"#FF6B8A", majors:{aq:73.4, rt:88.7, va:76.0}, rtScore:37.01, rtPrice:"$360/門",
+    opps:[{k:"AQ 999+",gap:"6 件",add:7.5},{k:"TTL AQ點數",gap:"34 點",add:4.5},{k:"高高特維",gap:"6 件",add:3.5}] },
+  { name:"凱旋", color:"#B48CFF", majors:{aq:121.0, rt:98.1, va:106.0}, rtScore:47.22, rtPrice:"$460/門",
+    opps:[{k:"特維續約",gap:"5 件",add:1.1},{k:"AQ 1399+",gap:"1 件",add:1.0},{k:"預付卡面額",gap:"4,706 元",add:0.9}] },
+];
+
+/* ---- 重點策略（官方三段式：<80%=−1 ／ 80~100%=0 ／ ≥100%=+1）---- */
+const TOLL = {
+  items:[
+    { k:"5G AQ+RT",   u:"件", cells:[{a:54,t:47},{a:46,t:42},{a:44,t:42},{a:44,t:49},{a:53,t:49}] },
+    { k:"好速案",      u:"點", cells:[{a:4,t:3},{a:3,t:2},{a:0.75,t:1},{a:13,t:16},{a:15,t:16}] },
+    { k:"手機保險",    u:"點", cells:[{a:63,t:60},{a:50,t:47},{a:46,t:46},{a:42,t:62},{a:58,t:56}] },
+    { k:"Device專案", u:"件", cells:[{a:99,t:133},{a:107,t:105},{a:84,t:103},{a:119,t:137},{a:109,t:125}] },
+  ],
+  accessory:{ k:"配件出貨金額", a:23.97, t:28.3, unit:"萬" },
+};
+
+/* ========================================================= */
+
+/* ===== Tabs ===== */
+document.querySelectorAll(".tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    document.querySelectorAll(".page").forEach(pg=>pg.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById("page-"+tab.dataset.page).classList.add("active");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+
+/* ===== 季獎金表（橫標=店名、直列=指標）===== */
+const cellCls = v => v >= 100 ? "c-ok" : v >= 85 ? "c-warn" : "c-bad";
+const RZ_STEPS = [32,37,42,47,52];
+const rzCell = c =>{
+  const nxt = RZ_STEPS.find(t=> t > c.rate);
+  const sub = nxt
+    ? `下一檔 ${nxt}%`
+    : `頂檔 ≥52%｜守住`;
+  return `<span class="cell num" style="color:var(--text);background:rgba(77,163,255,.08)">${c.rate}%<span style="display:block;font-size:10.5px;color:var(--gold);font-weight:700;margin-top:1px">${sub}</span></span>`;
+};
+const seasonCell = c =>{
+  const main = c.gap <= 0 ? `達標` : `缺 ${c.gap} ${c.u}`;
+  const sub = c.gap < 0
+    ? `超 ${Math.abs(c.gap)} ${c.u}｜目標 ${c.t} ${c.u}`
+    : `目標 ${c.t}${c.u==="%"?"%":" "+c.u}`;
+  return `<span class="cell num ${cellCls(c.pct)}">${main}<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">${sub}</span></span>`;
+};
+const SEASON_ROWS = [
+  {k:"5G", key:"g5"},
+  {k:"RT點數", key:"rt"},
+  {k:"RT升轉率", key:"rz"},
+  {k:"AQ點數", key:"aq"},
+  {k:"好速案", key:"hs"},
+];
+const seasonHead = document.querySelector("#seasonTbl thead tr");
+seasonHead.innerHTML = `<th>項目</th>` + SEASON.map((s,i)=>`
+  <th class="store-th" data-i="${i}" style="cursor:pointer" title="點我看明細">
+    <span class="store-name" style="justify-content:center"><i class="dot" style="background:${s.color}"></i>${s.name} <span style="font-size:13px">👇</span></span>
+  </th>`).join("");
+const tbody = document.querySelector("#seasonTbl tbody"); tbody.innerHTML="";
+SEASON_ROWS.forEach(r=>{
+  const tr = document.createElement("tr");
+  tr.innerHTML = `<td style="font-weight:700">${r.k}</td>` +
+    SEASON.map(s=>`<td>${r.key==="rz" ? rzCell(s.vals[r.key]) : seasonCell(s.vals[r.key])}</td>`).join("");
+  tbody.appendChild(tr);
+});
+const seasonDetail = document.getElementById("seasonDetail");
+let openStore = -1;
+seasonHead.querySelectorAll(".store-th").forEach(th=>{
+  th.addEventListener("click", ()=>{
+    const i = +th.dataset.i;
+    if(openStore === i){ seasonDetail.style.display="none"; openStore=-1; return; }
+    openStore = i;
+    const s = SEASON[i];
+    seasonDetail.innerHTML = `
+      <div style="font-weight:900;margin-bottom:10px;font-size:14px"><i class="dot" style="background:${s.color};margin-right:6px"></i>${s.name}｜缺口明細</div>
+      <div class="detail-grid">
+        ${s.detail.map(d=>`<div class="fuel"><div class="k">${d.k}</div><div class="v">${d.v}</div><div class="k" style="margin-top:4px">${d.s}</div></div>`).join("")}
+      </div>`;
+    seasonDetail.style.display = "block";
+  });
+});
+
+/* ===== 重點策略表 ===== */
+const tollBody = document.querySelector("#tollTbl tbody"); tollBody.innerHTML="";
+const gapFmt = g => (Math.round(g*100)/100).toString();
+const tier = rate => rate >= 1 ? 1 : rate >= 0.8 ? 0 : -1;
+const tollMoney = s => s>=5?20000 : s>=4?10000 : s>=2?5000 : s>=0?0 : s>=-2?-5000 : s>=-4?-10000 : -20000;
+const tollCell = (c,u) =>{
+  const rate = c.a / c.t, gap = c.t - c.a, t = tier(rate);
+  const sub = `<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">${gapFmt(c.a)}／${gapFmt(c.t)}${u}（${Math.round(rate*100)}%）</span>`;
+  if(t === 1)
+    return `<span class="toll-status c-ok">+1${sub}</span>`;
+  if(t === 0)
+    return `<span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 ${gapFmt(gap)} ${u} → +1</span>${sub}</span>`;
+  const to0 = c.t*0.8 - c.a;
+  return `<span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 ${gapFmt(to0)} ${u} → 0分</span>${sub}</span>`;
+};
+TOLL.items.forEach(it=>{
+  const tr = document.createElement("tr");
+  tr.innerHTML = `<td>${it.k}</td>` + it.cells.map(c=>`<td>${tollCell(c, it.u||"件")}</td>`).join("");
+  tollBody.appendChild(tr);
+});
+/* 配件：大加盟合計，三段式同步套用五店 */
+const accA = TOLL.accessory;
+const accRate = accA.a/accA.t, accTier = tier(accRate);
+const accGap = Math.round((accA.t - accA.a)*100)/100;
+const gapTo80 = Math.round((accA.t*0.8 - accA.a)*100)/100;
+const accTxt = accTier===1
+  ? `五店各 +1`
+  : accTier===0
+  ? `五店各 0分｜補 <b class="num">${accGap}${accA.unit}</b> 達100% → 五店各 <b>+1分</b>`
+  : `五店各 −1｜補 <b class="num">${gapTo80}${accA.unit}</b> 達80% → <b>不扣分</b>｜補 <b class="num">${accGap}${accA.unit}</b> 達100% → 五店各 <b>+1分</b>`;
+const acc = document.createElement("tr");
+acc.className = "accessory-row";
+acc.innerHTML = `<td>${accA.k} 🟣</td><td colspan="5" style="text-align:center;font-size:13px">
+  <b class="num" style="color:var(--purple)">${(accRate*100).toFixed(1)}%</b>（${accA.a}／${accA.t}${accA.unit}）　${accTxt}</td>`;
+tollBody.appendChild(acc);
+/* 得分列：自動加總 */
+const storeScores = TOLL.items[0].cells.map((_,i)=>
+  TOLL.items.reduce((sum,it)=> sum + tier(it.cells[i].a/it.cells[i].t), 0) + accTier
+);
+const sc = document.createElement("tr");
+sc.className = "score-row";
+sc.innerHTML = `<td>本店得分 → 獎懲</td>` + storeScores.map(s=>{
+  const money = tollMoney(s);
+  const cls = money>0?"money-pos":money<0?"money-neg":"money-zero";
+  const m = money===0?"$0":(money>0?"+$":"−$")+Math.abs(money).toLocaleString();
+  return `<td><span class="num">${s>0?"+":""}${s}分</span><br><span class="${cls} num">${m}</span></td>`;
+}).join("");
+tollBody.appendChild(sc);
+
+/* ===== 升轉率獎金：各店跳檔卡 ===== */
+const RZ_TIERS = [
+  {lo:0,  hi:32, label:"<32%",   p45:150, p70:250},
+  {lo:32, hi:37, label:"32~37%", p45:300, p70:400},
+  {lo:37, hi:42, label:"37~42%", p45:450, p70:600},
+  {lo:42, hi:47, label:"42~47%", p45:650, p70:1000},
+  {lo:47, hi:52, label:"47~52%", p45:800, p70:1250},
+  {lo:52, hi:999,label:"≥52%",   p45:800, p70:1250},
+];
+/* ===== RT KPI獎勵級距表 ===== */
+
+const LADDER = [
+  {lo:0,    hi:27.0, label:"< 27.0%",        price:"$0 ❌", danger:true},
+  {lo:27.0, hi:31.5, label:"27.0% ~ 31.5%",  price:"$230"},
+  {lo:31.5, hi:36.0, label:"31.5% ~ 36.0%",  price:"$310"},
+  {lo:36.0, hi:40.5, label:"36.0% ~ 40.5%",  price:"$360"},
+  {lo:40.5, hi:43.0, label:"40.5% ~ 43.0%",  price:"$390"},
+  {lo:43.0, hi:45.5, label:"43.0% ~ 45.5%",  price:"$420"},
+  {lo:45.5, hi:48.0, label:"45.5% ~ 48.0%",  price:"$460"},
+  {lo:48.0, hi:50.5, label:"48.0% ~ 50.5%",  price:"$500"},
+  {lo:50.5, hi:52.5, label:"50.5% ~ 52.5%",  price:"$525"},
+  {lo:52.5, hi:999,  label:"52.5% 以上",      price:"$550"},
+];
+const ladderBody = document.querySelector("#ladderTbl tbody"); ladderBody.innerHTML="";
+LADDER.forEach(t=>{
+  const here = KPI.filter(k=> k.rtScore >= t.lo && k.rtScore < t.hi);
+  const tr = document.createElement("tr");
+  const who = here.length
+    ? here.map(k=>`<span style="font-weight:900;color:${k.color}"><i class="dot" style="background:${k.color};margin-right:4px"></i>${k.name} ${k.rtScore}%</span>`).join("　")
+    : `<span style="color:var(--dim)">—</span>`;
+  tr.innerHTML = `
+    <td style="text-align:center;font-weight:700" class="num">${t.label}</td>
+    <td style="text-align:center"><span class="num" style="font-weight:900;color:${t.danger?'var(--red)':'var(--gold)'};font-size:15px">${t.price}</span></td>
+    <td style="text-align:center">${who}</td>`;
+  if(t.danger) tr.style.background = "rgba(255,107,107,.06)";
+  if(here.length) tr.style.boxShadow = "inset 3px 0 0 var(--blue)";
+  ladderBody.appendChild(tr);
+});
+
+/* ===== KPI 卡 ===== */
+const kpiGrid = document.getElementById("kpiGrid"); kpiGrid.innerHTML="";
+KPI.forEach(s=>{
+  const majors=[{k:"AQ點數",v:s.majors.aq},{k:"RT點數",v:s.majors.rt},{k:"店內總分",v:s.majors.va}];
+  const card = document.createElement("div");
+  card.className = "kpi-card";
+  card.style.setProperty("--sc", s.color);
+  card.innerHTML = `
+    <h3>${s.name}</h3>
+    <div class="maj-row">
+      ${majors.map(m=>{
+        const bad = m.v < 70;
+        return `<div class="maj ${bad?'maj-bad':''}">
+          <div class="mv num" style="color:${bad?'var(--red)':s.color}">${m.v}%</div>
+          <div class="mk">${m.k} KPI</div>
+          ${bad?'<div class="ml">⚠ 達成率偏低，待拉升</div>':'<div class="ml ok">✓ 達成率正常</div>'}
+        </div>`;
+      }).join("")}
+    </div>
+    <div class="opp-title">🔧 最大補分機會</div>
+    ${s.opps.map(o=>`<div class="opp"><span class="ok1">${o.k}</span><span class="ok2">缺 ${o.gap}</span><span class="ok3 num">補回 +${o.add.toFixed(1)}分</span></div>`).join("")}
+    <div class="rt-chip">🎰 RT加權總分 <b class="num">${s.rtScore}%</b>（7/24 未更新）→ RT KPI獎勵單價 <span class="price num">${s.rtPrice}</span></div>
+  `;
+  card.dataset.store = s.name;
+  kpiGrid.appendChild(card);
+});
+
+/* ===== KPI 店別篩選（全覽／單店）===== */
+const sfBar = document.getElementById("storeFilter"); sfBar.innerHTML="";
+const sfOpts = [{name:"全覽",color:"#4DA3FF"}].concat(KPI.map(k=>({name:k.name,color:k.color})));
+sfOpts.forEach((o,i)=>{
+  const b = document.createElement("div");
+  b.className = "sf" + (i===0?" on":"");
+  b.style.setProperty("--fc", o.color);
+  b.innerHTML = `<span class="sd"></span>${o.name}`;
+  b.addEventListener("click", ()=>{
+    sfBar.querySelectorAll(".sf").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    const warSec = document.querySelector(".rzwar");
+    const warGrid = document.getElementById("rzWarGrid");
+    /* 先把所有戰情卡歸位到底部區（依原順序） */
+    document.querySelectorAll('[data-store]').forEach(c=>{
+      if(c.querySelector("h3") && c.innerHTML.includes("升轉率戰情") && c.parentElement===kpiGrid){
+        warGrid.appendChild(c);
+      }
+    });
+    if(o.name==="全覽"){
+      kpiGrid.querySelectorAll(".kpi-card").forEach(c=> c.style.display="");
+      warGrid.querySelectorAll(".kpi-card").forEach(c=> c.style.display="");
+      if(warSec) warSec.style.display="";
+    }else{
+      kpiGrid.querySelectorAll(".kpi-card").forEach(c=>{
+        c.style.display = c.dataset.store===o.name ? "" : "none";
+      });
+      /* 把該店戰情卡搬進KPI區並排 */
+      const wc = Array.from(warGrid.querySelectorAll(".kpi-card")).find(c=>c.dataset.store===o.name);
+      if(wc){ wc.style.display=""; kpiGrid.appendChild(wc); }
+      if(warSec) warSec.style.display="none";
+    }
+  });
+  sfBar.appendChild(b);
+});
+
+/* ===== 5家升轉率戰情分析（升轉件/RT總件 → 檔位/跳檔/防守）===== */
+const RZ_WAR = [
+  {name:"鼎山", color:"#FFB020", u:65, n:128},
+  {name:"陽明", color:"#4DA3FF", u:56, n:117},
+  {name:"後昌", color:"#34D2A0", u:45, n:107},
+  {name:"仁雄", color:"#FF6B8A", u:52, n:139},
+  {name:"凱旋", color:"#B48CFF", u:61, n:136},
+];
+const rzWarGrid = document.getElementById("rzWarGrid"); rzWarGrid.innerHTML="";
+RZ_WAR.forEach(st=>{
+  const rate = st.u/st.n*100;
+  const ti = RZ_TIERS.findIndex(t=> rate >= t.lo && rate < t.hi);
+  const t = RZ_TIERS[ti];
+  const next = t.hi <= 52 ? RZ_TIERS[ti+1] : null;
+  const effTop = !next || (next.p45===t.p45 && next.p70===t.p70);  /* 47%以上單價已同頂檔 */
+
+  /* 現在每案 */
+  const nowRow = `<div class="war-row"><span class="wl">💰 現在每案</span><span class="wv num">$${t.p45} ~ $${t.p70.toLocaleString()}<span style="display:block;font-size:10px;color:var(--dim);font-weight:500">淨增401↑案件單價，小額案較低</span></span></div>`;
+
+  /* 跳檔 or 頂檔 */
+  let upRow;
+  if(effTop){
+    upRow = `<div class="war-row w-green"><span class="wl">✅ 實質頂檔</span><span class="wv">單價已最高，守住就好</span></div>`;
+  }else{
+    const T = t.hi/100;
+    const need = Math.ceil((T*st.n - st.u)/(1-T));
+    upRow = `<div class="war-row w-gold"><span class="wl">🚀 跳檔 ${t.hi}%</span><span class="wv">再 <b class="num">${need}</b> 件純升轉 → <b>全月升轉案</b>每件升為 <b class="num">$${next.p45}~$${next.p70.toLocaleString()}</b></span></div>`;
+  }
+
+  /* 防守 */
+  const lo = t.lo/100;
+  const tol = Math.floor(st.u/lo - st.n);
+  const defRow = `<div class="war-row w-red"><span class="wl">🛡️ 防守 ${t.lo}%</span><span class="wv">可容 <b class="num">${tol}</b> 件平降轉｜第 ${tol+1} 件掉檔</span></div>`;
+
+  /* 季目標39%警戒（分「已跌破」與「貼線」兩種）*/
+  const tol39 = Math.floor(st.u/0.39 - st.n);
+  let seasonWarn = "";
+  if(rate < 39){
+    const back = Math.ceil((0.39*st.n - st.u)/(1-0.39));
+    seasonWarn = `<div class="war-warn">🔴 <b>已跌破季目標39%</b>：季升轉率項目 &lt;100%！補 <b class="num">${back}</b> 件純升轉救回 39% 線 —— 平降轉全數依當日上線指令外導</div>`;
+  }else if(tol39 <= 8){
+    seasonWarn = `<div class="war-warn">⚠️ <b>季目標39%警戒</b>：第 <b>${tol39+1}</b> 件平降轉就跌破季升轉率100% —— 平降轉依當日上線指令導流</div>`;
+  }
+
+  const card = document.createElement("div");
+  card.className = "kpi-card";
+  card.dataset.store = st.name;
+  card.style.setProperty("--sc", st.color);
+  card.innerHTML = `
+    <h3>${st.name} <span style="font-size:11px;color:var(--dim);font-weight:700">｜升轉率戰情</span></h3>
+    <div class="maj-row">
+      <div class="maj"><div class="mv num" style="color:${st.color}">${Math.round(rate*10)/10}%</div><div class="mk">升轉率｜檔位 ${t.label}</div></div>
+      <div class="maj"><div class="mv num">${st.u}<span style="font-size:11px;color:var(--dim)">／${st.n}</span></div><div class="mk">升轉件／RT總件</div></div>
+    </div>
+    ${nowRow}
+    ${upRow}
+    ${defRow}
+    ${seasonWarn}
+  `;
+  rzWarGrid.appendChild(card);
+});
+</script>
+
+
+</body></html>
