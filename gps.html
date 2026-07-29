@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<!-- saved from url=(0102)file:///C:/Users/eason/Downloads/%E5%80%9A%E7%9B%9FGPS_%E7%BC%BA%E5%8F%A3%E5%B0%8E%E8%88%AA%20(9).html -->
+<!-- saved from url=(0047)file:///C:/Users/eason/Downloads/gps%20(6).html -->
 <html lang="zh-Hant"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>倚盟GPS｜缺口導航</title>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
-<link href="./gps_files/css2" rel="stylesheet">
+<link href="file:///C:/Users/eason/Downloads/gps_files/css2" rel="stylesheet">
 <style>
   :root{
     --bg:#0D1321; --surface:#161F36; --surface-2:#1C2740; --lane:#2E3A5C;
@@ -69,7 +69,7 @@
   }
   .tab .t1{font-size:15px;font-weight:900;letter-spacing:.5px;color:#0D1321;}
   .tab .t2{font-size:10.5px;color:rgba(13,19,33,.78);font-weight:700;}
-  .tab .badge{font-size:10.5px;font-weight:700;padding:1px 9px;border-radius:999px;margin-top:1px;}
+  .tab .badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:999px;margin-top:2px;line-height:1.4;text-align:center;}
   .tab .badge.b-red{background:rgba(13,19,33,.4);color:#fff;}
   .tab .badge.b-gold{background:rgba(13,19,33,.4);color:#fff;}
   .tab .badge.b-green{background:rgba(13,19,33,.4);color:#fff;}
@@ -144,7 +144,7 @@
   .maj{flex:1;background:var(--surface-2);border-radius:10px;padding:9px 6px;text-align:center;}
   .maj.maj-bad{background:rgba(255,107,107,.08);}
   .maj .mv{font-size:17px;font-weight:700;}
-  .maj .mk{font-size:10px;color:var(--dim);margin-top:2px;}
+  .maj .mk{font-size:9.5px;color:var(--dim);margin-top:2px;line-height:1.3;}
   .maj .ml{font-size:9.5px;color:var(--red);margin-top:2px;font-weight:700;}
   .maj .ml.ok{color:var(--green);}
   .opp-title{font-size:11.5px;font-weight:900;color:var(--gold);margin:2px 0 6px;}
@@ -156,6 +156,38 @@
   .rt-chip b{color:var(--text);}
   .rt-chip .price{color:var(--gold);font-weight:700;}
 
+  /* ===== RT獎勵卡：排名／檔位進度／追逐 ===== */
+  .rankrow{display:flex;gap:6px;margin-bottom:9px;}
+  .rk{flex:1;background:var(--surface-2);border-radius:10px;padding:9px 5px;text-align:center;}
+  .rk .rv{font-size:21px;font-weight:900;line-height:1.15;font-family:'Chakra Petch','Noto Sans TC',sans-serif;}
+  .rk .rl{font-size:9.5px;color:var(--dim);margin-top:3px;font-weight:700;}
+  .rk .rkx{font-size:9.5px;color:var(--dim);font-weight:700;margin-top:5px;padding-top:5px;border-top:1px solid rgba(46,58,92,.8);}
+  .rk.push{background:rgba(255,209,102,.1);box-shadow:inset 0 0 0 1px rgba(255,209,102,.3);}
+  .rk.push .rv{color:var(--gold);font-size:18px;}
+  .rk.push .rl{color:var(--text);font-size:11px;}
+  .rk.push .rl b{color:var(--gold);font-size:13px;}
+  .rk.push .stp{display:block;font-size:9px;color:var(--dim);font-weight:700;margin-top:1px;}
+  .tierbar{background:#5A3FC0;border:1px solid #7A63D8;border-radius:12px;padding:10px 12px;
+    margin-bottom:8px;display:flex;align-items:center;gap:9px;}
+  .tb-star{font-size:23px;line-height:1;flex-shrink:0;}
+  .tb-bot{flex:1;font-size:12px;color:#fff;line-height:1.55;}
+  .tb-bot b{color:#fff;font-weight:900;}
+  .tb-bot b.up{color:#fff;font-size:17px;font-weight:900;}
+  @media(max-width:640px){ .rk .rv{font-size:22px;} .rk .rl{font-size:10.5px;} }
+  /* ===== 店卡雙檢視切換 ===== */
+  .kpi-card h3{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .cardsw{display:flex;gap:5px;margin-left:auto;}
+  .cardsw span{font-size:10px;font-weight:900;padding:4px 9px;border-radius:999px;cursor:pointer;
+    background:var(--surface-2);color:var(--dim);border:1px solid var(--lane);user-select:none;transition:all .15s;white-space:nowrap;}
+  .cardsw span.on{background:var(--blue);color:#0D1321;border-color:transparent;}
+  .cv{display:none;} .cv.on{display:block;}
+  .nextbar{background:var(--surface-2);border-radius:10px;padding:9px 11px;margin-bottom:9px;font-size:11.5px;line-height:1.65;color:var(--dim);}
+  .nextbar b{color:var(--gold);} .nextbar .big{font-size:15px;font-weight:900;color:var(--text);}
+  .fix{display:flex;align-items:center;gap:6px;font-size:11px;background:var(--surface-2);border-radius:8px;padding:7px 9px;margin-bottom:5px;}
+  .fix.hit{box-shadow:inset 3px 0 0 var(--gold);}
+  .fix .fk{font-weight:700;}
+  .fix .fv{margin-left:auto;color:var(--gold);font-weight:700;white-space:nowrap;text-align:right;}
+  @media(max-width:640px){ .cardsw span{font-size:11px;padding:5px 10px;} .fix{font-size:12px;flex-wrap:wrap;} .fix .fv{margin-left:auto;} }
   .war-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;
     background:var(--surface-2);margin-bottom:6px;font-size:12px;line-height:1.45;}
   .war-row .wl{color:var(--dim);font-weight:700;white-space:nowrap;flex-shrink:0;}
@@ -167,6 +199,64 @@
   .war-warn{margin-top:2px;padding:8px 12px;border-radius:10px;font-size:10.5px;line-height:1.6;
     background:rgba(255,107,107,.09);border:1px solid rgba(255,107,107,.3);color:var(--dim);}
   .war-warn b{color:var(--red);}
+  /* ===== 級距表下方：分店摘要 ===== */
+  .ldsum{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:7px;
+    padding:11px 16px 14px;border-top:1px solid rgba(255,209,102,.15);background:rgba(255,209,102,.04);}
+  .ld{background:var(--surface-2);border-radius:9px;padding:8px 9px;border-left:3px solid var(--lc,#4DA3FF);}
+  .ld.near{box-shadow:0 0 0 1.5px rgba(255,209,102,.55);}
+  .ld .n{font-size:12px;font-weight:900;display:flex;align-items:center;gap:4px;}
+  .ld .sc{font-size:17px;font-weight:900;line-height:1.25;font-family:'Chakra Petch','Noto Sans TC',sans-serif;}
+  .ld .pr{font-size:11.5px;font-weight:900;color:var(--gold);}
+  .ld .gp{font-size:9.5px;color:var(--dim);line-height:1.45;margin-top:4px;padding-top:4px;border-top:1px solid rgba(46,58,92,.7);}
+  .ld .gp b{color:var(--gold);}
+  @media(max-width:640px){
+    .ldsum{grid-template-columns:repeat(2,1fr);padding:10px 12px 12px;}
+    .ld .sc{font-size:18px;} .ld .gp{font-size:10.5px;}
+  }
+  /* ===== 級距表：壓縮列高 ===== */
+  #ladderTbl{min-width:420px;}
+  #ladderTbl th{padding:6px 8px;font-size:10.5px;}
+  #ladderTbl td{padding:6px 8px;font-size:12.5px;}
+  @media(max-width:640px){
+    #ladderTbl{min-width:340px;}
+    #ladderTbl th{padding:5px 6px;font-size:10.5px;}
+    #ladderTbl td{padding:5px 6px;font-size:12px;}
+  }
+  /* ===== RT補分速查 ===== */
+  .fuelbar{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding:11px 16px 12px;}
+  .fcard{border-radius:8px;padding:6px 9px;background:var(--surface-2);border-left:3px solid var(--fcc,#4DA3FF);}
+  .fcard .fk{font-size:9.5px;color:var(--dim);font-weight:700;line-height:1.3;}
+  .fcard .fv{font-size:16px;font-weight:900;color:var(--fcc);line-height:1.35;font-family:'Chakra Petch','Noto Sans TC',sans-serif;}
+  .fcard .fp{font-size:9px;color:var(--dim);line-height:1.3;}
+  .frow{display:flex;align-items:center;gap:9px;padding:7px 16px;border-top:1px solid rgba(46,58,92,.55);font-size:11.5px;}
+  .frow .fn{width:44px;font-weight:900;font-size:12.5px;flex-shrink:0;}
+  .frow .fr{width:62px;flex-shrink:0;display:flex;flex-direction:column;line-height:1.2;}
+  .frow .frv{font-weight:900;font-size:14px;}
+  .frow .frs{font-size:8.5px;color:var(--dim);font-weight:700;margin-top:1px;}
+  .frow .fpill{font-size:10.5px;font-weight:900;padding:3px 9px;border-radius:999px;flex-shrink:0;
+    background:rgba(77,163,255,.12);color:var(--blue);border:1px solid rgba(77,163,255,.32);}
+  .frow .fpill.hot{background:rgba(255,209,102,.14);color:var(--gold);border-color:rgba(255,209,102,.45);}
+  .frow .fw{flex:1;color:var(--dim);line-height:1.45;font-size:11px;}
+  .frow .fw b{color:var(--text);font-size:13px;}
+  .frow .fg{font-weight:900;font-size:14px;white-space:nowrap;flex-shrink:0;color:var(--green);}
+  .fwarn{margin:9px 16px 13px;padding:7px 11px;border-radius:9px;font-size:10.5px;line-height:1.6;
+    background:rgba(255,107,107,.09);border:1px solid rgba(255,107,107,.3);color:var(--dim);}
+  .fwarn b{color:var(--red);}
+  @media(max-width:640px){
+    .fuelbar{grid-template-columns:repeat(4,1fr);gap:5px;padding:10px 12px;}
+    .fcard{padding:6px 7px;}
+    .fcard .fk{font-size:9.5px;}
+    .fcard .fv{font-size:15px;}
+    .frow{padding:7px 12px;font-size:12px;}
+    .frow .fn{width:42px;font-size:13px;}
+    .frow .fr{width:60px;}
+    .frow .frv{font-size:14px;}
+    .frow .frs{font-size:9.5px;}
+    .frow .fw{font-size:12px;}
+    .frow .fpill{font-size:11px;}
+    .frow .fg{font-size:14px;}
+    .fwarn{font-size:11.5px;}
+  }
   .demo-note{margin-top:30px;font-size:10.5px;color:var(--dim);text-align:center;line-height:1.8;}
 
   @media (max-width:640px){
@@ -174,6 +264,7 @@
     .tab{min-width:112px;padding:10px 8px;}
     .tab .t2{display:none;}
     .tab .t1{font-size:14px;}
+    .tab .badge{font-size:9px;padding:2px 7px;}
     /* 表格：主字放大、觸控好點 */
     th,td{padding:10px 7px;font-size:13px;}
     .cell{font-size:13.5px;}
@@ -198,6 +289,9 @@
     .war-row{font-size:12.5px;flex-wrap:wrap;}
     .war-row .wv{margin-left:0;text-align:left;width:100%;}
     .war-row .wv b{font-size:15px;}
+    /* 防守列文字短，維持與標籤同一行 */
+    .war-row.w-red{flex-wrap:nowrap;}
+    .war-row.w-red .wv{width:auto;margin-left:auto;text-align:right;}
     .war-warn{font-size:11.5px;}
     /* 重點策略行動區 */
     .flip{font-size:12.5px;}
@@ -224,7 +318,7 @@
       </div>
     </div>
     <div class="chips">
-      <div class="chip">📅 <b>2026年7月</b>｜數據至 7/27，剩 <b>4</b> 天</div>
+      <div class="chip">📅 <b>2026年7月</b>｜數據為 7/1-7/28，<b style="color:var(--red)">剩 <span class="num">3</span> 天</b></div>
     </div>
   </header>
 
@@ -233,17 +327,17 @@
     <div class="tab active" data-page="season">
       <span class="t1">🏆 季獎金</span>
       <span class="t2">$90,000／店・五項缺口</span>
-      <span class="badge b-red">🏆 凱旋季五項全綠・三店RT點破百</span>
+      <span class="badge b-red">🏆 陽明加入滿貫・仁雄三破百</span>
     </div>
     <div class="tab" data-page="toll">
       <span class="t1">💰 重點策略</span>
       <span class="t2">五項計分・獎懲試算</span>
-      <span class="badge b-red">💥 配件破百・全區 +$45,000</span>
+      <span class="badge b-red">💥 配件破百・全區+$50,000</span>
     </div>
     <div class="tab" data-page="kpi">
-      <span class="t1">📟 3大KPI分數</span>
-      <span class="t2">三大KPI・補分機會</span>
-      <span class="badge b-red">⚠️ 鼎山陽明升轉率零容量・仁雄補5件</span>
+      <span class="t1">🎰 RT KPI獎勵</span>
+      <span class="t2">領獎線27%・每門單價跳檔</span>
+      <span class="badge b-red">🔴 仁雄升轉率差2件</span>
     </div>
   </div>
 
@@ -274,7 +368,7 @@
   <th class="store-th" data-i="4" style="cursor:pointer" title="點我看明細">
     <span class="store-name" style="justify-content:center"><i class="dot" style="background:#B48CFF"></i>凱旋 <span style="font-size:13px">👇</span></span>
   </th></tr></thead>
-          <tbody><!-- injected --><tr><td style="font-weight:700">5G</td><td><span class="cell num c-warn">缺 7 件<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 47 件</span></span></td><td><span class="cell num c-warn">缺 6 件<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 42 件</span></span></td><td><span class="cell num c-warn">缺 4 件<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 42 件</span></span></td><td><span class="cell num c-bad">缺 15 件<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 49 件</span></span></td><td><span class="cell num c-warn">缺 4 件<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 49 件</span></span></td></tr><tr><td style="font-weight:700">RT點數</td><td><span class="cell num c-bad">缺 365 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 982 點</span></span></td><td><span class="cell num c-bad">缺 170 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 684 點</span></span></td><td><span class="cell num c-bad">缺 210 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 686 點</span></span></td><td><span class="cell num c-bad">缺 318 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 1026 點</span></span></td><td><span class="cell num c-bad">缺 205 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 858 點</span></span></td></tr><tr><td style="font-weight:700">RT升轉率</td><td><span class="cell num" style="color:var(--text);background:rgba(77,163,255,.08)">50.5%<span style="display:block;font-size:10.5px;color:var(--gold);font-weight:700;margin-top:1px">下一檔 52%</span></span></td><td><span class="cell num" style="color:var(--text);background:rgba(77,163,255,.08)">46.7%<span style="display:block;font-size:10.5px;color:var(--gold);font-weight:700;margin-top:1px">下一檔 47%</span></span></td><td><span class="cell num" style="color:var(--text);background:rgba(77,163,255,.08)">41.4%<span style="display:block;font-size:10.5px;color:var(--gold);font-weight:700;margin-top:1px">下一檔 42%</span></span></td><td><span class="cell num" style="color:var(--text);background:rgba(77,163,255,.08)">40.7%<span style="display:block;font-size:10.5px;color:var(--gold);font-weight:700;margin-top:1px">下一檔 42%</span></span></td><td><span class="cell num" style="color:var(--text);background:rgba(77,163,255,.08)">40.7%<span style="display:block;font-size:10.5px;color:var(--gold);font-weight:700;margin-top:1px">下一檔 42%</span></span></td></tr><tr><td style="font-weight:700">AQ點數</td><td><span class="cell num c-bad">缺 56.5 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 126 點</span></span></td><td><span class="cell num c-bad">缺 57.5 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 126 點</span></span></td><td><span class="cell num c-bad">缺 57 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 126 點</span></span></td><td><span class="cell num c-bad">缺 60 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 126 點</span></span></td><td><span class="cell num c-ok">達標<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">超 22.5 點｜目標 126 點</span></span></td></tr><tr><td style="font-weight:700">好速案</td><td><span class="cell num c-ok">達標<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">超 1 點｜目標 3 點</span></span></td><td><span class="cell num c-ok">達標<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">超 1 點｜目標 2 點</span></span></td><td><span class="cell num c-bad">缺 0.25 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 1 點</span></span></td><td><span class="cell num c-bad">缺 5.5 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 16 點</span></span></td><td><span class="cell num c-bad">缺 7.75 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 16 點</span></span></td></tr></tbody>
+          <tbody><tr><td style="font-weight:700">5G</td><td><span class="cell num c-ok">達標<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">超 11 件｜目標 47 件</span></span></td><td><span class="cell num c-ok">達標<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">超 5 件｜目標 42 件</span></span></td><td><span class="cell num c-ok">達標<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">超 5 件｜目標 42 件</span></span></td><td><span class="cell num c-warn">缺 4 件<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 49 件</span></span></td><td><span class="cell num c-ok">達標<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">超 5 件｜目標 49 件</span></span></td></tr><tr><td style="font-weight:700">RT點數</td><td><span class="cell num c-warn">缺 124 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 982 點</span></span></td><td><span class="cell num c-warn">缺 21.25 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 684 點</span></span></td><td><span class="cell num c-warn">缺 59.45 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 686 點</span></span></td><td><span class="cell num c-warn">缺 15.45 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 1026 點</span></span></td><td><span class="cell num c-ok">達標<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">超 28.9 點｜目標 858 點</span></span></td></tr><tr><td style="font-weight:700">RT升轉率</td><td><span class="cell num" style="color:var(--text);background:rgba(77,163,255,.08)">49.63%<span style="display:block;font-size:10.5px;color:var(--gold);font-weight:700;margin-top:1px">下一檔 52%</span></span></td><td><span class="cell num" style="color:var(--text);background:rgba(77,163,255,.08)">47.86%<span style="display:block;font-size:10.5px;color:var(--gold);font-weight:700;margin-top:1px">下一檔 52%</span></span></td><td><span class="cell num" style="color:var(--text);background:rgba(77,163,255,.08)">41.07%<span style="display:block;font-size:10.5px;color:var(--gold);font-weight:700;margin-top:1px">下一檔 42%</span></span></td><td><span class="cell num" style="color:var(--text);background:rgba(77,163,255,.08)">36.84%<span style="display:block;font-size:10.5px;color:var(--gold);font-weight:700;margin-top:1px">下一檔 37%</span></span></td><td><span class="cell num" style="color:var(--text);background:rgba(77,163,255,.08)">45.07%<span style="display:block;font-size:10.5px;color:var(--gold);font-weight:700;margin-top:1px">下一檔 47%</span></span></td></tr><tr><td style="font-weight:700">AQ點數</td><td><span class="cell num c-bad">缺 22.5 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 126 點</span></span></td><td><span class="cell num c-warn">缺 1 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 126 點</span></span></td><td><span class="cell num c-bad">缺 35 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 126 點</span></span></td><td><span class="cell num c-bad">缺 23.5 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 126 點</span></span></td><td><span class="cell num c-ok">達標<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">超 28 點｜目標 126 點</span></span></td></tr><tr><td style="font-weight:700">好速案</td><td><span class="cell num c-ok">達標<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">超 1 點｜目標 3 點</span></span></td><td><span class="cell num c-ok">達標<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">超 1 點｜目標 2 點</span></span></td><td><span class="cell num c-bad">缺 0.25 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 1 點</span></span></td><td><span class="cell num c-bad">缺 2.75 點<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">目標 16 點</span></span></td><td><span class="cell num c-ok">達標<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:1px">超 0.5 點｜目標 16 點</span></span></td></tr></tbody>
         </table>
         </div>
         <div id="seasonDetail" style="display:none;padding:16px 18px;background:var(--surface-2);border-top:1px solid var(--lane)"></div>
@@ -296,16 +390,16 @@
           <thead>
             <tr><th>項目</th><th>鼎山</th><th>陽明</th><th>後昌</th><th>仁雄</th><th>凱旋</th></tr>
           </thead>
-          <tbody><!-- injected --><tr><td>5G AQ+RT</td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 7 件 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">40／47件（85%）</span></span></td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 6 件 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">36／42件（86%）</span></span></td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 4 件 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">38／42件（90%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 5.2 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">34／49件（69%）</span></span></td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 4 件 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">45／49件（92%）</span></span></td></tr><tr><td>好速案</td><td><span class="toll-status c-ok">+1<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">4／3件（133%）</span></span></td><td><span class="toll-status c-ok">+1<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">3／2件（150%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 0.1 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">0.8／1件（75%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 2.3 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">10.5／16件（66%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 4.6 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">8.3／16件（52%）</span></span></td></tr><tr><td>手機保險</td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 10 件 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">50／60件（83%）</span></span></td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 8 件 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">39／47件（83%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 1.8 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">35／46件（76%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 17.6 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">32／62件（52%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 0.3 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">44.5／56件（79%）</span></span></td></tr><tr><td>Device專案</td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 35.4 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">71／133件（53%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 3 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">81／105件（77%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 15.4 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">67／103件（65%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 16.6 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">93／137件（68%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 11 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">89／125件（71%）</span></span></td></tr><tr class="accessory-row"><td>配件出貨金額 🟣</td><td colspan="5" style="text-align:center;font-size:13px">
-  <b class="num" style="color:var(--purple)">70%</b>（19.86／28.3萬）　五店各 −1｜補 <b class="num">2.8萬</b> 達80% → <b>不扣分</b>｜補 <b class="num">8.4萬</b> 達100% → 五店各 <b>+1分</b></td></tr><tr class="score-row"><td>本店得分 → 獎懲</td><td><span class="num">-1分</span><br><span class="money-neg num">−$5,000</span></td><td><span class="num">-1分</span><br><span class="money-neg num">−$5,000</span></td><td><span class="num">-4分</span><br><span class="money-neg num">−$10,000</span></td><td><span class="num">-5分</span><br><span class="money-neg num">−$20,000</span></td><td><span class="num">-4分</span><br><span class="money-neg num">−$10,000</span></td></tr></tbody>
+          <tbody><tr><td>5G AQ+RT</td><td><span class="toll-status c-ok">+1<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">58／47件（123%）</span></span></td><td><span class="toll-status c-ok">+1<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">47／42件（112%）</span></span></td><td><span class="toll-status c-ok">+1<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">47／42件（112%）</span></span></td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 4 件 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">45／49件（92%）</span></span></td><td><span class="toll-status c-ok">+1<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">54／49件（110%）</span></span></td></tr><tr><td>好速案</td><td><span class="toll-status c-ok">+1<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">4／3點（133%）</span></span></td><td><span class="toll-status c-ok">+1<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">3／2點（150%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 0.05 點 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">0.75／1點（75%）</span></span></td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 2.75 點 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">13.25／16點（83%）</span></span></td><td><span class="toll-status c-ok">+1<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">16.5／16點（103%）</span></span></td></tr><tr><td>手機保險</td><td><span class="toll-status c-ok">+1<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">64／60點（107%）</span></span></td><td><span class="toll-status c-ok">+1<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">50.5／47點（107%）</span></span></td><td><span class="toll-status c-ok">+1<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">51.5／46點（112%）</span></span></td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 5.6 點 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">44／62點（71%）</span></span></td><td><span class="toll-status c-ok">+1<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">58／56點（104%）</span></span></td></tr><tr><td>Device專案</td><td><span class="toll-status c-bad">−1<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 1.4 件 → 0分</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">105／133件（79%）</span></span></td><td><span class="toll-status c-ok">+1<span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">107／105件（102%）</span></span></td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 12 件 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">91／103件（88%）</span></span></td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 5 件 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">132／137件（96%）</span></span></td><td><span class="toll-status c-warn">0分<span style="display:block;font-size:10.5px;font-weight:700;margin-top:1px">補 13 件 → +1</span><span style="display:block;font-size:10.5px;color:var(--dim);font-weight:500;margin-top:2px">112／125件（90%）</span></span></td></tr><tr class="accessory-row"><td>配件出貨金額 🟣</td><td colspan="5" style="text-align:center;font-size:13px">
+  <b class="num" style="color:var(--purple)">97%</b>（27.53／28.3萬）　五店各 0分｜補 <b class="num">0.77萬</b> 達100% → 五店各 <b>+1分</b></td></tr><tr class="score-row"><td>本店得分 → 獎懲</td><td><span class="num">+2分</span><br><span class="money-pos num">+$5,000</span></td><td><span class="num">+4分</span><br><span class="money-pos num">+$10,000</span></td><td><span class="num">+1分</span><br><span class="money-zero num">$0</span></td><td><span class="num">-1分</span><br><span class="money-neg num">−$5,000</span></td><td><span class="num">+3分</span><br><span class="money-pos num">+$5,000</span></td></tr></tbody>
         </table>
         </div>
         <div class="flip-box">
-          <h4>🏎️ 立即追上的行動（官方7/27・剩4天）</h4>
-          <div class="flip">🟢 <b>後昌・好速案</b>：補 <b class="num">0.25</b> 點到100% → −1翻+1、+2→+4 → +$10,000<span class="roi">再 +$5,000</span></div>
-          <div class="flip">🟡 <b>仁雄・手機保險</b>：補 <b class="num">4.6</b> 點到80% → 脫離 −1、$0→+$5,000<span class="roi">再 +$5,000</span></div>
-          <div class="flip">🛡️ <b>配件防守</b>：100.19% 只超 <b class="num">535 元</b>——月底前嚴防退貨，掉回100%以下全區立刻 −$25,000<span class="roi">守住 +$45,000</span></div>
-          <div class="flip-total">配件破百立大功：全區 <b>+$45,000</b>（陽明滿分+5 獨拿 +$20,000）→ 兩條補完 → <b>+$55,000 獎金</b></div>
+          <h4>🏎️ 立即追上的行動（官方7/28・剩3天）</h4>
+          <div class="flip">🟢 <b>後昌・好速案</b>：補 <b class="num">0.25</b> 點到100% → −1翻+1、+3→+5 滿分 → <b>+$20,000</b><span class="roi">再 +$15,000</span></div>
+          <div class="flip">🟡 <b>仁雄・保險1.6點＋好速2點</b>：雙補 → +2→+4 → +$10,000<span class="roi">再 +$5,000</span></div>
+          <div class="flip">🛡️ <b>配件防守</b>：100.19% 只超 <b class="num">535 元</b>——月底前嚴防退貨，掉回全區 −$25,000<span class="roi">守住 +$50,000</span></div>
+          <div class="flip-total">官方7/28 全區 <b>+$50,000</b>（陽明滿分 +$20,000・後昌仁雄 Device 雙破百）→ 全做 → <b>+$70,000 獎金</b></div>
         </div>
       </div>
     </div>
@@ -322,186 +416,407 @@
         <div class="tbl-scroll">
         <table id="ladderTbl">
           <thead><tr><th>RT加權總分</th><th>單價／門</th><th>目前在此檔</th></tr></thead>
-          <tbody><!-- 由 JS 依 LADDER + KPI.rtScore 自動生成 --></tbody>
+          <tbody><tr style="background: rgba(255, 107, 107, 0.06);">
+    <td style="text-align:center;font-weight:700" class="num">&lt; 27.0%</td>
+    <td style="text-align:center"><span class="num" style="font-weight:900;color:var(--red);font-size:13px">$0 ❌</span></td>
+    <td style="text-align:center"><span style="color:var(--dim)">—</span></td></tr><tr>
+    <td style="text-align:center;font-weight:700" class="num">27.0% ~ 31.5%</td>
+    <td style="text-align:center"><span class="num" style="font-weight:900;color:var(--gold);font-size:13px">$230</span></td>
+    <td style="text-align:center"><span style="color:var(--dim)">—</span></td></tr><tr style="box-shadow: inset 3px 0 0 var(--blue);">
+    <td style="text-align:center;font-weight:700" class="num">31.5% ~ 36.0%</td>
+    <td style="text-align:center"><span class="num" style="font-weight:900;color:var(--gold);font-size:13px">$310</span></td>
+    <td style="text-align:center"><span style="font-weight:900;font-size:12px;color:#FFB020"><i class="dot" style="width:7px;height:7px;background:#FFB020;margin-right:3px"></i>鼎山 35.39</span>　<span style="font-weight:900;font-size:12px;color:#34D2A0"><i class="dot" style="width:7px;height:7px;background:#34D2A0;margin-right:3px"></i>後昌 35.07</span></td></tr><tr>
+    <td style="text-align:center;font-weight:700" class="num">36.0% ~ 40.5%</td>
+    <td style="text-align:center"><span class="num" style="font-weight:900;color:var(--gold);font-size:13px">$360</span></td>
+    <td style="text-align:center"><span style="color:var(--dim)">—</span></td></tr><tr style="box-shadow: inset 3px 0 0 var(--blue);">
+    <td style="text-align:center;font-weight:700" class="num">40.5% ~ 43.0%</td>
+    <td style="text-align:center"><span class="num" style="font-weight:900;color:var(--gold);font-size:13px">$390</span></td>
+    <td style="text-align:center"><span style="font-weight:900;font-size:12px;color:#FF6B8A"><i class="dot" style="width:7px;height:7px;background:#FF6B8A;margin-right:3px"></i>仁雄 41.15</span></td></tr><tr style="box-shadow: inset 3px 0 0 var(--blue);">
+    <td style="text-align:center;font-weight:700" class="num">43.0% ~ 45.5%</td>
+    <td style="text-align:center"><span class="num" style="font-weight:900;color:var(--gold);font-size:13px">$420</span></td>
+    <td style="text-align:center"><span style="font-weight:900;font-size:12px;color:#4DA3FF"><i class="dot" style="width:7px;height:7px;background:#4DA3FF;margin-right:3px"></i>陽明 45.33</span></td></tr><tr style="box-shadow: inset 3px 0 0 var(--blue);">
+    <td style="text-align:center;font-weight:700" class="num">45.5% ~ 48.0%</td>
+    <td style="text-align:center"><span class="num" style="font-weight:900;color:var(--gold);font-size:13px">$460</span></td>
+    <td style="text-align:center"><span style="font-weight:900;font-size:12px;color:#B48CFF"><i class="dot" style="width:7px;height:7px;background:#B48CFF;margin-right:3px"></i>凱旋 47.63</span></td></tr><tr>
+    <td style="text-align:center;font-weight:700" class="num">48.0% ~ 50.5%</td>
+    <td style="text-align:center"><span class="num" style="font-weight:900;color:var(--gold);font-size:13px">$500</span></td>
+    <td style="text-align:center"><span style="color:var(--dim)">—</span></td></tr><tr>
+    <td style="text-align:center;font-weight:700" class="num">50.5% ~ 52.5%</td>
+    <td style="text-align:center"><span class="num" style="font-weight:900;color:var(--gold);font-size:13px">$525</span></td>
+    <td style="text-align:center"><span style="color:var(--dim)">—</span></td></tr><tr>
+    <td style="text-align:center;font-weight:700" class="num">52.5% 以上</td>
+    <td style="text-align:center"><span class="num" style="font-weight:900;color:var(--gold);font-size:13px">$550</span></td>
+    <td style="text-align:center"><span style="color:var(--dim)">—</span></td></tr></tbody>
         </table>
         </div>
-        <div class="rule-note">💡 讀法：<b>官方 7/27 當前分數</b>：凱旋 48.22% 衝上 <b>$500/門</b>；陽明 46.70% 重回 $460；<b>仁雄 42.93% 差 0.07pp 就跳 $420</b>；鼎山 36.79%、後昌 37.29% 同站 $360。官方月底推估：凱旋 $525、陽明／仁雄 $500、鼎山／後昌 $420——最後4天每一件都在加價。</div>
+        <div class="ldsum" id="ladderSum">
+    <div class="ld " style="--lc:#B48CFF">
+      <div class="n"><i class="dot" style="background:#B48CFF"></i>凱旋</div>
+      <div class="sc num" style="color:#B48CFF">47.63</div>
+      <div class="pr num">$460/門</div>
+      <div class="gp">差 <b class="num">0.37</b> 分跳 <b>$500</b></div>
+    </div>
+    <div class="ld near" style="--lc:#4DA3FF">
+      <div class="n"><i class="dot" style="background:#4DA3FF"></i>陽明</div>
+      <div class="sc num" style="color:#4DA3FF">45.33</div>
+      <div class="pr num">$420/門</div>
+      <div class="gp">差 <b class="num">0.17</b> 分跳 <b>$460</b></div>
+    </div>
+    <div class="ld " style="--lc:#FF6B8A">
+      <div class="n"><i class="dot" style="background:#FF6B8A"></i>仁雄</div>
+      <div class="sc num" style="color:#FF6B8A">41.15</div>
+      <div class="pr num">$390/門</div>
+      <div class="gp">差 <b class="num">1.85</b> 分跳 <b>$420</b></div>
+    </div>
+    <div class="ld " style="--lc:#FFB020">
+      <div class="n"><i class="dot" style="background:#FFB020"></i>鼎山</div>
+      <div class="sc num" style="color:#FFB020">35.39</div>
+      <div class="pr num">$310/門</div>
+      <div class="gp">差 <b class="num">0.61</b> 分跳 <b>$360</b></div>
+    </div>
+    <div class="ld " style="--lc:#34D2A0">
+      <div class="n"><i class="dot" style="background:#34D2A0"></i>後昌</div>
+      <div class="sc num" style="color:#34D2A0">35.07</div>
+      <div class="pr num">$310/門</div>
+      <div class="gp">差 <b class="num">0.93</b> 分跳 <b>$360</b></div>
+    </div></div>
       </div>
 
   </div>
 
+    <!-- ===== RT補分速查 ===== -->
     <div class="sec">
       <div class="sec-head">
-        <h2>📟 3大KPI分數</h2>
-        <span class="dest">三大類為官方逐項計分後的彙總達成率｜折半是<b>各項套自己的低標</b>（AQ TTL 60%、多數項 70%、標「－」者不折半），非一律70%｜補分機會＝小項目缺口 × 權重</span>
+        <h2>⛽ RT補分速查</h2>
+        <span class="dest">每件的加權分數 <b>×2.08 放大值</b> ＝ 這件的 RT達成率 %</span>
       </div>
-      <div class="store-filter" id="storeFilter"><!-- injected --><div class="sf on" style="--fc: #4DA3FF;"><span class="sd"></span>全覽</div><div class="sf" style="--fc: #FFB020;"><span class="sd"></span>鼎山</div><div class="sf" style="--fc: #4DA3FF;"><span class="sd"></span>陽明</div><div class="sf" style="--fc: #34D2A0;"><span class="sd"></span>後昌</div><div class="sf" style="--fc: #FF6B8A;"><span class="sd"></span>仁雄</div><div class="sf" style="--fc: #B48CFF;"><span class="sd"></span>凱旋</div></div>
-      <div class="kpi-grid" id="kpiGrid"><!-- injected --><div class="kpi-card" style="--sc: #FFB020;" data-store="鼎山">
-    <h3>鼎山</h3>
-    <div class="maj-row">
-      <div class="maj maj-bad">
-          <div class="mv num" style="color:var(--red)">40.4%</div>
-          <div class="mk">AQ KPI</div>
-          <div class="ml">⚠ 達成率偏低，待拉升</div>
-        </div><div class="maj maj-bad">
-          <div class="mv num" style="color:var(--red)">32.2%</div>
-          <div class="mk">RT KPI</div>
-          <div class="ml">⚠ 達成率偏低，待拉升</div>
-        </div><div class="maj ">
-          <div class="mv num" style="color:#FFB020">86.8%</div>
-          <div class="mk">加值 KPI</div>
-          <div class="ml ok">✓ 達成率正常</div>
+      <div class="panel">
+        <div class="fuelbar">
+          <div class="fcard" style="--fcc:#4DA3FF"><div class="fk">1399 以上</div><div class="fv">+1.0%</div><div class="fp">約 15 點</div></div>
+          <div class="fcard" style="--fcc:#34D2A0"><div class="fk">999 ~ 1188</div><div class="fv">+0.7%</div><div class="fp">約 11 點</div></div>
+          <div class="fcard" style="--fcc:#FFC24D"><div class="fk">799 ~ 888</div><div class="fv">+0.4%</div><div class="fp">約 8 點</div></div>
+          <div class="fcard" style="--fcc:#8B98B8"><div class="fk">799 以下</div><div class="fv">+0.3%</div><div class="fp">約 6 點</div></div>
         </div>
+        <div id="rtFuelRows">
+    <div class="frow" style="box-shadow:inset 3px 0 0 var(--red)">
+      <span class="fn">鼎山</span>
+      <span class="fr"><span class="frv num" style="color:var(--red)">73.2%</span><span class="frs num">總分 35.39</span></span>
+      <span class="fpill hot">🛡️ 特維</span>
+      <span class="fw">缺 <b class="num">5 件</b></span>
+      <span class="fg num">+3.97 分</span>
     </div>
-    <div class="opp-title">🔧 最大補分機會</div>
-    <div class="opp"><span class="ok1">TTL AQ點數</span><span class="ok2">缺 56.5 點</span><span class="ok3 num">補回 +7.6分</span></div><div class="opp"><span class="ok1">RT上線點數</span><span class="ok2">缺 365 點</span><span class="ok3 num">補回 +7.4分</span></div><div class="opp"><span class="ok1">特維續約</span><span class="ok2">缺 35 件</span><span class="ok3 num">補回 +6.0分</span></div>
-    <div class="rt-chip">🎰 RT加權總分 <b class="num">15.7%</b>（領獎線26.5%）→ RT KPI獎勵單價 <span class="price num">$0（未達26.5%）</span></div>
+    <div class="frow" style="box-shadow:inset 3px 0 0 var(--red)">
+      <span class="fn">後昌</span>
+      <span class="fr"><span class="frv num" style="color:var(--red)">73.3%</span><span class="frs num">總分 35.07</span></span>
+      <span class="fpill hot">🛡️ 特維</span>
+      <span class="fw">缺 <b class="num">3 件</b></span>
+      <span class="fg num">+3.95 分</span>
+    </div>
+    <div class="frow" style="box-shadow:inset 3px 0 0 var(--yellow)">
+      <span class="fn">仁雄</span>
+      <span class="fr"><span class="frv num" style="color:var(--yellow)">89.1%</span><span class="frs num">總分 41.15</span></span>
+      <span class="fpill hot">💎 高高特維</span>
+      <span class="fw">缺 <b class="num">1 件</b></span>
+      <span class="fg num">+2.00 分</span>
+    </div>
+    <div class="frow" style="box-shadow:inset 3px 0 0 var(--green)">
+      <span class="fn">凱旋</span>
+      <span class="fr"><span class="frv num" style="color:var(--green)">100.6%</span><span class="frs num">總分 47.63</span></span>
+      <span class="fpill hot">🛡️ 特維</span>
+      <span class="fw">缺 <b class="num">2 件</b></span>
+      <span class="fg num">+0.44 分</span>
+    </div>
+    <div class="frow" style="box-shadow:inset 3px 0 0 var(--yellow)">
+      <span class="fn">陽明</span>
+      <span class="fr"><span class="frv num" style="color:var(--yellow)">96.0%</span><span class="frs num">總分 45.33</span></span>
+      <span class="fpill hot">💎 高高特維</span>
+      <span class="fw">缺 <b class="num">1 件</b></span>
+      <span class="fg num">+0.45 分</span>
+    </div></div>
+        <div class="fwarn">⚠️ <b>特維／高高特維未達 70%，該項分數對折</b>，補不到臨界件數等於白補。鼎山補到 39 件只拿 +0.4%，補到 <b>41 件</b>才跳 +8.3%。</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-head">
+        <h2>📟 店卡明細</h2>
+      </div>
+      <div class="store-filter" id="storeFilter"><div class="sf on" style="--fc: #4DA3FF;"><span class="sd"></span>全覽</div><div class="sf" style="--fc: #FFB020;"><span class="sd"></span>鼎山</div><div class="sf" style="--fc: #4DA3FF;"><span class="sd"></span>陽明</div><div class="sf" style="--fc: #34D2A0;"><span class="sd"></span>後昌</div><div class="sf" style="--fc: #FF6B8A;"><span class="sd"></span>仁雄</div><div class="sf" style="--fc: #B48CFF;"><span class="sd"></span>凱旋</div></div>
+      <div class="kpi-grid" id="kpiGrid"><div class="kpi-card" style="--sc: #FFB020;" data-store="鼎山">
+    <h3>鼎山
+      <span class="cardsw">
+        <span class="on" data-v="rt">🎰 RT KPI獎勵</span>
+        <span data-v="life">🛟 3大KPI生死線</span>
+      </span>
+    </h3>
+
+    <div class="cv on" data-view="rt">
+      <div class="rankrow">
+        <div class="rk push"><div class="rv">剩 <span class="num">4</span> 天</div><div class="rl">努力 <b class="num">40.5%</b><span class="stp">＋2檔</span></div></div>
+        <div class="rk"><div class="rv num" style="color:#FFB020">35.39</div><div class="rl">RT加權總分</div><div class="rkx">加乘後RT KPI <span class="num">73.2%</span></div></div>
+        <div class="rk"><div class="rv num" style="color:var(--gold)">$310</div><div class="rl">目前每門單價</div><div class="rkx">RT件數 <span class="num">135</span> 件</div></div>
+      </div>
+      <div class="tierbar">
+        <span class="tb-star">⭐</span>
+        <div class="tb-bot">跨過後<b>全月每一門</b>從 $310/門 升為 <b class="up">$360/門</b></div>
+      </div>
+      <div class="opp-title"><svg viewBox="0 0 24 24" width="17" height="17" style="vertical-align:-3.5px;margin-right:3px"><path d="M4.6 6.6 L7.4 2.2 L10.4 5.6 Z" fill="#B48CFF"></path><path d="M19.4 6.6 L16.6 2.2 L13.6 5.6 Z" fill="#B48CFF"></path><ellipse cx="12" cy="13.6" rx="8.6" ry="8.4" fill="#B48CFF"></ellipse><path d="M3.6 12.6 A8.6 8.4 0 0 1 20.4 12.6 Z" fill="#C9AEFF"></path><line x1="5.4" y1="11.4" x2="2.6" y2="10.2" stroke="#FFD166" stroke-width="1.2" stroke-linecap="round"></line><line x1="18.6" y1="11.4" x2="21.4" y2="10.2" stroke="#FFD166" stroke-width="1.2" stroke-linecap="round"></line><circle cx="8.7" cy="11.6" r="3.5" fill="#0D1321" stroke="#FFD166" stroke-width="1.4"></circle><circle cx="15.3" cy="11.6" r="3.5" fill="#0D1321" stroke="#FFD166" stroke-width="1.4"></circle><circle cx="9.2" cy="11.3" r="1.5" fill="#FFFFFF"></circle><circle cx="15.8" cy="11.3" r="1.5" fill="#FFFFFF"></circle><path d="M12 15.2 L10.6 17.2 L13.4 17.2 Z" fill="#FFD166"></path></svg>小項目要補幾件</div>
+      <div class="fix hit"><span class="fk">⭐ 特維 36→41 件（+5）</span><span class="fv num">解對折 +3.97分｜一次跨檔</span></div><div class="fix "><span class="fk">高高特維 15→16（+1）</span><span class="fv num">+0.31分｜跨檔 2 件</span></div><div class="fix "><span class="fk">1399 以上續約</span><span class="fv num">每件 +0.47分｜跨檔 2 件</span></div><div class="fix "><span class="fk">999~1188 續約</span><span class="fv num">每件 +0.29分｜跨檔 3 件</span></div>
+    </div>
+
+    <div class="cv" data-view="life">
+      <div class="maj-row">
+        <div class="maj ">
+            <div class="mv num" style="color:#FFB020">85.2%</div>
+            <div class="mk">AQ KPI</div>
+            <div class="ml ok">✓ 高於70%生存線</div>
+          </div><div class="maj ">
+            <div class="mv num" style="color:#FFB020">73.2%</div>
+            <div class="mk">RT KPI</div>
+            <div class="ml ok">✓ 高於70%生存線</div>
+          </div><div class="maj ">
+            <div class="mv num" style="color:#FFB020">101.1%</div>
+            <div class="mk">加值 KPI</div>
+            <div class="ml ok">✓ 高於70%生存線</div>
+          </div>
+      </div>
+      <div class="opp-title">🔧 最大補分機會</div>
+      <div class="opp"><span class="ok1">特維續約（補5件解對折）</span><span class="ok2">缺 22 件</span><span class="ok3 num">補回 +4.0分</span></div><div class="opp"><span class="ok1">RT上線點數</span><span class="ok2">缺 124 點</span><span class="ok3 num">補回 +2.5分</span></div><div class="opp"><span class="ok1">RT 1399+</span><span class="ok2">缺 12 件</span><span class="ok3 num">補回 +1.3分</span></div>
+      <div class="rt-chip">🛟 70%生存線只看 <b>AQ／RT／加值</b> 三大類，小項目未達70%不觸發記點單</div>
+    </div>
   </div><div class="kpi-card" style="--sc: #4DA3FF;" data-store="陽明">
-    <h3>陽明</h3>
-    <div class="maj-row">
-      <div class="maj maj-bad">
-          <div class="mv num" style="color:var(--red)">33.3%</div>
-          <div class="mk">AQ KPI</div>
-          <div class="ml">⚠ 達成率偏低，待拉升</div>
-        </div><div class="maj ">
-          <div class="mv num" style="color:#4DA3FF">71.2%</div>
-          <div class="mk">RT KPI</div>
-          <div class="ml ok">✓ 達成率正常</div>
-        </div><div class="maj ">
-          <div class="mv num" style="color:#4DA3FF">111.4%</div>
-          <div class="mk">加值 KPI</div>
-          <div class="ml ok">✓ 達成率正常</div>
-        </div>
+    <h3>陽明
+      <span class="cardsw">
+        <span class="on" data-v="rt">🎰 RT KPI獎勵</span>
+        <span data-v="life">🛟 3大KPI生死線</span>
+      </span>
+    </h3>
+
+    <div class="cv on" data-view="rt">
+      <div class="rankrow">
+        <div class="rk push"><div class="rv">剩 <span class="num">4</span> 天</div><div class="rl">努力 <b class="num">48%</b><span class="stp">＋2檔</span></div></div>
+        <div class="rk"><div class="rv num" style="color:#4DA3FF">45.33</div><div class="rl">RT加權總分</div><div class="rkx">加乘後RT KPI <span class="num">96.0%</span></div></div>
+        <div class="rk"><div class="rv num" style="color:var(--gold)">$420</div><div class="rl">目前每門單價</div><div class="rkx">RT件數 <span class="num">117</span> 件</div></div>
+      </div>
+      <div class="tierbar">
+        <span class="tb-star">⭐</span>
+        <div class="tb-bot">跨過後<b>全月每一門</b>從 $420/門 升為 <b class="up">$460/門</b></div>
+      </div>
+      <div class="opp-title"><svg viewBox="0 0 24 24" width="17" height="17" style="vertical-align:-3.5px;margin-right:3px"><path d="M4.6 6.6 L7.4 2.2 L10.4 5.6 Z" fill="#B48CFF"></path><path d="M19.4 6.6 L16.6 2.2 L13.6 5.6 Z" fill="#B48CFF"></path><ellipse cx="12" cy="13.6" rx="8.6" ry="8.4" fill="#B48CFF"></ellipse><path d="M3.6 12.6 A8.6 8.4 0 0 1 20.4 12.6 Z" fill="#C9AEFF"></path><line x1="5.4" y1="11.4" x2="2.6" y2="10.2" stroke="#FFD166" stroke-width="1.2" stroke-linecap="round"></line><line x1="18.6" y1="11.4" x2="21.4" y2="10.2" stroke="#FFD166" stroke-width="1.2" stroke-linecap="round"></line><circle cx="8.7" cy="11.6" r="3.5" fill="#0D1321" stroke="#FFD166" stroke-width="1.4"></circle><circle cx="15.3" cy="11.6" r="3.5" fill="#0D1321" stroke="#FFD166" stroke-width="1.4"></circle><circle cx="9.2" cy="11.3" r="1.5" fill="#FFFFFF"></circle><circle cx="15.8" cy="11.3" r="1.5" fill="#FFFFFF"></circle><path d="M12 15.2 L10.6 17.2 L13.4 17.2 Z" fill="#FFD166"></path></svg>小項目要補幾件</div>
+      <div class="fix hit"><span class="fk">⭐ 高高特維 9→10（+1）</span><span class="fv num">+0.45分｜一件就跨檔</span></div><div class="fix "><span class="fk">1399 以上續約</span><span class="fv num">每件 +0.70分｜跨檔 1 件</span></div><div class="fix "><span class="fk">999~1188 續約</span><span class="fv num">每件 +0.42分｜跨檔 1 件</span></div><div class="fix "><span class="fk">特維 39→41（+2）</span><span class="fv num">+0.54分</span></div>
     </div>
-    <div class="opp-title">🔧 最大補分機會</div>
-    <div class="opp"><span class="ok1">TTL AQ點數</span><span class="ok2">缺 57.5 點</span><span class="ok3 num">補回 +7.8分</span></div><div class="opp"><span class="ok1">AQ 999+</span><span class="ok2">缺 7 件</span><span class="ok3 num">補回 +5.8分</span></div><div class="opp"><span class="ok1">RT上線點數</span><span class="ok2">缺 170 點</span><span class="ok3 num">補回 +5.0分</span></div>
-    <div class="rt-chip">🎰 RT加權總分 <b class="num">32.9%</b>（領獎線26.5%）→ RT KPI獎勵單價 <span class="price num">$310/門</span></div>
+
+    <div class="cv" data-view="life">
+      <div class="maj-row">
+        <div class="maj ">
+            <div class="mv num" style="color:#4DA3FF">96.8%</div>
+            <div class="mk">AQ KPI</div>
+            <div class="ml ok">✓ 高於70%生存線</div>
+          </div><div class="maj ">
+            <div class="mv num" style="color:#4DA3FF">96%</div>
+            <div class="mk">RT KPI</div>
+            <div class="ml ok">✓ 高於70%生存線</div>
+          </div><div class="maj ">
+            <div class="mv num" style="color:#4DA3FF">126.4%</div>
+            <div class="mk">加值 KPI</div>
+            <div class="ml ok">✓ 高於70%生存線</div>
+          </div>
+      </div>
+      <div class="opp-title">🔧 最大補分機會</div>
+      <div class="opp"><span class="ok1">RT 1399+</span><span class="ok2">缺 6 件</span><span class="ok3 num">補回 +1.0分</span></div><div class="opp"><span class="ok1">RT 999+</span><span class="ok2">缺 10 件</span><span class="ok3 num">補回 +1.0分</span></div><div class="opp"><span class="ok1">高高特維</span><span class="ok2">缺 2 件</span><span class="ok3 num">補回 +0.9分</span></div>
+      <div class="rt-chip">🛟 70%生存線只看 <b>AQ／RT／加值</b> 三大類，小項目未達70%不觸發記點單</div>
+    </div>
   </div><div class="kpi-card" style="--sc: #34D2A0;" data-store="後昌">
-    <h3>後昌</h3>
-    <div class="maj-row">
-      <div class="maj maj-bad">
-          <div class="mv num" style="color:var(--red)">30.7%</div>
-          <div class="mk">AQ KPI</div>
-          <div class="ml">⚠ 達成率偏低，待拉升</div>
-        </div><div class="maj maj-bad">
-          <div class="mv num" style="color:var(--red)">31.2%</div>
-          <div class="mk">RT KPI</div>
-          <div class="ml">⚠ 達成率偏低，待拉升</div>
-        </div><div class="maj maj-bad">
-          <div class="mv num" style="color:var(--red)">64.9%</div>
-          <div class="mk">加值 KPI</div>
-          <div class="ml">⚠ 達成率偏低，待拉升</div>
-        </div>
+    <h3>後昌
+      <span class="cardsw">
+        <span class="on" data-v="rt">🎰 RT KPI獎勵</span>
+        <span data-v="life">🛟 3大KPI生死線</span>
+      </span>
+    </h3>
+
+    <div class="cv on" data-view="rt">
+      <div class="rankrow">
+        <div class="rk push"><div class="rv">剩 <span class="num">4</span> 天</div><div class="rl">努力 <b class="num">40.5%</b><span class="stp">＋2檔</span></div></div>
+        <div class="rk"><div class="rv num" style="color:#34D2A0">35.07</div><div class="rl">RT加權總分</div><div class="rkx">加乘後RT KPI <span class="num">73.3%</span></div></div>
+        <div class="rk"><div class="rv num" style="color:var(--gold)">$310</div><div class="rl">目前每門單價</div><div class="rkx">RT件數 <span class="num">112</span> 件</div></div>
+      </div>
+      <div class="tierbar">
+        <span class="tb-star">⭐</span>
+        <div class="tb-bot">跨過後<b>全月每一門</b>從 $310/門 升為 <b class="up">$360/門</b></div>
+      </div>
+      <div class="opp-title"><svg viewBox="0 0 24 24" width="17" height="17" style="vertical-align:-3.5px;margin-right:3px"><path d="M4.6 6.6 L7.4 2.2 L10.4 5.6 Z" fill="#B48CFF"></path><path d="M19.4 6.6 L16.6 2.2 L13.6 5.6 Z" fill="#B48CFF"></path><ellipse cx="12" cy="13.6" rx="8.6" ry="8.4" fill="#B48CFF"></ellipse><path d="M3.6 12.6 A8.6 8.4 0 0 1 20.4 12.6 Z" fill="#C9AEFF"></path><line x1="5.4" y1="11.4" x2="2.6" y2="10.2" stroke="#FFD166" stroke-width="1.2" stroke-linecap="round"></line><line x1="18.6" y1="11.4" x2="21.4" y2="10.2" stroke="#FFD166" stroke-width="1.2" stroke-linecap="round"></line><circle cx="8.7" cy="11.6" r="3.5" fill="#0D1321" stroke="#FFD166" stroke-width="1.4"></circle><circle cx="15.3" cy="11.6" r="3.5" fill="#0D1321" stroke="#FFD166" stroke-width="1.4"></circle><circle cx="9.2" cy="11.3" r="1.5" fill="#FFFFFF"></circle><circle cx="15.8" cy="11.3" r="1.5" fill="#FFFFFF"></circle><path d="M12 15.2 L10.6 17.2 L13.4 17.2 Z" fill="#FFD166"></path></svg>小項目要補幾件</div>
+      <div class="fix hit"><span class="fk">⭐ 特維 28→31 件（+3）</span><span class="fv num">解對折 +3.95分｜一次跨檔</span></div><div class="fix "><span class="fk">高高特維 9→12（+3）</span><span class="fv num">每件 +0.42分｜跨檔 3 件</span></div><div class="fix "><span class="fk">1399 以上續約</span><span class="fv num">每件 +0.68分｜跨檔 2 件</span></div><div class="fix "><span class="fk">999~1188 續約</span><span class="fv num">每件 +0.42分｜跨檔 3 件</span></div>
     </div>
-    <div class="opp-title">🔧 最大補分機會</div>
-    <div class="opp"><span class="ok1">TTL AQ點數</span><span class="ok2">缺 57 點</span><span class="ok3 num">補回 +7.7分</span></div><div class="opp"><span class="ok1">RT上線點數</span><span class="ok2">缺 210 點</span><span class="ok3 num">補回 +6.1分</span></div><div class="opp"><span class="ok1">AQ 999+</span><span class="ok2">缺 7 件</span><span class="ok3 num">補回 +5.8分</span></div>
-    <div class="rt-chip">🎰 RT加權總分 <b class="num">15.5%</b>（領獎線26.5%）→ RT KPI獎勵單價 <span class="price num">$0（未達26.5%）</span></div>
+
+    <div class="cv" data-view="life">
+      <div class="maj-row">
+        <div class="maj maj-bad">
+            <div class="mv num" style="color:var(--red)">54.1%</div>
+            <div class="mk">AQ KPI</div>
+            <div class="ml">⚠ 低於70%，須簽記點單</div>
+          </div><div class="maj ">
+            <div class="mv num" style="color:#34D2A0">73.3%</div>
+            <div class="mk">RT KPI</div>
+            <div class="ml ok">✓ 高於70%生存線</div>
+          </div><div class="maj ">
+            <div class="mv num" style="color:#34D2A0">79%</div>
+            <div class="mk">加值 KPI</div>
+            <div class="ml ok">✓ 高於70%生存線</div>
+          </div>
+      </div>
+      <div class="opp-title">🔧 最大補分機會</div>
+      <div class="opp"><span class="ok1">特維續約（補3件解對折）</span><span class="ok2">缺 15 件</span><span class="ok3 num">補回 +4.0分</span></div><div class="opp"><span class="ok1">RT上線點數</span><span class="ok2">缺 59 點</span><span class="ok3 num">補回 +1.7分</span></div><div class="opp"><span class="ok1">高高特維</span><span class="ok2">缺 3 件</span><span class="ok3 num">補回 +1.3分</span></div>
+      <div class="rt-chip">🛟 70%生存線只看 <b>AQ／RT／加值</b> 三大類，小項目未達70%不觸發記點單</div>
+    </div>
   </div><div class="kpi-card" style="--sc: #FF6B8A;" data-store="仁雄">
-    <h3>仁雄</h3>
-    <div class="maj-row">
-      <div class="maj maj-bad">
-          <div class="mv num" style="color:var(--red)">33.2%</div>
-          <div class="mk">AQ KPI</div>
-          <div class="ml">⚠ 達成率偏低，待拉升</div>
-        </div><div class="maj maj-bad">
-          <div class="mv num" style="color:var(--red)">40.7%</div>
-          <div class="mk">RT KPI</div>
-          <div class="ml">⚠ 達成率偏低，待拉升</div>
-        </div><div class="maj maj-bad">
-          <div class="mv num" style="color:var(--red)">60.8%</div>
-          <div class="mk">加值 KPI</div>
-          <div class="ml">⚠ 達成率偏低，待拉升</div>
-        </div>
+    <h3>仁雄
+      <span class="cardsw">
+        <span class="on" data-v="rt">🎰 RT KPI獎勵</span>
+        <span data-v="life">🛟 3大KPI生死線</span>
+      </span>
+    </h3>
+
+    <div class="cv on" data-view="rt">
+      <div class="rankrow">
+        <div class="rk push"><div class="rv">剩 <span class="num">4</span> 天</div><div class="rl">努力 <b class="num">45.5%</b><span class="stp">＋2檔</span></div></div>
+        <div class="rk"><div class="rv num" style="color:#FF6B8A">41.15</div><div class="rl">RT加權總分</div><div class="rkx">加乘後RT KPI <span class="num">89.1%</span></div></div>
+        <div class="rk"><div class="rv num" style="color:var(--gold)">$390</div><div class="rl">目前每門單價</div><div class="rkx">RT件數 <span class="num">152</span> 件</div></div>
+      </div>
+      <div class="tierbar">
+        <span class="tb-star">⭐</span>
+        <div class="tb-bot">跨過後<b>全月每一門</b>從 $390/門 升為 <b class="up">$420/門</b></div>
+      </div>
+      <div class="opp-title"><svg viewBox="0 0 24 24" width="17" height="17" style="vertical-align:-3.5px;margin-right:3px"><path d="M4.6 6.6 L7.4 2.2 L10.4 5.6 Z" fill="#B48CFF"></path><path d="M19.4 6.6 L16.6 2.2 L13.6 5.6 Z" fill="#B48CFF"></path><ellipse cx="12" cy="13.6" rx="8.6" ry="8.4" fill="#B48CFF"></ellipse><path d="M3.6 12.6 A8.6 8.4 0 0 1 20.4 12.6 Z" fill="#C9AEFF"></path><line x1="5.4" y1="11.4" x2="2.6" y2="10.2" stroke="#FFD166" stroke-width="1.2" stroke-linecap="round"></line><line x1="18.6" y1="11.4" x2="21.4" y2="10.2" stroke="#FFD166" stroke-width="1.2" stroke-linecap="round"></line><circle cx="8.7" cy="11.6" r="3.5" fill="#0D1321" stroke="#FFD166" stroke-width="1.4"></circle><circle cx="15.3" cy="11.6" r="3.5" fill="#0D1321" stroke="#FFD166" stroke-width="1.4"></circle><circle cx="9.2" cy="11.3" r="1.5" fill="#FFFFFF"></circle><circle cx="15.8" cy="11.3" r="1.5" fill="#FFFFFF"></circle><path d="M12 15.2 L10.6 17.2 L13.4 17.2 Z" fill="#FFD166"></path></svg>小項目要補幾件</div>
+      <div class="fix hit"><span class="fk">⭐ 高高特維 10→11 件（+1）</span><span class="fv num">解對折 +2.00分｜一次跨檔</span></div><div class="fix "><span class="fk">特維 46→55（+9）</span><span class="fv num">每件 +0.18分</span></div><div class="fix "><span class="fk">1399 以上續約</span><span class="fv num">每件 +0.46分｜跨檔 4 件</span></div><div class="fix "><span class="fk">999~1188 續約</span><span class="fv num">每件 +0.28分｜跨檔 7 件</span></div>
     </div>
-    <div class="opp-title">🔧 最大補分機會</div>
-    <div class="opp"><span class="ok1">TTL AQ點數</span><span class="ok2">缺 60 點</span><span class="ok3 num">補回 +8.1分</span></div><div class="opp"><span class="ok1">AQ 999+</span><span class="ok2">缺 8 件</span><span class="ok3 num">補回 +6.7分</span></div><div class="opp"><span class="ok1">RT上線點數</span><span class="ok2">缺 318 點</span><span class="ok3 num">補回 +6.2分</span></div>
-    <div class="rt-chip">🎰 RT加權總分 <b class="num">18.3%</b>（領獎線26.5%）→ RT KPI獎勵單價 <span class="price num">$0（未達26.5%）</span></div>
+
+    <div class="cv" data-view="life">
+      <div class="maj-row">
+        <div class="maj maj-bad">
+            <div class="mv num" style="color:var(--red)">66.9%</div>
+            <div class="mk">AQ KPI</div>
+            <div class="ml">⚠ 低於70%，須簽記點單</div>
+          </div><div class="maj ">
+            <div class="mv num" style="color:#FF6B8A">89.1%</div>
+            <div class="mk">RT KPI</div>
+            <div class="ml ok">✓ 高於70%生存線</div>
+          </div><div class="maj ">
+            <div class="mv num" style="color:#FF6B8A">81.8%</div>
+            <div class="mk">加值 KPI</div>
+            <div class="ml ok">✓ 高於70%生存線</div>
+          </div>
+      </div>
+      <div class="opp-title">🔧 最大補分機會</div>
+      <div class="opp"><span class="ok1">高高特維（補1件解對折）</span><span class="ok2">缺 5 件</span><span class="ok3 num">補回 +2.0分</span></div><div class="opp"><span class="ok1">特維續約</span><span class="ok2">缺 9 件</span><span class="ok3 num">補回 +1.6分</span></div><div class="opp"><span class="ok1">RT上線點數</span><span class="ok2">缺 15 點</span><span class="ok3 num">補回 +0.3分</span></div>
+      <div class="rt-chip">🛟 70%生存線只看 <b>AQ／RT／加值</b> 三大類，小項目未達70%不觸發記點單</div>
+    </div>
   </div><div class="kpi-card" style="--sc: #B48CFF;" data-store="凱旋">
-    <h3>凱旋</h3>
-    <div class="maj-row">
-      <div class="maj ">
-          <div class="mv num" style="color:#B48CFF">104.3%</div>
-          <div class="mk">AQ KPI</div>
-          <div class="ml ok">✓ 達成率正常</div>
-        </div><div class="maj ">
-          <div class="mv num" style="color:#B48CFF">74.7%</div>
-          <div class="mk">RT KPI</div>
-          <div class="ml ok">✓ 達成率正常</div>
-        </div><div class="maj maj-bad">
-          <div class="mv num" style="color:var(--red)">61.9%</div>
-          <div class="mk">加值 KPI</div>
-          <div class="ml">⚠ 達成率偏低，待拉升</div>
-        </div>
+    <h3>凱旋
+      <span class="cardsw">
+        <span class="on" data-v="rt">🎰 RT KPI獎勵</span>
+        <span data-v="life">🛟 3大KPI生死線</span>
+      </span>
+    </h3>
+
+    <div class="cv on" data-view="rt">
+      <div class="rankrow">
+        <div class="rk push"><div class="rv">剩 <span class="num">4</span> 天</div><div class="rl">努力 <b class="num">50.5%</b><span class="stp">＋2檔</span></div></div>
+        <div class="rk"><div class="rv num" style="color:#B48CFF">47.63</div><div class="rl">RT加權總分</div><div class="rkx">加乘後RT KPI <span class="num">100.6%</span></div></div>
+        <div class="rk"><div class="rv num" style="color:var(--gold)">$460</div><div class="rl">目前每門單價</div><div class="rkx">RT件數 <span class="num">142</span> 件</div></div>
+      </div>
+      <div class="tierbar">
+        <span class="tb-star">⭐</span>
+        <div class="tb-bot">跨過後<b>全月每一門</b>從 $460/門 升為 <b class="up">$500/門</b></div>
+      </div>
+      <div class="opp-title"><svg viewBox="0 0 24 24" width="17" height="17" style="vertical-align:-3.5px;margin-right:3px"><path d="M4.6 6.6 L7.4 2.2 L10.4 5.6 Z" fill="#B48CFF"></path><path d="M19.4 6.6 L16.6 2.2 L13.6 5.6 Z" fill="#B48CFF"></path><ellipse cx="12" cy="13.6" rx="8.6" ry="8.4" fill="#B48CFF"></ellipse><path d="M3.6 12.6 A8.6 8.4 0 0 1 20.4 12.6 Z" fill="#C9AEFF"></path><line x1="5.4" y1="11.4" x2="2.6" y2="10.2" stroke="#FFD166" stroke-width="1.2" stroke-linecap="round"></line><line x1="18.6" y1="11.4" x2="21.4" y2="10.2" stroke="#FFD166" stroke-width="1.2" stroke-linecap="round"></line><circle cx="8.7" cy="11.6" r="3.5" fill="#0D1321" stroke="#FFD166" stroke-width="1.4"></circle><circle cx="15.3" cy="11.6" r="3.5" fill="#0D1321" stroke="#FFD166" stroke-width="1.4"></circle><circle cx="9.2" cy="11.3" r="1.5" fill="#FFFFFF"></circle><circle cx="15.8" cy="11.3" r="1.5" fill="#FFFFFF"></circle><path d="M12 15.2 L10.6 17.2 L13.4 17.2 Z" fill="#FFD166"></path></svg>小項目要補幾件</div>
+      <div class="fix hit"><span class="fk">⭐ 特維 40→42（+2）</span><span class="fv num">+0.44分｜兩件就跨檔</span></div><div class="fix "><span class="fk">1399 以上續約</span><span class="fv num">每件 +0.55分｜跨檔 1 件</span></div><div class="fix "><span class="fk">999~1188 續約</span><span class="fv num">每件 +0.33分｜跨檔 2 件</span></div><div class="fix "><span class="fk">5G RT 22→23（+1）</span><span class="fv num">+0.09分</span></div>
     </div>
-    <div class="opp-title">🔧 最大補分機會</div>
-    <div class="opp"><span class="ok1">RT上線點數</span><span class="ok2">缺 205 點</span><span class="ok3 num">補回 +4.8分</span></div><div class="opp"><span class="ok1">特維續約</span><span class="ok2">缺 13 件</span><span class="ok3 num">補回 +2.9分</span></div><div class="opp"><span class="ok1">好速案</span><span class="ok2">缺 7.75 點</span><span class="ok3 num">補回 +2.4分</span></div>
-    <div class="rt-chip">🎰 RT加權總分 <b class="num">34.6%</b>（領獎線26.5%）→ RT KPI獎勵單價 <span class="price num">$310/門</span></div>
+
+    <div class="cv" data-view="life">
+      <div class="maj-row">
+        <div class="maj ">
+            <div class="mv num" style="color:#B48CFF">110.6%</div>
+            <div class="mk">AQ KPI</div>
+            <div class="ml ok">✓ 高於70%生存線</div>
+          </div><div class="maj ">
+            <div class="mv num" style="color:#B48CFF">100.6%</div>
+            <div class="mk">RT KPI</div>
+            <div class="ml ok">✓ 高於70%生存線</div>
+          </div><div class="maj ">
+            <div class="mv num" style="color:#B48CFF">94.2%</div>
+            <div class="mk">加值 KPI</div>
+            <div class="ml ok">✓ 高於70%生存線</div>
+          </div>
+      </div>
+      <div class="opp-title">🔧 最大補分機會</div>
+      <div class="opp"><span class="ok1">特維續約</span><span class="ok2">缺 5 件</span><span class="ok3 num">補回 +1.1分</span></div><div class="opp"><span class="ok1">5G RT銷售</span><span class="ok2">缺 1 件</span><span class="ok3 num">補回 +0.1分</span></div><div class="opp"><span class="ok1">RT點數（已達標）</span><span class="ok2">缺 超額中</span><span class="ok3 num">補回 +0.3分</span></div>
+      <div class="rt-chip">🛟 70%生存線只看 <b>AQ／RT／加值</b> 三大類，小項目未達70%不觸發記點單</div>
+    </div>
   </div></div>
     </div>
 
     <div class="rzwar">
       <div class="sec-head" style="margin-top:26px">
         <h2>⚔️ 5家升轉率戰情分析</h2>
-        <span class="dest">升轉率 ＝ 升轉件 ÷ RT總件｜數據至 7/27</span>
+        <span class="dest">升轉率 ＝ 升轉件 ÷ RT總件｜數據至 7/28</span>
       </div>
       <div class="remind" style="--rc:var(--red);margin-bottom:12px"><span class="rt1">⏳ 檔位以月底結算為準，最後5天（7/27–7/31）定生死</span><b style="color:var(--gold)">要跳檔 → 收純升轉</b>｜<b style="color:var(--red)">要守檔 → 平降轉依指令導流</b></div>
-      <div class="kpi-grid" id="rzWarGrid"><!-- injected --><div class="kpi-card" data-store="鼎山" style="--sc: #FFB020;">
+      <div class="kpi-grid" id="rzWarGrid"><div class="kpi-card" data-store="鼎山" style="--sc: #FFB020;">
     <h3>鼎山 <span style="font-size:11px;color:var(--dim);font-weight:700">｜升轉率戰情</span></h3>
     <div class="maj-row">
-      <div class="maj"><div class="mv num" style="color:#FFB020">50.5%</div><div class="mk">升轉率｜檔位 47~52%</div></div>
-      <div class="maj"><div class="mv num">48<span style="font-size:11px;color:var(--dim)">／95</span></div><div class="mk">升轉件／RT總件</div></div>
+      <div class="maj"><div class="mv num" style="color:#FFB020">49.6%</div><div class="mk">升轉率｜檔位 47~52%</div></div>
+      <div class="maj"><div class="mv num">67<span style="font-size:11px;color:var(--dim)">／135</span></div><div class="mk">升轉件／RT總件</div></div>
+      <div class="maj"><div class="mv num" style="font-size:13px;padding-top:3px;color:var(--gold)">$800~$1,250</div><div class="mk">現在每案｜淨增401↑</div></div>
     </div>
-    <div class="war-row"><span class="wl">💰 現在每案</span><span class="wv num">$800 ~ $1,250<span style="display:block;font-size:10px;color:var(--dim);font-weight:500">淨增401↑案件單價，小額案較低</span></span></div>
-    <div class="war-row w-green"><span class="wl">✅ 實質頂檔</span><span class="wv">單價已最高，守住就好</span></div>
     <div class="war-row w-red"><span class="wl">🛡️ 防守 47%</span><span class="wv">可容 <b class="num">7</b> 件平降轉｜第 8 件掉檔</span></div>
+    <div class="war-row w-green"><span class="wl">✅ 實質頂檔</span><span class="wv">單價已最高，守住就好</span></div>
     
   </div><div class="kpi-card" data-store="陽明" style="--sc: #4DA3FF;">
     <h3>陽明 <span style="font-size:11px;color:var(--dim);font-weight:700">｜升轉率戰情</span></h3>
     <div class="maj-row">
-      <div class="maj"><div class="mv num" style="color:#4DA3FF">46.7%</div><div class="mk">升轉率｜檔位 42~47%</div></div>
-      <div class="maj"><div class="mv num">42<span style="font-size:11px;color:var(--dim)">／90</span></div><div class="mk">升轉件／RT總件</div></div>
+      <div class="maj"><div class="mv num" style="color:#4DA3FF">47.9%</div><div class="mk">升轉率｜檔位 47~52%</div></div>
+      <div class="maj"><div class="mv num">56<span style="font-size:11px;color:var(--dim)">／117</span></div><div class="mk">升轉件／RT總件</div></div>
+      <div class="maj"><div class="mv num" style="font-size:13px;padding-top:3px;color:var(--gold)">$800~$1,250</div><div class="mk">現在每案｜淨增401↑</div></div>
     </div>
-    <div class="war-row"><span class="wl">💰 現在每案</span><span class="wv num">$650 ~ $1,000<span style="display:block;font-size:10px;color:var(--dim);font-weight:500">淨增401↑案件單價，小額案較低</span></span></div>
-    <div class="war-row w-gold"><span class="wl">🚀 跳檔 47%</span><span class="wv">再 <b class="num">1</b> 件純升轉 → <b>全月升轉案</b>每件升為 <b class="num">$800~$1,250</b></span></div>
-    <div class="war-row w-red"><span class="wl">🛡️ 防守 42%</span><span class="wv">可容 <b class="num">10</b> 件平降轉｜第 11 件掉檔</span></div>
+    <div class="war-row w-red"><span class="wl">🛡️ 防守 47%</span><span class="wv">可容 <b class="num">2</b> 件平降轉｜第 3 件掉檔</span></div>
+    <div class="war-row w-green"><span class="wl">✅ 實質頂檔</span><span class="wv">單價已最高，守住就好</span></div>
     
   </div><div class="kpi-card" data-store="後昌" style="--sc: #34D2A0;">
     <h3>後昌 <span style="font-size:11px;color:var(--dim);font-weight:700">｜升轉率戰情</span></h3>
     <div class="maj-row">
-      <div class="maj"><div class="mv num" style="color:#34D2A0">41.4%</div><div class="mk">升轉率｜檔位 37~42%</div></div>
-      <div class="maj"><div class="mv num">36<span style="font-size:11px;color:var(--dim)">／87</span></div><div class="mk">升轉件／RT總件</div></div>
+      <div class="maj"><div class="mv num" style="color:#34D2A0">41.1%</div><div class="mk">升轉率｜檔位 37~42%</div></div>
+      <div class="maj"><div class="mv num">46<span style="font-size:11px;color:var(--dim)">／112</span></div><div class="mk">升轉件／RT總件</div></div>
+      <div class="maj"><div class="mv num" style="font-size:13px;padding-top:3px;color:var(--gold)">$450~$600</div><div class="mk">現在每案｜淨增401↑</div></div>
     </div>
-    <div class="war-row"><span class="wl">💰 現在每案</span><span class="wv num">$450 ~ $600<span style="display:block;font-size:10px;color:var(--dim);font-weight:500">淨增401↑案件單價，小額案較低</span></span></div>
-    <div class="war-row w-gold"><span class="wl">🚀 跳檔 42%</span><span class="wv">再 <b class="num">1</b> 件純升轉 → <b>全月升轉案</b>每件升為 <b class="num">$650~$1,000</b></span></div>
-    <div class="war-row w-red"><span class="wl">🛡️ 防守 37%</span><span class="wv">可容 <b class="num">10</b> 件平降轉｜第 11 件掉檔</span></div>
+    <div class="war-row w-red"><span class="wl">🛡️ 防守 37%</span><span class="wv">可容 <b class="num">12</b> 件平降轉｜第 13 件掉檔</span></div>
+    <div class="war-row w-gold"><span class="wl">🚀 跳檔 42%</span><span class="wv">再 <b class="num">2</b> 件純升轉 → <b>全月升轉案</b>每件升為 <b class="num">$650~$1,000</b></span></div>
     <div class="war-warn">⚠️ <b>季目標39%警戒</b>：第 <b>6</b> 件平降轉就跌破季升轉率100% —— 平降轉依當日上線指令導流</div>
   </div><div class="kpi-card" data-store="仁雄" style="--sc: #FF6B8A;">
     <h3>仁雄 <span style="font-size:11px;color:var(--dim);font-weight:700">｜升轉率戰情</span></h3>
     <div class="maj-row">
-      <div class="maj"><div class="mv num" style="color:#FF6B8A">40.7%</div><div class="mk">升轉率｜檔位 37~42%</div></div>
-      <div class="maj"><div class="mv num">44<span style="font-size:11px;color:var(--dim)">／108</span></div><div class="mk">升轉件／RT總件</div></div>
+      <div class="maj"><div class="mv num" style="color:#FF6B8A">36.8%</div><div class="mk">升轉率｜檔位 32~37%</div></div>
+      <div class="maj"><div class="mv num">56<span style="font-size:11px;color:var(--dim)">／152</span></div><div class="mk">升轉件／RT總件</div></div>
+      <div class="maj"><div class="mv num" style="font-size:13px;padding-top:3px;color:var(--gold)">$300~$400</div><div class="mk">現在每案｜淨增401↑</div></div>
     </div>
-    <div class="war-row"><span class="wl">💰 現在每案</span><span class="wv num">$450 ~ $600<span style="display:block;font-size:10px;color:var(--dim);font-weight:500">淨增401↑案件單價，小額案較低</span></span></div>
-    <div class="war-row w-gold"><span class="wl">🚀 跳檔 42%</span><span class="wv">再 <b class="num">3</b> 件純升轉 → <b>全月升轉案</b>每件升為 <b class="num">$650~$1,000</b></span></div>
-    <div class="war-row w-red"><span class="wl">🛡️ 防守 37%</span><span class="wv">可容 <b class="num">10</b> 件平降轉｜第 11 件掉檔</span></div>
-    <div class="war-warn">⚠️ <b>季目標39%警戒</b>：第 <b>5</b> 件平降轉就跌破季升轉率100% —— 平降轉依當日上線指令導流</div>
+    <div class="war-row w-red"><span class="wl">🛡️ 防守 32%</span><span class="wv">可容 <b class="num">23</b> 件平降轉｜第 24 件掉檔</span></div>
+    <div class="war-row w-gold"><span class="wl">🚀 跳檔 37%</span><span class="wv">再 <b class="num">1</b> 件純升轉 → <b>全月升轉案</b>每件升為 <b class="num">$450~$600</b></span></div>
+    <div class="war-warn">🔴 <b>已跌破季目標39%</b>：季升轉率項目 &lt;100%！補 <b class="num">6</b> 件純升轉救回 39% 線 —— 平降轉全數依當日上線指令外導</div>
   </div><div class="kpi-card" data-store="凱旋" style="--sc: #B48CFF;">
     <h3>凱旋 <span style="font-size:11px;color:var(--dim);font-weight:700">｜升轉率戰情</span></h3>
     <div class="maj-row">
-      <div class="maj"><div class="mv num" style="color:#B48CFF">40.7%</div><div class="mk">升轉率｜檔位 37~42%</div></div>
-      <div class="maj"><div class="mv num">46<span style="font-size:11px;color:var(--dim)">／113</span></div><div class="mk">升轉件／RT總件</div></div>
+      <div class="maj"><div class="mv num" style="color:#B48CFF">45.1%</div><div class="mk">升轉率｜檔位 42~47%</div></div>
+      <div class="maj"><div class="mv num">64<span style="font-size:11px;color:var(--dim)">／142</span></div><div class="mk">升轉件／RT總件</div></div>
+      <div class="maj"><div class="mv num" style="font-size:13px;padding-top:3px;color:var(--gold)">$650~$1,000</div><div class="mk">現在每案｜淨增401↑</div></div>
     </div>
-    <div class="war-row"><span class="wl">💰 現在每案</span><span class="wv num">$450 ~ $600<span style="display:block;font-size:10px;color:var(--dim);font-weight:500">淨增401↑案件單價，小額案較低</span></span></div>
-    <div class="war-row w-gold"><span class="wl">🚀 跳檔 42%</span><span class="wv">再 <b class="num">3</b> 件純升轉 → <b>全月升轉案</b>每件升為 <b class="num">$650~$1,000</b></span></div>
-    <div class="war-row w-red"><span class="wl">🛡️ 防守 37%</span><span class="wv">可容 <b class="num">11</b> 件平降轉｜第 12 件掉檔</span></div>
-    <div class="war-warn">⚠️ <b>季目標39%警戒</b>：第 <b>5</b> 件平降轉就跌破季升轉率100% —— 平降轉依當日上線指令導流</div>
+    <div class="war-row w-red"><span class="wl">🛡️ 防守 42%</span><span class="wv">可容 <b class="num">10</b> 件平降轉｜第 11 件掉檔</span></div>
+    <div class="war-row w-gold"><span class="wl">🚀 跳檔 47%</span><span class="wv">再 <b class="num">6</b> 件純升轉 → <b>全月升轉案</b>每件升為 <b class="num">$800~$1,250</b></span></div>
+    
   </div></div>
     </div>
   </div>
 
 
   <div class="demo-note">
-    📸 數據來源：2026/7/27 官方BOE（7/1–7/27，V姐姐提供）｜RT區塊取自「加盟店KPI 達成率_明細」、RT KPI當前分數與三大類取自「AQRT&手機與加掛」實際表、季五項取自「加盟店季報達成率」、各項實際數取自「KPI項目實際數」；月底推估為官方「RT KPI分數(推估)」欄。剩 4 天逐日更新。<br>
     倚盟GPS｜倚盟電訊有限公司 內部戰情看板
   </div>
 </div>
@@ -514,65 +829,99 @@
 /* ---- 季獎金（gap=缺口數，負值=超標；u=單位；t=目標；pct=官方Y2607達成分數）---- */
 const SEASON = [
   { name:"鼎山", color:"#FFB020",
-    vals:{ g5:{gap:-12,u:"件",pct:125.5,t:47}, rt:{gap:88,u:"點",pct:91.1,t:982}, rz:{rate:47.18,pct:121.0,t:39}, aq:{gap:22.5,u:"點",pct:82.1,t:126}, hs:{gap:-1,u:"點",pct:133.3,t:3} },
+    vals:{ g5:{gap:-15,u:"件",pct:131.9,t:47}, rt:{gap:58.75,u:"點",pct:94.0,t:982}, rz:{rate:47.62,pct:122.1,t:39}, aq:{gap:19.5,u:"點",pct:84.5,t:126}, hs:{gap:-1,u:"點",pct:133.3,t:3} },
     detail:[
-      {k:"RT點數缺口", v:"88 點", s:"每天要 22 點（894.25／982・剩4天）｜91.1%，官方推估月底可達標"},
-      {k:"⚠️ 升轉率 47% 檔零容量", v:"47.18%（67/142）", s:"再收 1 件非升轉就掉出 47% 檔（機制1單價全月降）——平降轉今起全數依當日指令外導"},
-      {k:"✅ RT月獎金再跳檔", v:"36.79%", s:"$360/門！官方推估月底 43.10% → $420｜特維 38/58（65.5%）仍折半，補到 40.6 件解折"},
+      {k:"RT點數缺口", v:"58.75 點", s:"923.25／982（94.0%）｜剩3天每天 20 點"},
+      {k:"⭐ 特維 2 件解對折", v:"39／58（67.2%）", s:"補到 41 件解折半 +3.71 分——月獎金跨檔＋店KPI雙贏，全店最划算"},
+      {k:"⚠️ 升轉率防守容量 1 件", v:"47.62%（70/147）", s:"再收 2 件非升轉就掉出 47% 檔——平降轉依當日指令外導"},
     ]},
   { name:"陽明", color:"#4DA3FF",
-    vals:{ g5:{gap:-6,u:"件",pct:114.3,t:42}, rt:{gap:-5,u:"點",pct:100.7,t:684}, rz:{rate:47.11,pct:120.8,t:39}, aq:{gap:1,u:"點",pct:99.2,t:126}, hs:{gap:-1,u:"點",pct:150,t:2} },
+    vals:{ g5:{gap:-7,u:"件",pct:116.7,t:42}, rt:{gap:-16.25,u:"點",pct:102.4,t:684}, rz:{rate:47.58,pct:122.0,t:39}, aq:{gap:-0.5,u:"點",pct:100.4,t:126}, hs:{gap:-1,u:"點",pct:150,t:2} },
     detail:[
-      {k:"🎉 RT點數破百", v:"688.75／684（100.7%）", s:"季獎金RT項達標！四項綠燈只剩AQ"},
-      {k:"🔥 AQ 差 1 點破百・第5天了", v:"125／126（99.2%）", s:"一件最小AQ就補完季獎金最後一塊拼圖——今天務必收掉"},
-      {k:"✅ RT月獎金回 $460", v:"46.70%", s:"重回 45.5% 檔上！再 +1.30pp 到 48% 就是 $500｜⚠️ 升轉率 47.11% 防守零容量，平降轉外導"},
+      {k:"🏆 AQ 破百・季五項全達標", v:"126.5／126（100.4%）", s:"卡了 6 天的最後 1 點今天過了！五項全綠，守 3 天就是滿貫"},
+      {k:"RT月獎金差 0.74 跳 $500", v:"47.26%", s:"1399 續約 2 件就跨 48% 檔｜官方推估月底 48.59% → $500"},
+      {k:"⚠️ 升轉率防守容量 1 件", v:"47.58%（59/124）", s:"守住 47% 檔——平降轉依當日指令外導"},
     ]},
   { name:"後昌", color:"#34D2A0",
-    vals:{ g5:{gap:-9,u:"件",pct:121.4,t:42}, rt:{gap:21,u:"點",pct:96.9,t:686}, rz:{rate:41.53,pct:106.5,t:39}, aq:{gap:17.5,u:"點",pct:86.1,t:126}, hs:{gap:0.25,u:"點",pct:75,t:1} },
+    vals:{ g5:{gap:-13,u:"件",pct:131.0,t:42}, rt:{gap:2.45,u:"點",pct:99.6,t:686}, rz:{rate:40.98,pct:105.1,t:39}, aq:{gap:4,u:"點",pct:96.8,t:126}, hs:{gap:0.25,u:"點",pct:75,t:1} },
     detail:[
-      {k:"🚀 連兩天大進補", v:"AQ 108.5／126（86.1%）", s:"從 59.9% 折半區一路衝到 86.1%——只剩 17.5 點就季獎金達標"},
-      {k:"✅ RT月獎金再跳檔", v:"37.29%", s:"$360/門（三天前還是 $0！）官方推估月底 44.38% → $420"},
-      {k:"差 1 件跳 42%・好速差 0.25 點", v:"雙近門檻", s:"升轉率 41.53%（49/118）收 1 件純升轉跳 42% 檔｜好速補 0.25 點重點策略 −1→+1 再 +$5,000"},
+      {k:"🔥 RT 差 2.45 點・AQ 差 4 點", v:"雙達標在望", s:"683.55／686、122／126——明天一天就能雙雙衝線！"},
+      {k:"好速案 0.25 點＝$15,000 鑰匙", v:"0.75／1（75%）", s:"補 0.25 點 −1 翻 +1，重點策略 +3→+5、$5,000→$20,000"},
+      {k:"⭐ AQ999 補 1 件解對折", v:"8／12（66.7%）", s:"一件就解折半 +4.17 分，店KPI 大補"},
     ]},
   { name:"仁雄", color:"#FF6B8A",
-    vals:{ g5:{gap:0,u:"件",pct:100.0,t:49}, rt:{gap:-22,u:"點",pct:102.2,t:1026}, rz:{rate:37.34,pct:95.7,t:39}, aq:{gap:21.5,u:"點",pct:82.9,t:126}, hs:{gap:2.75,u:"點",pct:82.8,t:16} },
+    vals:{ g5:{gap:-3,u:"件",pct:106.1,t:49}, rt:{gap:-52.75,u:"點",pct:105.1,t:1026}, rz:{rate:38.51,pct:98.7,t:39}, aq:{gap:-3,u:"點",pct:102.4,t:126}, hs:{gap:2,u:"點",pct:87.5,t:16} },
     detail:[
-      {k:"🎉 RT點數＋5G 雙達標", v:"RT 102.2%・5G 100.0%", s:"1048.25／1026 破百、5G 49/49 剛好衝線！季獎金剩 AQ／好速／升轉率三項"},
-      {k:"🔴 升轉率 37.34%・補 5 件", v:"59／158", s:"全店唯一季紅燈——最後4天純升轉全力收、平降轉全數依當日指令外導"},
-      {k:"⚡ RT月獎金差 0.07pp 跳 $420", v:"42.93%", s:"就差這麼一點點到 43.0%！特維/RT999 任一件就過｜官方推估月底 49.96% → $500"},
+      {k:"🎉 AQ／RT／5G 三響炮破百", v:"AQ 102.4%・RT 105.1%・5G 106.1%", s:"一天補 24.5 點 AQ 直接衝線！季獎金剩升轉率＋好速案兩關"},
+      {k:"🔴 升轉率只差 2 件", v:"38.51%（62/161）", s:"距季 39% 目標剩 2 件純升轉——3天內收 2 件就五項全綠，平降轉全外導"},
+      {k:"好速案缺 2 點", v:"14／16（87.5%）", s:"補 2 點季項達標＋重點策略 +1"},
     ]},
   { name:"凱旋", color:"#B48CFF",
-    vals:{ g5:{gap:-5,u:"件",pct:110.2,t:49}, rt:{gap:-46,u:"點",pct:105.3,t:858}, rz:{rate:45.83,pct:117.5,t:39}, aq:{gap:-28,u:"點",pct:122.2,t:126}, hs:{gap:-0.5,u:"點",pct:103.1,t:16} },
+    vals:{ g5:{gap:-6,u:"件",pct:112.3,t:49}, rt:{gap:-60.1,u:"點",pct:107.0,t:858}, rz:{rate:45.95,pct:117.8,t:39}, aq:{gap:-31,u:"點",pct:124.6,t:126}, hs:{gap:-0.5,u:"點",pct:103.1,t:16} },
     detail:[
-      {k:"🏆 季五項全綠・滿貫保持中", v:"守 4 天", s:"5G 110%・RT 105%・AQ 122%・好速 103%・升轉率 117%——不出九折工程案、守住就是 $90,000"},
-      {k:"🚀 RT月獎金跳上 $500", v:"48.22%", s:"衝過 48% 檔！全區最高｜官方推估月底 52.30% → $525"},
-      {k:"跳 47% 需 4 件", v:"45.83%（66/144）", s:"機制1再跳一檔全月升轉案重新計價——特維再 5 件也是 +1.1 分"},
+      {k:"🏆 滿貫守成中", v:"五項全綠", s:"5G 112%・RT 107%・升轉 118%・AQ 125%・好速 103%——守 3 天、不收九折工程案"},
+      {k:"RT月獎金 $500 全區最高", v:"48.78%", s:"差 1.72 跳 $525（1399 續約 4 件）｜官方推估月底 51.06% → $525"},
+      {k:"升轉率跳 47% 需 3 件", v:"45.95%（68/148）", s:"機制1再跳檔全月升轉案重新計價"},
     ]},
 ];
 
 /* ---- KPI 儀表（三大類達成率 + 最大補分機會：加分=權重×(100%−達成率)）---- */
 const KPI = [
-  { name:"鼎山", color:"#FFB020", majors:{aq:85.4, rt:76.1, va:103.6}, rtScore:36.79, rtPrice:"$360/門（推估月底$420）",
-    opps:[{k:"特維續約",gap:"20 件",add:3.4},{k:"TTL AQ點數",gap:"22.5 點",add:3.0},{k:"AQ 999+",gap:"3 件",add:2.5}] },
-  { name:"陽明", color:"#4DA3FF", majors:{aq:97.2, rt:98.9, va:127.6}, rtScore:46.70, rtPrice:"$460/門（推估月底$500）",
-    opps:[{k:"AQ 999+",gap:"2 件",add:1.7},{k:"高高特維",gap:"2 件",add:0.9},{k:"RT 999+",gap:"7 件",add:0.7}] },
-  { name:"後昌", color:"#34D2A0", majors:{aq:62.1, rt:77.7, va:82.9}, rtScore:37.29, rtPrice:"$360/門（推估月底$420）",
-    opps:[{k:"AQ 999+",gap:"5 件",add:4.2},{k:"AQ 1399+",gap:"4 件",add:4.0},{k:"特維續約",gap:"13 件",add:3.0}] },
-  { name:"仁雄", color:"#FF6B8A", majors:{aq:69.1, rt:92.9, va:82.4}, rtScore:42.93, rtPrice:"$390/門（差0.07pp跳$420）",
-    opps:[{k:"AQ 999+",gap:"6 件",add:5.0},{k:"TTL AQ點數",gap:"21.5 點",add:2.9},{k:"高高特維",gap:"5 件",add:1.7}] },
-  { name:"凱旋", color:"#B48CFF", majors:{aq:110.8, rt:101.8, va:94.7}, rtScore:48.22, rtPrice:"$500/門（推估月底$525）",
-    opps:[{k:"特維續約",gap:"5 件",add:1.1},{k:"AQ 1399+",gap:"1 件",add:1.0},{k:"預付卡面額",gap:"4,308 元",add:0.8}] },
+  { name:"鼎山", color:"#FFB020", majors:{aq:86.9, rt:78.4, va:104.8}, rtScore:37.89, rtPrice:"$360/門", doors:147,
+    opps:[{k:"特維續約（補2件解對折）",gap:"19 件",add:3.71},{k:"TTL AQ點數",gap:"19.5 點",add:2.63},{k:"AQ 999+",gap:"3 件",add:2.50}],
+    next:{label:"40.5%", gap:2.61, price:"$390/門", lo:36.0, hi:40.5},
+    fix:[{k:"⭐ 特維 39→41 件（+2）",v:"解對折 +3.71分｜一次跨檔",hit:1},
+         {k:"1399 以上續約",v:"每件 +0.47分｜跨檔 6 件"},
+         {k:"999~1188 續約",v:"每件 +0.29分｜跨檔 10 件"},
+         {k:"高高特維 15→16（+1）",v:"+0.31分"}] },
+  { name:"陽明", color:"#4DA3FF", majors:{aq:97.8, rt:99.7, va:128.8}, rtScore:47.26, rtPrice:"$460/門", doors:124,
+    opps:[{k:"AQ 999+",gap:"2 件",add:1.67},{k:"高高特維",gap:"2 件",add:0.91},{k:"RT 1399+",gap:"4 件",add:0.65}],
+    next:{label:"48.0%", gap:0.74, price:"$500/門", lo:45.5, hi:48.0},
+    fix:[{k:"⭐ 1399 以上續約",v:"每件 +0.70分｜2 件跨 $500",hit:1},
+         {k:"高高特維 9→10（+1）",v:"+0.45分｜跨檔 2 件"},
+         {k:"999~1188 續約",v:"每件 +0.42分｜跨檔 2 件"},
+         {k:"特維 39→41（+2）",v:"每件 +0.27分｜跨檔 3 件"}] },
+  { name:"後昌", color:"#34D2A0", majors:{aq:71.3, rt:87.6, va:86.3}, rtScore:42.05, rtPrice:"$390/門", doors:122,
+    opps:[{k:"AQ 999+（補1件解對折）",gap:"4 件",add:4.17},{k:"AQ 1399+",gap:"3 件",add:3.00},{k:"特維續約",gap:"12 件",add:2.79}],
+    next:{label:"43.0%", gap:0.95, price:"$420/門", lo:40.5, hi:43.0},
+    fix:[{k:"⭐ 1399 以上續約",v:"每件 +0.68分｜2 件跨 $420",hit:1},
+         {k:"高高特維 10→12（+2）",v:"每件 +0.42分｜跨檔 3 件"},
+         {k:"999~1188 續約",v:"每件 +0.42分｜跨檔 3 件"},
+         {k:"特維 31→43",v:"每件 +0.23分｜跨檔 5 件"}] },
+  { name:"仁雄", color:"#FF6B8A", majors:{aq:95.3, rt:100.0, va:88.2}, rtScore:47.03, rtPrice:"$460/門", doors:161,
+    opps:[{k:"AQ 999+",gap:"3 件",add:2.50},{k:"高高特維",gap:"4 件",add:1.33},{k:"好速案",gap:"2 點",add:0.63}],
+    next:{label:"48.0%", gap:0.97, price:"$500/門", lo:45.5, hi:48.0},
+    fix:[{k:"⭐ 1399 以上續約",v:"每件 +0.46分｜3 件跨 $500",hit:1},
+         {k:"高高特維 11→15（+4）",v:"每件 +0.33分｜跨檔 3 件"},
+         {k:"999~1188 續約",v:"每件 +0.28分｜跨檔 4 件"},
+         {k:"特維 51→55（+4）",v:"每件 +0.18分"}] },
+  { name:"凱旋", color:"#B48CFF", majors:{aq:112.3, rt:102.7, va:95.5}, rtScore:48.78, rtPrice:"$500/門", doors:148,
+    opps:[{k:"AQ 1399+",gap:"1 件",add:1.00},{k:"特維續約",gap:"4 件",add:0.89},{k:"預付卡面額",gap:"3,709 元",add:0.68}],
+    next:{label:"50.5%", gap:1.72, price:"$525/門", lo:48.0, hi:50.5},
+    fix:[{k:"⭐ 1399 以上續約",v:"每件 +0.55分｜4 件跨 $525",hit:1},
+         {k:"999~1188 續約",v:"每件 +0.33分｜跨檔 6 件"},
+         {k:"特維 41→45（+4）",v:"每件 +0.22分｜跨檔 8 件"},
+         {k:"5G RT 22→23（+1）",v:"+0.09分"}] },
+];
+
+/* ===== RT補分速查（每件依續約後資費，RT達成率增幅）===== */
+const RTFUEL = [
+  {name:"鼎山", rate:78.4, score:37.89, icon:"🛡️", item:"特維",     need:"2 件", add:"+3.71", lv:"bad",  hit:1},
+  {name:"後昌", rate:87.6, score:42.05, icon:"🚀", item:"1399續約", need:"2 件", add:"+1.36", lv:"warn", hit:1},
+  {name:"陽明", rate:99.7, score:47.26, icon:"🚀", item:"1399續約", need:"2 件", add:"+1.39", lv:"warn", hit:1},
+  {name:"仁雄", rate:100.0,score:47.03, icon:"🚀", item:"1399續約", need:"3 件", add:"+1.38", lv:"ok",   hit:1},
+  {name:"凱旋", rate:102.7,score:48.78, icon:"🚀", item:"1399續約", need:"4 件", add:"+2.20", lv:"ok",   hit:1},
 ];
 
 /* ---- 重點策略（官方三段式：<80%=−1 ／ 80~100%=0 ／ ≥100%=+1）---- */
 const TOLL = {
   items:[
-    { k:"5G AQ+RT",   u:"件", cells:[{a:59,t:47},{a:48,t:42},{a:51,t:42},{a:49,t:49},{a:54,t:49}] },
-    { k:"好速案",      u:"點", cells:[{a:4,t:3},{a:3,t:2},{a:0.75,t:1},{a:13.25,t:16},{a:16.5,t:16}] },
-    { k:"手機保險",    u:"點", cells:[{a:67,t:60},{a:52.5,t:47},{a:53.5,t:46},{a:45,t:62},{a:58,t:56}] },
-    { k:"Device專案", u:"件", cells:[{a:112,t:133},{a:109,t:105},{a:99,t:103},{a:134,t:137},{a:113,t:125}] },
+    { k:"5G AQ+RT",   u:"件", cells:[{a:62,t:47},{a:49,t:42},{a:55,t:42},{a:52,t:49},{a:55,t:49}] },
+    { k:"好速案",      u:"點", cells:[{a:4,t:3},{a:3,t:2},{a:0.75,t:1},{a:14,t:16},{a:16.5,t:16}] },
+    { k:"手機保險",    u:"點", cells:[{a:69,t:60},{a:54.5,t:47},{a:55.5,t:46},{a:48,t:62},{a:59,t:56}] },
+    { k:"Device專案", u:"件", cells:[{a:117,t:133},{a:111,t:105},{a:107,t:103},{a:141,t:137},{a:115,t:125}] },
   ],
-  accessory:{ k:"配件出貨金額", a:28.35, t:28.3, unit:"萬" },
+  accessory:{ k:"配件出貨金額", a:28.35, t:28.30, unit:"萬" },
 };
 
 /* ========================================================= */
@@ -713,16 +1062,44 @@ const LADDER = [
   {lo:50.5, hi:52.5, label:"50.5% ~ 52.5%",  price:"$525"},
   {lo:52.5, hi:999,  label:"52.5% 以上",      price:"$550"},
 ];
+/* ===== RT補分速查列 ===== */
+const rtFuelBox = document.getElementById("rtFuelRows");
+if(rtFuelBox){
+  const COLOR = {bad:"var(--red)", warn:"var(--yellow)", ok:"var(--green)"};
+  rtFuelBox.innerHTML = RTFUEL.map(f=>`
+    <div class="frow" style="box-shadow:inset 3px 0 0 ${COLOR[f.lv]}">
+      <span class="fn">${f.name}</span>
+      <span class="fr"><span class="frv num" style="color:${COLOR[f.lv]}">${f.rate.toFixed(1)}%</span><span class="frs num">總分 ${f.score}</span></span>
+      <span class="fpill ${f.hit?'hot':''}">${f.icon} ${f.item}</span>
+      <span class="fw">缺 <b class="num">${f.need}</b></span>
+      <span class="fg num">${f.add} 分</span>
+    </div>`).join("");
+}
+
+/* ===== 級距表下方分店摘要 ===== */
+const ldSum = document.getElementById("ladderSum");
+if(ldSum){
+  const sorted = KPI.slice().sort((a,b)=> b.rtScore - a.rtScore);
+  const minGap = Math.min(...sorted.map(k=>k.next.gap));
+  ldSum.innerHTML = sorted.map(k=>`
+    <div class="ld ${k.next.gap===minGap?'near':''}" style="--lc:${k.color}">
+      <div class="n"><i class="dot" style="background:${k.color}"></i>${k.name}</div>
+      <div class="sc num" style="color:${k.color}">${k.rtScore}</div>
+      <div class="pr num">${k.rtPrice}</div>
+      <div class="gp">差 <b class="num">${k.next.gap}</b> 分跳 <b>${k.next.price.replace("/門","")}</b></div>
+    </div>`).join("");
+}
+
 const ladderBody = document.querySelector("#ladderTbl tbody"); ladderBody.innerHTML="";
 LADDER.forEach(t=>{
   const here = KPI.filter(k=> k.rtScore >= t.lo && k.rtScore < t.hi);
   const tr = document.createElement("tr");
   const who = here.length
-    ? here.map(k=>`<span style="font-weight:900;color:${k.color}"><i class="dot" style="background:${k.color};margin-right:4px"></i>${k.name} ${k.rtScore}%</span>`).join("　")
+    ? here.map(k=>`<span style="font-weight:900;font-size:12px;color:${k.color}"><i class="dot" style="width:7px;height:7px;background:${k.color};margin-right:3px"></i>${k.name} ${k.rtScore}</span>`).join("　")
     : `<span style="color:var(--dim)">—</span>`;
   tr.innerHTML = `
     <td style="text-align:center;font-weight:700" class="num">${t.label}</td>
-    <td style="text-align:center"><span class="num" style="font-weight:900;color:${t.danger?'var(--red)':'var(--gold)'};font-size:15px">${t.price}</span></td>
+    <td style="text-align:center"><span class="num" style="font-weight:900;color:${t.danger?'var(--red)':'var(--gold)'};font-size:13px">${t.price}</span></td>
     <td style="text-align:center">${who}</td>`;
   if(t.danger) tr.style.background = "rgba(255,107,107,.06)";
   if(here.length) tr.style.boxShadow = "inset 3px 0 0 var(--blue)";
@@ -730,6 +1107,24 @@ LADDER.forEach(t=>{
 });
 
 /* ===== KPI 卡 ===== */
+/* ===== 衝刺目標規則：剩餘天數 → 往上推幾檔 =====
+   10天以上 → +4檔｜7~9天 → +3檔｜4~6天 → +2檔｜1~3天 → +1檔
+   每日只需改 DAYS_LEFT，五店目標自動重算                      */
+const OWL = `<svg viewBox="0 0 24 24" width="17" height="17" style="vertical-align:-3.5px;margin-right:3px"><path d="M4.6 6.6 L7.4 2.2 L10.4 5.6 Z" fill="#B48CFF"/><path d="M19.4 6.6 L16.6 2.2 L13.6 5.6 Z" fill="#B48CFF"/><ellipse cx="12" cy="13.6" rx="8.6" ry="8.4" fill="#B48CFF"/><path d="M3.6 12.6 A8.6 8.4 0 0 1 20.4 12.6 Z" fill="#C9AEFF"/><line x1="5.4" y1="11.4" x2="2.6" y2="10.2" stroke="#FFD166" stroke-width="1.2" stroke-linecap="round"/><line x1="18.6" y1="11.4" x2="21.4" y2="10.2" stroke="#FFD166" stroke-width="1.2" stroke-linecap="round"/><circle cx="8.7" cy="11.6" r="3.5" fill="#0D1321" stroke="#FFD166" stroke-width="1.4"/><circle cx="15.3" cy="11.6" r="3.5" fill="#0D1321" stroke="#FFD166" stroke-width="1.4"/><circle cx="9.2" cy="11.3" r="1.5" fill="#FFFFFF"/><circle cx="15.8" cy="11.3" r="1.5" fill="#FFFFFF"/><path d="M12 15.2 L10.6 17.2 L13.4 17.2 Z" fill="#FFD166"/></svg>`;
+const DAYS_LEFT = 3;
+const PUSH_STEPS = d => d>=10 ? 4 : d>=7 ? 3 : d>=4 ? 2 : 1;
+(function(){
+  const steps = PUSH_STEPS(DAYS_LEFT);
+  const sorted = KPI.slice().sort((a,b)=> b.rtScore - a.rtScore);
+  sorted.forEach((s,i)=>{
+    s.rank = (i>0 && sorted[i-1].rtScore===s.rtScore) ? sorted[i-1].rank : i+1;
+    const li = LADDER.findIndex(t=> s.rtScore >= t.lo && s.rtScore < t.hi);
+    s.pushStep = steps;
+    s.push2 = LADDER[Math.min(li+steps, LADDER.length-1)].lo;
+    s.prog = Math.round((s.rtScore - s.next.lo)/(s.next.hi - s.next.lo)*1000)/10;
+  });
+})();
+
 const kpiGrid = document.getElementById("kpiGrid"); kpiGrid.innerHTML="";
 KPI.forEach(s=>{
   const majors=[{k:"AQ",v:s.majors.aq},{k:"RT",v:s.majors.rt},{k:"加值",v:s.majors.va}];
@@ -737,21 +1132,50 @@ KPI.forEach(s=>{
   card.className = "kpi-card";
   card.style.setProperty("--sc", s.color);
   card.innerHTML = `
-    <h3>${s.name}</h3>
-    <div class="maj-row">
-      ${majors.map(m=>{
-        const bad = m.v < 70;
-        return `<div class="maj ${bad?'maj-bad':''}">
-          <div class="mv num" style="color:${bad?'var(--red)':s.color}">${m.v}%</div>
-          <div class="mk">${m.k} KPI</div>
-          ${bad?'<div class="ml">⚠ 達成率偏低，待拉升</div>':'<div class="ml ok">✓ 達成率正常</div>'}
-        </div>`;
-      }).join("")}
+    <h3>${s.name}
+      <span class="cardsw">
+        <span class="on" data-v="rt">🎰 RT KPI獎勵</span>
+        <span data-v="life">🛟 3大KPI生死線</span>
+      </span>
+    </h3>
+
+    <div class="cv on" data-view="rt">
+      <div class="rankrow">
+        <div class="rk push"><div class="rv">剩 <span class="num">${DAYS_LEFT}</span> 天</div><div class="rl">努力 <b class="num">${s.push2}%</b><span class="stp">＋${s.pushStep}檔</span></div></div>
+        <div class="rk"><div class="rv num" style="color:${s.color}">${s.rtScore}</div><div class="rl">RT加權總分</div><div class="rkx">加乘後RT KPI <span class="num">${s.majors.rt.toFixed(1)}%</span></div></div>
+        <div class="rk"><div class="rv num" style="color:var(--gold)">${s.rtPrice.replace("/門","")}</div><div class="rl">目前每門單價</div><div class="rkx">RT件數 <span class="num">${s.doors}</span> 件</div></div>
+      </div>
+      <div class="tierbar">
+        <span class="tb-star">⭐</span>
+        <div class="tb-bot">跨過後<b>全月每一門</b>從 ${s.rtPrice} 升為 <b class="up">${s.next.price}</b></div>
+      </div>
+      <div class="opp-title">${OWL}小項目要補幾件</div>
+      ${s.fix.map(f=>`<div class="fix ${f.hit?'hit':''}"><span class="fk">${f.k}</span><span class="fv num">${f.v}</span></div>`).join("")}
     </div>
-    <div class="opp-title">🔧 最大補分機會</div>
-    ${s.opps.map(o=>`<div class="opp"><span class="ok1">${o.k}</span><span class="ok2">缺 ${o.gap}</span><span class="ok3 num">補回 +${o.add.toFixed(1)}分</span></div>`).join("")}
-    <div class="rt-chip">🎰 RT加權總分 <b class="num">${s.rtScore}%</b>（領獎線27.0%）→ RT KPI獎勵單價 <span class="price num">${s.rtPrice}</span></div>
+
+    <div class="cv" data-view="life">
+      <div class="maj-row">
+        ${majors.map(m=>{
+          const bad = m.v < 70;
+          return `<div class="maj ${bad?'maj-bad':''}">
+            <div class="mv num" style="color:${bad?'var(--red)':s.color}">${m.v}%</div>
+            <div class="mk">${m.k} KPI</div>
+            ${bad?'<div class="ml">⚠ 低於70%，須簽記點單</div>':'<div class="ml ok">✓ 高於70%生存線</div>'}
+          </div>`;
+        }).join("")}
+      </div>
+      <div class="opp-title">🔧 最大補分機會</div>
+      ${s.opps.map(o=>`<div class="opp"><span class="ok1">${o.k}</span><span class="ok2">缺 ${o.gap}</span><span class="ok3 num">補回 +${o.add.toFixed(1)}分</span></div>`).join("")}
+      <div class="rt-chip">🛟 70%生存線只看 <b>AQ／RT／加值</b> 三大類，小項目未達70%不觸發記點單</div>
+    </div>
   `;
+  card.querySelectorAll(".cardsw span").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      card.querySelectorAll(".cardsw span").forEach(x=>x.classList.remove("on"));
+      btn.classList.add("on");
+      card.querySelectorAll(".cv").forEach(v=>v.classList.toggle("on", v.dataset.view===btn.dataset.v));
+    });
+  });
   card.dataset.store = s.name;
   kpiGrid.appendChild(card);
 });
@@ -794,11 +1218,11 @@ sfOpts.forEach((o,i)=>{
 
 /* ===== 5家升轉率戰情分析（升轉件/RT總件 → 檔位/跳檔/防守）===== */
 const RZ_WAR = [
-  {name:"鼎山", color:"#FFB020", u:67, n:142},
-  {name:"陽明", color:"#4DA3FF", u:57, n:121},
-  {name:"後昌", color:"#34D2A0", u:49, n:118},
-  {name:"仁雄", color:"#FF6B8A", u:59, n:158},
-  {name:"凱旋", color:"#B48CFF", u:66, n:144},
+  {name:"鼎山", color:"#FFB020", u:70, n:147},
+  {name:"陽明", color:"#4DA3FF", u:59, n:124},
+  {name:"後昌", color:"#34D2A0", u:50, n:122},
+  {name:"仁雄", color:"#FF6B8A", u:62, n:161},
+  {name:"凱旋", color:"#B48CFF", u:68, n:148},
 ];
 const rzWarGrid = document.getElementById("rzWarGrid"); rzWarGrid.innerHTML="";
 RZ_WAR.forEach(st=>{
@@ -808,8 +1232,8 @@ RZ_WAR.forEach(st=>{
   const next = t.hi <= 52 ? RZ_TIERS[ti+1] : null;
   const effTop = !next || (next.p45===t.p45 && next.p70===t.p70);  /* 47%以上單價已同頂檔 */
 
-  /* 現在每案 */
-  const nowRow = `<div class="war-row"><span class="wl">💰 現在每案</span><span class="wv num">$${t.p45} ~ $${t.p70.toLocaleString()}<span style="display:block;font-size:10px;color:var(--dim);font-weight:500">淨增401↑案件單價，小額案較低</span></span></div>`;
+  /* 現在每案（併入上方三格）*/
+  const nowCell = `<div class="maj"><div class="mv num" style="font-size:13px;padding-top:3px;color:var(--gold)">$${t.p45}~$${t.p70.toLocaleString()}</div><div class="mk">現在每案｜淨增401↑</div></div>`;
 
   /* 跳檔 or 頂檔 */
   let upRow;
@@ -845,10 +1269,10 @@ RZ_WAR.forEach(st=>{
     <div class="maj-row">
       <div class="maj"><div class="mv num" style="color:${st.color}">${Math.round(rate*10)/10}%</div><div class="mk">升轉率｜檔位 ${t.label}</div></div>
       <div class="maj"><div class="mv num">${st.u}<span style="font-size:11px;color:var(--dim)">／${st.n}</span></div><div class="mk">升轉件／RT總件</div></div>
+      ${nowCell}
     </div>
-    ${nowRow}
-    ${upRow}
     ${defRow}
+    ${upRow}
     ${seasonWarn}
   `;
   rzWarGrid.appendChild(card);
