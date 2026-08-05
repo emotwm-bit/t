@@ -2593,8 +2593,8 @@ function getTodayMidnight() {
 
 function periodWorkdaysLeft(d){
   // 依目前期間，扣此人休假，算真實今天(含)之後的上班日
-  const upDates=[629,630,701,702,703,704,705,706,707,708,709,710,711,712,713,714];
-  const dnDates=[715,716,717,718,719,720,721,722,723,724,725,726,727,728,729];
+  const upDates=[730,731,801,802,803,804,805,806,807,808,809,810,811,812,813,814];
+  const dnDates=[815,816,817,818,819,820,821,822,823,824,825,826,827,828,829];
   const p=getCurrentPeriod();
   let dates, off;
   if(p==='first'){ dates=upDates; off=new Set(d.offUp||[]); }
@@ -2606,8 +2606,8 @@ function periodWorkdaysLeft(d){
 }
 function getCurrentPeriod() {
   const today = getTodayMidnight();
-  const firstEnd = new Date(2026, 6, 14); firstEnd.setHours(0,0,0,0);
-  const secondEnd = new Date(2026, 6, 29); secondEnd.setHours(0,0,0,0);
+  const firstEnd = new Date(2026, 7, 14); firstEnd.setHours(0,0,0,0);
+  const secondEnd = new Date(2026, 7, 29); secondEnd.setHours(0,0,0,0);
   if (today.getTime() <= firstEnd.getTime()) return 'first';
   if (today.getTime() <= secondEnd.getTime()) return 'second';
   return 'ended';
@@ -2617,8 +2617,8 @@ function getDaysLeftInclusive() {
   const today = getTodayMidnight();
   const period = getCurrentPeriod();
   let endDate;
-  if (period === 'first') { endDate = new Date(2026, 6, 14); }
-  else if (period === 'second') { endDate = new Date(2026, 6, 29); }
+  if (period === 'first') { endDate = new Date(2026, 7, 14); }
+  else if (period === 'second') { endDate = new Date(2026, 7, 29); }
   else return 0;
   endDate.setHours(0,0,0,0);
   // 含今天的剩餘天數 = (endDate - today)/86400000 + 1
@@ -2791,7 +2791,7 @@ function renderStoreResult(store){
   const _period = getCurrentPeriod();
   // 全月結束 8/29，距全月結束天數
   const _today = getTodayMidnight();
-  const _mEnd = new Date(2026, 6, 29); _mEnd.setHours(0,0,0,0);
+  const _mEnd = new Date(2026, 7, 29); _mEnd.setHours(0,0,0,0);
   const _monthLeft = Math.max(0, Math.round((_mEnd - _today) / (1000*60*60*24)) + 1);
   document.getElementById('emptyState').style.display = 'none';
   const area = document.getElementById('resultArea');
