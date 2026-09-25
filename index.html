@@ -4,23 +4,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>💰 倚盟戰報</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Bungee+Shade&family=Fredoka:wght@500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Bungee+Shade&family=Fredoka:wght@500;600;700&family=Chakra+Petch:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
         :root {
-            --neon-cyan: #00F5FF; --neon-cyan-deep: #00BCD4; --neon-cyan-glow: rgba(0,245,255,0.25);
-            --neon-pink: #FF2D78; --neon-pink-deep: #D81B60; --neon-pink-glow: rgba(255,45,120,0.25);
-            --neon-lime: #76FF03; --neon-lime-deep: #64DD17; --neon-lime-glow: rgba(118,255,3,0.2);
-            --neon-yellow: #FFEA00; --neon-yellow-deep: #FFD600;
-            --neon-orange: #FF6D00; --neon-orange-deep: #E65100;
-            --neon-red: #FF1744; --neon-red-deep: #D50000;
-            --neon-purple: #D500F9; --neon-purple-deep: #AA00FF;
-            --bg-space: #0C1033; --bg-mid: #131848; --bg-card: rgba(20,28,75,0.85);
-            --bg-card-solid: #161D55; --bg-input: rgba(10,15,50,0.9);
-            --text-1: #ECEEFF; --text-2: #9BA3D2; --text-3: #6670A8;
-            --border: rgba(100,140,255,0.12);
-            --glass: rgba(255,255,255,0.04);
+            /* ── 2026/09 新配色：深夜靛藍底 × 薄荷綠 / 珊瑚紅 / 琥珀金 / 電光紫 ── */
+            --neon-cyan: #2DE2E6; --neon-cyan-deep: #0FB9BD; --neon-cyan-glow: rgba(45,226,230,0.28);
+            --neon-pink: #FF4D6D; --neon-pink-deep: #C9184A; --neon-pink-glow: rgba(255,77,109,0.28);
+            --neon-lime: #00E5A0; --neon-lime-deep: #00B37E; --neon-lime-glow: rgba(0,229,160,0.26);
+            --neon-yellow: #FFC845; --neon-yellow-deep: #FFA600;
+            --neon-orange: #FF7B31; --neon-orange-deep: #E85D04;
+            --neon-red: #FF3B5C; --neon-red-deep: #D00000;
+            --neon-purple: #9D4EDD; --neon-purple-deep: #7B2CBF;
+            --bg-space: #0A0E27; --bg-mid: #121A3D; --bg-card: rgba(22,32,72,0.88);
+            --bg-card-solid: #16204A; --bg-input: rgba(8,13,40,0.92);
+            --text-1: #F2F5FF; --text-2: #A8B2E0; --text-3: #7480B4;
+            --border: rgba(120,150,255,0.16);
+            --glass: rgba(255,255,255,0.05);
+            /* 毛利專用 */
+            --gp: #00E5A0; --gp-deep: #009E6D;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
+            font-size: 17px;
             font-family: 'Fredoka', 'Microsoft JhengHei', sans-serif;
             background: var(--bg-space);
             background-image:
@@ -38,33 +42,106 @@
         }
         .coin { position: fixed; font-size: 24px; animation: coinFall linear forwards; pointer-events: none; z-index: 1000; }
         @keyframes coinFall { 0% { transform: translateY(-50px) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
-        .container { max-width: 520px; margin: 0 auto; padding: 15px; position: relative; z-index: 1; }
-        .header { text-align: center; padding: 32px 20px 22px; }
-        .header h1 {
-            font-family: 'Bungee Shade', sans-serif; font-size: 1.6em; letter-spacing: 2px;
-            color: var(--neon-cyan);
-            text-shadow: 0 0 20px var(--neon-cyan-glow), 0 0 60px rgba(0,245,255,0.1), 0 2px 0 rgba(0,0,0,0.3);
-            animation: neonFlicker 4s ease-in-out infinite;
+        .container { max-width: 560px; margin: 0 auto; padding: 15px; position: relative; z-index: 1; }
+        .header { text-align: center; padding: 20px 0 18px; }
+        .masthead {
+            position: relative; overflow: hidden; text-align: center;
+            padding: 22px 16px 20px; border-radius: 24px;
+            background:
+                radial-gradient(ellipse 130% 110% at 50% 0%, rgba(255,200,69,0.16), transparent 62%),
+                linear-gradient(180deg, #16204C 0%, #0B1030 100%);
+            border: 1px solid rgba(255,200,69,0.26);
+            box-shadow: 0 16px 46px rgba(0,0,0,0.60), inset 0 1px 0 rgba(255,255,255,0.10);
+        }
+        /* 斜紋底：球場燈光的質地 */
+        .masthead::before {
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            background: repeating-linear-gradient(115deg, rgba(255,255,255,0.032) 0 2px, transparent 2px 10px);
+        }
+        .masthead::after {
+            content: ''; position: absolute; left: 50%; top: -60%; transform: translateX(-50%);
+            width: 160%; height: 120%; pointer-events: none;
+            background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255,200,69,0.10), transparent 70%);
+        }
+        .masthead h1 {
+            position: relative; z-index: 1;
+            display: flex; align-items: center; justify-content: center; gap: 9px;
+            font-family: 'Noto Sans TC','Microsoft JhengHei',sans-serif; line-height: 1.04;
+        }
+        .mh-name {
+            font-weight: 900; font-size: 1.95rem; letter-spacing: 0.05em;
+            background: linear-gradient(180deg, #FFFFFF 0%, #FFEDB4 34%, #FFC42E 64%, #A96C00 100%);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            filter:
+                drop-shadow(0 2px 0 rgba(95,52,0,0.75))
+                drop-shadow(0 6px 14px rgba(0,0,0,0.65))
+                drop-shadow(0 0 28px rgba(255,190,60,0.32));
+        }
+        /* 戰報：傾斜紅牌＋硬邊描字，做出戰力感 */
+        .mh-war {
+            display: inline-block; padding: 6px 13px 6px 16px; border-radius: 7px;
+            transform: skewX(-9deg);
+            background: linear-gradient(180deg, #FF2E4C 0%, #D00000 55%, #8B0109 100%);
+            border: 1.5px solid rgba(255,211,107,0.85);
+            box-shadow: 0 5px 16px rgba(157,2,8,0.55), inset 0 1px 0 rgba(255,255,255,0.35),
+                        inset 0 -2px 6px rgba(0,0,0,0.45);
+            font-weight: 900; font-size: 1.82rem; letter-spacing: 0.12em;
+            color: #FFF6DC;
+            text-shadow: 0 2px 0 rgba(90,0,6,0.95), 0 0 14px rgba(255,120,120,0.55);
+        }
+        /* 戰報右側速度線 */
+        .mh-speed {
+            display: inline-flex; flex-direction: column; justify-content: center; gap: 6px;
+            transform: skewX(-9deg); margin-left: 1px; flex: 0 0 auto;
+        }
+        .mh-speed i {
+            display: block; height: 4.5px; border-radius: 3px;
+            background: linear-gradient(90deg, #FF3E58 0%, #FF6B7F 45%, rgba(255,62,88,0) 100%);
+            box-shadow: 0 0 8px rgba(255,62,88,0.45);
+            animation: speedLine 1.6s ease-in-out infinite;
+        }
+        .mh-speed i:nth-child(1) { width: 36px; opacity: .95; animation-delay: 0s; }
+        .mh-speed i:nth-child(2) { width: 56px; opacity: .78; animation-delay: .18s; }
+        .mh-speed i:nth-child(3) { width: 28px; opacity: .58; animation-delay: .36s; }
+        @keyframes speedLine {
+            0%,100% { transform: translateX(0); opacity: .45; }
+            45%     { transform: translateX(8px); opacity: 1; }
+        }
+        .mh-date {
+            position: relative; z-index: 1; margin-top: 16px;
+            color: var(--text-2); font-weight: 700; font-size: 0.95em; letter-spacing: 1px;
         }
         @keyframes neonFlicker {
             0%,100% { text-shadow: 0 0 20px var(--neon-cyan-glow), 0 0 60px rgba(0,245,255,0.1); }
             50% { text-shadow: 0 0 30px rgba(0,245,255,0.4), 0 0 80px rgba(0,245,255,0.15); }
         }
-        .header p { color: var(--text-2); margin-top: 10px; font-size: 0.85em; font-weight: 600; letter-spacing: 1px; }
+
         .tab-container { display: flex; gap: 10px; margin-bottom: 20px; }
         .tab-btn {
             flex: 1; padding: 13px; border: 2px solid var(--border); border-radius: 16px;
             background: var(--bg-card); backdrop-filter: blur(10px);
-            color: var(--text-3); font-size: 0.95em; font-weight: 700; cursor: pointer;
+            color: var(--text-3); font-size: 1.05em; font-weight: 700; cursor: pointer;
             transition: all 0.3s ease; font-family: 'Baloo 2', sans-serif;
         }
-        .tab-btn:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); transform: translateY(-2px); }
-        .tab-btn.active {
-            background: linear-gradient(135deg, var(--neon-pink-deep), var(--neon-pink));
-            color: #fff; border-color: var(--neon-pink);
-            box-shadow: 0 6px 30px var(--neon-pink-glow), inset 0 1px 0 rgba(255,255,255,0.2);
-            transform: translateY(-2px);
-        }
+        .tab-btn:hover { transform: translateY(-2px); }
+        .tab-btn.active { color: #fff; transform: translateY(-2px);
+            box-shadow: 0 6px 26px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.28); }
+        /* 我的獎金＝紫 */
+        .tab-btn.bonus-tab { border-color: rgba(157,78,221,0.42); color: #C9A0F5; }
+        .tab-btn.bonus-tab:hover { border-color: #C77DFF; color: #fff; background: rgba(157,78,221,0.14); }
+        .tab-btn.bonus-tab.active { background: linear-gradient(135deg, #6A1FB0, #A855F7);
+            border-color: #D9B3FF; color: #fff; text-shadow: 0 1px 2px rgba(40,0,80,0.55);
+            box-shadow: 0 6px 26px rgba(157,78,221,0.45), inset 0 1px 0 rgba(255,255,255,0.30); }
+        /* 排行榜＝橘 */
+        .tab-btn.rank-tab { border-color: rgba(255,123,49,0.42); color: #FFB37A; }
+        .tab-btn.rank-tab:hover { border-color: #FF9A4D; color: #fff; background: rgba(255,123,49,0.14); }
+        .tab-btn.rank-tab.active { background: linear-gradient(135deg, #E85D04, #FFB347);
+            border-color: #FFCF9A; color: #2B1200;
+            box-shadow: 0 6px 26px rgba(255,123,49,0.45), inset 0 1px 0 rgba(255,255,255,0.40); }
+        /* 追星獎＝金 */
+        .tab-btn.star-tab.active { background: linear-gradient(135deg, #C98A00, #FFD84D);
+            border-color: #FFE9A8; color: #3A2600;
+            box-shadow: 0 6px 26px rgba(255,200,69,0.45), inset 0 1px 0 rgba(255,255,255,0.45); }
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
@@ -131,8 +208,8 @@
             border-radius: 16px; padding: 15px 10px; text-align: center;
             border: 1px solid var(--border);
         }
-        .stats-sub-item .value { font-family: 'Baloo 2', sans-serif; font-size: 1.15em; color: var(--text-1); font-weight: 800; }
-        .stats-sub-item .label { color: var(--text-3); font-size: 0.7em; margin-top: 5px; font-weight: 600; }
+        .stats-sub-item .value { font-family: 'Baloo 2', sans-serif; font-size: 1.42em; color: var(--text-1); font-weight: 800; }
+        .stats-sub-item .label { color: var(--text-3); font-size: 0.85em; margin-top: 5px; font-weight: 600; }
         .stats-sub-item.green-accent .value { color: var(--neon-lime); text-shadow: 0 0 10px var(--neon-lime-glow); }
         .bonus-distribution {
             background: var(--bg-card); backdrop-filter: blur(14px);
@@ -149,12 +226,15 @@
         .dist-rank.pass { color: var(--text-2); }
         .dist-rank.effort { color: var(--neon-pink); }
         .dist-bar-wrap { position: relative; height: 22px; background: rgba(255,255,255,0.05); border-radius: 11px; overflow: hidden; }
-        .dist-fill { height: 100%; border-radius: 11px; transition: width 1s ease; display: flex; align-items: center; padding-left: 8px; font-size: 0.7em; color: #fff; font-weight: 700; }
-        .dist-fill.top { background: linear-gradient(90deg, #F9A825, var(--neon-yellow)); }
-        .dist-fill.star { background: linear-gradient(90deg, var(--neon-cyan-deep), var(--neon-cyan)); }
-        .dist-fill.good { background: linear-gradient(90deg, var(--neon-lime-deep), var(--neon-lime)); }
-        .dist-fill.pass { background: linear-gradient(90deg, #546E7A, #78909C); }
-        .dist-fill.effort { background: linear-gradient(90deg, var(--neon-pink-deep), var(--neon-pink)); }
+        .dist-fill { height: 100%; border-radius: 11px; transition: width 1s ease;
+            display: flex; align-items: center; justify-content: center; padding: 0 10px;
+            font-size: 0.72em; font-weight: 800; letter-spacing: 0.2px; white-space: nowrap;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.35); }
+        .dist-fill.top { background: linear-gradient(90deg, #FFB627, #FFD966); color: #5A3B00; }
+        .dist-fill.star { background: linear-gradient(90deg, #3FD9DD, #8CF0F2); color: #00383B; }
+        .dist-fill.good { background: linear-gradient(90deg, #17D695, #7DF0C6); color: #00402C; }
+        .dist-fill.pass { background: linear-gradient(90deg, #8FA6B4, #C2D2DC); color: #1E2E38; }
+        .dist-fill.effort { background: linear-gradient(90deg, #FF6B82, #FFA8B6); color: #6B0018; }
         .dist-count { color: var(--text-1); font-size: 0.9em; text-align: center; font-weight: 800; }
         .dist-percent { color: var(--text-3); font-size: 0.75em; text-align: center; font-weight: 600; }
         .store-stats {
@@ -162,35 +242,73 @@
             border-radius: 20px; padding: 16px; margin-bottom: 15px;
             border: 1px solid var(--border);
         }
-        .store-list { display: flex; flex-direction: column; gap: 6px; }
-        .store-item { display: flex; justify-content: space-between; align-items: center; padding: 11px 14px; border-radius: 14px; background: rgba(10,15,50,0.5); transition: all 0.3s; }
-        .store-item:hover { background: rgba(0,245,255,0.06); transform: translateX(4px); }
-        .store-item.top-store { background: linear-gradient(90deg, rgba(255,234,0,0.1), transparent); border-left: 4px solid var(--neon-yellow); }
-        .store-item.second-store { background: linear-gradient(90deg, rgba(0,245,255,0.08), transparent); border-left: 4px solid var(--neon-cyan); }
-        .store-name { color: var(--text-1); font-weight: 800; font-size: 0.9em; min-width: 80px; }
-        .store-data { display: flex; gap: 10px; color: var(--text-3); font-size: 0.75em; font-weight: 600; }
-        .store-bonus { font-family: 'Baloo 2', sans-serif; color: var(--neon-lime); font-size: 1em; font-weight: 800; text-shadow: 0 0 8px var(--neon-lime-glow); }
-        .store-item.top-store .store-bonus { color: var(--neon-yellow); text-shadow: 0 0 10px rgba(255,234,0,0.4); }
-        .rank-toggle { display: flex; gap: 8px; margin-bottom: 15px; }
-        .rank-toggle-btn {
-            flex: 1; padding: 11px; border: 2px solid var(--border); border-radius: 14px;
-            background: var(--bg-card); backdrop-filter: blur(10px);
-            color: var(--text-3); font-size: 0.85em; font-weight: 700; cursor: pointer;
-            transition: all 0.3s; font-family: 'Baloo 2', sans-serif;
+        .store-list { display: flex; flex-direction: column; gap: 7px; }
+        .store-row {
+            display: flex; align-items: center; gap: 11px;
+            padding: 11px 13px; border-radius: 15px;
+            background: rgba(9,14,44,0.62); border: 1px solid rgba(120,150,255,0.10);
+            transition: background .25s, border-color .25s;
         }
-        .rank-toggle-btn.active { border-color: var(--neon-cyan); color: var(--neon-cyan); background: rgba(0,245,255,0.08); box-shadow: 0 0 15px var(--neon-cyan-glow); }
-        .rank-toggle-btn.kpi-active { border-color: var(--neon-purple); color: var(--neon-purple); background: rgba(213,0,249,0.08); box-shadow: 0 0 15px rgba(213,0,249,0.2); }
+        .store-row:hover { background: rgba(18,26,70,0.85); border-color: rgba(120,150,255,0.22); }
+        .s-rank { flex: 0 0 auto; width: 30px; text-align: center; }
+        .s-medal { font-size: 1.35em; line-height: 1; }
+        .s-num { display: inline-flex; align-items: center; justify-content: center;
+            width: 25px; height: 25px; border-radius: 50%;
+            background: rgba(255,255,255,0.05); color: var(--text-3);
+            font-family: 'Baloo 2',sans-serif; font-size: 0.82em; font-weight: 800; }
+        .s-main { flex: 1; min-width: 0; }
+        .s-top { display: flex; align-items: baseline; gap: 9px; }
+        .s-name { color: var(--text-1); font-weight: 800; font-size: 0.97em; letter-spacing: .03em; }
+        .s-gp { font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 1.12em;
+            letter-spacing: -0.3px; white-space: nowrap; }
+        .s-bar { position: relative; height: 6px; margin: 7px 0 6px; border-radius: 99px;
+            background: rgba(255,255,255,0.05); box-shadow: inset 0 1px 2px rgba(0,0,0,0.45); }
+        .s-bar i { display: block; height: 100%; border-radius: 99px;
+            transition: width .9s cubic-bezier(.22,1,.36,1); }
+        .s-meta { display: flex; align-items: center; justify-content: flex-end; gap: 10px;
+            color: var(--text-3); font-size: 0.72em; font-weight: 600; }
+        .s-top .s-per { margin-left: auto; color: var(--text-3);
+            font-size: 0.66em; font-weight: 700; white-space: nowrap; }
+        /* 名次配色：金 → 銀 → 銅 → 中性橘 */
+        .store-row.s1 { background: linear-gradient(90deg, rgba(255,200,69,0.12), rgba(9,14,44,0.62) 55%);
+            border-color: rgba(255,200,69,0.32); }
+        .store-row.s1 .s-gp { color: #FFD75E; text-shadow: 0 0 12px rgba(255,200,69,0.40); }
+        .store-row.s1 .s-bar i { background: linear-gradient(90deg,#C98A00,#FFD84D); box-shadow: 0 0 10px rgba(255,200,69,.50); }
+        .store-row.s2 { background: linear-gradient(90deg, rgba(190,215,240,0.10), rgba(9,14,44,0.62) 55%);
+            border-color: rgba(190,215,240,0.26); }
+        .store-row.s2 .s-gp { color: #DCE9F7; }
+        .store-row.s2 .s-bar i { background: linear-gradient(90deg,#6E8FB5,#CFE2F5); box-shadow: 0 0 10px rgba(180,210,240,.40); }
+        .store-row.s3 { background: linear-gradient(90deg, rgba(216,136,74,0.11), rgba(9,14,44,0.62) 55%);
+            border-color: rgba(216,136,74,0.26); }
+        .store-row.s3 .s-gp { color: #F0B183; }
+        .store-row.s3 .s-bar i { background: linear-gradient(90deg,#A65B22,#F0B183); box-shadow: 0 0 10px rgba(240,150,90,.35); }
+        .store-row.sx .s-gp { color: #A8B2E0; }
+        .store-row.sx .s-bar i { background: linear-gradient(90deg,#3B4570,#7D89BE); }
+        .rank-toggle {
+            display: flex; gap: 5px; margin-bottom: 14px; padding: 5px;
+            border-radius: 18px; background: rgba(6,10,32,0.80);
+            border: 1px solid var(--border);
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.45);
+        }
+        .rank-toggle-btn {
+            flex: 1; padding: 11px 8px; border: none; border-radius: 13px;
+            background: transparent; color: var(--text-3);
+            font-size: 0.88em; font-weight: 800; cursor: pointer;
+            transition: all 0.25s ease; font-family: 'Baloo 2', sans-serif;
+        }
+        .rank-toggle-btn:hover { color: var(--text-1); background: rgba(255,255,255,0.05); }
         .leaderboard {
             background: var(--bg-card); backdrop-filter: blur(14px);
             border-radius: 22px; overflow: hidden;
             border: 1px solid var(--border); margin-bottom: 15px;
         }
         .leaderboard-header {
-            background: linear-gradient(135deg, #1a237e, var(--neon-cyan-deep));
+            background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
+            background-color: #141C42;
             padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 2px solid var(--neon-cyan);
+            border-bottom: 1px solid var(--border);
         }
-        .leaderboard-header.kpi-header { background: linear-gradient(135deg, #4A148C, var(--neon-purple)); border-bottom-color: var(--neon-purple); }
+
         .leaderboard-header h3 { color: #fff; font-size: 1.1em; font-weight: 800; font-family: 'Baloo 2', sans-serif; }
         .leaderboard-header .total { color: rgba(255,255,255,0.8); font-size: 0.85em; font-weight: 700; }
         .rank-item { display: flex; align-items: center; padding: 12px 15px; border-bottom: 1px solid var(--border); transition: all 0.3s; }
@@ -200,7 +318,7 @@
 .rank-item.me .rank-name::after { content: " ← 你"; color: #00E5FF; font-size: 12px; font-weight: 700; margin-left: 4px; }
         .rank-item.top2 { background: linear-gradient(90deg, rgba(0,245,255,0.07), transparent); }
         .rank-item.top3 { background: linear-gradient(90deg, rgba(255,45,120,0.05), transparent); }
-        .rank-number { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px; }
+        .rank-number { flex: 0 0 36px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px; }
         .rank-number.medal { font-size: 1.6em; }
         .rank-number:not(.medal) { color: var(--text-3); font-size: 0.9em; font-weight: 800; background: rgba(255,255,255,0.04); border-radius: 50%; }
         .rank-info { flex: 1; }
@@ -217,10 +335,12 @@
         .kpi-status.red { background: linear-gradient(135deg, var(--neon-red-deep), var(--neon-red)); color: #fff; animation: redPulse 1.5s ease-in-out infinite; }
         @keyframes redPulse { 0%, 100% { box-shadow: 0 0 5px rgba(255,23,68,0.2); } 50% { box-shadow: 0 0 18px rgba(255,23,68,0.45); } }
         .power-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 0.7em; font-weight: 700; }
-        .power-badge.L3 { background: linear-gradient(135deg, var(--neon-orange-deep), var(--neon-orange)); color: #fff; box-shadow: 0 0 12px rgba(255,109,0,0.3); animation: l3glow 2s ease-in-out infinite; }
-        @keyframes l3glow { 0%,100% { box-shadow: 0 0 8px rgba(255,109,0,0.3); } 50% { box-shadow: 0 0 18px rgba(255,109,0,0.5); } }
+        .power-badge.L1 { background: rgba(255,255,255,0.07); color: var(--text-2); border: 1.5px solid rgba(255,255,255,0.14); }
         .power-badge.L2 { background: linear-gradient(135deg, #1565C0, #42A5F5); color: #fff; }
-        .power-badge.L1 { background: rgba(255,255,255,0.06); color: var(--text-2); border: 1.5px solid rgba(255,255,255,0.12); }
+        .power-badge.L3 { background: linear-gradient(135deg, #6A1FB0, #B15BFF); color: #fff; box-shadow: 0 0 12px rgba(157,78,221,0.35); }
+        .power-badge.L4 { background: linear-gradient(135deg, #E85D04, #FFB020); color: #2A1400; font-weight: 800;
+            box-shadow: 0 0 12px rgba(255,150,0,0.45); animation: l4glow 2s ease-in-out infinite; }
+        @keyframes l4glow { 0%,100% { box-shadow: 0 0 9px rgba(255,150,0,0.35); } 50% { box-shadow: 0 0 20px rgba(255,170,0,0.65); } }
         .result-card { display: none; }
         .result-card.active { display: block; animation: slideUp 0.5s ease; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -229,7 +349,8 @@
             border-radius: 22px; padding: 22px; margin-bottom: 15px;
             border: 1px solid var(--border); position: relative; overflow: hidden;
         }
-        .profile-card.L3-border { border: 2px solid var(--neon-orange); box-shadow: 0 0 30px rgba(255,109,0,0.2); }
+        .profile-card.L3-border { border: 2px solid var(--neon-purple); box-shadow: 0 0 26px rgba(157,78,221,0.22); }
+        .profile-card.L4-border { border: 2px solid #FFB020; box-shadow: 0 0 32px rgba(255,170,0,0.28); }
         .profile-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(0,245,255,0.03), transparent); animation: shine 4s infinite; }
         @keyframes shine { 0% { transform: translateX(-100%) rotate(45deg); } 100% { transform: translateX(100%) rotate(45deg); } }
         .profile-row { display: flex; align-items: center; gap: 15px; position: relative; z-index: 1; }
@@ -244,7 +365,15 @@
         .profile-badges { display: flex; gap: 6px; flex-wrap: wrap; }
         .badge { padding: 4px 12px; border-radius: 15px; font-size: 0.72em; font-weight: 700; }
         .badge.store { background: rgba(0,245,255,0.1); color: var(--neon-cyan); border: 1.5px solid rgba(0,245,255,0.25); }
-        .badge.rank { background: rgba(255,234,0,0.1); color: var(--neon-yellow); border: 1.5px solid rgba(255,234,0,0.25); }
+        .badge.rank { border: none; box-shadow: inset 0 1px 0 rgba(255,255,255,0.55); }
+        .badge.rank.plat   { background: linear-gradient(160deg,#FFFFFF,#DCE9F7 45%,#A9C4DE); color: #12253A;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), 0 0 12px rgba(180,215,255,0.45); }
+        .badge.rank.gold   { background: linear-gradient(160deg,#FFF0B0,#FFCE3E 45%,#D89400); color: #4A2C00;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.80), 0 0 12px rgba(255,190,60,0.38); }
+        .badge.rank.silver { background: linear-gradient(160deg,#E4EAF2,#C0C9D6 45%,#95A0B2); color: #1E2733; }
+        .badge.rank.copper { background: linear-gradient(160deg,#F2C193,#D8884A 45%,#A65B22); color: #33170A; }
+        .badge.rank.stone  { background: linear-gradient(160deg,#79849B,#5C6679 45%,#454E5F); color: #EDF1F8; }
+        .badge.rank.pebble { background: linear-gradient(160deg,#9AA98A,#77866A 45%,#5A6751); color: #F0F4EA; }
         .kpi-dashboard {
             background: var(--bg-card); backdrop-filter: blur(14px);
             border-radius: 22px; padding: 16px; margin-bottom: 15px;
@@ -362,19 +491,38 @@
         .star-section .value { font-family: 'Baloo 2', sans-serif; color: #FFF8E1; font-size: 1.5em; font-weight: 800; text-shadow: 0 0 14px rgba(255,224,130,0.65), 0 1px 3px rgba(0,0,0,0.45); }
         .footer { text-align: center; padding: 25px 20px; color: var(--text-3); font-size: 0.75em; font-weight: 600; }
         .nav-link-btn {
-            display: flex; align-items: center; justify-content: space-between;
-            background: linear-gradient(135deg, #1a237e, #283593);
-            border: 1.5px solid rgba(0,245,255,0.25); border-radius: 18px;
-            padding: 16px 20px; margin-bottom: 15px; text-decoration: none;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,245,255,0.08);
+            position: relative; display: block; text-align: center;
+            border-radius: 18px; padding: 15px 42px; margin-bottom: 12px;
+            text-decoration: none; transition: transform .25s, box-shadow .25s, border-color .25s;
+            border: 1.5px solid transparent;
         }
-        .nav-link-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px var(--neon-cyan-glow); border-color: var(--neon-cyan); }
-        .nav-link-btn .nav-left { display: flex; align-items: center; gap: 10px; }
-        .nav-link-btn .nav-icon { font-size: 1.5em; }
-        .nav-link-btn .nav-title { color: #fff; font-weight: 800; font-size: 0.95em; }
-        .nav-link-btn .nav-desc { color: rgba(255,255,255,0.7); font-size: 0.75em; margin-top: 2px; font-weight: 600; }
-        .nav-link-btn .nav-arrow { color: var(--neon-cyan); font-size: 1.2em; }
+        .nav-link-btn:hover { transform: translateY(-3px); }
+        .nav-link-btn .nav-icon {
+            position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+            font-size: 1.45em; line-height: 1;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.45));
+        }
+        .nav-link-btn .nav-body { display: block; }
+        .nav-link-btn .nav-title { display: block; color: #fff; font-weight: 800; font-size: 0.97em; letter-spacing: .03em; }
+        .nav-link-btn .nav-desc  { display: block; font-size: 0.75em; margin-top: 3px; font-weight: 600; }
+        .nav-link-btn .nav-arrow {
+            position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 1.15em; }
+        /* 業績目標＋缺口提醒：深紫 */
+        .nav-link-btn.nav-target {
+            background: linear-gradient(135deg, #2B0B5E 0%, #4A148C 55%, #6A1FB0 100%);
+            border-color: rgba(199,125,255,0.42);
+            box-shadow: 0 6px 22px rgba(74,20,140,0.45), inset 0 1px 0 rgba(255,255,255,0.14); }
+        .nav-link-btn.nav-target:hover { border-color: #C77DFF; box-shadow: 0 10px 32px rgba(157,78,221,0.45); }
+        .nav-link-btn.nav-target .nav-desc  { color: #D9BBFF; }
+        .nav-link-btn.nav-target .nav-arrow { color: #D9BBFF; }
+        /* 每日班表：綠 */
+        .nav-link-btn.nav-shift {
+            background: linear-gradient(135deg, #04372A 0%, #00875A 55%, #17B67F 100%);
+            border-color: rgba(61,220,151,0.42);
+            box-shadow: 0 6px 22px rgba(0,135,90,0.42), inset 0 1px 0 rgba(255,255,255,0.14); }
+        .nav-link-btn.nav-shift:hover { border-color: #3DDC97; box-shadow: 0 10px 32px rgba(0,180,120,0.45); }
+        .nav-link-btn.nav-shift .nav-desc  { color: #A9EFD3; }
+        .nav-link-btn.nav-shift .nav-arrow { color: #A9EFD3; }
         @media (max-width: 400px) {
             .total-bonus-card .amount { font-size: 2.2em; }
             .bonus-list { grid-template-columns: repeat(2, 1fr); }
@@ -385,17 +533,400 @@
             .dist-item { grid-template-columns: 75px 1fr 35px 30px; }
             .store-data { flex-wrap: wrap; gap: 5px; }
         }
+        /* ══════════════ 2026/09 改版新增樣式 ══════════════ */
+        /* 第三個主畫面：追星獎 */
+        .tab-container { gap: 8px; }
+        .tab-btn { white-space: nowrap; font-size: 0.92em; padding: 13px 6px; }
+        .tab-btn.tab-link { text-decoration: none; display: flex; align-items: center; justify-content: center; }
+        .tab-btn.star-tab { border-color: rgba(255,200,69,0.45); color: var(--neon-yellow); }
+        .tab-btn.star-tab:hover { border-color: var(--neon-yellow); color: #fff;
+            background: rgba(255,200,69,0.12); box-shadow: 0 0 18px rgba(255,200,69,0.28); }
+
+        /* ── 合併主卡：紫色螢光，總獎金為主、總毛利為輔 ── */
+        .stats-hero.combo {
+            background: #7B2CBF;                 /* 純色，不用漸層，字才不糊 */
+            border: 2px solid #C77DFF;
+            border-radius: 24px; padding: 18px 18px 16px; margin-bottom: 12px;
+            position: relative; overflow: visible;
+            display: flex; align-items: center; gap: 14px;
+            box-shadow: 0 8px 30px rgba(157,78,221,0.45);
+        }
+        .stats-hero.combo::before { content: none; }
+        .stats-hero.combo::after  { content: none; }
+        .combo-body { flex: 1; min-width: 0; text-align: center; }
+        /* 立體金幣袋：多層陰影做出厚度 */
+        .combo-icon {
+            flex: 0 0 auto; width: 86px; height: 90px; display: block;
+            transform: rotate(-6deg); transform-origin: 50% 70%;
+            animation: bagBob 4.5s ease-in-out infinite;
+        }
+        .combo-icon svg { display: block; overflow: visible; }
+        @keyframes bagBob {
+            0%,100% { transform: rotate(-6deg) translateY(0); }
+            50%     { transform: rotate(-4deg) translateY(-4px); }
+        }
+        .combo-title { position: relative; z-index: 1;
+            color: #F6EBFF; font-size: 0.86em; font-weight: 800; letter-spacing: 1.5px; margin-bottom: 4px; }
+        .combo-main { position: relative; z-index: 1;
+            display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; justify-content: center; }
+        .combo-amount { font-family: 'Baloo 2', sans-serif; font-size: 2.45em; font-weight: 800;
+            color: #fff; letter-spacing: -1px; line-height: 1.05;
+            text-shadow: 0 2px 0 rgba(74,20,140,0.75), 0 3px 6px rgba(30,5,60,0.35); }
+        .combo-per { font-size: 0.78em; font-weight: 700; color: #E3CCFA; white-space: nowrap; }
+        .combo-line { position: relative; z-index: 1; height: 1px; margin: 13px 0 11px;
+            background: linear-gradient(90deg, transparent, rgba(246,235,255,0.55) 50%, transparent); }
+        .combo-gp { position: relative; z-index: 1;
+            display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .combo-gp-tag { font-size: 0.72em; font-weight: 800; color: #F0E0FF;
+            background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 999px; padding: 2px 10px; }
+        .combo-gp-amount { font-family: 'Baloo 2', sans-serif; font-size: 1.42em; font-weight: 800;
+            color: #FFD36B; text-shadow: 0 2px 0 rgba(90,40,0,0.45); letter-spacing: -0.5px; }
+        .combo-gp-tag { background: rgba(0,0,0,0.20); border-color: rgba(255,255,255,0.30); }
+
+        /* 日期旁的半場倒數：紅底提醒 */
+        .period-badge { display: inline-flex; align-items: center; gap: 6px; margin-left: 10px;
+            vertical-align: middle; padding: 4px 12px; border-radius: 999px;
+            background: linear-gradient(135deg, #D00000, #FF3B5C);
+            border: 1px solid #FF8095; color: #fff;
+            font-size: 0.78em; font-weight: 800; letter-spacing: 0.5px;
+            box-shadow: 0 0 14px rgba(255,59,92,0.55); animation: badgePulse 2s ease-in-out infinite; }
+        .period-badge .pd { background: rgba(0,0,0,0.25); border-radius: 999px; padding: 1px 8px; }
+        @keyframes badgePulse { 0%,100% { box-shadow: 0 0 12px rgba(255,59,92,0.45); }
+                                50% { box-shadow: 0 0 22px rgba(255,59,92,0.85); } }
+
+        .stats-sub-item .value .unit { font-size: 0.58em; font-weight: 700; color: var(--text-3); margin-left: 3px; }
+        .ranking-item .label .sub-mini { display: block; margin-top: 2px;
+            font-size: 0.86em; font-weight: 600; color: var(--text-3); }
+
+        /* 雙主角（已停用，保留給舊版）：左 總獎金／右 總毛利 */
+        .hero-row { display: grid; grid-template-columns: 1fr 1.15fr; gap: 10px; margin-bottom: 10px; }
+        .stats-hero.mini { padding: 18px 14px; margin-bottom: 0; border-radius: 20px; }
+        .stats-hero.mini::before { font-size: 3.4em; opacity: 0.10; top: -6px; right: -2px; }
+        .stats-hero.mini .label { font-size: 0.80em; line-height: 1.35; margin-bottom: 4px; }
+        .stats-hero.mini .amount { font-size: 1.62em; letter-spacing: -0.5px; }
+        .stats-hero .per-line { position: relative; z-index: 1; margin-top: 6px;
+            font-size: 0.68em; font-weight: 600; color: rgba(255,255,255,0.55); letter-spacing: 0.3px; }
+        /* 左邊總獎金：整體降一階，灰調 */
+        .stats-hero.mini.bonus { background: linear-gradient(135deg, #2A3160, #3A2E63);
+            box-shadow: 0 6px 22px rgba(0,0,0,0.30); border: 1px solid rgba(157,78,221,0.28); }
+        .stats-hero.mini.bonus::before { content: '💰'; }
+        .stats-hero.mini.bonus .label { color: rgba(226,230,255,0.70); }
+        .stats-hero.mini.bonus .amount { color: #C3CBEE; text-shadow: none; }
+        .stats-hero.mini.bonus .per-line { color: rgba(168,178,224,0.62); }
+        /* 右邊總毛利：主角，橘金發光 */
+        .stats-hero.mini.gp { background: linear-gradient(135deg, var(--neon-orange-deep), var(--neon-orange) 55%, #FFB020);
+            box-shadow: 0 10px 34px rgba(255,123,49,0.32); }
+        .stats-hero.mini.gp::before { content: '📈'; }
+        .stats-hero.mini.gp .amount { font-size: 1.86em; color: #fff; text-shadow: 0 0 22px rgba(255,255,255,0.35); }
+        .stats-hero.mini.gp .per-line { color: rgba(255,255,255,0.72); }
+        .stats-sub-item.gp-accent .value { color: var(--neon-orange); text-shadow: 0 0 10px rgba(255,123,49,0.32); }
+        .stats-sub-item.rt-accent .value { color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan-glow); }
+
+        /* 各店毛利：金額一行、人均小灰字獨立一行 */
+        .store-gp { text-align: right; line-height: 1.25; min-width: 108px; }
+        .store-gp .gp-num { display: block; font-family: 'Baloo 2', sans-serif;
+            font-size: 1.05em; font-weight: 800; color: var(--neon-orange);
+            text-shadow: 0 0 9px rgba(255,123,49,0.32); }
+        .store-gp .per { display: block; margin-top: 2px;
+            font-size: 0.66em; font-weight: 600; color: var(--text-3); letter-spacing: 0.2px; }
+        .store-item.top-store .store-gp .gp-num { color: var(--neon-yellow); text-shadow: 0 0 11px rgba(255,200,69,0.45); }
+        .store-item.second-store .store-gp .gp-num { color: #FFA046; }
+
+        /* 切換鈕：毛利＝橘、獎金＝紫 */
+        .rank-toggle-btn.gp-active {
+            background: linear-gradient(135deg, #FF7B31, #FFB347); color: #2B1200;
+            box-shadow: 0 4px 14px rgba(255,123,49,0.38), inset 0 1px 0 rgba(255,255,255,0.45); }
+        .rank-toggle-btn.gp-active:hover { background: linear-gradient(135deg, #FF7B31, #FFB347); color: #2B1200; }
+        .rank-toggle-btn.bonus-active {
+            background: linear-gradient(135deg, #A855F7, #D4A5FF); color: #250043;
+            box-shadow: 0 4px 14px rgba(168,85,247,0.38), inset 0 1px 0 rgba(255,255,255,0.45); }
+        .rank-toggle-btn.bonus-active:hover { background: linear-gradient(135deg, #A855F7, #D4A5FF); color: #250043; }
+
+        /* 排行榜標題置中 */
+        .leaderboard-header { position: relative; justify-content: center; padding: 17px 20px 15px; overflow: hidden; }
+        .leaderboard-header h3 { text-align: center; letter-spacing: 0.5px; }
+        .leaderboard-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+        .leaderboard-header .total {
+            position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+            padding: 3px 10px; border-radius: 999px; font-size: 0.72em; font-weight: 800; }
+        /* 毛利＝暖橘 */
+        .leaderboard-header.kpi-header::before {
+            background: linear-gradient(90deg, #E85D04, #FFC845 50%, #E85D04);
+            box-shadow: 0 0 16px rgba(255,150,40,0.60); }
+        .leaderboard-header.kpi-header h3 { color: #FFD09B; text-shadow: 0 0 18px rgba(255,150,40,0.35); }
+        .leaderboard-header.kpi-header .total {
+            background: rgba(255,123,49,0.16); color: #FFC08A; border: 1px solid rgba(255,123,49,0.42); }
+        /* 獎金＝電光紫 */
+        .leaderboard-header.bonus-header::before {
+            background: linear-gradient(90deg, #7B2CBF, #D4A5FF 50%, #7B2CBF);
+            box-shadow: 0 0 16px rgba(168,85,247,0.60); }
+        .leaderboard-header.bonus-header h3 { color: #E3C6FF; text-shadow: 0 0 18px rgba(168,85,247,0.35); }
+        .leaderboard-header.bonus-header .total {
+            background: rgba(168,85,247,0.16); color: #DDB8FF; border: 1px solid rgba(168,85,247,0.42); }
+        /* 榜單外框跟著主色走一點點 */
+        #kpiRanking .leaderboard { border-color: rgba(255,123,49,0.28); box-shadow: 0 8px 28px rgba(232,93,4,0.10); }
+        #bonusRanking .leaderboard { border-color: rgba(168,85,247,0.28); box-shadow: 0 8px 28px rgba(123,44,191,0.12); }
+
+        /* 三階段圖例 */
+        .tier-legend { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;
+            padding: 11px 12px; background: rgba(8,13,40,0.55); border-bottom: 1px solid var(--border); }
+        .gp-tier { font-size: 0.7em; font-weight: 800; padding: 4px 9px; border-radius: 999px;
+            white-space: nowrap; border: 1px solid transparent; }
+        .gp-tier.t1 { color: #FFD9A0; background: rgba(255,123,49,0.16); border-color: rgba(255,123,49,0.45); }
+        .gp-tier.t2 { color: #7CF5C6; background: rgba(0,229,160,0.13); border-color: rgba(0,229,160,0.38); }
+        .gp-tier.t3 { color: #FF6B82; background: rgba(255,59,92,0.13); border-color: rgba(255,59,92,0.42); }
+
+        /* 金牌排序（頂尖／紫色群組） */
+        /* 4 名以後的金牌：CSS 自繪（緞帶＋金圓牌），跨手機顯示一致 */
+        .rank-number.medal-num {
+            position: relative; width: 36px; height: 36px; flex-shrink: 0;
+            background: none; border-radius: 0; box-shadow: none;
+            display: block; margin-right: 12px;
+        }
+        .rank-number.medal-num::before,
+        .rank-number.medal-num::after {
+            content: ''; position: absolute; top: 0; width: 8px; height: 19px; border-radius: 2px 2px 0 0;
+        }
+        .rank-number.medal-num::before { left: 8.5px;  background: linear-gradient(180deg,#5C9CFF,#3F7BE0); transform: skewX(13deg); }
+        .rank-number.medal-num::after  { right: 8.5px; background: linear-gradient(180deg,#3F7BE0,#2A5CB8); transform: skewX(-13deg); }
+        .rank-number.medal-num .mn {
+            position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); z-index: 2;
+            width: 24px; height: 24px; border-radius: 50%;
+            background: radial-gradient(circle at 32% 26%, #FFEFB0, #FFC845 46%, #E08A00);
+            border: 2px solid #FFF3C4; box-shadow: 0 2px 7px rgba(255,180,0,0.40);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Baloo 2', sans-serif; font-size: 13.5px; font-weight: 900;
+            color: #6B3E00; text-shadow: 0 1px 0 rgba(255,255,255,0.45);
+        }
+        .rank-item.gold-row { background: linear-gradient(90deg, rgba(255,123,49,0.10), transparent); }
+
+        /* 毛利金額 + 責任毛利 + KPI 小標 */
+        .rank-amount .gp-value { font-family: 'Baloo 2', sans-serif; font-size: 1.12em; font-weight: 800;
+            color: var(--neon-orange); text-shadow: 0 0 10px rgba(255,123,49,0.30); }
+        .rank-amount .label.kpi-only { margin-top: 3px; }
+        .kpi-mini { display: inline-block; font-size: 0.92em; font-weight: 700; color: var(--text-3);
+            background: rgba(255,255,255,0.05); border-radius: 6px; padding: 1px 6px; }
+        .duty { display: inline-block; margin-left: 7px; font-size: 0.92em; font-weight: 700;
+            padding: 1px 7px; border-radius: 999px; white-space: nowrap; }
+        .duty.ok { color: #7CF5C6; background: rgba(0,229,160,0.14); border: 1px solid rgba(0,229,160,0.35); }
+        .duty.no { color: #FF8FA0; background: rgba(255,59,92,0.13); border: 1px solid rgba(255,59,92,0.38); }
+
+        @media (max-width: 400px) {
+            .hero-row { grid-template-columns: 1fr; }
+            .stats-hero.combo { padding: 15px 11px; gap: 8px; }
+            .combo-icon { width: 66px; height: 70px; }
+            .combo-amount { font-size: 2.0em; }
+            .combo-gp-amount { font-size: 1.28em; }
+            .combo-main, .combo-gp { gap: 6px; }
+            .stats-hero.mini .amount { font-size: 1.7em; }
+            .stats-hero.mini.gp .amount { font-size: 1.9em; }
+            .store-gp { min-width: 92px; }
+            .duty { margin-left: 0; margin-top: 3px; }
+        }
+        /* ══════════ 追星獎分頁樣式（已加 #starTab 命名空間） ══════════ */
+        #starTab{--bg:#080b16; --bg2:#0f1424; --card:#141a2e; --card2:#1a2138;
+    --line:rgba(255,255,255,.07);
+    --gold:#ffd36b; --gold-deep:#c9962f; --gold-soft:#f5c542;
+    --text:#eef2fb; --muted:#8a93ad; --dim:#5b647a;
+    --plat:#d8e6f4; --au:#ffd36b; --ag:#c3cad8; --cu:#d98c52; --stone:#7d879c;
+    --good:#5fd0a8;}
+        #starTab, #starTab *{box-sizing:border-box;margin:0;padding:0}
+        #starTab{-webkit-text-size-adjust:100%}
+        #starTab{font-family:"Noto Sans TC",sans-serif;
+    background:var(--bg); color:var(--text);
+    line-height:1.5; overflow-x:hidden;
+    background-image:
+      radial-gradient(1200px 600px at 70% -10%, rgba(255,211,107,.10), transparent 60%),
+      radial-gradient(900px 500px at -10% 10%, rgba(95,120,255,.08), transparent 55%);}
+        #starTab /* twinkling starfield */
+  .sky{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.9}
+        #starTab .sky::before, #starTab .sky::after{content:"";position:absolute;inset:-50%;
+    background-image:
+      radial-gradient(1.2px 1.2px at 20% 30%, #fff, transparent),
+      radial-gradient(1px 1px at 60% 70%, #fff, transparent),
+      radial-gradient(1.4px 1.4px at 80% 20%, #ffe9b0, transparent),
+      radial-gradient(1px 1px at 35% 80%, #fff, transparent),
+      radial-gradient(1.1px 1.1px at 90% 55%, #cfe0ff, transparent),
+      radial-gradient(1px 1px at 10% 60%, #fff, transparent),
+      radial-gradient(1.3px 1.3px at 50% 12%, #fff, transparent);
+    background-repeat:repeat; background-size:340px 340px;
+    animation:st_tw 7s ease-in-out infinite alternate}
+        #starTab .sky::after{background-size:520px 520px;opacity:.5;animation-duration:11s}
+        @keyframes st_tw{from{opacity:.35}to{opacity:.95}}
+        #starTab .wrap{position:relative;z-index:1;max-width:100%;margin:0 auto;padding:4px 0 10px}
+        #starTab /* ---------- header ---------- */
+  header{text-align:center;padding:14px 0 8px}
+        #starTab .kick{font-family:"Chakra Petch";letter-spacing:.5em;font-size:12px;color:var(--gold);
+    text-transform:uppercase;padding-left:.5em}
+        #starTab h1{font-family:"Noto Sans TC";font-weight:900;font-size:clamp(40px,12vw,68px);
+    letter-spacing:.04em;line-height:1;margin:6px 0 2px;
+    background:linear-gradient(180deg,#fff 0%,var(--gold) 60%,var(--gold-deep) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 38px rgba(255,211,107,.25)}
+        #starTab h1 .star{-webkit-text-fill-color:var(--gold);filter:drop-shadow(0 0 12px rgba(255,211,107,.6))}
+        #starTab .sub{color:var(--muted);font-size:14px;margin-top:6px}
+        #starTab .period{display:inline-flex;align-items:center;gap:8px;margin-top:12px;
+    background:rgba(255,211,107,.08);border:1px solid rgba(255,211,107,.25);
+    padding:7px 14px;border-radius:999px;font-size:13px;color:var(--gold)}
+        #starTab .live{width:8px;height:8px;border-radius:50%;background:var(--good);
+    box-shadow:0 0 0 0 rgba(95,208,168,.6);animation:st_pulse 1.8s infinite}
+        @keyframes st_pulse{0%{box-shadow:0 0 0 0 rgba(95,208,168,.5)}70%{box-shadow:0 0 0 7px rgba(95,208,168,0)}100%{box-shadow:0 0 0 0 rgba(95,208,168,0)}}
+        #starTab /* ---------- stats ---------- */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0 8px}
+        #starTab .stat{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);
+    border-radius:16px;padding:14px 8px;text-align:center}
+        #starTab .stat .n{font-family:"Chakra Petch";font-weight:700;font-size:30px;line-height:1;color:var(--gold)}
+        #starTab .stat .l{font-size:11.5px;color:var(--muted);margin-top:6px;letter-spacing:.05em}
+        #starTab /* ---------- ladder ---------- */
+  .ladder{margin:18px 0 6px}
+        #starTab .ladder .ttl{font-size:12px;color:var(--muted);letter-spacing:.2em;text-align:center;margin-bottom:10px}
+        #starTab .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
+        #starTab .chips::-webkit-scrollbar{display:none}
+        #starTab .chip{flex:0 0 auto;background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:9px 13px;text-align:center;min-width:96px}
+        #starTab .chip b{font-family:"Chakra Petch";color:var(--text);font-size:14px;display:block}
+        #starTab .chip span{color:var(--gold);font-weight:700;font-size:15px}
+        #starTab .chip.base{border-color:rgba(255,211,107,.35);background:rgba(255,211,107,.06)}
+        #starTab /* ---------- podium ---------- */
+  .podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:10px;align-items:end;margin:26px 0 14px}
+        #starTab .pod{position:relative;border-radius:18px;padding:16px 10px 14px;text-align:center;cursor:pointer;
+    background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);
+    transition:transform .25s, box-shadow .25s}
+        #starTab .pod:hover{transform:translateY(-3px)}
+        #starTab .pod .rk{font-family:"Chakra Petch";font-weight:700;font-size:13px;color:var(--muted)}
+        #starTab .pod .av{width:46px;height:46px;border-radius:50%;margin:6px auto 8px;display:grid;place-items:center;
+    font-weight:900;font-size:20px;color:#1a1300}
+        #starTab .pod .nm{font-weight:700;font-size:16px}
+        #starTab .pod .st{font-size:12px;color:var(--muted);margin-top:2px}
+        #starTab .pod .sc{font-family:"Chakra Petch";font-weight:700;font-size:34px;margin-top:8px;color:var(--gold);line-height:1}
+        #starTab .pod .sc small{font-size:14px;color:var(--muted);font-weight:500}
+        #starTab .pod.p1{transform:translateY(-10px);border-color:rgba(255,211,107,.5);
+    box-shadow:0 12px 40px rgba(255,211,107,.18)}
+        #starTab .pod.p1:hover{transform:translateY(-13px)}
+        #starTab .pod.p1 .av{background:linear-gradient(160deg,#fff2c4,var(--gold),var(--gold-deep));box-shadow:0 0 22px rgba(255,211,107,.5)}
+        #starTab .pod.p2 .av{background:linear-gradient(160deg,#fff,#c3cad8,#8b93a6)}
+        #starTab .pod.p3 .av{background:linear-gradient(160deg,#ffd9b8,#d98c52,#9c5e2e)}
+        #starTab .crown{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:22px;
+    filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
+        #starTab /* ---------- list ---------- */
+  .listttl{display:flex;align-items:center;gap:10px;margin:24px 4px 12px;color:var(--muted);font-size:13px;letter-spacing:.15em}
+        #starTab .listttl::after{content:"";flex:1;height:1px;background:var(--line)}
+        #starTab .row{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:9px;
+    overflow:hidden;transition:border-color .2s, background .2s}
+        #starTab .row:hover{border-color:rgba(255,211,107,.25)}
+        #starTab .rhead{display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer}
+        #starTab .who{min-width:0}
+        #starTab .rk2{font-family:"Chakra Petch";font-weight:700;font-size:17px;width:26px;text-align:center;color:var(--muted);flex:0 0 auto}
+        #starTab .av2{width:38px;height:38px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;
+    font-weight:900;font-size:15px;color:#0c1020;background:linear-gradient(160deg,#3a4564,#2a3450)}
+        #starTab .who{flex:1;min-width:0}
+        #starTab .who .nm{font-weight:700;font-size:15.5px;display:flex;align-items:center;gap:7px}
+        #starTab .badge{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:6px;letter-spacing:.03em;
+    border:1px solid currentColor;line-height:1.4}
+        #starTab .who .meta{font-size:12px;color:var(--muted);margin-top:2px}
+        #starTab .scorebox{text-align:right;flex:0 0 auto}
+        #starTab .scorebox .v{font-family:"Chakra Petch";font-weight:700;font-size:24px;color:var(--gold);line-height:1}
+        #starTab .scorebox .v small{font-size:12px;color:var(--muted);font-weight:500}
+        #starTab .scorebox .gap{font-size:11px;color:var(--muted);margin-top:3px}
+        #starTab .chev{flex:0 0 auto;color:var(--dim);transition:transform .25s;font-size:12px;margin-left:2px}
+        #starTab .row.open .chev{transform:rotate(180deg)}
+        #starTab .bar{position:relative;height:7px;margin:0 14px 12px;border-radius:99px;
+            background:rgba(255,255,255,.05);box-shadow:inset 0 1px 2px rgba(0,0,0,.45)}
+        #starTab .bar i{display:block;height:100%;border-radius:99px;width:0;
+            transition:width .9s cubic-bezier(.22,1,.36,1);position:relative;
+            background:linear-gradient(90deg,#5C6679,#8593AD)}
+        /* 前端亮點：讓線條看起來有「衝到這裡」的動勢 */
+        #starTab .bar i::after{content:"";position:absolute;right:0;top:50%;
+            width:7px;height:7px;margin-top:-3.5px;border-radius:50%;
+            background:#fff;opacity:.85;box-shadow:0 0 8px currentColor}
+        /* 45★ 底標刻度 */
+        #starTab .bar .tick{position:absolute;top:-3px;bottom:-3px;width:2px;
+            background:rgba(255,255,255,.34);border-radius:2px;z-index:2}
+        /* 依職級上色 */
+        #starTab .bar i.plat  {background:linear-gradient(90deg,#6A1FB0,#C77DFF);color:#C77DFF;box-shadow:0 0 10px rgba(157,78,221,.55)}
+        #starTab .bar i.gold  {background:linear-gradient(90deg,#C98A00,#FFD84D);color:#FFD84D;box-shadow:0 0 10px rgba(255,200,69,.50)}
+        #starTab .bar i.silver{background:linear-gradient(90deg,#6E8FB5,#CFE2F5);color:#CFE2F5;box-shadow:0 0 10px rgba(180,210,240,.40)}
+        #starTab .bar i.copper{background:linear-gradient(90deg,#C2571A,#FF9040);color:#FF9040;box-shadow:0 0 10px rgba(255,144,64,.50)}
+        #starTab .bar i.stone {background:linear-gradient(90deg,#3F4859,#8593AD);color:#8593AD;box-shadow:0 0 8px rgba(133,147,173,.35)}
+        #starTab .bar i.pebble{background:linear-gradient(90deg,#55663C,#A7C078);color:#A7C078;box-shadow:0 0 8px rgba(167,192,120,.35)}
+        #starTab .detail{max-height:0;overflow:hidden;transition:max-height .35s ease}
+        #starTab .row.open .detail{max-height:2600px}
+        #starTab .detail-in{padding:2px 14px 14px}
+        #starTab .mline{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px dashed var(--line);font-size:13.5px}
+        #starTab .mline .dt{font-family:"Chakra Petch";color:var(--muted);font-size:12px;width:38px;flex:0 0 auto}
+        #starTab .mline .md{flex:1}
+        #starTab .mline .ss{color:var(--gold);font-weight:700;font-family:"Chakra Petch";font-size:13px}
+        #starTab .mstar{letter-spacing:1px;font-size:11px}
+        #starTab /* ---------- note ---------- */
+  .note{margin-top:26px;background:var(--bg2);border:1px solid var(--line);border-radius:14px;
+    padding:15px 16px;font-size:12.5px;color:var(--muted);line-height:1.8}
+        #starTab .note b{color:var(--gold-soft)}
+        #starTab .foot{text-align:center;color:var(--dim);font-size:11px;margin-top:18px;letter-spacing:.08em}
+        @media(max-width:420px){
+          #starTab .stats{gap:7px}
+          #starTab .stat .n{font-size:25px}
+          #starTab .pod .sc{font-size:28px}
+          #starTab .podium{gap:7px}
+          #starTab .rhead{padding:11px 11px;gap:9px}
+        }        /* ── 追星榜：職級／戰力徽章、達標狀態 ── */
+        #starTab .who .nm { display: block; font-size: 16.5px; font-weight: 800; letter-spacing: .02em; }
+        #starTab .who .meta { display: flex; align-items: center; flex-wrap: wrap;
+            gap: 4px; margin-top: 5px; font-size: 0; }
+        #starTab .who .meta .mtxt { font-size: 11.5px; color: var(--muted); margin-left: 3px; white-space: nowrap; }
+        #starTab .tchip, #starTab .pchip {
+            font-size: 9.5px; font-weight: 800; padding: 2.5px 6px; border-radius: 6px;
+            line-height: 1.5; letter-spacing: .02em; white-space: nowrap; border: none; }
+        #starTab .pchip { min-width: 30px; text-align: center; letter-spacing: .06em;
+            font-family: 'Chakra Petch','Baloo 2',sans-serif; }
+        /* 職級：白金→小石頭，明度與彩度逐級遞減；上緣高光做金屬感 */
+        #starTab .tchip { box-shadow: inset 0 1px 0 rgba(255,255,255,0.55); }
+        #starTab .tchip.plat {
+            background: linear-gradient(160deg,#FFFFFF 0%,#DCE9F7 45%,#A9C4DE 100%); color: #12253A;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), 0 0 10px rgba(180,215,255,0.45); }
+        #starTab .tchip.gold {
+            background: linear-gradient(160deg,#FFF0B0 0%,#FFCE3E 45%,#D89400 100%); color: #4A2C00;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.80), 0 0 10px rgba(255,190,60,0.38); }
+        #starTab .tchip.silver {
+            background: linear-gradient(160deg,#E4EAF2 0%,#C0C9D6 45%,#95A0B2 100%); color: #1E2733;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.70); }
+        #starTab .tchip.copper {
+            background: linear-gradient(160deg,#F2C193 0%,#D8884A 45%,#A65B22 100%); color: #33170A;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.45); }
+        #starTab .tchip.stone {
+            background: linear-gradient(160deg,#79849B 0%,#5C6679 45%,#454E5F 100%); color: #EDF1F8;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.22); }
+        #starTab .tchip.pebble {
+            background: linear-gradient(160deg,#9AA98A 0%,#77866A 45%,#5A6751 100%); color: #F0F4EA;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.20); }
+        #starTab .pchip.L1 { background: rgba(255,255,255,0.10); color: #C9D2E6; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18); }
+        #starTab .pchip.L2 { background: linear-gradient(135deg,#1565C0,#42A5F5); color: #fff; }
+        #starTab .pchip.L3 { background: linear-gradient(135deg,#6A1FB0,#B15BFF); color: #fff; }
+        #starTab .pchip.L4 { background: linear-gradient(135deg,#E85D04,#FFB020); color: #2A1400;
+            box-shadow: 0 0 10px rgba(255,150,0,0.40); }
+        #starTab .scorebox .gap.hit  { color: #3DDC97; font-weight: 800; }
+        #starTab .scorebox .gap.miss { color: #FF4D6D; font-weight: 800; }        #starTab .listhint {
+            display: flex; align-items: center; justify-content: center; gap: 7px;
+            margin: 24px 2px 12px; padding: 9px 14px; border-radius: 12px;
+            background: rgba(255,211,107,0.07); border: 1px dashed rgba(255,211,107,0.34);
+            color: #FFD98F; font-size: 12.5px; font-weight: 700; letter-spacing: .04em;
+        }
+        #starTab .listhint .lh-ico { font-size: 14px; animation: tapHint 1.8s ease-in-out infinite; }
+        @keyframes tapHint { 0%,100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
 </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>💰 倚盟戰報</h1>
-            <p>2026/09/24</p>
+            <div class="masthead">
+                <h1><span class="mh-name">倚盟大聯盟</span><span class="mh-war">戰報</span><span class="mh-speed"><i></i><i></i><i></i></span></h1>
+                <div class="mh-date">2026/09/25<span class="period-badge" id="periodBadge"></span></div>
+            </div>
         </div>
         <div class="tab-container">
-            <button class="tab-btn active" onclick="switchTab('personal')">💰 查詢我的獎金</button>
-            <button class="tab-btn" onclick="switchTab('ranking')">🏆 排行榜</button>
+            <button class="tab-btn bonus-tab active" onclick="switchTab('personal')">💰 我的獎金</button>
+            <button class="tab-btn rank-tab" onclick="switchTab('ranking')">🏆 排行榜</button>
+            <button class="tab-btn star-tab" onclick="switchTab('star')">⭐ 追星獎</button>
         </div>
         <div class="tab-content active" id="personalTab">
             <div class="select-area">
@@ -412,24 +943,77 @@
                 </div>
             </div>
             <div class="stats-summary">
-                <div class="stats-hero">
-                    <div class="label">💰 全團隊 9月累計總獎金</div>
-                    <div class="amount">$550,023</div>
+                <div class="stats-hero combo">
+                    <span class="combo-icon"><svg viewBox="0 0 100 104" width="100%" height="100%" aria-hidden="true">
+  <defs>
+    <radialGradient id="bagFill" cx="36%" cy="30%" r="78%">
+      <stop offset="0%"  stop-color="#FFF3C0"/>
+      <stop offset="32%" stop-color="#FFD84D"/>
+      <stop offset="70%" stop-color="#F0A500"/>
+      <stop offset="100%" stop-color="#B46A00"/>
+    </radialGradient>
+    <linearGradient id="tieFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFE98A"/><stop offset="55%" stop-color="#E9A300"/><stop offset="100%" stop-color="#9C5A00"/>
+    </linearGradient>
+    <linearGradient id="neckFill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFF0AE"/><stop offset="100%" stop-color="#D99200"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFD36B" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#FFD36B" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.65"/>
+      <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="bagShadow" x="-40%" y="-30%" width="180%" height="175%">
+      <feDropShadow dx="0" dy="3" stdDeviation="1.4" flood-color="#5A2E00" flood-opacity="0.55"/>
+      <feDropShadow dx="0" dy="9" stdDeviation="7"   flood-color="#1A0533" flood-opacity="0.60"/>
+    </filter>
+  </defs>
+  <ellipse cx="50" cy="56" rx="50" ry="46" fill="url(#glow)"/>
+  <ellipse cx="50" cy="97" rx="30" ry="6" fill="#2A0A52" opacity="0.45"/>
+  <g filter="url(#bagShadow)">
+    <path d="M34 12 L66 12 L70 27 L30 27 Z" fill="url(#neckFill)"/>
+    <path d="M31 25 h38 a4 4 0 0 1 0 9 h-38 a4 4 0 0 1 0-9 z" fill="url(#tieFill)"/>
+    <path d="M36 33 C24 45 9 57 9 70 C9 87 28 97 50 97 C72 97 91 87 91 70 C91 57 76 45 64 33 Z" fill="url(#bagFill)"/>
+    <path d="M36 33 C24 45 9 57 9 70 C9 78 13 84 20 89 C14 82 12 75 14 67 C17 54 30 43 40 33 Z" fill="#FFFFFF" opacity="0.30"/>
+    <ellipse cx="35" cy="52" rx="11" ry="15" fill="url(#sheen)" transform="rotate(-24 35 52)"/>
+    <path d="M50 97 C72 97 91 87 91 70 C91 64 88 58 84 53 C87 60 87 67 84 73 C77 87 63 93 50 93 Z" fill="#8A4C00" opacity="0.42"/>
+    <text x="50" y="77" text-anchor="middle" font-family="'Baloo 2','Arial Black',sans-serif"
+          font-size="37" font-weight="900" fill="#8A4A00" opacity="0.40">$</text>
+    <text x="50" y="75" text-anchor="middle" font-family="'Baloo 2','Arial Black',sans-serif"
+          font-size="37" font-weight="900" fill="#FFF6D0">$</text>
+  </g>
+</svg></span>
+                    <div class="combo-body">
+                    <div class="combo-title">9月累計總獎金</div>
+                    <div class="combo-main">
+                        <span class="combo-amount">$420,329</span>
+                        <span class="combo-per">人均 $22,123</span>
+                    </div>
+                    <div class="combo-line"></div>
+                    <div class="combo-gp">
+                        <span class="combo-gp-tag">總毛利</span>
+                        <span class="combo-gp-amount">$1,846,103</span>
+                        <span class="combo-per">人均 $97,163</span>
+                    </div>
+                    </div>
                 </div>
                 <div class="stats-sub">
-                    <div class="stats-sub-item green-accent"><div class="value">$28,949</div><div class="label">人均獎金</div></div>
-                    <div class="stats-sub-item"><div class="value">$60,272</div><div class="label">最高獎金</div></div>
-                    <div class="stats-sub-item"><div class="value">652.2</div><div class="label">總AQ點數</div></div>
+                    <div class="stats-sub-item gp-accent"><div class="value">$150,782</div><div class="label">最高毛利</div></div>
+                    <div class="stats-sub-item green-accent"><div class="value">$45,886</div><div class="label">最高獎金</div></div>
+                    <div class="stats-sub-item rt-accent"><div class="value">2,860.8<span class="unit">點</span></div><div class="label">總RT點數</div></div>
                 </div>
             </div>
             <div class="bonus-distribution">
                 <div class="section-header">🎖️ 獎金等級分布</div>
                 <div class="dist-list">
-<div class="dist-item"><span class="dist-rank top">🏆🏆 頂尖</span><div class="dist-bar-wrap"><div class="dist-fill top" style="width:84.2%">$14,000↑</div></div><span class="dist-count">16人</span><span class="dist-percent">84.2%</span></div>
-<div class="dist-item"><span class="dist-rank star">🏆 明星</span><div class="dist-bar-wrap"><div class="dist-fill star" style="width:5.3%;min-width:fit-content">$10,000-$14,000</div></div><span class="dist-count">1人</span><span class="dist-percent">5.3%</span></div>
+<div class="dist-item"><span class="dist-rank top">🏆🏆 頂尖</span><div class="dist-bar-wrap"><div class="dist-fill top" style="width:68.4%">$14,000↑</div></div><span class="dist-count">13人</span><span class="dist-percent">68.4%</span></div>
+<div class="dist-item"><span class="dist-rank star">🏆 明星</span><div class="dist-bar-wrap"><div class="dist-fill star" style="width:10.5%;min-width:fit-content">$10,000-$14,000</div></div><span class="dist-count">2人</span><span class="dist-percent">10.5%</span></div>
 <div class="dist-item"><span class="dist-rank good">💪 優秀</span><div class="dist-bar-wrap"><div class="dist-fill good" style="width:10.5%;min-width:fit-content">$7,000-$10,000</div></div><span class="dist-count">2人</span><span class="dist-percent">10.5%</span></div>
-<div class="dist-item"><span class="dist-rank pass">✅ 合格</span><div class="dist-bar-wrap"><div class="dist-fill pass" style="width:0.0%;min-width:fit-content">$4,000-$7,000</div></div><span class="dist-count">0人</span><span class="dist-percent">0.0%</span></div>
-<div class="dist-item"><span class="dist-rank effort">📈 加油</span><div class="dist-bar-wrap"><div class="dist-fill effort" style="width:0.0%;min-width:fit-content">$4,000以下</div></div><span class="dist-count">0人</span><span class="dist-percent">0.0%</span></div>
+<div class="dist-item"><span class="dist-rank pass">✅ 合格</span><div class="dist-bar-wrap"><div class="dist-fill pass" style="width:5.3%;min-width:fit-content">$4,000-$7,000</div></div><span class="dist-count">1人</span><span class="dist-percent">5.3%</span></div>
+<div class="dist-item"><span class="dist-rank effort">😭 加油</span><div class="dist-bar-wrap"><div class="dist-fill effort" style="width:5.3%;min-width:fit-content">$4,000以下</div></div><span class="dist-count">1人</span><span class="dist-percent">5.3%</span></div>
 </div>
 </div>
 </div>
@@ -464,27 +1048,6 @@
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="store-stats">
-                <div class="section-header">🏪 各店業績統計</div>
-                <div class="store-list">
-<div class="store-item top-store"><div class="store-name">🥇 仁雄店</div><div class="store-data"><span>4人</span><span>AQ 155.5</span><span>RT 1254.9</span></div><div class="store-bonus">$124,036</div></div>
-<div class="store-item second-store"><div class="store-name">🥈 凱旋店</div><div class="store-data"><span>4人</span><span>AQ 114.5</span><span>RT 1077.9</span></div><div class="store-bonus">$116,219</div></div>
-<div class="store-item "><div class="store-name">🥉 鼎山店</div><div class="store-data"><span>4人</span><span>AQ 139</span><span>RT 748.1</span></div><div class="store-bonus">$98,307</div></div>
-<div class="store-item "><div class="store-name">　    後昌店</div><div class="store-data"><span>3人</span><span>AQ 143.2</span><span>RT 702.1</span></div><div class="store-bonus">$88,485</div></div>
-<div class="store-item "><div class="store-name">　    陽明店</div><div class="store-data"><span>3人</span><span>AQ 100</span><span>RT 657.2</span></div><div class="store-bonus">$69,882</div></div>
 </div>
 </div>
 </div>
@@ -537,45 +1100,191 @@
 <div class="result-card" id="resultCard"></div>
         </div>
         <div class="tab-content" id="rankingTab">
+            <div class="store-stats">
+                <div class="section-header">🏪 各店毛利排行</div>
+                <div class="store-list" id="storeList"></div>
+</div>
             <div class="rank-toggle">
+                <button class="rank-toggle-btn gp-active" onclick="toggleRanking('kpi')">📈 毛利排行</button>
                 <button class="rank-toggle-btn" onclick="toggleRanking('bonus')">💰 獎金排行</button>
-                <button class="rank-toggle-btn kpi-active" onclick="toggleRanking('kpi')">🎯 KPI排行</button>
             </div>
-            <div id="bonusRanking" style="display: none;"><div class="leaderboard"><div class="leaderboard-header"><h3>🏆 總獎金排行榜</h3><span class="total">共19人</span></div><div id="rankingList"></div></div></div>
-            <div id="kpiRanking" style="display: block;"><div class="leaderboard"><div class="leaderboard-header kpi-header"><h3>🎯 KPI 貢獻度排行</h3><span class="total">共19人</span></div><div id="kpiRankingList"></div></div></div>
+            <div id="kpiRanking" style="display: block;"><div class="leaderboard"><div class="leaderboard-header kpi-header"><h3>📈 個人毛利排行</h3><span class="total">共19人</span></div><div class="tier-legend" id="tierLegend"></div><div id="kpiRankingList"></div></div></div>
+            <div id="bonusRanking" style="display: none;"><div class="leaderboard"><div class="leaderboard-header bonus-header"><h3>🏆 總獎金排行榜</h3><span class="total">共19人</span></div><div id="rankingList"></div></div></div>
         </div>
-        <a href="september-targets.html" class="nav-link-btn" target="_blank">
-            <div class="nav-left">
-                <div class="nav-icon">📊</div>
-                <div>
-                    <div class="nav-title">查看 9月份業績目標</div>
-                    <div class="nav-desc">我這個月要衝多少？</div>
-                </div>
-            </div>
-            <div class="nav-arrow">→</div>
+        <div class="tab-content" id="starTab">
+<div class="sky"></div>
+<div class="wrap">
+
+  <header>
+    <div class="kick">CHASE&nbsp;THE&nbsp;STARS</div>
+    <h1>追<span class="star">★</span>星獎</h1>
+    <div class="sub">業務售機 ★ 月度排行榜</div>
+    <div class="period"><span class="live"></span>本月期間　2026 / 08 / 30 – 09 / 28　月底結算</div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><div class="n">769</div><div class="l">全員總星數 ★</div></div>
+    <div class="stat"><div class="n">459</div><div class="l">本月售機（台）</div></div>
+    <div class="stat"><div class="n">9<small style="font-size:15px;color:var(--muted)">/19</small></div><div class="l">達底標人數<small style="display:block;font-size:10px;color:var(--muted)">投影≥45★</small></div></div>
+  </div>
+
+  <div class="ladder">
+    <div class="ttl">獎 金 階 梯（9月・依月底投影星數）</div>
+    <div class="chips">
+      <div class="chip base"><b>底標</b><span>45★</span></div>
+      <div class="chip"><b>45–59★</b><span>$3,000</span></div>
+      <div class="chip"><b>60–75★</b><span>$5,500</span></div>
+      <div class="chip"><b>76★ +</b><span>$8,000</span></div>
+    </div>
+  </div>
+
+  <div class="podium" id="podium"></div>
+
+  <div class="listhint"><span class="lh-ico">👇</span>點姓名，看你這個月賣了哪些機型</div>
+  <div id="list"></div>
+
+  <div class="note">
+    ※ <b>底標 45★</b>：未達45★不發、下月重新累積。獎金依「月底投影星數」（目前速度推估）套級距：45–59★=$3,000、60–75★=$5,500、76★+=$8,000。<br>
+    ※ 財源為台哥大手機補貼，不影響公司 23% 毛利基準線。<br>
+    ※ 計星方式：一台 5★ 機 = 5 星，依機款星等表加總。<br>
+    ※ 本榜統計本月業績週期（8/30–9/28）之售機，資料截止 9/25，星數與追星機彙整完全一致（總計 459 台 / 769★），每筆明細齊全。<br>
+    ※ 平板與盤機（如 S26+ 512G）尚未納入計星，待規則確認後更新。
+  </div>
+  <div class="foot">資料更新：2026/09/25 ｜ 點任一列可展開售機明細</div>
+
+</div>
+        </div>
+
+        <a href="september-targets.html" class="nav-link-btn nav-target" target="_blank">
+            <span class="nav-icon">📊</span>
+            <span class="nav-body">
+                <span class="nav-title">業績目標查詢 ＋ 缺口提醒</span>
+                <span class="nav-desc">我這個月還差多少？</span>
+            </span>
+            <span class="nav-arrow">→</span>
         </a>
-        <a href="追星獎排行榜.html" class="nav-link-btn" target="_blank"><div class="nav-left"><div class="nav-icon">⭐</div><div><div class="nav-title">追星獎排行榜</div><div class="nav-desc">誰是本月追星王？</div></div></div><div class="nav-arrow">→</div></a>
-        <a href="class.html.html" class="nav-link-btn" target="_blank"><div class="nav-left"><div class="nav-icon">📅</div><div><div class="nav-title">每日班表查詢</div><div class="nav-desc">今天誰上班？</div></div></div><div class="nav-arrow">→</div></a>
+        <a href="class.html.html" class="nav-link-btn nav-shift" target="_blank">
+            <span class="nav-icon">📅</span>
+            <span class="nav-body">
+                <span class="nav-title">每日班表查詢</span>
+                <span class="nav-desc">今天誰上班？</span>
+            </span>
+            <span class="nav-arrow">→</span>
+        </a>
         
-        <div class="footer"><p>© 2026 倚盟電訊 | 數據截至 9/24，最終以實際發放為準</p></div>
+        <div class="footer"><p>© 2026 倚盟電訊 | 數據截至 9/25，最終以實際發放為準</p></div>
     </div>
     <script>
-        const totalPeople=19;const avgBonus=28949;
+        window.employeeData=[];const totalPeople=19;const avgBonus=22123;const avgGP=97163;const totalGP=1846103;
         let lastQueried=null;
-        const employeeData=[{"店點": "仁雄店", "姓名": "黃傑稜", "職級": "白金級", "AQ": 7400, "AQ999": 900, "RT升轉": 3100, "RT999": 0, "RT1399": 2600, "特維": 1400, "手機台獎": 0, "寬頻": 1625, "OP": 500, "基礎獎金": 17525, "毛利分潤": 27747, "追星獎": 8000, "全壘打分數": 17.93, "全壘打獎金": 7000, "KPI淨獎金": -3000, "總獎金": 60272, "KPI分數": 7.49, "總積分": 974190, "戰力": "L1"}, {"店點": "後昌店", "姓名": "黃閔聖", "職級": "銀級", "AQ": 6220, "AQ999": 0, "RT升轉": 2000, "RT999": 0, "RT1399": 1300, "特維": 1300, "手機台獎": 0, "寬頻": 750, "OP": 0, "基礎獎金": 11570, "毛利分潤": 27040, "追星獎": 8000, "全壘打分數": 18.28, "全壘打獎金": 8000, "KPI淨獎金": -1500, "總獎金": 54610, "KPI分數": 6.48, "總積分": 841803, "戰力": "L4"}, {"店點": "凱旋店", "姓名": "陳宛姍", "職級": "白金級", "AQ": 3800, "AQ999": 600, "RT升轉": 2400, "RT999": 0, "RT1399": 1500, "特維": 1100, "手機台獎": 0, "寬頻": 4500, "OP": 500, "基礎獎金": 14400, "毛利分潤": 28405, "追星獎": 3000, "全壘打分數": 19.29, "全壘打獎金": 8000, "KPI淨獎金": -3500, "總獎金": 53805, "KPI分數": 6.64, "總積分": 863092, "戰力": "L2"}, {"店點": "區督導", "姓名": "黃庭鈞", "職級": "黃金級", "AQ": 4300, "AQ999": 300, "RT升轉": 2200, "RT999": 0, "RT1399": 1600, "特維": 1500, "手機台獎": 0, "寬頻": 2125, "OP": 1000, "基礎獎金": 13025, "毛利分潤": 28069, "追星獎": 3000, "全壘打分數": 20.0, "全壘打獎金": 9000, "KPI淨獎金": -1000, "總獎金": 53094, "KPI分數": 6.61, "總積分": 859124, "戰力": "L1"}, {"店點": "陽明店", "姓名": "邱雨蔚", "職級": "銀級", "AQ": 6650, "AQ999": 1200, "RT升轉": 1900, "RT999": 0, "RT1399": 1100, "特維": 800, "手機台獎": 0, "寬頻": 500, "OP": 0, "基礎獎金": 12150, "毛利分潤": 19906, "追星獎": 3000, "全壘打分數": 16.81, "全壘打獎金": 7000, "KPI淨獎金": -3000, "總獎金": 42056, "KPI分數": 5.26, "總積分": 683376, "戰力": "L2"}, {"店點": "鼎山店", "姓名": "劉家妘", "職級": "白金級", "AQ": 5000, "AQ999": 900, "RT升轉": 1100, "RT999": 0, "RT1399": 1200, "特維": 1500, "手機台獎": 0, "寬頻": 0, "OP": 0, "基礎獎金": 9700, "毛利分潤": 15790, "追星獎": 3000, "全壘打分數": 16.59, "全壘打獎金": 7000, "KPI淨獎金": -2000, "總獎金": 35490, "KPI分數": 4.27, "總積分": 554797, "戰力": "L1"}, {"店點": "鼎山店", "姓名": "陳亭安", "職級": "銀級", "AQ": 3650, "AQ999": 600, "RT升轉": 1600, "RT999": 0, "RT1399": 1500, "特維": 900, "手機台獎": 0, "寬頻": 0, "OP": 0, "基礎獎金": 8250, "毛利分潤": 14092, "追星獎": 0, "全壘打分數": 18.43, "全壘打獎金": 8000, "KPI淨獎金": -2000, "總獎金": 30342, "KPI分數": 3.79, "總積分": 493088, "戰力": "L2"}, {"店點": "凱旋店", "姓名": "黃子珊", "職級": "銀級", "AQ": 2900, "AQ999": 600, "RT升轉": 1500, "RT999": 0, "RT1399": 1300, "特維": 1500, "手機台獎": 0, "寬頻": 1000, "OP": 0, "基礎獎金": 8800, "毛利分潤": 10218, "追星獎": 3000, "全壘打分數": 17.01, "全壘打獎金": 7000, "KPI淨獎金": -4000, "總獎金": 29018, "KPI分數": 3.2, "總積分": 415858, "戰力": "L2"}, {"店點": "後昌店", "姓名": "郭家維", "職級": "銅級", "AQ": 3550, "AQ999": 300, "RT升轉": 1900, "RT999": 0, "RT1399": 1000, "特維": 1600, "手機台獎": 0, "寬頻": 1375, "OP": 500, "基礎獎金": 10225, "毛利分潤": 8650, "追星獎": 0, "全壘打分數": 16.93, "全壘打獎金": 7000, "KPI淨獎金": -4000, "總獎金": 25875, "KPI分數": 3.2, "總積分": 415492, "戰力": "L2"}, {"店點": "仁雄店", "姓名": "郭紳鴻", "職級": "銅級", "AQ": 2400, "AQ999": 300, "RT升轉": 2100, "RT999": 0, "RT1399": 1400, "特維": 1200, "手機台獎": 0, "寬頻": 2000, "OP": 0, "基礎獎金": 9400, "毛利分潤": 8811, "追星獎": 0, "全壘打分數": 15.35, "全壘打獎金": 6000, "KPI淨獎金": -3500, "總獎金": 24211, "KPI分數": 3.06, "總積分": 397217, "戰力": "L4"}, {"店點": "凱旋店", "姓名": "林瑞獻", "職級": "石頭", "AQ": 2350, "AQ999": 300, "RT升轉": 1700, "RT999": 0, "RT1399": 800, "特維": 1000, "手機台獎": 0, "寬頻": 1875, "OP": 0, "基礎獎金": 8025, "毛利分潤": 6672, "追星獎": 0, "全壘打分數": 16.94, "全壘打獎金": 7000, "KPI淨獎金": -4000, "總獎金": 21697, "KPI分數": 2.43, "總積分": 315938, "戰力": "L2"}, {"店點": "仁雄店", "姓名": "蔡冠廷", "職級": "石頭", "AQ": 2450, "AQ999": 300, "RT升轉": 1200, "RT999": 0, "RT1399": 1000, "特維": 900, "手機台獎": 0, "寬頻": 0, "OP": 0, "基礎獎金": 5850, "毛利分潤": 5000, "追星獎": 3000, "全壘打分數": 16.43, "全壘打獎金": 7000, "KPI淨獎金": -4500, "總獎金": 20850, "KPI分數": 1.96, "總積分": 254250, "戰力": "L1"}, {"店點": "陽明店", "姓名": "林庭逸", "職級": "石頭", "AQ": 1400, "AQ999": 300, "RT升轉": 1500, "RT999": 0, "RT1399": 1000, "特維": 1100, "手機台獎": 0, "寬頻": 750, "OP": 0, "基礎獎金": 6050, "毛利分潤": 6976, "追星獎": 0, "全壘打分數": 17.85, "全壘打獎金": 7000, "KPI淨獎金": -4000, "總獎金": 20026, "KPI分數": 2.23, "總積分": 290016, "戰力": "L2"}, {"店點": "仁雄店", "姓名": "石佳穎", "職級": "銀級", "AQ": 2600, "AQ999": 300, "RT升轉": 1200, "RT999": 0, "RT1399": 900, "特維": 900, "手機台獎": 0, "寬頻": 500, "OP": 0, "基礎獎金": 6400, "毛利分潤": 8303, "追星獎": 0, "全壘打分數": 11.17, "全壘打獎金": 4000, "KPI淨獎金": -4000, "總獎金": 18703, "KPI分數": 2.51, "總積分": 326067, "戰力": "L2"}, {"店點": "鼎山店", "姓名": "彥州", "職級": "石頭", "AQ": 3450, "AQ999": 900, "RT升轉": 700, "RT999": 0, "RT1399": 700, "特維": 1000, "手機台獎": 0, "寬頻": 625, "OP": 500, "基礎獎金": 7875, "毛利分潤": 5000, "追星獎": 0, "全壘打分數": 13.91, "全壘打獎金": 5000, "KPI淨獎金": -3500, "總獎金": 17875, "KPI分數": 2.07, "總積分": 269500, "戰力": "L2"}, {"店點": "鼎山店", "姓名": "高琦茗", "職級": "銅級", "AQ": 2650, "AQ999": 600, "RT升轉": 1300, "RT999": 0, "RT1399": 800, "特維": 1000, "手機台獎": 0, "寬頻": 2250, "OP": 0, "基礎獎金": 8600, "毛利分潤": 0, "追星獎": 0, "全壘打分數": 14.02, "全壘打獎金": 6000, "KPI淨獎金": -3500, "總獎金": 14600, "KPI分數": 1.4, "總積分": 181750, "戰力": "L2"}, {"店點": "凱旋店", "姓名": "劉宗翰", "職級": "小石頭", "AQ": 800, "AQ999": 0, "RT升轉": 1600, "RT999": 0, "RT1399": 700, "特維": 600, "手機台獎": 0, "寬頻": 0, "OP": 0, "基礎獎金": 3700, "毛利分潤": 0, "追星獎": 0, "全壘打分數": 19.69, "全壘打獎金": 8000, "KPI淨獎金": -2500, "總獎金": 11700, "KPI分數": 0.82, "總積分": 107000, "戰力": "L1"}, {"店點": "後昌店", "姓名": "秦曼芯", "職級": "石頭", "AQ": 3100, "AQ999": 300, "RT升轉": 600, "RT999": 0, "RT1399": 400, "特維": 600, "手機台獎": 0, "寬頻": 0, "OP": 0, "基礎獎金": 5000, "毛利分潤": 0, "追星獎": 0, "全壘打分數": 9.53, "全壘打獎金": 3000, "KPI淨獎金": -4000, "總獎金": 8000, "KPI分數": 0.97, "總積分": 125500, "戰力": "L2"}, {"店點": "陽明店", "姓名": "劉芳廷", "職級": "銀級", "AQ": 2500, "AQ999": 300, "RT升轉": 700, "RT999": 0, "RT1399": 800, "特維": 500, "手機台獎": 0, "寬頻": 0, "OP": 0, "基礎獎金": 4800, "毛利分潤": 0, "追星獎": 0, "全壘打分數": 9.98, "全壘打獎金": 3000, "KPI淨獎金": -4500, "總獎金": 7800, "KPI分數": 0.94, "總積分": 122500, "戰力": "L2"}];
-        document.addEventListener('DOMContentLoaded',function(){initStoreSelect();renderRankingList();renderKpiRankingList();calculateDaysLeft();});
-        function calculateDaysLeft(){const end=new Date('2026-09-28');const today=new Date('2026-09-24');const d=Math.ceil((end-today)/(1000*60*60*24));document.getElementById('daysLeft').textContent=d>0?d:0;}
-        function switchTab(t){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));const rc=document.getElementById('resultCard');if(t==='personal'){document.querySelectorAll('.tab-btn')[0].classList.add('active');document.getElementById('personalTab').classList.add('active');if(rc)rc.style.display='';}else{document.querySelectorAll('.tab-btn')[1].classList.add('active');document.getElementById('rankingTab').classList.add('active');if(rc)rc.style.display='none';}}
-        function toggleRanking(t){const b=document.querySelectorAll('.rank-toggle-btn');b.forEach(x=>x.classList.remove('active','kpi-active'));if(t==='bonus'){b[0].classList.add('active');document.getElementById('bonusRanking').style.display='block';document.getElementById('kpiRanking').style.display='none';}else{b[1].classList.add('kpi-active');document.getElementById('bonusRanking').style.display='none';document.getElementById('kpiRanking').style.display='block';}}
+        const employeeData=window.employeeData=[{"店點": "區督導", "姓名": "黃庭鈞", "職級": "黃金級", "AQ": 1650, "AQ999": 300, "RT升轉": 1200, "RT999": 0, "RT1399": 800, "特維": 1400, "手機台獎": 0, "寬頻": 2125, "OP": 500, "基礎獎金": 7975, "毛利分潤": 27911, "追星獎": 3000, "全壘打分數": 16.5, "全壘打獎金": 7000, "KPI淨獎金": -2500, "總獎金": 45886, "KPI分數": 5.6, "總積分": 727725, "戰力": "L1", "毛利": 147296, "責任毛利": 100000}, {"店點": "仁雄店", "姓名": "黃傑稜", "職級": "白金級", "AQ": 3550, "AQ999": 900, "RT升轉": 2000, "RT999": 0, "RT1399": 1400, "特維": 800, "手機台獎": 0, "寬頻": 625, "OP": 0, "基礎獎金": 9275, "毛利分潤": 23459, "追星獎": 8000, "全壘打分數": 12.26, "全壘打獎金": 5000, "KPI淨獎金": -3500, "總獎金": 45734, "KPI分數": 5.31, "總積分": 690183, "戰力": "L1", "毛利": 140166, "責任毛利": 100000}, {"店點": "凱旋店", "姓名": "陳宛姍", "職級": "白金級", "AQ": 2200, "AQ999": 600, "RT升轉": 1700, "RT999": 0, "RT1399": 800, "特維": 1000, "手機台獎": 0, "寬頻": 2750, "OP": 0, "基礎獎金": 9050, "毛利分潤": 28240, "追星獎": 3000, "全壘打分數": 12.24, "全壘打獎金": 5000, "KPI淨獎金": -3500, "總獎金": 45290, "KPI分數": 5.79, "總積分": 752310, "戰力": "L2", "毛利": 150782, "責任毛利": 100000}, {"店點": "後昌店", "姓名": "黃閔聖", "職級": "銀級", "AQ": 1200, "AQ999": 0, "RT升轉": 1000, "RT999": 0, "RT1399": 600, "特維": 1000, "手機台獎": 0, "寬頻": 750, "OP": 0, "基礎獎金": 4550, "毛利分潤": 25720, "追星獎": 8000, "全壘打分數": 10.46, "全壘打獎金": 4000, "KPI淨獎金": -2500, "總獎金": 42270, "KPI分數": 4.85, "總積分": 629900, "戰力": "L4", "毛利": 150686, "責任毛利": 90000}, {"店點": "陽明店", "姓名": "邱雨蔚", "職級": "銀級", "AQ": 4700, "AQ999": 1200, "RT升轉": 1300, "RT999": 0, "RT1399": 800, "特維": 500, "手機台獎": 0, "寬頻": 500, "OP": 0, "基礎獎金": 9000, "毛利分潤": 20934, "追星獎": 3000, "全壘打分數": 11.36, "全壘打獎金": 4000, "KPI淨獎金": -3500, "總獎金": 36934, "KPI分數": 4.76, "總積分": 619178, "戰力": "L2", "毛利": 137546, "責任毛利": 90000}, {"店點": "鼎山店", "姓名": "劉家妘", "職級": "白金級", "AQ": 2550, "AQ999": 900, "RT升轉": 500, "RT999": 0, "RT1399": 700, "特維": 1000, "手機台獎": 0, "寬頻": 0, "OP": 0, "基礎獎金": 5650, "毛利分潤": 15501, "追星獎": 3000, "全壘打分數": 9.55, "全壘打獎金": 3000, "KPI淨獎金": -2500, "總獎金": 27151, "KPI分數": 3.38, "總積分": 439777, "戰力": "L1", "毛利": 112520, "責任毛利": 100000}, {"店點": "凱旋店", "姓名": "黃子珊", "職級": "銀級", "AQ": 2550, "AQ999": 600, "RT升轉": 1100, "RT999": 0, "RT1399": 700, "特維": 900, "手機台獎": 0, "寬頻": 1000, "OP": 0, "基礎獎金": 6850, "毛利分潤": 10025, "追星獎": 3000, "全壘打分數": 10.83, "全壘打獎金": 4000, "KPI淨獎金": -4000, "總獎金": 23875, "KPI分數": 2.73, "總積分": 355243, "戰力": "L2", "毛利": 100493, "責任毛利": 90000}, {"店點": "鼎山店", "姓名": "陳亭安", "職級": "銀級", "AQ": 2350, "AQ999": 600, "RT升轉": 1100, "RT999": 0, "RT1399": 1100, "特維": 700, "手機台獎": 0, "寬頻": 0, "OP": 0, "基礎獎金": 5850, "毛利分潤": 10374, "追星獎": 0, "全壘打分數": 13.56, "全壘打獎金": 5000, "KPI淨獎金": -2500, "總獎金": 21224, "KPI分數": 2.72, "總積分": 353239, "戰力": "L2", "毛利": 107489, "責任毛利": 90000}, {"店點": "後昌店", "姓名": "郭家維", "職級": "銅級", "AQ": 1550, "AQ999": 300, "RT升轉": 1300, "RT999": 0, "RT1399": 800, "特維": 1000, "手機台獎": 0, "寬頻": 1375, "OP": 0, "基礎獎金": 6325, "毛利分潤": 8606, "追星獎": 0, "全壘打分數": 13.15, "全壘打獎金": 5000, "KPI淨獎金": -4000, "總獎金": 19931, "KPI分數": 2.44, "總積分": 317628, "戰力": "L2", "毛利": 92736, "責任毛利": 80000}, {"店點": "仁雄店", "姓名": "郭紳鴻", "職級": "銅級", "AQ": 1150, "AQ999": 300, "RT升轉": 1300, "RT999": 0, "RT1399": 700, "特維": 700, "手機台獎": 0, "寬頻": 1250, "OP": 0, "基礎獎金": 5400, "毛利分潤": 8670, "追星獎": 0, "全壘打分數": 9.32, "全壘打獎金": 3000, "KPI淨獎金": -3500, "總獎金": 17070, "KPI分數": 2.27, "總積分": 295644, "戰力": "L4", "毛利": 94363, "責任毛利": 80000}, {"店點": "仁雄店", "姓名": "蔡冠廷", "職級": "石頭", "AQ": 1200, "AQ999": 300, "RT升轉": 800, "RT999": 0, "RT1399": 700, "特維": 700, "手機台獎": 0, "寬頻": 0, "OP": 0, "基礎獎金": 3700, "毛利分潤": 5000, "追星獎": 3000, "全壘打分數": 11.58, "全壘打獎金": 4000, "KPI淨獎金": -4500, "總獎金": 15700, "KPI分數": 1.51, "總積分": 196000, "戰力": "L1", "毛利": 65487, "責任毛利": 70000}, {"店點": "鼎山店", "姓名": "彥州", "職級": "石頭", "AQ": 3450, "AQ999": 900, "RT升轉": 500, "RT999": 0, "RT1399": 300, "特維": 900, "手機台獎": 0, "寬頻": 0, "OP": 500, "基礎獎金": 6550, "毛利分潤": 5000, "追星獎": 0, "全壘打分數": 9.38, "全壘打獎金": 3000, "KPI淨獎金": -3500, "總獎金": 14550, "KPI分數": 1.86, "總積分": 242250, "戰力": "L2", "毛利": 66112, "責任毛利": 70000}, {"店點": "凱旋店", "姓名": "林瑞獻", "職級": "石頭", "AQ": 1200, "AQ999": 300, "RT升轉": 1000, "RT999": 0, "RT1399": 200, "特維": 500, "手機台獎": 0, "寬頻": 1250, "OP": 0, "基礎獎金": 4450, "毛利分潤": 6622, "追星獎": 0, "全壘打分數": 8.03, "全壘打獎金": 3000, "KPI淨獎金": -4000, "總獎金": 14072, "KPI分數": 1.74, "總積分": 225939, "戰力": "L2", "毛利": 72989, "責任毛利": 70000}, {"店點": "陽明店", "姓名": "林庭逸", "職級": "石頭", "AQ": 1200, "AQ999": 300, "RT升轉": 800, "RT999": 0, "RT1399": 300, "特維": 500, "手機台獎": 0, "寬頻": 750, "OP": 0, "基礎獎金": 3850, "毛利分潤": 6903, "追星獎": 0, "全壘打分數": 8.55, "全壘打獎金": 3000, "KPI淨獎金": -4000, "總獎金": 13753, "KPI分數": 1.72, "總積分": 223553, "戰力": "L2", "毛利": 85619, "責任毛利": 70000}, {"店點": "仁雄店", "姓名": "石佳穎", "職級": "銀級", "AQ": 1450, "AQ999": 300, "RT升轉": 700, "RT999": 0, "RT1399": 700, "特維": 500, "手機台獎": 0, "寬頻": 0, "OP": 0, "基礎獎金": 3650, "毛利分潤": 8288, "追星獎": 0, "全壘打分數": 7.65, "全壘打獎金": 0, "KPI淨獎金": -4000, "總獎金": 11938, "KPI分數": 1.99, "總積分": 259002, "戰力": "L2", "毛利": 84538, "責任毛利": 90000}, {"店點": "鼎山店", "姓名": "高琦茗", "職級": "銅級", "AQ": 1500, "AQ999": 600, "RT升轉": 900, "RT999": 0, "RT1399": 400, "特維": 700, "手機台獎": 0, "寬頻": 1000, "OP": 0, "基礎獎金": 5100, "毛利分潤": 0, "追星獎": 0, "全壘打分數": 9.01, "全壘打獎金": 3000, "KPI淨獎金": -3500, "總獎金": 8100, "KPI分數": 0.83, "總積分": 107500, "戰力": "L2", "毛利": 63688, "責任毛利": 80000}, {"店點": "凱旋店", "姓名": "劉宗翰", "職級": "小石頭", "AQ": 800, "AQ999": 0, "RT升轉": 1100, "RT999": 0, "RT1399": 500, "特維": 300, "手機台獎": 0, "寬頻": 0, "OP": 0, "基礎獎金": 2700, "毛利分潤": 0, "追星獎": 0, "全壘打分數": 13.15, "全壘打獎金": 5000, "KPI淨獎金": -2500, "總獎金": 7700, "KPI分數": 0.59, "總積分": 77000, "戰力": "L1", "毛利": 52070, "責任毛利": 60000}, {"店點": "後昌店", "姓名": "秦曼芯", "職級": "石頭", "AQ": 1500, "AQ999": 300, "RT升轉": 500, "RT999": 0, "RT1399": 400, "特維": 600, "手機台獎": 0, "寬頻": 0, "OP": 0, "基礎獎金": 3300, "毛利分潤": 0, "追星獎": 0, "全壘打分數": 8.16, "全壘打獎金": 3000, "KPI淨獎金": -4500, "總獎金": 6300, "KPI分數": 0.63, "總積分": 82500, "戰力": "L2", "毛利": 49698, "責任毛利": 70000}, {"店點": "陽明店", "姓名": "劉芳廷", "職級": "銀級", "AQ": 1350, "AQ999": 300, "RT升轉": 400, "RT999": 0, "RT1399": 600, "特維": 200, "手機台獎": 0, "寬頻": 0, "OP": 0, "基礎獎金": 2850, "毛利分潤": 0, "追星獎": 0, "全壘打分數": 5.74, "全壘打獎金": 0, "KPI淨獎金": -4500, "總獎金": 2850, "KPI分數": 0.54, "總積分": 69750, "戰力": "L2", "毛利": 71825, "責任毛利": 90000}];
+        document.addEventListener('DOMContentLoaded',function(){initStoreSelect();renderRankingList();renderKpiRankingList();renderStoreList();calculateDaysLeft();renderPeriodBadge();});
+        const storeData=[
+            {店:'仁雄店', 人:4, AQ:89,   RT:818.3, 毛利:384554, 人均:96138},
+            {店:'凱旋店', 人:4, AQ:75,   RT:672.4, 毛利:376334, 人均:94083},
+            {店:'鼎山店', 人:4, AQ:98.5, RT:521.0, 毛利:349809, 人均:87452},
+            {店:'陽明店', 人:3, AQ:65,   RT:380.4, 毛利:294990, 人均:98330},
+            {店:'後昌店', 人:3, AQ:41,   RT:468.7, 毛利:293119, 人均:97706}
+        ];
+        function renderStoreList(){
+            const el=document.getElementById('storeList'); if(!el) return;
+            const rows=[...storeData].sort((a,b)=>b.毛利-a.毛利);
+            const max=rows[0].毛利;
+            const medal=['🥇','🥈','🥉'];
+            el.innerHTML=rows.map((r,i)=>{
+                const cls='s'+(i<3?(i+1):'x');
+                const rk=i<3?`<span class="s-medal">${medal[i]}</span>`:`<span class="s-num">${i+1}</span>`;
+                return `<div class="store-row ${cls}">
+                    <div class="s-rank">${rk}</div>
+                    <div class="s-main">
+                        <div class="s-top"><span class="s-name">${r.店}</span>
+                            <span class="s-gp">${fmtGP(r.毛利)}</span>
+                            <span class="s-per">人均 ${fmtGP(r.人均)}</span></div>
+                        <div class="s-bar"><i style="width:${(r.毛利/max*100).toFixed(1)}%"></i></div>
+                        <div class="s-meta"><span>${r.人}人</span><span>AQ ${r.AQ}</span>
+                            <span>RT ${r.RT.toFixed(1)}</span></div>
+                    </div></div>`;
+            }).join('');
+        }
+        const CYCLE={start:'2026-08-30',mid:'2026-09-13',end:'2026-09-28',today:'2026-09-25'};
+        function renderPeriodBadge(){
+            const el=document.getElementById('periodBadge'); if(!el) return;
+            const d=x=>new Date(x+'T00:00:00');
+            const t=d(CYCLE.today), mid=d(CYCLE.mid), end=d(CYCLE.end);
+            const first=t<=mid, target=first?mid:end;
+            const left=Math.max(0,Math.round((target-t)/86400000));
+            el.innerHTML=`<span class="ph">${first?'上半場':'下半場'}</span>`+
+                         `<span class="pd">${left>0?'剩 '+left+' 天':'今天結算'}</span>`;
+        }
+        function calculateDaysLeft(){const end=new Date('2026-09-28');const today=new Date('2026-09-25');const d=Math.ceil((end-today)/(1000*60*60*24));document.getElementById('daysLeft').textContent=d>0?d:0;}
+        function switchTab(t){
+            const map={personal:0,ranking:1,star:2};
+            const ids={personal:'personalTab',ranking:'rankingTab',star:'starTab'};
+            const i=(t in map)?map[t]:0;
+            document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn')[i].classList.add('active');
+            document.getElementById(ids[t]||'personalTab').classList.add('active');
+            const rc=document.getElementById('resultCard');
+            if(rc) rc.style.display=(t==='personal')?'':'none';
+            if(t==='star'&&window.__starBars) window.__starBars();
+            window.scrollTo({top:0,behavior:'smooth'});
+        }
+        function toggleRanking(t){const b=document.querySelectorAll('.rank-toggle-btn');b.forEach(x=>x.classList.remove('active','kpi-active','gp-active','bonus-active'));if(t==='bonus'){b[1].classList.add('bonus-active');document.getElementById('bonusRanking').style.display='block';document.getElementById('kpiRanking').style.display='none';}else{b[0].classList.add('gp-active');document.getElementById('bonusRanking').style.display='none';document.getElementById('kpiRanking').style.display='block';}}
         function fmtKPI(v){return Number(v).toFixed(2);}
         function fmtHR(v){return Number(v).toFixed(2);}
         function percentileINC(arr,p){const sorted=[...arr].sort((a,b)=>a-b);const n=sorted.length;if(n===0)return 0;const idx=p*(n-1);const lo=Math.floor(idx);const hi=Math.ceil(idx);if(lo===hi)return sorted[lo];return sorted[lo]+(idx-lo)*(sorted[hi]-sorted[lo]);}
         function getKpiThresholds(){const kpis=employeeData.map(e=>e.KPI分數);const ceil2=v=>Math.ceil(v*100)/100;return{top:ceil2(percentileINC(kpis,0.8)),mid:ceil2(percentileINC(kpis,0.4))};}
         function getKpiStatus(k){const t=getKpiThresholds();if(k>t.top)return{class:'purple',text:'💜 表現頂尖',color:'purple'};if(k>=t.mid)return{class:'green',text:'💚 在進度內',color:'green'};return{class:'red',text:'❤️ 狀況不佳',color:'red'};}
         function getKpiStatusBadge(k){const s=getKpiStatus(k);return`<span class="kpi-status ${s.class}">${s.text}</span>`;}
-        function getPowerBadgeHTML(p){if(p==='L3')return`<span class="power-badge L3">🔥 L3</span>`;if(p==='L2')return`<span class="power-badge L2">⚡ L2</span>`;return`<span class="power-badge L1">💫 L1</span>`;}
-        function renderRankingList(){const sorted=[...employeeData].sort((a,b)=>b.總獎金-a.總獎金);document.getElementById('rankingList').innerHTML=sorted.map((e,i)=>{const r=i+1;let rc=r<=3?`top${r}`:'';const me=(lastQueried&&e.店點===lastQueried.店點&&e.姓名===lastQueried.姓名)?' me':'';let rd=r===1?'🥇':r===2?'🥈':r===3?'🥉':r;return`<div class="rank-item ${rc}${me}"><span class="rank-number ${r<=3?'medal':''}">${rd}</span><div class="rank-info"><div class="rank-name-row"><span class="rank-name">${e.姓名}</span>${getKpiStatusBadge(e.KPI分數)}</div><div class="rank-store">${e.店點} · ${e.職級} · KPI ${fmtKPI(e.KPI分數)}</div></div><div class="rank-amount"><div class="value ${e.總獎金<0?'negative':''}">${formatMoney(e.總獎金)}</div><div class="label">總獎金</div></div></div>`;}).join('');}
-        function renderKpiRankingList(){const sorted=[...employeeData].sort((a,b)=>b.KPI分數-a.KPI分數);document.getElementById('kpiRankingList').innerHTML=sorted.map((e,i)=>{const r=i+1;let rc=r<=3?`top${r}`:'';const me=(lastQueried&&e.店點===lastQueried.店點&&e.姓名===lastQueried.姓名)?' me':'';let rd=r===1?'🥇':r===2?'🥈':r===3?'🥉':r;const s=getKpiStatus(e.KPI分數);return`<div class="rank-item ${rc}${me}"><span class="rank-number ${r<=3?'medal':''}">${rd}</span><div class="rank-info"><div class="rank-name-row"><span class="rank-name">${e.姓名}</span>${getKpiStatusBadge(e.KPI分數)}</div><div class="rank-store">${e.店點} · 總積分 ${e.總積分.toLocaleString()}</div></div><div class="rank-amount"><div class="value" style="color:${s.color==='purple'?'#D500F9':s.color==='green'?'#76FF03':'#FF1744'}">${fmtKPI(e.KPI分數)}</div><div class="label">KPI分數</div></div></div>`;}).join('');}
+        const RANK_KEY={'白金級':'plat','黃金級':'gold','金級':'gold','銀級':'silver','銅級':'copper','石頭':'stone','小石頭':'pebble'};
+        function getPowerBadgeHTML(p){const cls=['L1','L2','L3','L4'].includes(p)?p:'L1';return`<span class="power-badge ${cls}">戰力 ${p||'L1'}</span>`;}
+        function renderRankingList(){const sorted=[...employeeData].sort((a,b)=>b.總獎金-a.總獎金);let g=0;document.getElementById('rankingList').innerHTML=sorted.map((e,i)=>{const r=i+1;let rc=r<=3?`top${r}`:'';const me=(lastQueried&&e.店點===lastQueried.店點&&e.姓名===lastQueried.姓名)?' me':'';const isGold=getKpiStatus(e.KPI分數).class==='purple';const gn=isGold?++g:0;const numHTML=isGold?goldBadge(gn):`<span class="rank-number">${r}</span>`;return`<div class="rank-item ${rc}${me}${isGold?' gold-row':''}">${numHTML}<div class="rank-info"><div class="rank-name-row"><span class="rank-name">${e.姓名}</span>${getKpiStatusBadge(e.KPI分數)}</div><div class="rank-store">${e.店點} · ${e.職級} · KPI ${fmtKPI(e.KPI分數)}</div></div><div class="rank-amount"><div class="value ${e.總獎金<0?'negative':''}">${formatMoney(e.總獎金)}</div><div class="label">總獎金</div></div></div>`;}).join('');}
+        function goldBadge(n){
+            if(n===1) return '<span class="rank-number medal gold-emoji">🥇</span>';
+            if(n===2) return '<span class="rank-number medal gold-emoji">🥈</span>';
+            if(n===3) return '<span class="rank-number medal gold-emoji">🥉</span>';
+            return `<span class="rank-number medal-num"><span class="mn">${n}</span></span>`;
+        }
+        function fmtGP(v){return '$'+Math.round(v).toLocaleString();}
+        // 三階段：以全團隊平均毛利為基準，±20%
+        function getGpTier(v){
+            if(v>=avgGP*1.2) return {cls:'t1',text:'🔥 頂尖',color:'#C77DFF'};
+            if(v>=avgGP*0.8) return {cls:'t2',text:'💪 達標',color:'#00E5A0'};
+            return {cls:'t3',text:'😭 加油',color:'#FF3B5C'};
+        }
+        function renderTierLegend(){
+            const el=document.getElementById('tierLegend'); if(!el) return;
+            const c=[0,0,0];
+            employeeData.forEach(e=>{const v=e.毛利||0; c[v>=avgGP*1.2?0:(v>=avgGP*0.8?1:2)]++;});
+            el.innerHTML=
+              `<span class="gp-tier t1">🔥 頂尖 ≥${fmtGP(avgGP*1.2)}　${c[0]}人</span>`+
+              `<span class="gp-tier t2">💪 達標 ${fmtGP(avgGP*0.8)}起　${c[1]}人</span>`+
+              `<span class="gp-tier t3">😭 加油 <${fmtGP(avgGP*0.8)}　${c[2]}人</span>`;
+        }
+        function renderKpiRankingList(){
+            const sorted=[...employeeData].sort((a,b)=>(b.毛利||0)-(a.毛利||0));
+            renderTierLegend();
+            let g=0;
+            document.getElementById('kpiRankingList').innerHTML=sorted.map((e,i)=>{
+                const r=i+1; let rc=r<=3?`top${r}`:'';
+                const me=(lastQueried&&e.店點===lastQueried.店點&&e.姓名===lastQueried.姓名)?' me':'';
+                const gp0=e.毛利||0; const isGold=gp0>=avgGP*1.2; const gn=isGold?++g:0;
+                const numHTML=isGold?goldBadge(gn):`<span class="rank-number">${r}</span>`;
+                const gp=e.毛利||0, duty=e.責任毛利||0;
+                const t=getGpTier(gp);
+                const done=duty>0&&gp>=duty;
+                const dutyHTML=duty>0
+                    ? `<span class="duty ${done?'ok':'no'}">責任 ${fmtGP(duty)}・${done?'已達成':'未達成'}</span>`
+                    : '';
+                return `<div class="rank-item ${rc}${me}${isGold?' gold-row':''}">${numHTML}`+
+                  `<div class="rank-info"><div class="rank-name-row"><span class="rank-name">${e.姓名}</span>`+
+                  `<span class="gp-tier ${t.cls}">${t.text}</span></div>`+
+                  `<div class="rank-store">${e.店點} · ${e.職級}${dutyHTML}</div></div>`+
+                  `<div class="rank-amount"><div class="gp-value">${fmtGP(gp)}</div>`+
+                  `<div class="label kpi-only"><span class="kpi-mini">KPI ${fmtKPI(e.KPI分數)}</span></div></div></div>`;
+            }).join('');
+        }
         function initStoreSelect(){const stores=['仁雄店','凱旋店','後昌店','陽明店','鼎山店','區督導'];document.getElementById('storeSelect').innerHTML='<option value="">選擇店點</option>'+stores.map(s=>`<option value="${s}">${s}</option>`).join('');}
         function updateEmployeeList(){const store=document.getElementById('storeSelect').value;const sel=document.getElementById('employeeSelect');sel.innerHTML='<option value="">選擇員工</option>';if(!store)return;employeeData.filter(e=>e.店點===store).forEach(e=>{sel.innerHTML+=`<option value="${e.姓名}">${e.姓名}</option>`;});}
         function formatMoney(n){n=Math.round(n);if(n===0)return'$0';return n<0?`-$${Math.abs(n).toLocaleString()}`:`$${n.toLocaleString()}`;}
@@ -583,11 +1292,111 @@
         function getRankTitle(r){if(r<=3)return'🏆 頂尖王者';if(r<=6)return'⭐ 超級明星';if(r<=10)return'💪 實力選手';if(r<=15)return'📈 穩定成長';return'🌱 持續加油';}
         function getKpiRank(e){return[...employeeData].sort((a,b)=>b.KPI分數-a.KPI分數).findIndex(x=>x.姓名===e.姓名)+1;}
         function getBonusRank(e){return[...employeeData].sort((a,b)=>b.總獎金-a.總獎金).findIndex(x=>x.姓名===e.姓名)+1;}
-        function getAchievements(e){const a=[];const ks=getKpiStatus(e.KPI分數);const br=getBonusRank(e);const kr=getKpiRank(e);if(ks.class==='purple')a.push({text:'💜 KPI頂尖',class:'purple'});if(e.戰力==='L3')a.push({text:'🔥 L3戰神',class:'purple'});else if(e.戰力==='L2')a.push({text:'⚡ L2精英',class:'blue'});if(br===1)a.push({text:'👑 獎金王',class:'purple'});if(br<=3)a.push({text:'🏆 TOP 3',class:'purple'});else if(br<=5)a.push({text:'⭐ TOP 5',class:'blue'});if(kr===1)a.push({text:'🎯 KPI王',class:'purple'});if(e.全壘打分數>=15)a.push({text:'⚾ 全壘打王',class:'red-hot'});else if(e.全壘打分數>=10)a.push({text:'⚾ 長打高手',class:'blue'});if(e.總獎金>=40000)a.push({text:'💰 4萬俱樂部',class:'purple'});else if(e.總獎金>=30000)a.push({text:'💵 3萬達成',class:'green'});else if(e.總獎金>=20000)a.push({text:'💴 2萬達成',class:'silver'});return a;}
+        function getAchievements(e){const a=[];const ks=getKpiStatus(e.KPI分數);const br=getBonusRank(e);const kr=getKpiRank(e);if(ks.class==='purple')a.push({text:'💜 KPI頂尖',class:'purple'});if(e.戰力==='L4')a.push({text:'👑 L4戰神',class:'red-hot'});else if(e.戰力==='L3')a.push({text:'🔥 L3精英',class:'purple'});else if(e.戰力==='L2')a.push({text:'⚡ L2好手',class:'blue'});if(br===1)a.push({text:'👑 獎金王',class:'purple'});if(br<=3)a.push({text:'🏆 TOP 3',class:'purple'});else if(br<=5)a.push({text:'⭐ TOP 5',class:'blue'});if(kr===1)a.push({text:'🎯 KPI王',class:'purple'});if(e.全壘打分數>=15)a.push({text:'⚾ 全壘打王',class:'red-hot'});else if(e.全壘打分數>=10)a.push({text:'⚾ 長打高手',class:'blue'});if(e.總獎金>=40000)a.push({text:'💰 4萬俱樂部',class:'purple'});else if(e.總獎金>=30000)a.push({text:'💵 3萬達成',class:'green'});else if(e.總獎金>=20000)a.push({text:'💴 2萬達成',class:'silver'});return a;}
         function createCoins(){const emojis=['💰','💵','💴','🪙','✨'];for(let i=0;i<12;i++){setTimeout(()=>{const c=document.createElement('div');c.className='coin';c.textContent=emojis[Math.floor(Math.random()*emojis.length)];c.style.left=Math.random()*100+'vw';c.style.animationDuration=(2+Math.random()*2)+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),4000);},i*80);}}
         function backToTeamView(){lastQueried=null;document.getElementById('storeSelect').value='';document.getElementById('employeeSelect').innerHTML='<option value="">選擇員工</option>';showResult();window.scrollTo({top:0,behavior:'smooth'});}
         function showResult(){const store=document.getElementById('storeSelect').value;const name=document.getElementById('employeeSelect').value;const _back=document.getElementById('backToTeam');if(_back)_back.style.display=name?'block':'none';const statsEls=document.querySelectorAll('.stats-summary,.bonus-distribution,.store-stats');if(!name){lastQueried=null;document.getElementById('resultCard').classList.remove('active');statsEls.forEach(el=>el.style.display='block');return;}const emp=employeeData.find(e=>e.店點===store&&e.姓名===name);if(!emp)return;lastQueried={店點:emp.店點,姓名:emp.姓名};createCoins();statsEls.forEach(el=>el.style.display='none');const achievements=getAchievements(emp);const achievementHTML=achievements.map((a,i)=>`<div class="achievement ${a.class}" style="animation-delay:${i*0.1}s">${a.text}</div>`).join('');const beatAvg=emp.總獎金>avgBonus;const diffAvg=Math.abs(emp.總獎金-avgBonus);const kpiStatus=getKpiStatus(emp.KPI分數);const kpiRank=getKpiRank(emp);const bonusRank=getBonusRank(emp);const progressPercent=Math.min((emp.KPI分數/5)*100,100);let kpiWarningHTML='';if(kpiStatus.class==='red'){kpiWarningHTML=`<div class="kpi-warning"><div class="icon">⚠️</div><div class="text">KPI 狀況不佳，需要加油衝刺！</div></div>`;}
-        document.getElementById('resultCard').innerHTML=`<div class="profile-card ${emp.戰力==='L3'?'L3-border':''}"><div class="profile-row"><div class="avatar">${emp.姓名.slice(-1)}</div><div class="profile-info"><h2>${emp.姓名}</h2><div class="profile-badges"><span class="badge store">${emp.店點}</span><span class="badge rank">${emp.職級}</span>${getPowerBadgeHTML(emp.戰力)}</div></div></div></div><div class="kpi-dashboard ${kpiStatus.class}-border"><div class="kpi-dashboard-title"><h3>🎯 你的 KPI 狀態</h3>${getKpiStatusBadge(emp.KPI分數)}</div><div class="kpi-main"><div class="kpi-main-item"><div class="number ${kpiStatus.class}">${fmtKPI(emp.KPI分數)}</div><div class="label">KPI 分數</div></div><div class="kpi-main-item"><div class="number" style="color:#ECEEFF;font-size:1.5em;">${emp.總積分.toLocaleString()}</div><div class="label">總積分</div></div></div><div class="kpi-progress"><div class="kpi-progress-bar ${kpiStatus.class}" style="width:${progressPercent}%"></div></div><div class="kpi-rank-info"><span>📊 KPI 排名：第 ${kpiRank} 名 / 19人</span><span>目標 5.0 分</span></div>${kpiWarningHTML}</div><div class="total-bonus-card"><div class="label">💰 9月份累計總獎金</div><div class="amount ${emp.總獎金<0?'negative':''}">${formatMoney(emp.總獎金)}</div><div class="rank-badge">${getRankTitle(bonusRank)}</div></div><div class="ranking-card"><div class="ranking-item"><div class="medal">${getRankMedal(bonusRank)}</div><div class="number">${bonusRank}</div><div class="label">獎金排名 / ${totalPeople}人</div></div><div class="ranking-item"><div class="medal">🎯</div><div class="number" style="color:#00F5FF">${formatMoney(emp.AQ)}</div><div class="label">我的AQ</div></div><div class="ranking-item"><div class="medal">⚾</div><div class="number">${fmtHR(emp.全壘打分數)}</div><div class="label">全壘打分數</div></div></div>${achievements.length>0?`<div class="achievement-section"><div class="achievement-title">🏅 獲得成就</div><div class="achievement-grid">${achievementHTML}</div></div>`:''}<div class="bonus-detail-section"><div class="detail-title">📋 基礎獎金明細</div><div class="bonus-list"><div class="bonus-item"><div class="name">AQ點數</div><div class="value ${emp.AQ===0?'zero':''}">${formatMoney(emp.AQ)}</div></div><div class="bonus-item"><div class="name">AQ999+</div><div class="value ${emp.AQ999===0?'zero':''}">${formatMoney(emp.AQ999)}</div></div><div class="bonus-item"><div class="name">RT升轉</div><div class="value ${emp.RT升轉===0?'zero':''}">${formatMoney(emp.RT升轉)}</div></div><div class="bonus-item"><div class="name">RT999+</div><div class="value ${emp.RT999===0?'zero':''}">${formatMoney(emp.RT999)}</div></div><div class="bonus-item"><div class="name">RT1399+</div><div class="value ${emp.RT1399===0?'zero':''}">${formatMoney(emp.RT1399)}</div></div><div class="bonus-item"><div class="name">特維</div><div class="value ${emp.特維===0?'zero':''}">${formatMoney(emp.特維)}</div></div><div class="bonus-item"><div class="name">手機台獎</div><div class="value ${emp.手機台獎===0?'zero':''}">${formatMoney(emp.手機台獎)}</div></div><div class="bonus-item"><div class="name">寬頻</div><div class="value ${emp.寬頻===0?'zero':''}">${formatMoney(emp.寬頻)}</div></div><div class="bonus-item"><div class="name">OP案</div><div class="value ${emp.OP===0?'zero':''}">${formatMoney(emp.OP)}</div></div></div><div class="subtotal-bar"><span class="label">基礎獎金小計</span><span class="value">${formatMoney(emp.基礎獎金)}</span></div></div><div class="profit-section"><div class="label">📈 毛利分潤獎金</div><div class="value">${formatMoney(emp.毛利分潤)}</div></div><div class="star-section"><div class="label">🌟 追星獎</div><div class="value">${formatMoney(emp.追星獎)}</div></div><div class="homerun-section"><div class="homerun-title">⚾ 全壘打獎金</div><div class="homerun-grid"><div class="homerun-item"><div class="label">得分</div><div class="value">${fmtHR(emp.全壘打分數)}</div></div><div class="homerun-item"><div class="label">全壘打獎金</div><div class="value">${formatMoney(emp.全壘打獎金)}</div></div><div class="homerun-item"><div class="label">KPI淨獎金</div><div class="value ${emp.KPI淨獎金<0?'negative':''}">${formatMoney(emp.KPI淨獎金)}</div></div></div></div>`;document.getElementById('resultCard').classList.add('active');}
+        document.getElementById('resultCard').innerHTML=`<div class="profile-card ${emp.戰力==='L4'?'L4-border':(emp.戰力==='L3'?'L3-border':'')}"><div class="profile-row"><div class="avatar">${emp.姓名.slice(-1)}</div><div class="profile-info"><h2>${emp.姓名}</h2><div class="profile-badges"><span class="badge store">${emp.店點}</span><span class="badge rank ${RANK_KEY[emp.職級]||'stone'}">${emp.職級}</span>${getPowerBadgeHTML(emp.戰力)}</div></div></div></div><div class="kpi-dashboard ${kpiStatus.class}-border"><div class="kpi-dashboard-title"><h3>🎯 你的 KPI 狀態</h3>${getKpiStatusBadge(emp.KPI分數)}</div><div class="kpi-main"><div class="kpi-main-item"><div class="number ${kpiStatus.class}">${fmtKPI(emp.KPI分數)}</div><div class="label">KPI 分數</div></div><div class="kpi-main-item"><div class="number" style="color:#ECEEFF;font-size:1.5em;">${emp.總積分.toLocaleString()}</div><div class="label">總積分</div></div></div><div class="kpi-progress"><div class="kpi-progress-bar ${kpiStatus.class}" style="width:${progressPercent}%"></div></div><div class="kpi-rank-info"><span>📊 KPI 排名：第 ${kpiRank} 名 / 19人</span><span>目標 5.0 分</span></div>${kpiWarningHTML}</div><div class="total-bonus-card"><div class="label">💰 9月份累計總獎金</div><div class="amount ${emp.總獎金<0?'negative':''}">${formatMoney(emp.總獎金)}</div><div class="rank-badge">${getRankTitle(bonusRank)}</div></div><div class="ranking-card"><div class="ranking-item"><div class="medal">${getRankMedal(bonusRank)}</div><div class="number">${bonusRank}</div><div class="label">獎金排名 / ${totalPeople}人</div></div><div class="ranking-item"><div class="medal">🎯</div><div class="number" style="color:#00F5FF">${formatMoney(emp.AQ)}</div><div class="label">我的AQ</div></div><div class="ranking-item"><div class="medal">⚾</div><div class="number">${formatMoney(emp.全壘打獎金)}</div><div class="label">全壘打獎金<span class="sub-mini">分數 ${fmtHR(emp.全壘打分數)}</span></div></div></div>${achievements.length>0?`<div class="achievement-section"><div class="achievement-title">🏅 獲得成就</div><div class="achievement-grid">${achievementHTML}</div></div>`:''}<div class="bonus-detail-section"><div class="detail-title">📋 基礎獎金明細</div><div class="bonus-list"><div class="bonus-item"><div class="name">AQ點數</div><div class="value ${emp.AQ===0?'zero':''}">${formatMoney(emp.AQ)}</div></div><div class="bonus-item"><div class="name">AQ999+</div><div class="value ${emp.AQ999===0?'zero':''}">${formatMoney(emp.AQ999)}</div></div><div class="bonus-item"><div class="name">RT升轉</div><div class="value ${emp.RT升轉===0?'zero':''}">${formatMoney(emp.RT升轉)}</div></div><div class="bonus-item"><div class="name">RT999+</div><div class="value ${emp.RT999===0?'zero':''}">${formatMoney(emp.RT999)}</div></div><div class="bonus-item"><div class="name">RT1399+</div><div class="value ${emp.RT1399===0?'zero':''}">${formatMoney(emp.RT1399)}</div></div><div class="bonus-item"><div class="name">特維</div><div class="value ${emp.特維===0?'zero':''}">${formatMoney(emp.特維)}</div></div><div class="bonus-item"><div class="name">手機台獎</div><div class="value ${emp.手機台獎===0?'zero':''}">${formatMoney(emp.手機台獎)}</div></div><div class="bonus-item"><div class="name">寬頻</div><div class="value ${emp.寬頻===0?'zero':''}">${formatMoney(emp.寬頻)}</div></div><div class="bonus-item"><div class="name">OP案</div><div class="value ${emp.OP===0?'zero':''}">${formatMoney(emp.OP)}</div></div></div><div class="subtotal-bar"><span class="label">基礎獎金小計</span><span class="value">${formatMoney(emp.基礎獎金)}</span></div></div><div class="profit-section"><div class="label">📈 毛利分潤獎金</div><div class="value">${formatMoney(emp.毛利分潤)}</div></div><div class="star-section"><div class="label">🌟 追星獎</div><div class="value">${formatMoney(emp.追星獎)}</div></div><div class="homerun-section"><div class="homerun-title">⚾ 全壘打獎金</div><div class="homerun-grid"><div class="homerun-item"><div class="label">得分</div><div class="value">${fmtHR(emp.全壘打分數)}</div></div><div class="homerun-item"><div class="label">全壘打獎金</div><div class="value">${formatMoney(emp.全壘打獎金)}</div></div><div class="homerun-item"><div class="label">KPI淨獎金</div><div class="value ${emp.KPI淨獎金<0?'negative':''}">${formatMoney(emp.KPI淨獎金)}</div></div></div></div>`;document.getElementById('resultCard').classList.add('active');}
+        // ══════════ 追星獎分頁（原 追星獎排行榜.html 內嵌） ══════════
+        (function(){
+
+const tierColor = {
+  "白金級":"#d8e6f4","黃金級":"#ffd36b","金級":"#f5c542",
+  "銀級":"#c3cad8","銅級":"#d98c52","石頭":"#7d879c","小石頭":"#9db668"
+};
+const starColor = {1:"#7d879c",2:"#9fd3ff",3:"#7fe0c0",4:"#ffd36b",5:"#ff8a6b"};
+
+// 本月（8/30起）官方星數，與追星機彙整一致（資料截止 9/25）
+const data = [{"n": "黃閔聖", "s": "後昌店", "t": "銀級", "u": 40, "star": 70, "d": [["8/31", "Google Pixel 10a", 3], ["9/2", "vivo V70 FE", 3], ["9/4", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/7", "OPPO Reno16 F", 2], ["9/7", "Galaxy A57", 3], ["9/8", "Google Pixel 11", 4], ["9/8", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/8", "vivo V70 FE", 3], ["9/10", "Pixel 10 Pro XL-展示", 7], ["9/11", "OPPO A6x", 1], ["9/11", "APPLE iPhone 17 Pro", 2], ["9/11", "Samsung A17", 1], ["9/12", "Samsung A27", 1], ["9/12", "vivo Y21", 1], ["9/12", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/12", "紅米REDMI Note 17 Pro", 1], ["9/13", "Samsung A27", 1], ["9/13", "OPPO A6x", 1], ["9/13", "Lenovo Idea Tab", 1], ["9/13", "APPLE iPhone 17 Pro", 2], ["9/16", "APPLE iPhone 17 Pro", 2], ["9/18", "APPLE iPhone 18 Pro Max", 1], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/18", "Apple iPad(A16)", 2], ["9/19", "Google Pixel 10a", 3], ["9/19", "Google Pixel 11", 4], ["9/19", "APPLE iPhone 18 Pro", 1], ["9/20", "APPLE iPhone 18 Pro Max", 1], ["9/20", "Samsung A17", 1], ["9/20", "vivo Y21", 1], ["9/20", "Apple原廠AirPods 5 主動式降噪款藍牙耳機(MKFW4TA/A)-白(台)", 1], ["9/22", "Samsung Tab A11+", 1], ["9/22", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/22", "vivo Y21", 1], ["9/23", "Samsung A27", 1], ["9/23", "APPLE iPhone 18 Pro", 1], ["9/23", "APPLE iPhone 18 Pro", 1], ["9/24", "Galaxy A57", 3], ["9/24", "APPLE iPhone 17 Pro", 2]]}, {"n": "黃傑稜", "s": "仁雄店", "t": "白金級", "u": 39, "star": 69, "d": [["8/31", "vivo V70 FE", 3], ["8/31", "OPPO Reno16 F", 2], ["9/3", "APPLE iPhone 17 Pro", 2], ["9/3", "OPPO Reno16 F", 2], ["9/3", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/4", "Google Pixel 10a", 3], ["9/5", "Samsung A17", 1], ["9/5", "Galaxy A57", 3], ["9/5", "APPLE iPhone 17", 2], ["9/7", "Galaxy A26", 1], ["9/7", "OPPO Reno16 F", 2], ["9/8", "APPLE iPhone 17", 2], ["9/10", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/10", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/11", "APPLE iPhone 17e", 2], ["9/12", "Google Pixel 10a", 3], ["9/12", "vivo Y21", 1], ["9/12", "Galaxy A57", 3], ["9/13", "vivo V70 FE", 3], ["9/13", "紅米REDMI Note 17 Pro", 1], ["9/13", "APPLE iPhone 17", 2], ["9/15", "Apple iPad(A16)", 2], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/18", "APPLE iPhone 18 Pro Max", 1], ["9/18", "Apple iPad(A16)", 2], ["9/18", "APPLE iPhone 18 Pro Max", 1], ["9/19", "Apple原廠AirPods 5 主動式降噪款藍牙耳機(無線充電盒)(MKFT4TA/A)-白(台)", 1], ["9/20", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/20", "Apple iPad(A16)", 2], ["9/22", "APPLE iPhone 18 Pro", 1], ["9/22", "Apple iPad(A16)", 2], ["9/22", "APPLE iPhone 18 Pro", 1], ["9/23", "Google Pixel 11 Pro", 5], ["9/23", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/23", "APPLE iPhone 18 Pro", 1], ["9/24", "APPLE iPhone 17 Pro", 2], ["9/24", "OPPO Reno16 F", 2], ["9/24", "APPLE iPhone 18 Pro Max", 1]]}, {"n": "邱雨蔚", "s": "陽明店", "t": "銀級", "u": 31, "star": 52, "d": [["8/31", "Lenovo Idea Tab", 1], ["8/31", "Apple iPad(A16)", 2], ["9/4", "vivo Y21", 1], ["9/4", "Google Pixel 11 Pro XL", 5], ["9/5", "vivo Y21", 1], ["9/5", "Samsung A17", 1], ["9/6", "APPLE iPhone 17e", 2], ["9/7", "Google Pixel 11 Pro", 5], ["9/9", "OPPO Reno16 F", 2], ["9/9", "APPLE iPhone 17e", 2], ["9/10", "APPLE iPhone 17 Pro", 2], ["9/10", "OPPO A6x", 1], ["9/12", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/12", "APPLE iPhone 17 Pro", 2], ["9/12", "APPLE iPhone 17 Pro Max", 2], ["9/13", "APPLE iPhone 17 Pro", 2], ["9/13", "APPLE iPhone 17 Pro", 2], ["9/14", "APPLE iPhone 17 Pro", 2], ["9/14", "Galaxy A57", 3], ["9/14", "APPLE iPhone 17 Pro Max", 2], ["9/17", "Samsung A27", 1], ["9/17", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/19", "vivo Y21", 1], ["9/20", "APPLE iPhone 18 Pro Max", 1], ["9/21", "APPLE iPhone 18 Pro Max", 1], ["9/23", "vivo Y21", 1], ["9/24", "APPLE iPhone 18 Pro Max", 1], ["9/25", "APPLE iPhone 18 Pro", 1], ["9/25", "Apple Watch S12(GPS)淺金色鋁金屬錶殼配沙色S/M錶帶42mm(MJED4TA/A)(台)", 1], ["9/23", "Samsung A27", 1], ["9/23", "vivo Y21", 1]]}, {"n": "劉家妘", "s": "鼎山店", "t": "白金級", "u": 23, "star": 48, "d": [["9/1", "Apple Watch S11(GPS)曜石黑鋁金屬錶殼配黑色S/M錶帶46mm(MEUW4TA/A)(台)", 1], ["9/2", "OPPO Reno16 F", 2], ["9/5", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/5", "Samsung Tab A11+", 1], ["9/6", "vivo V70 FE", 3], ["9/7", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/9", "Samsung A17", 1], ["9/9", "Apple iPad Air M4(11吋)", 1], ["9/11", "Pixel 10 Pro XL-展示", 7], ["9/11", "APPLE iPhone 17", 2], ["9/11", "OPPO Reno16 F", 2], ["9/14", "Galaxy A57", 3], ["9/14", "APPLE iPhone 17e", 2], ["9/18", "APPLE iPhone 18 Pro Max", 1], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/19", "Galaxy A57", 3], ["9/19", "Samsung A27", 1], ["9/22", "Z Fold8", 8], ["9/22", "APPLE iPhone 18 Pro Max", 1], ["9/23", "Samsung A17", 1], ["9/24", "APPLE iPhone 18 Pro Max", 1], ["9/24", "vivo V70 FE", 3], ["9/24", "APPLE iPhone 18 Pro", 1]]}, {"n": "陳宛姍", "s": "凱旋店", "t": "白金級", "u": 31, "star": 47, "d": [["9/3", "vivo V70 FE", 3], ["9/3", "Galaxy A57", 3], ["9/3", "Apple iPad(A16)", 2], ["9/4", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/4", "vivo Y21", 1], ["9/4", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/4", "Samsung A27", 1], ["9/6", "APPLE iPhone 17 Pro", 2], ["9/7", "Pixel 10 Pro XL-展示", 7], ["9/8", "APPLE iPhone 17 Pro Max", 2], ["9/8", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/11", "Galaxy A57", 3], ["9/12", "vivo Y21", 1], ["9/13", "OPPO Reno16 F", 2], ["9/17", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/18", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/18", "APPLE iPhone 18 Pro Max", 1], ["9/18", "APPLE iPhone 18 Pro Max", 1], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/18", "APPLE iPhone 18 Pro Max", 1], ["9/19", "APPLE iPhone 18 Pro Max", 1], ["9/19", "APPLE iPhone 18 Pro Max", 1], ["9/19", "APPLE iPhone 18 Pro", 1], ["9/19", "APPLE iPhone 18 Pro Max", 1], ["9/19", "APPLE iPhone 18 Pro", 1], ["9/22", "Samsung A17", 1], ["9/22", "APPLE iPhone 18 Pro Max", 1], ["9/24", "APPLE iPhone 18 Pro Max", 1], ["9/25", "APPLE iPhone 18 Pro", 1]]}, {"n": "黃子珊", "s": "凱旋店", "t": "銀級", "u": 29, "star": 45, "d": [["8/30", "TCL MT28T 4G智慧兒童手錶+貓貓蟲咖波配件組-粉(連宇) (台)", 1], ["8/31", "vivo Y21", 1], ["9/1", "Galaxy A26", 1], ["9/1", "Google Pixel 10a", 3], ["9/1", "vivo Y21", 1], ["9/2", "Samsung Tab A11+", 1], ["9/2", "vivo Y21", 1], ["9/2", "TCL MT28T 4G智慧兒童手錶+貓貓蟲咖波配件組-粉(連宇) (台)", 1], ["9/5", "APPLE iPhone 17 Pro Max", 2], ["9/5", "Samsung A27", 1], ["9/5", "Galaxy A26", 1], ["9/6", "Galaxy A57", 3], ["9/6", "Google Pixel 10a", 3], ["9/7", "APPLE iPhone 17 Pro", 2], ["9/9", "OPPO A6x", 1], ["9/10", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/11", "APPLE iPhone 17 Pro", 2], ["9/11", "Samsung Tab A11+", 1], ["9/14", "紅米Redmi Pad 2", 1], ["9/15", "Samsung Tab A11+", 1], ["9/15", "Samsung A17", 1], ["9/18", "Galaxy A57", 3], ["9/19", "Galaxy A57", 3], ["9/19", "APPLE iPhone 17", 2], ["9/21", "Apple iPad(A16)", 2], ["9/21", "Apple iPad(A16)", 2], ["9/21", "OPPO A6x", 1], ["9/22", "APPLE iPhone 18 Pro", 1], ["9/22", "Apple原廠AirPods 5 主動式降噪款藍牙耳機(MKFW4TA/A)-白(台)", 1]]}, {"n": "黃庭鈞", "s": "區督導", "t": "黃金級", "u": 30, "star": 43, "d": [["9/4", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/6", "OPPO A6x", 1], ["9/8", "APPLE iPhone 17 Pro", 2], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/18", "Apple原廠AirPods 5 主動式降噪款藍牙耳機(無線充電盒)(MKFT4TA/A)-白(台)", 1], ["9/18", "Google Pixel 11", 4], ["9/18", "Galaxy A26", 1], ["9/18", "Galaxy A26", 1], ["9/18", "APPLE iPhone 18 Pro Max", 1], ["9/18", "紅米REDMI Note 17 Pro", 1], ["9/24", "APPLE iPhone 18 Pro", 1], ["8/30", "APPLE iPhone 17 Pro", 2], ["8/30", "vivo Y21", 1], ["8/31", "Samsung A17", 1], ["9/3", "OPPO Reno15", 5], ["9/3", "OPPO A6x", 1], ["9/3", "APPLE iPhone 17", 2], ["9/20", "APPLE iPhone 18 Pro", 1], ["9/20", "OPPO A6x", 1], ["9/20", "APPLE iPhone 18 Pro", 1], ["9/20", "APPLE iPhone 18 Pro Max", 1], ["9/20", "Samsung A27", 1], ["9/1", "Galaxy A26", 1], ["9/14", "Apple iPad(A16)", 2], ["9/14", "Apple iPad(A16)", 2], ["9/17", "OPPO Reno16 F", 2], ["9/19", "APPLE iPhone 18 Pro", 1], ["9/19", "Apple原廠AirPods 5 主動式降噪款藍牙耳機(無線充電盒)(MKFT4TA/A)-白(台)", 1], ["9/19", "APPLE iPhone 18 Pro Max", 1]]}, {"n": "蔡冠廷", "s": "仁雄店", "t": "石頭", "u": 24, "star": 42, "d": [["8/30", "APPLE iPhone 17 Pro Max", 2], ["9/5", "APPLE iPhone 17 Pro", 2], ["9/6", "Galaxy A57", 3], ["9/7", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/7", "Apple iPad(A16)", 2], ["9/10", "APPLE iPhone 17 Pro Max", 2], ["9/10", "SONY Xperia 1 VIII", 5], ["9/10", "vivo Y21", 1], ["9/12", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/13", "Samsung A27", 1], ["9/13", "APPLE iPhone 17 Pro", 2], ["9/13", "APPLE iPhone 17 Pro", 2], ["9/14", "Apple iPad(A16)", 2], ["9/18", "Apple原廠AirPods 5 主動式降噪款藍牙耳機(MKFW4TA/A)-白(台)", 1], ["9/18", "APPLE iPhone 18 Pro Max", 1], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/18", "APPLE iPhone 18 Pro Max", 1], ["9/18", "Google Pixel 11 Pro", 5], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/19", "OPPO A6x", 1], ["9/21", "APPLE iPhone 18 Pro", 1], ["9/23", "APPLE iPhone 17", 2]]}, {"n": "郭家維", "s": "後昌店", "t": "銅級", "u": 21, "star": 40, "d": [["8/30", "Samsung Tab A11+", 1], ["9/1", "Google Pixel 10a", 3], ["9/3", "Google Pixel 10a", 3], ["9/4", "Apple iPad(A16)", 2], ["9/4", "Apple iPad(A16)", 2], ["9/6", "OPPO Reno16 F", 2], ["9/7", "APPLE iPhone 17", 2], ["9/8", "vivo Y21", 1], ["9/11", "vivo V70 FE", 3], ["9/11", "Samsung Tab A11+", 1], ["9/12", "紅米REDMI Note 17 5G", 1], ["9/12", "Galaxy A57", 3], ["9/14", "vivo V70 FE", 3], ["9/14", "APPLE iPhone 17 Pro Max", 2], ["9/15", "OPPO A6x", 1], ["9/18", "APPLE iPhone 18 Pro Max", 1], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/19", "Apple iPad(A16)", 2], ["9/19", "Apple原廠AirPods 5 主動式降噪款藍牙耳機(無線充電盒)(MKFT4TA/A)-白(台)", 1], ["9/19", "APPLE iPhone 17e", 2], ["9/25", "Google Pixel 10a", 3]]}, {"n": "劉宗翰", "s": "凱旋店", "t": "小石頭", "u": 16, "star": 37, "d": [["9/3", "Galaxy A57", 3], ["9/4", "Apple iPad(A16)", 2], ["9/4", "OPPO Reno16 F", 2], ["9/5", "小米Xiaomi 17T", 1], ["9/5", "OPPO Find X9s", 7], ["9/7", "OPPO A6x", 1], ["9/10", "Google Pixel 11", 4], ["9/11", "vivo Y31", 1], ["9/13", "Apple iPad(A16)", 2], ["9/15", "Galaxy A26", 1], ["9/16", "vivo Y21", 1], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/20", "Z Fold8", 8], ["9/24", "Apple原廠AirPods 5 主動式降噪款藍牙耳機(MKFW4TA/A)-白(台)", 1], ["9/24", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/24", "Galaxy A26", 1]]}, {"n": "石佳穎", "s": "仁雄店", "t": "銀級", "u": 22, "star": 36, "d": [["9/3", "Galaxy A57", 3], ["9/5", "Galaxy A57", 3], ["9/5", "紅米REDMI Note 17 Pro", 1], ["9/6", "Samsung A27", 1], ["9/6", "APPLE iPhone 17 Pro", 2], ["9/8", "Galaxy A57", 3], ["9/8", "Galaxy A57", 3], ["9/9", "Galaxy A57", 3], ["9/10", "OPPO A6x", 1], ["9/10", "vivo Y21", 1], ["9/10", "APPLE iPhone 17 Pro", 2], ["9/11", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/11", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/14", "Apple iPad(A16)", 2], ["9/17", "Apple iPad(A16)", 2], ["9/19", "APPLE iPhone 18 Pro", 1], ["9/19", "APPLE iPhone 18 Pro", 1], ["9/19", "Samsung Tab A11+", 1], ["9/20", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/20", "Apple原廠AirPods 5 主動式降噪款藍牙耳機(MKFW4TA/A)-白(台)", 1], ["9/24", "APPLE iPhone 18 Pro Max", 1], ["9/25", "APPLE iPhone 18 Pro", 1]]}, {"n": "陳亭安", "s": "鼎山店", "t": "銀級", "u": 25, "star": 35, "d": [["8/30", "APPLE iPhone 17", 2], ["8/30", "APPLE iPhone 17e", 2], ["8/30", "Samsung Tab A11+", 1], ["8/31", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/2", "紅米Redmi Pad 2", 1], ["9/2", "Apple iPad(A16)", 2], ["9/3", "Apple iPad(A16)", 2], ["9/3", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/3", "APPLE iPhone 17 Pro", 2], ["9/3", "OPPO A6x", 1], ["9/4", "OPPO Reno16 F", 2], ["9/7", "OPPO A6x", 1], ["9/12", "Apple iPad Air M4(11吋)", 1], ["9/12", "Samsung A27", 1], ["9/16", "OPPO A6x", 1], ["9/19", "APPLE iPhone 18 Pro Max", 1], ["9/19", "APPLE iPhone 18 Pro Max", 1], ["9/19", "APPLE iPhone 18 Pro Max", 1], ["9/20", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/20", "APPLE iPhone 18 Pro", 1], ["9/21", "Apple原廠AirPods 5 主動式降噪款藍牙耳機(無線充電盒)(MKFT4TA/A)-白(台)", 1], ["9/24", "OPPO Reno16 F", 2], ["9/24", "vivo V70 FE", 3], ["9/25", "Samsung A17", 1], ["9/9", "APPLE iPhone 17", 2]]}, {"n": "林瑞獻", "s": "凱旋店", "t": "石頭", "u": 22, "star": 33, "d": [["8/30", "vivo Y21", 1], ["8/31", "APPLE iPhone 17 Pro", 2], ["9/3", "OPPO Reno16 F", 2], ["9/4", "APPLE iPhone 17", 2], ["9/5", "vivo V70 FE", 3], ["9/6", "Samsung Galaxy Buds4 Pro 真無線藍牙耳機 (R640)-黑(台)", 1], ["9/8", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/10", "Samsung A27", 1], ["9/12", "OPPO Reno16 F", 2], ["9/13", "Samsung A27", 1], ["9/13", "vivo V70 FE", 3], ["9/15", "vivo Y21", 1], ["9/15", "OPPO Reno16 F", 2], ["9/16", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/18", "APPLE iPhone 18 Pro Max", 1], ["9/19", "Samsung A27", 1], ["9/19", "APPLE iPhone 18 Pro", 1], ["9/20", "OPPO Reno16 F", 2], ["9/21", "APPLE iPhone 17", 2], ["9/24", "Samsung Tab A11+", 1], ["9/24", "OPPO A6x", 1], ["9/24", "OPPO A6x", 1]]}, {"n": "高琦茗", "s": "鼎山店", "t": "銅級", "u": 18, "star": 31, "d": [["8/30", "Galaxy A57", 3], ["9/2", "vivo Y31", 1], ["9/3", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/4", "Google Pixel 11 Pro XL", 5], ["9/5", "紅米Redmi Pad 2", 1], ["9/7", "OPPO Reno16 F", 2], ["9/10", "APPLE iPhone 17", 2], ["9/10", "APPLE iPhone 17", 2], ["9/12", "APPLE iPhone 17 Pro", 2], ["9/14", "OPPO A6x", 1], ["9/15", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/16", "vivo V70 FE", 3], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/21", "APPLE iPhone 18 Pro Max", 1], ["9/22", "Apple iPad(A16)", 2], ["9/23", "APPLE iPhone 18 Pro Max", 1], ["9/23", "Apple Watch S12(GPS)深古銅色鋁金屬錶殼配深古銅色不鏽鋼米蘭式M/L錶環46mm(MKD84TA/A)(台)", 1], ["9/25", "Samsung Tab A11+", 1]]}, {"n": "劉芳廷", "s": "陽明店", "t": "銀級", "u": 19, "star": 31, "d": [["8/31", "Galaxy A57", 3], ["8/31", "OPPO Reno16 F", 2], ["9/5", "Apple iPad(A16)", 2], ["9/5", "Apple iPad(A16)", 2], ["9/12", "APPLE iPhone 17", 2], ["9/13", "Apple iPad(A16)", 2], ["9/15", "Galaxy A26", 1], ["9/16", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/18", "Apple iPad(A16)", 2], ["9/19", "APPLE iPhone 18 Pro Max", 1], ["9/19", "Galaxy A26", 1], ["9/19", "vivo Y21", 1], ["9/20", "Apple原廠AirPods 5 主動式降噪款藍牙耳機(MKFW4TA/A)-白(台)", 1], ["9/20", "Galaxy A57", 3], ["9/22", "Apple原廠AirPods 5 主動式降噪款藍牙耳機(MKFW4TA/A)-白(台)", 1], ["9/23", "APPLE iPhone 18 Pro", 1], ["9/23", "Apple iPad Air M4(11吋)", 1], ["9/23", "APPLE iPhone 18 Pro Max", 1], ["9/8", "Galaxy A57", 3]]}, {"n": "林庭逸", "s": "陽明店", "t": "石頭", "u": 18, "star": 31, "d": [["9/2", "vivo V70 FE", 3], ["9/6", "APPLE iPhone 17 Pro Max", 2], ["9/7", "OPPO Reno16 F", 2], ["9/8", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/8", "Samsung Tab A11+", 1], ["9/10", "OPPO A6x", 1], ["9/11", "APPLE iPhone 17 Pro Max", 2], ["9/14", "vivo V70 FE", 3], ["9/15", "APPLE iPhone 17", 2], ["9/18", "Google Pixel 11", 4], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/18", "OPPO A6x", 1], ["9/18", "APPLE iPhone 18 Pro Max", 1], ["9/21", "APPLE iPhone 18 Pro", 1], ["9/22", "Apple原廠AirPods 5 主動式降噪款藍牙耳機(MKFW4TA/A)-白(台)", 1], ["9/22", "APPLE iPhone 17", 2], ["9/23", "APPLE iPhone 18 Pro", 1], ["8/31", "APPLE iPhone 17", 2]]}, {"n": "郭紳鴻", "s": "仁雄店", "t": "銅級", "u": 19, "star": 31, "d": [["9/3", "Lenovo Idea Tab", 1], ["9/3", "Z Flip8", 5], ["9/5", "Galaxy A57", 3], ["9/6", "Samsung A17", 1], ["9/6", "Samsung Tab A11+", 1], ["9/6", "Galaxy A57", 3], ["9/7", "Lenovo Idea Tab", 1], ["9/9", "APPLE iPhone 17", 2], ["9/9", "APPLE iPhone 17 Pro Max", 2], ["9/13", "Samsung A17", 1], ["9/18", "APPLE iPhone 18 Pro Max", 1], ["9/18", "Galaxy A57", 3], ["9/18", "APPLE iPhone 18 Pro", 1], ["9/18", "APPLE iPhone 18 Pro Max", 1], ["9/20", "Samsung A17", 1], ["9/20", "APPLE iPhone 18 Pro Max", 1], ["9/20", "APPLE iPhone 18 Pro", 1], ["9/22", "Samsung A27", 1], ["9/24", "APPLE iPhone 18 Pro Max", 1]]}, {"n": "彥州", "s": "鼎山店", "t": "石頭", "u": 17, "star": 28, "d": [["8/31", "Galaxy A26", 1], ["9/1", "Samsung A27", 1], ["9/4", "APPLE iPhone 17e", 2], ["9/5", "Samsung A27", 1], ["9/5", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/9", "OPPO Reno16 F", 2], ["9/12", "TCL MT28T 4G智慧兒童手錶+貓貓蟲咖波配件組-灰藍(連宇) (台)", 1], ["9/12", "APPLE iPhone 17", 2], ["9/12", "APPLE iPhone 17 Pro", 2], ["9/13", "Apple iPad(A16)", 2], ["9/13", "APPLE iPhone 17 Pro Max", 2], ["9/14", "vivo V70 FE", 3], ["9/17", "APPLE iPhone 17 Pro", 2], ["9/20", "vivo Y21", 1], ["9/20", "APPLE iPhone 18 Pro", 1], ["9/21", "Galaxy A57", 3], ["9/18", "Apple原廠AirPods 5 主動式降噪款藍牙耳機(MKFW4TA/A)-白(台)", 1]]}, {"n": "秦曼芯", "s": "後昌店", "t": "石頭", "u": 15, "star": 20, "d": [["9/2", "myFirst Fone S3 SE 4G 智慧兒童手錶-棉花糖 (台)", 1], ["9/5", "vivo Y21", 1], ["9/9", "APPLE iPhone 17 Pro", 2], ["9/10", "Apple iPad(A16)", 2], ["9/10", "TP-Link Archer MR600路由器-黑(台)", 1], ["9/13", "Samsung A17", 1], ["9/13", "Galaxy A26", 1], ["9/13", "APPLE iPhone 17 Pro Max", 2], ["9/13", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/16", "Apple原廠AirPods Pro 3 藍牙耳機(MFHP4TA/A)-白(台)", 1], ["9/17", "Samsung A27", 1], ["9/18", "APPLE iPhone 18 Pro Max", 1], ["9/19", "vivo Y31", 1], ["9/24", "Apple iPad(A16)", 2], ["9/25", "APPLE iPhone 17 Pro", 2]]}];
+// 標準競賽排名（同分同名次）
+let rank=0,prev=null;
+data.forEach((p,i)=>{ if(p.star!==prev){rank=i+1;prev=p.star;} p.rank=rank; });
+
+const BASE=45;
+const MAXSTAR=Math.max(...data.map(x=>x.star));
+const BASEPCT=(BASE/MAXSTAR*100).toFixed(1);
+const stars = n => "★".repeat(Math.min(n,5));
+function detailHTML(p){
+  return p.d.map(([dt,md,ss])=>`
+    <div class="mline">
+      <span class="dt">${dt}</span>
+      <span class="md">${md} <span class="mstar" style="color:${starColor[ss]}">${stars(ss)}</span></span>
+      <span class="ss">+${ss}★</span>
+    </div>`).join("");
+}
+function avatarBg(t){const c=tierColor[t]||"#3a4564";return `linear-gradient(160deg,#ffffff22,${c})`;}
+const tierKey={"白金級":"plat","黃金級":"gold","金級":"gold","銀級":"silver","銅級":"copper","石頭":"stone","小石頭":"pebble"};
+function tierChip(t){return `<span class="tchip ${tierKey[t]||"stone"}">${t}</span>`;}
+const powerIco={L1:"💫",L2:"⚡",L3:"🔥",L4:"👑"};
+function powerOf(n){const e=(window.employeeData||[]).find(x=>x.姓名===n);return e?e.戰力:"";}
+function powerChip(n){const p=powerOf(n);if(!p)return "";return `<span class="pchip ${p}">${p}</span>`;}
+
+// podium top3
+const pod=document.querySelector("#starTab #podium");
+const order=[1,0,2]; // 2nd,1st,3rd 視覺排序
+const crowns=["🥇","🥈","🥉"];
+order.forEach(idx=>{
+  const p=data[idx];
+  const cls=idx===0?"p1":idx===1?"p2":"p3";
+  const el=document.createElement("div");
+  el.className=`pod ${cls}`; el.dataset.i=idx;
+  el.innerHTML=`
+    <div class="crown">${crowns[idx]}</div>
+    <div class="rk">第 ${p.rank} 名</div>
+    <div class="av">${p.n.slice(-2)}</div>
+    <div class="nm">${p.n}</div>
+    <div class="st">${p.s}</div>
+    <div class="sc">${p.star}<small> ★</small></div>`;
+  pod.appendChild(el);
+});
+
+// full list
+const list=document.querySelector("#starTab #list");
+data.forEach((p,i)=>{
+  const pct=(p.star/MAXSTAR*100).toFixed(1);
+  const gap=Math.max(BASE-p.star,0);
+  const tc=tierColor[p.t]||"#9aa3b8";
+  const row=document.createElement("div");
+  row.className="row"; row.dataset.i=i;
+  row.innerHTML=`
+    <div class="rhead">
+      <div class="rk2">${p.rank}</div>
+      <div class="av2" style="background:${avatarBg(p.t)};color:#0c1020">${p.n.slice(-2)}</div>
+      <div class="who">
+        <div class="nm">${p.n}</div>
+        <div class="meta">${tierChip(p.t)}${powerChip(p.n)}<span class="mtxt">${p.s} · 售機 ${p.u} 台</span></div>
+      </div>
+      <div class="scorebox">
+        <div class="v">${p.star}<small> ★</small></div>
+        <div class="gap ${gap>0?"miss":"hit"}">${gap>0?`差 ${gap}★ 加油！`:`✓ 已達底標`}</div>
+      </div>
+      <div class="chev">▼</div>
+    </div>
+    <div class="bar"><span class="tick" style="left:${BASEPCT}%"></span><i class="${tierKey[p.t]||"stone"}" data-w="${pct}"></i></div>
+    <div class="detail"><div class="detail-in">${detailHTML(p)}</div></div>`;
+  list.appendChild(row);
+});
+
+// interactions
+function toggle(i){
+  const r=document.querySelector(`#starTab .row[data-i="${i}"]`);
+  if(r) r.classList.toggle("open");
+}
+document.querySelectorAll("#starTab .row .rhead").forEach(h=>h.addEventListener("click",()=>toggle(h.parentElement.dataset.i)));
+document.querySelectorAll("#starTab .pod").forEach(p=>p.addEventListener("click",()=>{
+  const r=document.querySelector(`#starTab .row[data-i="${p.dataset.i}"]`);
+  if(r){r.classList.add("open");r.scrollIntoView({behavior:"smooth",block:"center"});}
+}));
+
+// animate bars on load (staggered)
+window.__starBars=function(){
+  document.querySelectorAll("#starTab .bar i").forEach((b,k)=>{
+    b.style.width="0";
+    setTimeout(()=>{b.style.width=b.dataset.w+"%";}, 200+k*40);
+  });
+};
+
+        })();
     </script>
 
 </body></html>
