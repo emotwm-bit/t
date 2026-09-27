@@ -270,7 +270,7 @@
         </table>
         </div>
         <div id="seasonDetail" style="display:none;padding:16px 18px;background:var(--surface-2);border-top:1px solid var(--lane)"></div>
-        <div class="rule-note">⚠️ <b>口徑</b>：缺口＝台哥大官方 KPI 報表的「目標數 − 實際數」｜升轉率季線各店不同，五店已全數超過 ✓｜<b>鼎山</b>官方 RT 目標一次補不完，務實先衝 <b>847 解對折線</b>（RT月獎金復活）｜原始達成率 &lt;70% 的小項分數打對折，衝過 70% 解鎖全額。</div>
+        <div class="rule-note">⚠️ <b>口徑</b>：缺口＝台哥大官方 KPI 報表的「目標數 − 實際數」｜升轉率季線各店不同，五店已全數超過 ✓｜<b>鼎山</b>官方 RT 目標 1210 一次補不完，務實先過 <b>70% 解折線＝847 點</b>（1210×70%，台哥大對折規則，RT月獎金復活）｜原始達成率 &lt;70% 的小項分數打對折，衝過 70% 解鎖全額。</div>
       </div>
     </div>
   </div>
@@ -319,7 +319,7 @@
           <tbody><!-- injected --></tbody>
         </table>
         </div>
-        <div class="rule-note">💡 讀法：凱旋 44.9% → 每門 $420；再拉 <b>+0.6</b> 跨 45.5% → 每門跳 $460。<b style="color:var(--red)">鼎山 22.0% 低於 27% 領獎線 → 本月RT月獎金目前 $0</b>——補 33 點RT過 847 解折＋RT999 補 1 件 → 31.1% → $310/門，約 $40,000 復活，全區最大一筆。</div>
+        <div class="rule-note">💡 讀法：凱旋 44.9% → 每門 $420；再拉 <b>+0.6</b> 跨 45.5% → 每門跳 $460。<b style="color:var(--red)">鼎山 22.0% 低於 27% 領獎線 → 本月RT月獎金目前 $0</b>——補 33 點RT過 70% 解折線（1210×70%＝847）＋RT999 補 1 件 → 31.1% → $310/門，約 $40,000 復活，全區最大一筆。</div>
       </div>
     </div>
 
@@ -358,8 +358,8 @@ const SEASON = [
   { name:"鼎山", color:"#FFB020",
     vals:{ g5:{gap:0,u:"件",pct:100,t:48}, rt:{gap:396,u:"點",pct:67,t:1210}, rz:{rate:34.9,pct:105,t:33.15}, aq:{gap:-17,u:"點",pct:112,t:135}, hs:{gap:-0.5,u:"點",pct:117,t:3} },
     detail:[
-      {k:"🔴 RT月獎金 $0 警報", v:"RT加權 22.0%＜27%", s:"補 33 點RT過 847 解對折＋RT999 補 1 件（67→68）→ 31.1% → $310/門，約 $40,000 從零復活——全區最大一筆，平降轉導鼎山剛好補點"},
-      {k:"RT點數缺口", v:"396 點（目標 1210）", s:"814／1210＝67.3%｜官方目標一次補不完，務實路線：先衝 847 解對折線（差 33 點），RT 小項分數翻倍＋店KPI 穩過 75%"},
+      {k:"🔴 RT月獎金 $0 警報", v:"RT加權 22.0%＜27%", s:"補 33 點RT過 70% 解折線（台哥大目標 1210 × 70% ＝ 847 點）＋RT999 補 1 件（67→68）→ 31.1% → $310/門，約 $40,000 從零復活——全區最大一筆，平降轉導鼎山剛好補點"},
+      {k:"RT點數缺口", v:"396 點（目標 1210）", s:"814／1210＝67.3%｜官方目標一次補不完，務實路線：先過 70% 解折線（1210×70%＝847，差 33 點），RT 小項分數翻倍＋店KPI 穩過 75%"},
       {k:"升轉率", v:"34.9%｜季線 33.15% ✓", s:"月獎金檔 32~37%，再 5 件純升轉跳 37 檔；平降轉可容 11 件——本月全區緩衝店"},
     ]},
   { name:"陽明", color:"#4DA3FF",
@@ -395,7 +395,7 @@ const SEASON = [
 /* ---- KPI 儀表（三大類達成率 + 最大補分機會）---- */
 const KPI = [
   { name:"鼎山", color:"#FFB020", majors:{aq:121.1, rt:45.7, va:72.3}, rtScore:22.0, rtPrice:"$0（未達27%）",
-    opps:[{k:"RT上線點數",gap:"33 點（→847解折）",add:7.3},{k:"RT V+D 999+",gap:"1 件（→68解折）",add:1.8},{k:"RT V+D 1399+",gap:"7 件（→46解折）",add:2.0}] },
+    opps:[{k:"RT上線點數",gap:"33 點（→1210×70%＝847 解折）",add:7.3},{k:"RT V+D 999+",gap:"1 件（→68解折）",add:1.8},{k:"RT V+D 1399+",gap:"7 件（→46解折）",add:2.0}] },
   { name:"陽明", color:"#4DA3FF", majors:{aq:109.6, rt:71.7, va:70.8}, rtScore:35.0, rtPrice:"$310/門",
     opps:[{k:"高高特維續約",gap:"2 件（→9解折）",add:2.3},{k:"RT上線點數",gap:"135 點（月目標）",add:2.9},{k:"RT V+D 1399+",gap:"13 件（月目標）",add:1.3}] },
   { name:"後昌", color:"#34D2A0", majors:{aq:115.9, rt:70.8, va:53.8}, rtScore:33.3, rtPrice:"$310/門",
@@ -666,7 +666,7 @@ RZ_WAR.forEach(st=>{
   const tolS = Math.floor(st.u/(st.need/100) - st.n);
   const seasonWarn = (!st.noWarn && tolS <= 8)
     ? `<div class="war-warn">⚠️ <b>季線 ${st.need}% 警戒</b>：第 <b>${tolS+1}</b> 件平降轉就跌破季升轉率線 —— 平降轉依當日上線指令導流</div>`
-    : (st.noWarn ? `<div class="war-warn" style="background:rgba(52,210,160,.08);border-color:rgba(52,210,160,.3)">🟢 <b style="color:var(--green)">全區緩衝店</b>：季獎金已轉攻 847 解折線，平降轉優先導鼎山——每件都補 RT 點數，離 $40,000 復活更近</div>` : "");
+    : (st.noWarn ? `<div class="war-warn" style="background:rgba(52,210,160,.08);border-color:rgba(52,210,160,.3)">🟢 <b style="color:var(--green)">全區緩衝店</b>：季獎金目標 1210 補不完，先過 70% 解折線 847，平降轉優先導鼎山——每件都補 RT 點數，離 $40,000 復活更近</div>` : "");
 
   const card = document.createElement("div");
   card.className = "kpi-card";
