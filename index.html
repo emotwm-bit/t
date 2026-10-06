@@ -964,6 +964,13 @@
         .support-stats .sup-sum b{display:block;font-size:1.15em;color:#FFD75E}
         .support-stats .sup-sum span{font-size:.75em;color:var(--text-2,#9aa3c7)}
         .support-stats .sup-note{font-size:.72em;color:var(--text-2,#9aa3c7);margin-top:8px;line-height:1.5}
+
+        .sup-person .kpi-dashboard-title h3{margin:0}
+        .sup-person .sup-sum{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 6px}
+        .sup-person .sup-sum div{flex:1 1 30%;min-width:88px;background:rgba(9,14,44,0.62);border:1px solid var(--border);border-radius:12px;padding:10px;text-align:center}
+        .sup-person .sup-sum b{display:block;font-size:1.25em;color:#FFD75E}
+        .sup-person .sup-sum span{font-size:.75em;color:var(--text-2,#9aa3c7)}
+        .sup-person .sup-note{font-size:.78em;color:var(--text-2,#9aa3c7);margin-top:10px;line-height:1.6}
 </style>
 </head>
 <body>
@@ -1174,6 +1181,22 @@
                 `<div><b>${t.單數}</b><span>單數</span></div>`;
             document.getElementById('supportNote').innerHTML=d.註;
         }
+        (function(){const _o=showResult;showResult=function(){
+            const store=document.getElementById('storeSelect').value, name=document.getElementById('employeeSelect').value;
+            if(name!=='觀摩人員'||typeof supportData==='undefined') return _o();
+            const emp=employeeData.find(e=>e.店點===store&&e.姓名===name); if(!emp) return _o();
+            const _back=document.getElementById('backToTeam'); if(_back)_back.style.display='block';
+            lastQueried={店點:emp.店點,姓名:emp.姓名};
+            document.querySelectorAll('.stats-summary,.bonus-distribution,.store-stats').forEach(el=>el.style.display='none');
+            const d=supportData,t=d.合計,f1=v=>(Math.round(v*100)/100).toLocaleString();
+            document.getElementById('resultCard').innerHTML=
+                `<div class="profile-card"><div class="profile-row"><div class="avatar">員</div><div class="profile-info"><h2>觀摩人員</h2><div class="profile-badges"><span class="badge store">${emp.店點}</span><span class="badge rank ${RANK_KEY[emp.職級]||'stone'}">${emp.職級}</span></div></div></div></div>`+
+                `<div class="kpi-dashboard green-border sup-person"><div class="kpi-dashboard-title"><h3>🤝 支援仁雄業績合計</h3><span class="kpi-status green">${d.期間}</span></div>`+
+                `<div class="sup-sum"><div><b>${fmtGP(t.淨利)}</b><span>淨利・佔仁雄 ${t.佔比}%</span></div><div><b>${f1(t.AQ)}</b><span>AQ 點</span></div><div><b>${f1(t.RT)}／${t.RT件}</b><span>RT 點／件</span></div><div><b>${t.手機} 台</b><span>手機・${t.星}★</span></div><div><b>${t.手機案}</b><span>手機案</span></div><div><b>${t.單數}</b><span>單數</span></div></div>`+
+                `<div class="sup-note">${d.註}</div></div>`;
+            document.getElementById('resultCard').classList.add('active');
+        };})();
+
 
         function renderStoreList(){
             const el=document.getElementById('storeList'); if(!el) return;
