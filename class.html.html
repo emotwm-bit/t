@@ -211,7 +211,23 @@
   .z-txt { font-size:12.5px; line-height:1.7; color:#5C5244; margin-top:6px; }
   .z-luck { font-size:11px; color:#9A8F7C; margin-top:6px; display:flex; gap:6px; flex-wrap:wrap; }
   .z-luck b { font-weight:bold; border-radius:99px; padding:1px 7px; }
-  .horo-foot { padding:0 14px 13px; font-size:11.5px; color:#9aa79d; text-align:center; }
+  .horo-foot { padding:2px 14px 15px; font-size:13.5px; font-weight:bold;
+    color:#7A6A4E; text-align:center; letter-spacing:.02em; }
+  /* 收合按鈕 */
+  .zbtn-wrap { text-align:center; margin-top:16px; }
+  #zBtn {
+    font: inherit; font-size:15px; font-weight:bold; cursor:pointer;
+    color:#6B4A8A; background:#F3EDF9; border:1px solid #DDD0EC;
+    border-radius:99px; padding:10px 22px; transition:.15s;
+  }
+  #zBtn:hover { background:#EBE2F5; }
+  #zBtn:focus-visible { outline:2px solid #9B7DBF; outline-offset:2px; }
+  #zBtn .arr { display:inline-block; margin-left:6px; transition:transform .25s; }
+  #zBtn.open .arr { transform:rotate(180deg); }
+  .horo { display:none; }
+  .horo.open { display:block; animation:horoIn .35s ease both; }
+  @keyframes horoIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+  @media (prefers-reduced-motion:reduce){ .horo.open{animation:none} }
   @media (prefers-reduced-motion:reduce){ .z{animation:none} }
   .footer-note {
     text-align: center;
@@ -319,14 +335,20 @@
     </span>
   </div>
 
-  <div class="horo">
+  <div class="zbtn-wrap">
+    <button id="zBtn" type="button" aria-expanded="false" aria-controls="horoBox">
+      🔮 看看今天的小幸運<span class="arr">▾</span>
+    </button>
+  </div>
+
+  <div class="horo" id="horoBox">
     <div class="horo-head">
       <span class="h-date" id="zDate"></span>
       <h3>12星座運勢</h3>
       <div class="h-sub" id="zSub"></div>
     </div>
     <div class="zgrid" id="zGrid"></div>
-    <div class="horo-foot">趣味參考，開心就好</div>
+    <div class="horo-foot">祝福你有美好收穫的一天 🌼</div>
   </div>
 
   <div class="footer-note">資料如有異動請聯繫倚盟管理部更新</div>
@@ -503,12 +525,10 @@ document.getElementById("datePicker").addEventListener("change", renderDay);
 const QUOTES = [
   ['🌿','今天也辛苦了，記得找時間喝口水'],
   ['☀️','早安，希望今天的客人都很好說話'],
-  ['🍀','排班排得好，大家都能好好休息'],
   ['💪','撐過這一波，休假就在前面等你'],
   ['🌸','忙歸忙，午餐還是要好好吃'],
   ['✨','今天的每一單，都是明天的獎金'],
   ['🫖','站了一整天，下班記得把腳抬高'],
-  ['🌙','該休的假要休，身體是自己的'],
   ['🎯','目標不是一天衝完的，穩穩來就好'],
   ['🤝','有事互相支援，這就是五間店的默契'],
   ['🌤','有些日子就是比較難，明天會好一點'],
@@ -516,10 +536,8 @@ const QUOTES = [
   ['🧋','辛苦的時候，給自己訂一杯飲料不過分'],
   ['🌟','你做的每件瑣事，都在撐著整間店'],
   ['🍚','吃飽才有力氣，別又跳過一餐'],
-  ['🕊','下班就是下班，訊息明天再回也可以'],
   ['🌻','笑容是最便宜也最有效的成交工具'],
   ['🧭','不確定的時候，問一下比猜一天快'],
-  ['🎈','今天站的每一班，都算數'],
   ['💐','謝謝每一位準時到班的人，真的不容易'],
   /* ↓ 以下為喬安收藏的勵志小語 */
   ['🌱','累了就停一停，但別放棄啊！你正在悄悄扎根呢'],
@@ -631,8 +649,10 @@ function zOf(iso, sign){
     num: 1 + ((h>>>17) % 9) };
 }
 function drawZodiac(){
-  const iso = document.getElementById("datePicker").value;
-  if (!iso) return;
+  /* 一律用「今天」，不跟著班表選的日期走，也看不到未來的運勢 */
+  const t = new Date();
+  const iso = t.getFullYear() + "-" + String(t.getMonth()+1).padStart(2,"0")
+            + "-" + String(t.getDate()).padStart(2,"0");
   const [y,m,dd] = iso.split("-").map(Number);
   const wd = W_ZH[new Date(y, m-1, dd).getDay()];
   document.getElementById("zDate").textContent = m + "/" + dd + "　星期" + wd;
@@ -666,16 +686,23 @@ function drawZodiac(){
   }).join('');
 }
 
-document.getElementById("datePicker").addEventListener("change", drawZodiac);
-["prevBtn","nextBtn","todayBtn"].forEach(id =>
-  document.getElementById(id).addEventListener("click", () => setTimeout(drawZodiac, 0)));
+(function zToggle(){
+  const btn = document.getElementById("zBtn"), box = document.getElementById("horoBox");
+  let drawn = false;
+  btn.addEventListener("click", () => {
+    const open = box.classList.toggle("open");
+    btn.classList.toggle("open", open);
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    if (open && !drawn) { drawZodiac(); drawn = true; }
+    if (open) setTimeout(() => box.scrollIntoView({behavior:"smooth", block:"nearest"}), 60);
+  });
+})();
 
 (function init() {
   const today = new Date();
   const iso = isoOf(today.getFullYear(), today.getMonth()+1, today.getDate());
   document.getElementById("datePicker").value = scheduleData[iso] ? iso : Object.keys(scheduleData).sort().pop();
   renderDay();
-  drawZodiac();
 })();
 </script>
 </body>
