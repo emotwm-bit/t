@@ -692,6 +692,43 @@ table.mpeople tr:hover td.w.we { background: #f7faf7; }
   }
 }
 
+
+/* 手機版日期操作：三顆按鈕縮小並排，不再佔滿兩大排 */
+@media (max-width: 600px) {
+  .controls {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    align-items: stretch;
+    margin: 0 auto 8px;
+  }
+  .controls .date-field {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 8px 12px;
+    font-size: 15px;
+  }
+  .controls button {
+    grid-row: 2;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 8px 4px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.25;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(23, 65, 49, .08);
+  }
+}
+@media (max-width: 380px) {
+  .controls { gap: 6px; }
+  .controls button { padding: 8px 2px; font-size: 12.5px; }
+}
+
 </style>
 </head>
 <body>
