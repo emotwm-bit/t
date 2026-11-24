@@ -496,10 +496,40 @@ button, select, .date-field { -webkit-tap-highlight-color: transparent; }
   table.day-schedule td { padding: 16px 12px; }
 }
 @media (max-width: 700px) {
-  .day-table-scroll { border-radius: 0 0 12px 12px; }
-  table.day-schedule { min-width: 570px; }
-  table.day-schedule th { padding: 12px 7px; }
-  table.day-schedule td { padding: 12px 7px; font-size: 13px; }
+  .day-table-scroll {
+    overflow-x: hidden;
+    border-radius: 0 0 12px 12px;
+  }
+  table.day-schedule {
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+  }
+  table.day-schedule th {
+    padding: 11px 2px;
+    font-size: clamp(11px, 3vw, 13px);
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+  table.day-schedule td {
+    padding: 11px 2px;
+    font-size: clamp(12px, 3.2vw, 14px);
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    word-break: keep-all;
+  }
+  table.day-schedule .sup-tag {
+    font-size: 10px;
+    padding: 1px 5px;
+    white-space: nowrap;
+  }
+  table.day-schedule tr.coef-label td {
+    padding: 9px 5px;
+  }
+  table.day-schedule tr.coef-row td {
+    padding: 11px 2px;
+    font-size: 13px;
+  }
   .date-banner { border-radius: 12px 12px 0 0; }
   .mv-scroll { border-radius: 12px; }
   table.mstaff { min-width: 590px; }
@@ -511,6 +541,11 @@ button, select, .date-field { -webkit-tap-highlight-color: transparent; }
   .controls button { padding: 9px 8px; font-size: 13px; }
   .date-field { font-size: 14px; }
   .legend { gap: 7px 10px; }
+}
+@media (max-width: 380px) {
+  table.day-schedule th { padding: 10px 1px; font-size: 10.5px; }
+  table.day-schedule td { padding: 10px 1px; font-size: 11.5px; }
+  table.day-schedule .sup-tag { font-size: 9px; padding: 1px 3px; }
 }
 
 
