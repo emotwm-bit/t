@@ -783,10 +783,6 @@ table.mpeople tr:hover td.w.we { background: #f7faf7; }
       <span id="mLabel"></span>
       <button type="button" id="mNext">▶</button>
     </div>
-    <div class="mv-sub">
-      <button type="button" data-t="staff" class="on">各店人力</button>
-      <button type="button" data-t="people">全員班表</button>
-    </div>
     <div class="mv-scroll" id="mvBody"></div>
     <div class="mv-note" id="mvNote"></div>
   </div>
@@ -1320,7 +1316,7 @@ function drawZodiac(){
 /* ── 整月總覽 ── */
 const MONTHS = [...new Set(DATES.map(k => k.slice(0, 7)))];
 const SHORT = { "鼎山":"鼎", "陽明":"陽", "後昌":"後", "仁雄":"仁", "凱旋":"凱", "總部":"總" };
-let VIEW = "day", MONTH = "", MTAB = "staff";
+let VIEW = "day", MONTH = "", MTAB = "people";
 
 function monthDates(ym) { return DATES.filter(k => k.startsWith(ym)); }
 
@@ -1351,7 +1347,7 @@ function renderMonth() {
   document.getElementById("mPrev").disabled = i <= 0;
   document.getElementById("mNext").disabled = i >= MONTHS.length - 1;
   document.querySelectorAll(".mv-sub button").forEach(b => b.classList.toggle("on", b.dataset.t === MTAB));
-  if (MTAB === "staff") renderMonthStaff(); else renderMonthPeople();
+  renderMonthPeople();
 }
 
 function renderMonthStaff() {
@@ -1445,9 +1441,7 @@ document.getElementById("mPrev").addEventListener("click", () => {
 document.getElementById("mNext").addEventListener("click", () => {
   const i = MONTHS.indexOf(MONTH); if (i < MONTHS.length - 1) { MONTH = MONTHS[i + 1]; renderMonth(); }
 });
-document.querySelectorAll(".mv-sub button").forEach(b => b.addEventListener("click", () => {
-  MTAB = b.dataset.t; renderMonth();
-}));
+
 
 (function init() {
   const dp = document.getElementById("datePicker");
