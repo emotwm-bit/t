@@ -301,450 +301,12 @@
     color: #6a8a76;
     margin: -6px 0 12px;
   }
-  .controls button:disabled { opacity: .4; cursor: default; }
-
-  /* 我的班 */
-  .me-bar {
-    background: #fff; border: 1px solid var(--border-c); border-radius: 10px;
-    padding: 10px 12px; margin-bottom: 12px; text-align: center;
-  }
-  .me-bar label { font-size: 15px; font-weight: bold; color: var(--header-green-dark); }
-  .me-bar select {
-    margin-left: 6px; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--border-c);
-    font-size: 16px; background: #fff; font-family: inherit;
-  }
-  .me-info { font-size: 14px; color: #3a4a42; margin-top: 8px; line-height: 1.7; }
-  .me-info:empty { display: none; }
-  .me-info b { color: #c2551d; }
-  .me-info .me-part { white-space: nowrap; }
-  .me-info .me-off { color: #d32f2f; font-weight: bold; }
-  td.me { box-shadow: inset 0 0 0 3px #e0662b; font-weight: bold; }
-
-  /* 支援標籤 */
-  .sup-tag {
-    display: block; width: fit-content; margin: 3px auto 0;
-    font-size: 10.5px; font-weight: bold; line-height: 1.5;
-    color: #fff; background: #5b8fc9; border-radius: 99px; padding: 0 6px;
-  }
-
-  /* 人力係數列 */
-  tr.coef-label td {
-    background: #eef5e6; color: #4e7a3e; font-size: 12px; font-weight: bold;
-    padding: 3px 4px; letter-spacing: .1em;
-  }
-  tr.coef-row td.coef-low { background: #f8d4d0; color: #a3271d; }
-
-  /* 圖例 */
-  .legend {
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px;
-    font-size: 12.5px; color: #5c6b62; margin-top: 10px;
-  }
-  .legend span { display: inline-flex; align-items: center; gap: 5px; }
-  .legend i {
-    display: inline-block; width: 14px; height: 14px; border-radius: 3px;
-    border: 1px solid var(--border-c);
-  }
-  .legend .sup-tag { display: inline-block; margin: 0; }
-  /* 每日／整月切換 */
-  .view-tabs { display: flex; justify-content: center; gap: 0; margin: -4px auto 14px;
-    background: #e4dfcc; border-radius: 99px; padding: 3px; width: fit-content; }
-  .view-tabs button { font: inherit; font-size: 15px; font-weight: bold; border: 0; cursor: pointer;
-    background: transparent; color: #5c6b62; padding: 7px 18px; border-radius: 99px; }
-  .view-tabs button.on { background: var(--header-green); color: #fff; }
-  [hidden] { display: none !important; }
-
-  /* 整月總覽 */
-  .mv-head { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 10px; }
-  .mv-head button { background: var(--header-green); color: #fff; border: 0; border-radius: 8px;
-    padding: 6px 14px; font-size: 15px; cursor: pointer; }
-  .mv-head button:disabled { opacity: .35; cursor: default; }
-  #mLabel { font-size: 20px; font-weight: bold; color: #d32f2f; min-width: 120px; text-align: center; }
-  .mv-sub { display: flex; justify-content: center; gap: 8px; margin-bottom: 10px; }
-  .mv-sub button { font: inherit; font-size: 14px; font-weight: bold; cursor: pointer;
-    border: 1px solid var(--border-c); background: #fff; color: #5c6b62; border-radius: 8px; padding: 6px 14px; }
-  .mv-sub button.on { background: #fdf3c7; color: #6b4a00; border-color: #e3c873; }
-  .mv-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(47,107,79,0.12); background: #fff; }
-  .mv-scroll table { box-shadow: none; border-radius: 0; overflow: visible; }
-  .mv-note { text-align: center; font-size: 12.5px; color: #6a8a76; margin-top: 8px; line-height: 1.7; }
-
-  /* 各店人力表 */
-  table.mstaff td { padding: 6px 2px; vertical-align: middle; cursor: pointer; }
-  table.mstaff td.d { font-weight: bold; white-space: nowrap; color: #3a4a42; }
-  table.mstaff td .c { display: block; font-weight: bold; font-size: 14.5px; color: #2e5c1f; }
-  table.mstaff td .n { display: block; font-size: 11px; color: #8a9a91; }
-  table.mstaff td.low { background: #f8d4d0; }
-  table.mstaff td.low .c { color: #a3271d; }
-  table.mstaff tr.we td.d { color: #d32f2f; }
-  table.mstaff tr.today td { box-shadow: inset 0 2px 0 #e0662b, inset 0 -2px 0 #e0662b; }
-  table.mstaff tr:hover td { filter: brightness(.97); }
-  table.mstaff tr.avg td { background: #eef5e6; cursor: default; font-weight: bold; color: #4e7a3e; }
-
-  /* 全員班表：只凸顯「休」和「支援」，原店上班只上淡綠底不寫字 */
-  table.mpeople { width: auto; min-width: 100%; border-collapse: separate; border-spacing: 0; }
-  table.mpeople th, table.mpeople td { padding: 6px 0; min-width: 28px; font-size: 13px;
-    border: 0; border-right: 1px solid #ece7d6; border-bottom: 1px solid #ece7d6; }
-  table.mpeople th { font-size: 12px; line-height: 1.25; cursor: pointer; border-color: var(--header-green-dark); }
-  table.mpeople th.we { background: #3f8f60; }
-  table.mpeople th.today { box-shadow: inset 0 -3px 0 #ffcf7a; }
-  table.mpeople .nm { position: sticky; left: 0; z-index: 1; min-width: 64px; padding: 6px 8px;
-    text-align: left; white-space: nowrap; font-weight: bold; background: #fff;
-    border-right: 1px solid var(--border-c); }
-  table.mpeople th.nm { background: var(--header-green); z-index: 2; cursor: default; }
-  table.mpeople tr.grp td { background: #f4f1e8; color: #2e5c1f; font-weight: bold; text-align: left;
-    padding: 5px 8px; font-size: 12.5px; border-right: 0; }
-  table.mpeople td.w { background: #e3f1e6; }
-  table.mpeople td.w.we { background: #d5eadb; }
-  table.mpeople td.off { background: #fff; color: #d0533f; font-weight: bold; }
-  table.mpeople td.sup { background: #5b8fc9; color: #fff; font-weight: bold; }
-  table.mpeople td.boss { background: #fff6dc; color: #6b4a00; }
-  table.mpeople td.cnt { font-weight: bold; color: #6b4a00; background: #fdf3c7; min-width: 36px; }
-  table.mpeople tr.me td { box-shadow: inset 0 2px 0 #e0662b, inset 0 -2px 0 #e0662b; }
-  table.mpeople tr.me td.nm { color: #c2551d; }
-  .mv-key { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; margin-top: 8px;
-    font-size: 12.5px; color: #5c6b62; }
-  .mv-key span { display: inline-flex; align-items: center; gap: 5px; }
-  .mv-key i { display: inline-grid; place-items: center; width: 22px; height: 18px; border-radius: 3px;
-    font-style: normal; font-size: 11px; font-weight: bold; border: 1px solid #e2dccb; }
-\n/* ===== UI refresh: clean, warm, mobile-first ===== */
-:root{--header-green:#176b52;--header-green-dark:#104b3b;--mint-bg:#f3f7f4;--header-banner:#e9f4ed;--accent-coral:#f4c66b;--accent-coral-dark:#73500c;--border-c:#dce7df;--ink:#20352d;--muted:#71847a;--shadow-soft:0 8px 28px rgba(25,76,56,.08)}
-body{padding:clamp(14px,3vw,30px);color:var(--ink);background:radial-gradient(ellipse at 8% 0%,rgba(211,235,219,.72),transparent 34rem),linear-gradient(180deg,#f5f8f5,#eef4ef);font-size:15px}
-.wrap{max-width:1040px}h1{font-size:clamp(23px,3vw,30px);letter-spacing:.04em;margin:8px 0 20px;color:var(--header-green-dark)}
-h1:before{content:"STORE OPERATIONS  /  TEAM SCHEDULE";display:block;margin-bottom:8px;color:#789386;font-size:10px;font-weight:800;letter-spacing:.2em}
-.view-tabs{margin:0 auto 18px;padding:4px;gap:4px;background:#e3ece5;border:1px solid #d7e4da}.view-tabs button{min-height:42px;padding:9px 22px;transition:background .18s,color .18s,box-shadow .18s}.view-tabs button.on{background:var(--header-green);box-shadow:0 3px 9px rgba(23,107,82,.2)}
-.me-bar,.edit-panel,.horo,.mv-scroll,table:not(.mpeople):not(.mstaff){border:1px solid var(--border-c);box-shadow:var(--shadow-soft)}
-.me-bar{padding:15px 18px;margin-bottom:18px;border-radius:14px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.me-bar label{color:var(--header-green-dark)}.me-bar select,.controls select{border:1px solid #d5e2d8;border-radius:10px;padding:9px 12px;color:var(--ink)}.me-info{margin:0;flex:1 1 100%}
-.controls{gap:9px;margin:0 auto 8px}.controls button,.mv-head button{background:var(--header-green);border-radius:10px;padding:10px 15px;font-weight:700;box-shadow:0 3px 8px rgba(23,107,82,.12);transition:transform .15s,background .15s}.controls button:hover:not(:disabled),.mv-head button:hover:not(:disabled){background:var(--header-green-dark);transform:translateY(-1px)}
-.date-field{border:1px solid #d5e2d8;border-radius:10px;padding:10px 14px;box-shadow:0 2px 6px rgba(25,76,56,.04);font-weight:700}.date-hint{color:var(--muted);margin:2px 0 14px}
-.date-banner{padding:15px 18px;border:1px solid #d6e8da;border-bottom:0;border-radius:14px 14px 0 0;background:linear-gradient(120deg,#e6f3e9,#f4f8ed);color:var(--header-green-dark);font-size:clamp(19px,2.5vw,24px);letter-spacing:.03em}
-table:not(.mpeople):not(.mstaff){border-radius:0 0 14px 14px;box-shadow:var(--shadow-soft)}th{background:var(--header-green);border-color:#236f58;padding:13px 7px;font-size:14px}td{padding:13px 7px;border-color:#e7eee8;background:#fff;font-size:14px;line-height:1.55}td.mgr-cell{background:#fff2d5;color:#79550c}tr.coef-row td{background:#e8f3df;color:#35632b}td.me{box-shadow:inset 0 0 0 2px #e07843}
-.legend,.mv-key{gap:8px 16px;color:#60756a}.legend{margin:13px 0 20px}.legend i,.mv-key i{border-color:#d8e4da}
-.quote{margin-top:20px;padding:16px 18px;border:1px solid #e0eae1;border-radius:14px;background:rgba(255,255,255,.78)}.quote .q-lbl{color:#668b73}.quote .q-line{font-size:15px;background:none;-webkit-text-fill-color:var(--ink);color:var(--ink)}.quote .q-ico{animation:none}
-.zbtn-wrap{margin:16px 0 0}#zBtn{color:var(--header-green-dark);background:#e8f2eb;border:1px solid #d2e3d7;padding:11px 20px}#zBtn:hover{background:#dcece1}.horo{border-radius:14px;margin-top:12px}.horo-head{background:#f8f5ed}.z{border-color:#e8e4d9}.footer-note{margin:24px 0 8px;color:#82948a}
-.mv-head{margin:8px 0 14px}#mLabel{color:var(--header-green-dark);font-size:22px}.mv-sub button{border-radius:10px;padding:8px 16px}.mv-sub button.on{background:#e8f2eb;border-color:#c8dfcf;color:var(--header-green-dark)}.mv-scroll{border-radius:14px}
-table.mstaff th{padding:11px 5px}table.mstaff td{padding:9px 4px}table.mpeople th,table.mpeople td{border-color:#e7eee8}table.mpeople th{background:var(--header-green)}table.mpeople th.we{background:#328268}table.mpeople .nm{background:#fff}table.mpeople th.nm{background:var(--header-green)}table.mpeople tr.grp td{background:#edf4ee;color:var(--header-green-dark)}table.mpeople td.w{background:#e8f3eb}table.mpeople td.w.we{background:#dcece1}table.mpeople td.off{color:#c45c4b}table.mpeople td.sup{background:#548bb8}table.mpeople td.boss{background:#fff3d8}table.mpeople td.cnt{background:#f4f0df;color:#725a1b}
-.edit-panel{border-radius:14px}.edit-store textarea{border-color:#d7e3da;border-radius:9px}.btn-save{background:var(--header-green)}.btn-cancel{background:#edf3ee}:focus-visible{outline:3px solid rgba(52,139,105,.35);outline-offset:2px}
-@media(max-width:600px){body{padding:12px}h1{margin-bottom:16px}.view-tabs{width:100%}.view-tabs button{flex:1;padding-inline:8px;font-size:14px}.me-bar{padding:13px}.me-bar label{display:flex;align-items:center;justify-content:space-between;width:100%;gap:8px}.me-bar select{flex:1;min-width:0}.controls{display:grid;grid-template-columns:1fr 1fr}.date-field{grid-column:1/-1;grid-row:1;width:100%}.controls button{min-height:42px}.date-banner{padding:13px 8px}th{padding:10px 3px;font-size:12px}td{padding:10px 3px;font-size:12px}.legend{justify-content:flex-start;font-size:11.5px}.quote{padding:14px}.mv-head{gap:10px}#mLabel{min-width:0;font-size:19px}.mv-sub button{flex:1;padding:8px 6px}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
-
-
-/* ===== Final refinement: enterprise finish + balanced responsive layout ===== */
-:root {
-  --header-green: #175c48;
-  --header-green-dark: #123f34;
-  --mint-bg: #f3f6f3;
-  --border-c: #dce5de;
-  --shadow-soft: 0 10px 30px rgba(23, 65, 49, .075);
-}
-body { background: #f2f5f2; }
-.wrap { max-width: 1120px; }
-h1 { font-weight: 800; }
-h1::before { color: #81958a; }
-.view-tabs { box-shadow: 0 2px 8px rgba(25,76,56,.035); }
-.me-bar { background: rgba(255,255,255,.94); }
-.me-bar label { font-size: 14px; }
-.me-bar select { min-height: 42px; }
-.controls button, .mv-head button { min-height: 42px; }
-.controls button:focus-visible, .mv-head button:focus-visible,
-.view-tabs button:focus-visible, .mv-sub button:focus-visible,
-#zBtn:focus-visible { outline: 3px solid rgba(39,123,91,.28); outline-offset: 2px; }
-.date-field { min-height: 42px; }
-.date-banner { font-weight: 800; }
-.day-table-scroll {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  border: 1px solid var(--border-c);
-  border-radius: 0 0 14px 14px;
-  background: #fff;
-  box-shadow: var(--shadow-soft);
-}
-table.day-schedule {
-  min-width: 100%;
-  width: 100%;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  table-layout: fixed;
-}
-table.day-schedule th { padding: 14px 8px; letter-spacing: .025em; }
-table.day-schedule td { padding: 13px 8px; overflow-wrap: anywhere; }
-table.day-schedule tbody tr:not(.coef-label):not(.coef-row):nth-child(even) td { background: #fbfdfb; }
-table.day-schedule td.mgr-cell { background: #fff2d8 !important; }
-table.day-schedule tr.coef-label td { background: #f0f5ed; color: #58764c; }
-table.day-schedule tr.coef-row td { background: #e8f2e5; }
-table.day-schedule tr.coef-row td.coef-low { background: #f9e2de; color: #a33e32; }
-.sup-tag { background: #477fa8; letter-spacing: .02em; padding: 1px 8px; }
-.legend { padding: 0 2px; }
-.mv-scroll { max-width: 100%; }
-.mv-scroll table { margin: 0; }
-table.mstaff { min-width: 620px; }
-table.mstaff th { position: sticky; top: 0; z-index: 1; }
-table.mpeople { min-width: max-content; }
-table.mpeople th { position: sticky; top: 0; z-index: 2; }
-table.mpeople th.nm { z-index: 4; }
-table.mpeople .nm { min-width: 76px; }
-table.mpeople td, table.mpeople th { min-width: 32px; }
-.mv-note { color: #73867b; }
-.quote { box-shadow: 0 4px 16px rgba(25,76,56,.035); }
-.horo { box-shadow: var(--shadow-soft); }
-.footer-note { letter-spacing: .025em; }
-button, select, .date-field { -webkit-tap-highlight-color: transparent; }
-@media (min-width: 900px) {
-  .controls { gap: 12px; }
-  .date-field { min-width: 190px; }
-  .day-table-scroll { overflow-x: visible; }
-  table.day-schedule td { padding: 16px 12px; }
-}
-@media (max-width: 700px) {
-  .day-table-scroll {
-    overflow-x: hidden;
-    border-radius: 0 0 12px 12px;
-  }
-  table.day-schedule {
-    width: 100%;
-    min-width: 0;
-    table-layout: fixed;
-  }
-  table.day-schedule th {
-    padding: 11px 2px;
-    font-size: clamp(11px, 3vw, 13px);
-    line-height: 1.3;
-    overflow-wrap: anywhere;
-  }
-  table.day-schedule td {
-    padding: 11px 2px;
-    font-size: clamp(12px, 3.2vw, 14px);
-    line-height: 1.45;
-    overflow-wrap: anywhere;
-    word-break: keep-all;
-  }
-  table.day-schedule .sup-tag {
-    font-size: 10px;
-    padding: 1px 5px;
-    white-space: nowrap;
-  }
-  table.day-schedule tr.coef-label td {
-    padding: 9px 5px;
-  }
-  table.day-schedule tr.coef-row td {
-    padding: 11px 2px;
-    font-size: 13px;
-  }
-  .date-banner { border-radius: 12px 12px 0 0; }
-  .mv-scroll { border-radius: 12px; }
-  table.mstaff { min-width: 590px; }
-  .mv-note { font-size: 12px; }
-}
-@media (max-width: 380px) {
-  body { padding: 9px; }
-  h1 { font-size: 21px; }
-  .controls button { padding: 9px 8px; font-size: 13px; }
-  .date-field { font-size: 14px; }
-  .legend { gap: 7px 10px; }
-}
-@media (max-width: 380px) {
-  table.day-schedule th { padding: 10px 1px; font-size: 10.5px; }
-  table.day-schedule td { padding: 10px 1px; font-size: 11.5px; }
-  table.day-schedule .sup-tag { font-size: 9px; padding: 1px 3px; }
-}
-
-
-/* ===== 全員班表：降噪閱讀模式 ===== */
-.mv-scroll:has(table.mpeople) {
-  background: #fff;
-  border-color: #dfe7e1;
-}
-table.mpeople {
-  border-spacing: 0;
-  border-collapse: separate;
-  background: #fff;
-}
-table.mpeople th,
-table.mpeople td {
-  min-width: 34px;
-  height: 36px;
-  padding: 6px 2px;
-  border-right: 1px solid #edf1ed;
-  border-bottom: 1px solid #edf1ed;
-  font-size: 12px;
-  color: #52645a;
-  background: #fff;
-}
-table.mpeople th {
-  height: 42px;
-  color: #fff;
-  background: #315f4e;
-  border-color: #426f5e;
-  font-weight: 650;
-}
-table.mpeople th.we { background: #315f4e; }
-table.mpeople th.today {
-  background: #244d3e;
-  box-shadow: inset 0 -3px 0 #c8d9ce;
-}
-table.mpeople .nm {
-  min-width: 82px;
-  padding: 7px 10px;
-  color: #34483d;
-  background: #fff;
-  text-align: left;
-  font-size: 12.5px;
-  font-weight: 650;
-  border-right: 1px solid #dfe7e1;
-}
-table.mpeople th.nm {
-  color: #fff;
-  background: #315f4e;
-  border-right-color: #426f5e;
-}
-table.mpeople tr.grp td {
-  height: 30px;
-  padding: 5px 10px;
-  color: #557064;
-  background: #f3f6f3;
-  border-bottom: 1px solid #e5ebe6;
-  font-size: 11.5px;
-  font-weight: 750;
-  letter-spacing: .08em;
-  text-align: left;
-}
-table.mpeople tr.grp .nm {
-  color: #557064;
-  background: #f3f6f3;
-}
-table.mpeople td.w,
-table.mpeople td.w.we {
-  color: transparent;
-  background: #fff;
-}
-table.mpeople td.off {
-  color: #a56c61;
-  background: #faf8f6;
-  font-weight: 650;
-}
-table.mpeople td.sup {
-  color: #315d50;
-  background: #e8f0eb;
-  font-weight: 700;
-}
-table.mpeople td.boss {
-  color: #536b5d;
-  background: #f4f6f3;
-  font-weight: 700;
-}
-table.mpeople td.cnt {
-  min-width: 42px;
-  color: #536b5d;
-  background: #f5f7f5;
-  font-weight: 700;
-  border-left: 1px solid #dfe7e1;
-}
-table.mpeople tr.me td {
-  box-shadow: inset 0 1px 0 #a8c4b2, inset 0 -1px 0 #a8c4b2;
-}
-table.mpeople tr.me td.nm {
-  color: #245c46;
-  background: #edf4ef;
-  box-shadow: inset 3px 0 0 #5c9275, inset 0 1px 0 #a8c4b2, inset 0 -1px 0 #a8c4b2;
-}
-table.mpeople tr:hover td.w,
-table.mpeople tr:hover td.w.we { background: #f7faf7; }
-.mv-key {
-  justify-content: flex-start;
-  padding: 10px 12px;
-  border: 1px solid #e5ebe6;
-  border-radius: 10px;
-  background: #fafcf9;
-  gap: 8px 16px;
-  font-size: 11.5px;
-}
-.mv-key i {
-  width: 20px;
-  height: 17px;
-  border-radius: 4px;
-  border: 1px solid #dfe7e1;
-}
-.mv-note { line-height: 1.8; }
-@media (max-width: 700px) {
-  table.mpeople th,
-  table.mpeople td { min-width: 34px; height: 35px; }
-  table.mpeople .nm { min-width: 76px; padding-left: 8px; }
-  table.mpeople th { font-size: 11px; }
-  .mv-key { justify-content: flex-start; }
-}
-
-
-/* 全員班表：滑鼠移到某位人員的任一欄，整排以柔和薄荷綠凸顯，不使用黑色反相 */
-@media (hover: hover) and (pointer: fine) {
-  table.mpeople tbody tr:not(.grp):hover > td {
-    background: #dceee3 !important;
-    color: #214f3d !important;
-    box-shadow: inset 0 1px 0 #b8d7c2, inset 0 -1px 0 #b8d7c2;
-  }
-  table.mpeople tbody tr:not(.grp):hover > td.nm {
-    z-index: 4;
-    background: #cfe6d7 !important;
-    color: #174a36 !important;
-    box-shadow: inset 3px 0 0 #4f9870, inset 0 1px 0 #b8d7c2, inset 0 -1px 0 #b8d7c2;
-  }
-  table.mpeople tbody tr:not(.grp) > td {
-    transition: background-color .12s ease, color .12s ease, box-shadow .12s ease;
-  }
-}
-
-
-/* 手機版日期操作：三顆按鈕縮小並排，不再佔滿兩大排 */
-@media (max-width: 600px) {
-  .controls {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
-    align-items: stretch;
-    margin: 0 auto 8px;
-  }
-  .controls .date-field {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    width: 100%;
-    min-width: 0;
-    min-height: 44px;
-    padding: 8px 12px;
-    font-size: 15px;
-  }
-  .controls button {
-    grid-row: 2;
-    width: 100%;
-    min-width: 0;
-    min-height: 44px;
-    padding: 8px 4px;
-    border-radius: 10px;
-    font-size: 14px;
-    line-height: 1.25;
-    white-space: nowrap;
-    box-shadow: 0 2px 6px rgba(23, 65, 49, .08);
-  }
-}
-@media (max-width: 380px) {
-  .controls { gap: 6px; }
-  .controls button { padding: 8px 2px; font-size: 12.5px; }
-}
-
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>倚盟電訊 門市班表查詢</h1>
-  <div class="view-tabs" role="tablist">
-    <button type="button" id="tabDay" class="on">📅 每日班表</button>
-    <button type="button" id="tabMonth">🗓 整月總覽</button>
-  </div>
+  <h1>倚盟電訊 每日班表查詢</h1>
 
-  <div class="me-bar">
-    <label>👤 我是<select id="meSel"><option value="">（選自己的名字）</option></select></label>
-    <div class="me-info" id="meInfo"></div>
-  </div>
-
-  <div id="dayView">
   <div class="controls">
     <button id="prevBtn">◀ 前一天</button>
     <span class="date-field" id="dateField">
@@ -756,10 +318,8 @@ table.mpeople tr:hover td.w.we { background: #f7faf7; }
   </div>
   <div class="date-hint">📅 點選上方日期欄可直接挑選日期</div>
 
-
   <div class="date-banner" id="dateBanner">2026/8/2 星期日</div>
-  <div class="day-table-scroll" role="region" aria-label="每日門市班表，可左右滑動查看" tabindex="0">
-  <table class="day-schedule">
+  <table>
     <thead>
       <tr id="headerRow"></tr>
     </thead>
@@ -767,25 +327,6 @@ table.mpeople tr:hover td.w.we { background: #f7faf7; }
       <tr id="bodyRow"></tr>
     </tbody>
   </table>
-  </div>
-  <div class="legend">
-    <span><i style="background:#ffe6a3"></i>店經理／督導</span>
-    <span><i style="background:#D9E1F2"></i>新人</span>
-    <span><span class="sup-tag">支援</span>從別店調來</span>
-    <span><i style="background:#fff;box-shadow:inset 0 0 0 3px #e0662b"></i>我</span>
-    <span><i style="background:#f8d4d0"></i>人力係數偏低</span>
-  </div>
-  </div>
-
-  <div id="monthView" hidden>
-    <div class="mv-head">
-      <button type="button" id="mPrev">◀</button>
-      <span id="mLabel"></span>
-      <button type="button" id="mNext">▶</button>
-    </div>
-    <div class="mv-scroll" id="mvBody"></div>
-    <div class="mv-note" id="mvNote"></div>
-  </div>
 
   <div class="quote">
     <span class="q-txt">
@@ -821,7 +362,7 @@ const NAME_COEF = {
   "黃庭鈞":1.3, "劉芳廷":1.1, "邱雨蔚":1.1, "林庭逸":0.85,
   "郭家維":1.0, "黃閔聖":1.1, "秦曼芯":0.85,
   "黃傑稜":1.2, "郭紳鴻":1.0, "石佳穎":1.1, "蔡冠廷":0.85,
-  "陳宛姍":1.3, "黃子珊":1.1, "林瑞献":0.85, "劉宗翰":0.8, "林文怡":0.6
+  "陳宛姍":1.3, "黃子珊":1.1, "林瑞献":0.85, "劉宗翰":0.8, "林文怡":0.6, "蔡冠廷":0.85
 };
 const NAME_BG = { "林文怡": "#D9E1F2" };
 
@@ -844,41 +385,12 @@ function rankOf(name, store) {
 }
 const WEEKDAY_ZH = ["日","一","二","三","四","五","六"];
 
-const DEFAULT_SCHEDULE = {"2026-08-01": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州"], "陽明": ["黃庭鈞", "劉芳廷"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献"], "總部": ["姚東妍"]}, "coef": {"鼎山": 3.15, "陽明": 2.4, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.25}}, "2026-08-02": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献"], "總部": []}, "coef": {"鼎山": 2.95, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.3, "凱旋": 3.25}}, "2026-08-03": {"weekday": "一", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["邱雨蔚", "黃閔聖"], "後昌": ["黃庭鈞", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃子珊", "方若帆", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.95, "陽明": 2.2, "後昌": 2.15, "仁雄": 2.95, "凱旋": 3.1}}, "2026-08-04": {"weekday": "二", "stores": {"鼎山": ["陳亭安", "凃彥州", "劉宗翰"], "陽明": ["黃庭鈞", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["黃子珊", "方若帆", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.75, "陽明": 2.4, "後昌": 1.85, "仁雄": 3.05, "凱旋": 3.15}}, "2026-08-05": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗"], "陽明": ["劉芳廷", "林庭逸", "林瑞献"], "後昌": ["郭家維", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "方若帆", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 2.8, "後昌": 2.95, "仁雄": 3.15, "凱旋": 4.6}}, "2026-08-06": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎"], "凱旋": ["陳宛姍", "方若帆", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 1.95, "後昌": 1.95, "仁雄": 2.3, "凱旋": 3.35}}, "2026-08-07": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州"], "陽明": ["黃庭鈞", "劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["郭紳鴻", "石佳穎", "邱雨蔚"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 3.25, "後昌": 2.1, "仁雄": 3.2, "凱旋": 4.05}}, "2026-08-08": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["黃庭鈞", "郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃子珊", "方若帆", "劉宗翰"], "總部": ["曾芳新"]}, "coef": {"鼎山": 2.4, "陽明": 1.95, "後昌": 3.15, "仁雄": 2.95, "凱旋": 3.1}}, "2026-08-09": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "凃彥州", "劉宗翰"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "方若帆"], "總部": []}, "coef": {"鼎山": 2.75, "陽明": 2.2, "後昌": 1.95, "仁雄": 3.05, "凱旋": 3.6}}, "2026-08-10": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州"], "陽明": ["黃庭鈞", "劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "方若帆", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 3.25, "後昌": 2.95, "仁雄": 3.3, "凱旋": 3.35}}, "2026-08-11": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗"], "陽明": ["黃庭鈞", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "石佳穎", "劉芳廷"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 2.4, "後昌": 2.1, "仁雄": 3.4, "凱旋": 4.05}}, "2026-08-12": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗"], "陽明": ["劉芳廷", "邱雨蔚", "林庭逸"], "後昌": ["黃庭鈞", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["黃子珊", "方若帆", "林瑞献", "劉宗翰"], "總部": ["廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 3.05, "後昌": 3.25, "仁雄": 3.05, "凱旋": 3.95}}, "2026-08-13": {"weekday": "四", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃子珊", "方若帆", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.95, "陽明": 1.95, "後昌": 1.85, "仁雄": 2.95, "凱旋": 3.15}}, "2026-08-14": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "方若帆", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 3.05, "後昌": 1.85, "仁雄": 3.15, "凱旋": 4.6}}, "2026-08-15": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "凃彥州", "林庭逸"], "陽明": ["黃庭鈞", "劉芳廷"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献", "劉宗翰"], "總部": ["廖宛如"]}, "coef": {"鼎山": 3.0, "陽明": 2.4, "後昌": 2.1, "仁雄": 3.3, "凱旋": 4.05}}, "2026-08-16": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "高琦茗"], "陽明": ["黃庭鈞", "劉芳廷"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["黃子珊", "方若帆", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 2.3, "陽明": 2.4, "後昌": 1.95, "仁雄": 3.05, "凱旋": 3.95}}, "2026-08-17": {"weekday": "一", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "方若帆", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.95, "陽明": 3.05, "後昌": 2.95, "仁雄": 3.05, "凱旋": 3.3}}, "2026-08-18": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "林瑞献"], "凱旋": ["黃庭鈞", "陳宛姍", "方若帆"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 1.95, "後昌": 1.85, "仁雄": 2.95, "凱旋": 3.8}}, "2026-08-19": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["黃庭鈞", "郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 1.95, "後昌": 3.4, "仁雄": 3.15, "凱旋": 4.05}}, "2026-08-20": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗"], "陽明": ["黃庭鈞", "劉芳廷", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 3.25, "後昌": 1.95, "仁雄": 3.05, "凱旋": 3.2}}, "2026-08-21": {"weekday": "五", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃庭鈞", "黃閔聖"], "仁雄": ["郭紳鴻", "石佳穎", "秦曼芯"], "凱旋": ["黃子珊", "方若帆", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.95, "陽明": 2.2, "後昌": 2.4, "仁雄": 2.95, "凱旋": 3.15}}, "2026-08-22": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["陳宛姍", "方若帆", "林瑞献"], "總部": ["姚東妍"]}, "coef": {"鼎山": 3.25, "陽明": 2.2, "後昌": 1.85, "仁雄": 3.15, "凱旋": 3.35}}, "2026-08-23": {"weekday": "日", "stores": {"鼎山": ["黃庭鈞", "劉家妘", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "方若帆", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 3.45, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.05, "凱旋": 4.15}}, "2026-08-24": {"weekday": "一", "stores": {"鼎山": ["高琦茗", "凃彥州"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃庭鈞", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 1.85, "陽明": 1.95, "後昌": 3.25, "仁雄": 3.3, "凱旋": 3.2}}, "2026-08-25": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "方若帆", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 2.2, "後昌": 1.85, "仁雄": 2.95, "凱旋": 4.4}}, "2026-08-26": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "方若帆", "林瑞献"], "總部": ["廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 2.2, "後昌": 1.85, "仁雄": 3.15, "凱旋": 3.35}}, "2026-08-27": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "石佳穎", "林瑞献"], "凱旋": ["黃庭鈞", "黃子珊", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.15, "凱旋": 3.2}}, "2026-08-28": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "劉宗翰"], "凱旋": ["黃子珊", "方若帆", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.0, "凱旋": 3.15}}, "2026-08-29": {"weekday": "六", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "方若帆", "劉宗翰"], "總部": ["廖宛如"]}, "coef": {"鼎山": 2.95, "陽明": 2.2, "後昌": 1.95, "仁雄": 2.95, "凱旋": 4.4}}, "2026-08-30": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "高琦茗"], "陽明": ["黃庭鈞", "邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["陳宛姍", "方若帆", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 2.1, "陽明": 3.25, "後昌": 1.85, "仁雄": 2.95, "凱旋": 4.15}}, "2026-08-31": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "黃子珊", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 3.05, "後昌": 2.95, "仁雄": 3.15, "凱旋": 4.55}}, "2026-09-01": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["黃庭鈞", "黃子珊", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.15, "陽明": 2.2, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.25}}, "2026-09-02": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 1.95, "後昌": 1.95, "仁雄": 2.1, "凱旋": 3.2}}, "2026-09-03": {"weekday": "四", "stores": {"鼎山": ["陳亭安", "高琦茗"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃庭鈞", "郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.1, "陽明": 1.95, "後昌": 3.15, "仁雄": 3.3, "凱旋": 2.95}}, "2026-09-04": {"weekday": "五", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["黃庭鈞", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "蔡冠廷", "林庭逸"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.95, "陽明": 2.4, "後昌": 2.1, "仁雄": 2.9, "凱旋": 2.95}}, "2026-09-05": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "黃子珊", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 3.15, "陽明": 2.2, "後昌": 1.95, "仁雄": 3.15, "凱旋": 4.05}}, "2026-09-06": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "黃子珊"], "總部": []}, "coef": {"鼎山": 2.15, "陽明": 1.95, "後昌": 1.85, "仁雄": 2.95, "凱旋": 3.7}}, "2026-09-07": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 1.95, "後昌": 2.95, "仁雄": 3.05, "凱旋": 3.2}}, "2026-09-08": {"weekday": "二", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["黃庭鈞", "劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.95, "陽明": 3.25, "後昌": 2.1, "仁雄": 3.3, "凱旋": 2.95}}, "2026-09-09": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "黃子珊", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 2.2, "後昌": 1.85, "仁雄": 2.95, "凱旋": 3.25}}, "2026-09-10": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州", "林文怡"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["黃庭鈞", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 1.95, "後昌": 3.25, "仁雄": 3.15, "凱旋": 2.75}}, "2026-09-11": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗", "林文怡"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": ["廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.15, "凱旋": 3.2}}, "2026-09-12": {"weekday": "六", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "劉宗翰"], "凱旋": ["黃庭鈞", "陳宛姍", "林瑞献"], "總部": []}, "coef": {"鼎山": 2.95, "陽明": 2.2, "後昌": 2.1, "仁雄": 3.0, "凱旋": 3.45}}, "2026-09-13": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "凃彥州", "林文怡"], "陽明": ["黃庭鈞", "劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 3.5, "後昌": 1.95, "仁雄": 3.05, "凱旋": 2.95}}, "2026-09-14": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州", "林文怡"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "黃子珊"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 1.95, "後昌": 1.85, "仁雄": 2.95, "凱旋": 3.7}}, "2026-09-15": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗", "林文怡"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.15, "凱旋": 2.75}}, "2026-09-16": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 2.2, "後昌": 1.95, "仁雄": 2.95, "凱旋": 2.75}}, "2026-09-17": {"weekday": "四", "stores": {"鼎山": ["陳亭安", "凃彥州", "林文怡"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "林瑞献"], "凱旋": ["黃庭鈞", "陳宛姍", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 1.95, "陽明": 1.95, "後昌": 1.85, "仁雄": 2.95, "凱旋": 3.4}}, "2026-09-18": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州", "林文怡"], "陽明": ["黃庭鈞", "劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 3.25, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.2}}, "2026-09-19": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗", "林文怡"], "陽明": ["劉芳廷", "邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "黃子珊", "林瑞献"], "總部": []}, "coef": {"鼎山": 3.4, "陽明": 3.05, "後昌": 2.95, "仁雄": 3.15, "凱旋": 4.55}}, "2026-09-20": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃庭鈞", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 3.25, "陽明": 2.2, "後昌": 3.25, "仁雄": 3.3, "凱旋": 2.95}}, "2026-09-21": {"weekday": "一", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州", "林文怡"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.95, "陽明": 1.95, "後昌": 1.85, "仁雄": 2.95, "凱旋": 2.75}}, "2026-09-22": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "高琦茗", "林文怡"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.3, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.25}}, "2026-09-23": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州", "林文怡"], "陽明": ["劉芳廷", "邱雨蔚", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "黃子珊"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 3.05, "後昌": 1.95, "仁雄": 3.15, "凱旋": 3.7}}, "2026-09-24": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["黃庭鈞", "邱雨蔚", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 3.25, "後昌": 1.95, "仁雄": 3.3, "凱旋": 2.95}}, "2026-09-25": {"weekday": "五", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州", "林文怡"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "林瑞献"], "凱旋": ["黃庭鈞", "陳宛姍", "劉宗翰"], "總部": []}, "coef": {"鼎山": 2.95, "陽明": 2.2, "後昌": 1.85, "仁雄": 2.95, "凱旋": 3.4}}, "2026-09-26": {"weekday": "六", "stores": {"鼎山": ["陳亭安", "高琦茗", "林文怡"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 2.1, "陽明": 1.95, "後昌": 2.1, "仁雄": 2.95, "凱旋": 2.75}}, "2026-09-27": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "高琦茗"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "蔡冠廷", "凃彥州"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 2.3, "陽明": 1.95, "後昌": 2.1, "仁雄": 2.9, "凱旋": 2.75}}, "2026-09-28": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "黃子珊"], "總部": []}, "coef": {"鼎山": 3.25, "陽明": 2.2, "後昌": 1.95, "仁雄": 3.05, "凱旋": 3.7}}, "2026-09-29": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗", "林文怡"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃庭鈞", "郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "邱雨蔚"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 1.95, "後昌": 3.15, "仁雄": 2.95, "凱旋": 3.5}}, "2026-09-30": {"weekday": "三", "stores": {"鼎山": ["陳亭安", "高琦茗", "林文怡"], "陽明": ["黃庭鈞", "劉芳廷", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "凃彥州"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.1, "陽明": 3.25, "後昌": 1.85, "仁雄": 3.15, "凱旋": 2.95}}, "2026-10-01": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["郭紳鴻", "高琦茗", "劉宗翰"], "凱旋": ["黃庭鈞", "黃子珊", "林瑞献", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 1.95, "後昌": 2.1, "仁雄": 2.8, "凱旋": 3.25}}, "2026-10-02": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "高琦茗"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 1.95, "後昌": 1.85, "仁雄": 3.2, "凱旋": 3.25}}, "2026-10-03": {"weekday": "六", "stores": {"鼎山": ["陳亭安", "凃彥州"], "陽明": ["黃庭鈞", "劉芳廷"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "邱雨蔚"], "凱旋": ["陳宛姍", "劉宗翰", "蔡冠廷"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 2.4, "後昌": 1.95, "仁雄": 3.3, "凱旋": 2.95}}, "2026-10-04": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["黃庭鈞", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "高琦茗", "邱雨蔚"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰", "林文怡"], "總部": []}, "coef": {"鼎山": 3.0, "陽明": 2.15, "後昌": 2.1, "仁雄": 3.3, "凱旋": 3.2}}, "2026-10-05": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "林庭逸"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.15, "陽明": 2.2, "後昌": 1.85, "仁雄": 2.85, "凱旋": 2.75}}, "2026-10-06": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "林瑞献"], "凱旋": ["黃庭鈞", "黃子珊", "秦曼芯"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.25}}, "2026-10-07": {"weekday": "三", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "高琦茗"], "凱旋": ["黃庭鈞", "陳宛姍", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 2.2, "後昌": 1.95, "仁雄": 3.2, "凱旋": 3.4}}, "2026-10-08": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["黃庭鈞", "郭家維"], "仁雄": ["黃傑稜", "高琦茗", "秦曼芯"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 1.95, "後昌": 2.3, "仁雄": 3.05, "凱旋": 2.95}}, "2026-10-09": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃庭鈞", "郭家維"], "仁雄": ["黃傑稜", "郭紳鴻", "凃彥州"], "凱旋": ["黃子珊", "林瑞献", "黃閔聖"], "總部": []}, "coef": {"鼎山": 2.4, "陽明": 1.95, "後昌": 2.3, "仁雄": 3.05, "凱旋": 3.05}}, "2026-10-10": {"weekday": "六", "stores": {"鼎山": ["陳亭安", "蔡冠廷", "林文怡"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["郭紳鴻", "高琦茗", "凃彥州"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 2.2, "後昌": 2.1, "仁雄": 2.85, "凱旋": 2.75}}, "2026-10-11": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "蔡冠廷", "林文怡"], "陽明": ["黃庭鈞", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "高琦茗", "林庭逸"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": []}, "coef": {"鼎山": 2.15, "陽明": 2.4, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.2}}, "2026-10-12": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["黃庭鈞", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "林庭逸"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 2.4, "後昌": 1.95, "仁雄": 3.05, "凱旋": 2.95}}, "2026-10-13": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "凃彥州", "林文怡"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "陳亭安"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.15, "陽明": 1.95, "後昌": 1.85, "仁雄": 3.3, "凱旋": 3.25}}, "2026-10-14": {"weekday": "三", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃庭鈞", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "黃閔聖"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 2.2, "後昌": 2.15, "仁雄": 3.1, "凱旋": 2.75}}, "2026-10-15": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["黃庭鈞", "黃閔聖"], "仁雄": ["黃傑稜", "高琦茗", "劉芳廷"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 1.95, "後昌": 2.4, "仁雄": 3.3, "凱旋": 3.2}}, "2026-10-16": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "林瑞献"], "凱旋": ["黃庭鈞", "陳宛姍", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.4, "陽明": 1.95, "後昌": 1.95, "仁雄": 3.05, "凱旋": 3.4}}, "2026-10-17": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "蔡冠廷"], "凱旋": ["黃庭鈞", "黃子珊", "林瑞献", "林文怡"], "總部": []}, "coef": {"鼎山": 2.4, "陽明": 1.95, "後昌": 1.85, "仁雄": 2.85, "凱旋": 3.25}}, "2026-10-18": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "凃彥州", "林文怡"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["郭紳鴻", "高琦茗", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 1.95, "後昌": 2.1, "仁雄": 2.85, "凱旋": 3.2}}, "2026-10-19": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "高琦茗", "劉宗翰"], "凱旋": ["陳宛姍", "林瑞献", "秦曼芯"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 2.2, "後昌": 2.1, "仁雄": 3.0, "凱旋": 3.0}}, "2026-10-20": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃庭鈞", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "凃彥州"], "凱旋": ["黃子珊", "林瑞献", "林文怡", "郭家維"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.4, "陽明": 2.2, "後昌": 2.15, "仁雄": 3.05, "凱旋": 2.95}}, "2026-10-21": {"weekday": "三", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃庭鈞", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "黃閔聖"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 1.95, "後昌": 2.15, "仁雄": 3.1, "凱旋": 3.25}}, "2026-10-22": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "高琦茗"], "凱旋": ["黃庭鈞", "陳宛姍", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.2, "凱旋": 3.4}}, "2026-10-23": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "黃閔聖", "林文怡"], "陽明": ["劉芳廷", "邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "林瑞献"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.4, "陽明": 3.05, "後昌": 1.85, "仁雄": 3.05, "凱旋": 3.2}}, "2026-10-24": {"weekday": "六", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "高琦茗"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 2.8, "陽明": 3.05, "後昌": 2.95, "仁雄": 3.2, "凱旋": 2.75}}, "2026-10-25": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "凃彥州"], "陽明": ["黃庭鈞", "劉芳廷"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 2.4, "後昌": 1.85, "仁雄": 3.05, "凱旋": 3.25}}, "2026-10-26": {"weekday": "一", "stores": {"鼎山": ["陳亭安", "凃彥州"], "陽明": ["黃庭鈞", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "劉芳廷"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 2.4, "後昌": 1.95, "仁雄": 3.1, "凱旋": 2.95}}, "2026-10-27": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "高琦茗"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.2, "凱旋": 3.2}}, "2026-10-28": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "黃子珊"], "凱旋": ["黃庭鈞", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 1.95, "後昌": 1.85, "仁雄": 3.3, "凱旋": 2.95}}, "2026-10-29": {"weekday": "四", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["郭紳鴻", "秦曼芯", "黃子珊"], "凱旋": ["黃庭鈞", "陳宛姍", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 1.95, "後昌": 2.1, "仁雄": 2.95, "凱旋": 3.45}}, "2026-10-30": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "凃彥州"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "陳亭安", "邱雨蔚"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.15, "陽明": 1.95, "後昌": 1.95, "仁雄": 3.2, "凱旋": 2.95}}, "2026-10-31": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃庭鈞", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "郭家維"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰", "林文怡"], "總部": []}, "coef": {"鼎山": 2.4, "陽明": 2.2, "後昌": 2.15, "仁雄": 3.2, "凱旋": 3.2}}, "2026-11-01": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["黃庭鈞", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "高琦茗"], "凱旋": ["黃子珊", "林瑞献", "林文怡", "邱雨蔚"], "總部": []}, "coef": {"鼎山": 3.0, "陽明": 2.15, "後昌": 2.1, "仁雄": 3.2, "凱旋": 3.65}}, "2026-11-02": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["黃庭鈞", "劉芳廷"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "林庭逸"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 2.4, "後昌": 1.95, "仁雄": 2.85, "凱旋": 2.75}}, "2026-11-03": {"weekday": "二", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "秦曼芯"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.05, "凱旋": 2.95}}, "2026-11-04": {"weekday": "三", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "高琦茗", "劉宗翰"], "凱旋": ["陳宛姍", "黃子珊", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.0, "凱旋": 3.0}}, "2026-11-05": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "黃子珊"], "凱旋": ["黃庭鈞", "陳宛姍", "林瑞献", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 2.2, "後昌": 1.85, "仁雄": 3.1, "凱旋": 4.05}}, "2026-11-06": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "黃子珊", "林瑞献"], "凱旋": ["黃庭鈞", "陳宛姍", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 2.2, "後昌": 1.95, "仁雄": 2.95, "凱旋": 3.2}}, "2026-11-07": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["郭紳鴻", "高琦茗", "劉宗翰"], "凱旋": ["黃子珊", "林瑞献", "林文怡"], "總部": []}, "coef": {"鼎山": 2.4, "陽明": 1.95, "後昌": 2.1, "仁雄": 2.8, "凱旋": 2.55}}, "2026-11-08": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "蔡冠廷"], "陽明": ["黃庭鈞", "劉芳廷"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["高琦茗", "凃彥州", "林庭逸"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 2.4, "後昌": 2.1, "仁雄": 2.7, "凱旋": 2.95}}, "2026-11-09": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃庭鈞", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "郭家維"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 1.95, "後昌": 2.15, "仁雄": 3.0, "凱旋": 3.8}}, "2026-11-10": {"weekday": "二", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃庭鈞", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "黃閔聖"], "凱旋": ["陳宛姍", "黃子珊", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 2.2, "後昌": 2.15, "仁雄": 3.3, "凱旋": 3.0}}, "2026-11-11": {"weekday": "三", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "高琦茗"], "凱旋": ["黃庭鈞", "陳宛姍", "林瑞献", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.2, "凱旋": 4.05}}, "2026-11-12": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "林庭逸"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.4, "陽明": 2.2, "後昌": 1.85, "仁雄": 3.05, "凱旋": 2.75}}, "2026-11-13": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "凃彥州"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃庭鈞", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "郭家維"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.15, "陽明": 1.95, "後昌": 2.15, "仁雄": 3.0, "凱旋": 3.8}}, "2026-11-14": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["黃庭鈞", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰", "林文怡"], "總部": []}, "coef": {"鼎山": 2.4, "陽明": 1.95, "後昌": 3.25, "仁雄": 3.05, "凱旋": 3.55}}, "2026-11-15": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "高琦茗", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "林瑞献"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 2.2, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.45}}, "2026-11-16": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "劉芳廷"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.15, "陽明": 1.95, "後昌": 1.85, "仁雄": 3.3, "凱旋": 3.8}}, "2026-11-17": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "凃彥州"], "陽明": ["黃庭鈞", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "秦曼芯"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.15, "陽明": 2.15, "後昌": 2.1, "仁雄": 3.05, "凱旋": 2.75}}, "2026-11-18": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "邱雨蔚"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 1.95, "後昌": 1.95, "仁雄": 3.1, "凱旋": 2.95}}, "2026-11-19": {"weekday": "四", "stores": {"鼎山": ["黃庭鈞", "劉家妘", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "劉宗翰"], "凱旋": ["陳宛姍", "黃子珊", "林文怡"], "總部": ["姚東妍", "曾芳新"]}, "coef": {"鼎山": 3.45, "陽明": 2.2, "後昌": 1.95, "仁雄": 3.0, "凱旋": 3.0}}, "2026-11-20": {"weekday": "五", "stores": {"鼎山": ["陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "林瑞献"], "凱旋": ["陳宛姍", "黃子珊", "林文怡"], "總部": ["姚東妍", "曾芳新"]}, "coef": {"鼎山": 1.95, "陽明": 2.2, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.0}}, "2026-11-21": {"weekday": "六", "stores": {"鼎山": ["陳亭安", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "林瑞献"], "凱旋": ["黃庭鈞", "黃子珊", "劉宗翰", "林文怡"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 1.95, "後昌": 1.85, "仁雄": 2.85, "凱旋": 3.8}}, "2026-11-22": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "凃彥州"], "凱旋": ["黃庭鈞", "陳宛姍", "劉宗翰", "林文怡"], "總部": []}, "coef": {"鼎山": 2.15, "陽明": 1.95, "後昌": 1.95, "仁雄": 2.85, "凱旋": 4.0}}, "2026-11-23": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "凃彥州"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.4, "陽明": 1.95, "後昌": 1.95, "仁雄": 3.05, "凱旋": 2.95}}, "2026-11-24": {"weekday": "二", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "高琦茗", "林瑞献"], "凱旋": ["陳宛姍", "黃子珊", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.0}}, "2026-11-25": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["黃庭鈞", "林瑞献"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "劉宗翰"], "凱旋": ["黃子珊", "林文怡", "劉芳廷"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 2.15, "後昌": 1.85, "仁雄": 3.0, "凱旋": 2.8}}, "2026-11-26": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "劉宗翰"], "凱旋": ["黃庭鈞", "黃子珊", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 1.95, "後昌": 1.95, "仁雄": 2.8, "凱旋": 3.0}}, "2026-11-27": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "凃彥州"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "陳亭安"], "凱旋": ["林瑞献", "劉宗翰", "黃閔聖"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.15, "陽明": 1.95, "後昌": 1.85, "仁雄": 3.3, "凱旋": 2.75}}, "2026-11-28": {"weekday": "六", "stores": {"鼎山": ["陳亭安", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["黃庭鈞", "黃子珊", "林瑞献", "林文怡"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.85}}, "2026-11-29": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃庭鈞", "郭家維"], "仁雄": ["黃傑稜", "郭紳鴻", "秦曼芯"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献", "林文怡"], "總部": []}, "coef": {"鼎山": 3.25, "陽明": 2.2, "後昌": 2.3, "仁雄": 3.05, "凱旋": 3.85}}, "2026-11-30": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃庭鈞", "郭家維"], "仁雄": ["郭紳鴻", "高琦茗", "秦曼芯"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 2.2, "後昌": 2.3, "仁雄": 2.85, "凱旋": 3.8}}};
+const DEFAULT_SCHEDULE = {"2026-08-01": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州"], "陽明": ["黃庭鈞", "劉芳廷"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献"], "總部": ["姚東妍"]}, "coef": {"鼎山": 3.15, "陽明": 2.4, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.25}}, "2026-08-02": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献"], "總部": []}, "coef": {"鼎山": 2.95, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.3, "凱旋": 3.25}}, "2026-08-03": {"weekday": "一", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["邱雨蔚", "黃閔聖"], "後昌": ["黃庭鈞", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃子珊", "方若帆", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.95, "陽明": 2.2, "後昌": 2.15, "仁雄": 2.95, "凱旋": 3.1}}, "2026-08-04": {"weekday": "二", "stores": {"鼎山": ["陳亭安", "凃彥州", "劉宗翰"], "陽明": ["黃庭鈞", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["黃子珊", "方若帆", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.75, "陽明": 2.4, "後昌": 1.85, "仁雄": 3.05, "凱旋": 3.15}}, "2026-08-05": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗"], "陽明": ["劉芳廷", "林庭逸", "林瑞献"], "後昌": ["郭家維", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "方若帆", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 2.8, "後昌": 2.95, "仁雄": 3.15, "凱旋": 4.6}}, "2026-08-06": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎"], "凱旋": ["陳宛姍", "方若帆", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 1.95, "後昌": 1.95, "仁雄": 2.3, "凱旋": 3.35}}, "2026-08-07": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州"], "陽明": ["黃庭鈞", "劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["郭紳鴻", "石佳穎", "邱雨蔚"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 3.25, "後昌": 2.1, "仁雄": 3.2, "凱旋": 4.05}}, "2026-08-08": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["黃庭鈞", "郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃子珊", "方若帆", "劉宗翰"], "總部": ["曾芳新"]}, "coef": {"鼎山": 2.4, "陽明": 1.95, "後昌": 3.15, "仁雄": 2.95, "凱旋": 3.1}}, "2026-08-09": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "凃彥州", "劉宗翰"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "方若帆"], "總部": []}, "coef": {"鼎山": 2.75, "陽明": 2.2, "後昌": 1.95, "仁雄": 3.05, "凱旋": 3.6}}, "2026-08-10": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州"], "陽明": ["黃庭鈞", "劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "方若帆", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 3.25, "後昌": 2.95, "仁雄": 3.3, "凱旋": 3.35}}, "2026-08-11": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗"], "陽明": ["黃庭鈞", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "石佳穎", "劉芳廷"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 2.4, "後昌": 2.1, "仁雄": 3.4, "凱旋": 4.05}}, "2026-08-12": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗"], "陽明": ["劉芳廷", "邱雨蔚", "林庭逸"], "後昌": ["黃庭鈞", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["黃子珊", "方若帆", "林瑞献", "劉宗翰"], "總部": ["廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 3.05, "後昌": 3.25, "仁雄": 3.05, "凱旋": 3.95}}, "2026-08-13": {"weekday": "四", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃子珊", "方若帆", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.95, "陽明": 1.95, "後昌": 1.85, "仁雄": 2.95, "凱旋": 3.15}}, "2026-08-14": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "方若帆", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 3.05, "後昌": 1.85, "仁雄": 3.15, "凱旋": 4.6}}, "2026-08-15": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "凃彥州", "林庭逸"], "陽明": ["黃庭鈞", "劉芳廷"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献", "劉宗翰"], "總部": ["廖宛如"]}, "coef": {"鼎山": 3.0, "陽明": 2.4, "後昌": 2.1, "仁雄": 3.3, "凱旋": 4.05}}, "2026-08-16": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "高琦茗"], "陽明": ["黃庭鈞", "劉芳廷"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["黃子珊", "方若帆", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 2.3, "陽明": 2.4, "後昌": 1.95, "仁雄": 3.05, "凱旋": 3.95}}, "2026-08-17": {"weekday": "一", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "方若帆", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.95, "陽明": 3.05, "後昌": 2.95, "仁雄": 3.05, "凱旋": 3.3}}, "2026-08-18": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "林瑞献"], "凱旋": ["黃庭鈞", "陳宛姍", "方若帆"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 1.95, "後昌": 1.85, "仁雄": 2.95, "凱旋": 3.8}}, "2026-08-19": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["黃庭鈞", "郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 1.95, "後昌": 3.4, "仁雄": 3.15, "凱旋": 4.05}}, "2026-08-20": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗"], "陽明": ["黃庭鈞", "劉芳廷", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 3.25, "後昌": 1.95, "仁雄": 3.05, "凱旋": 3.2}}, "2026-08-21": {"weekday": "五", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃庭鈞", "黃閔聖"], "仁雄": ["郭紳鴻", "石佳穎", "秦曼芯"], "凱旋": ["黃子珊", "方若帆", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.95, "陽明": 2.2, "後昌": 2.4, "仁雄": 2.95, "凱旋": 3.15}}, "2026-08-22": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["陳宛姍", "方若帆", "林瑞献"], "總部": ["姚東妍"]}, "coef": {"鼎山": 3.25, "陽明": 2.2, "後昌": 1.85, "仁雄": 3.15, "凱旋": 3.35}}, "2026-08-23": {"weekday": "日", "stores": {"鼎山": ["黃庭鈞", "劉家妘", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "方若帆", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 3.45, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.05, "凱旋": 4.15}}, "2026-08-24": {"weekday": "一", "stores": {"鼎山": ["高琦茗", "凃彥州"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃庭鈞", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 1.85, "陽明": 1.95, "後昌": 3.25, "仁雄": 3.3, "凱旋": 3.2}}, "2026-08-25": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "方若帆", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 2.2, "後昌": 1.85, "仁雄": 2.95, "凱旋": 4.4}}, "2026-08-26": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "方若帆", "林瑞献"], "總部": ["廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 2.2, "後昌": 1.85, "仁雄": 3.15, "凱旋": 3.35}}, "2026-08-27": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "石佳穎", "林瑞献"], "凱旋": ["黃庭鈞", "黃子珊", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.15, "凱旋": 3.2}}, "2026-08-28": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "劉宗翰"], "凱旋": ["黃子珊", "方若帆", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.0, "凱旋": 3.15}}, "2026-08-29": {"weekday": "六", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "方若帆", "劉宗翰"], "總部": ["廖宛如"]}, "coef": {"鼎山": 2.95, "陽明": 2.2, "後昌": 1.95, "仁雄": 2.95, "凱旋": 4.4}}, "2026-08-30": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "高琦茗"], "陽明": ["黃庭鈞", "邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["陳宛姍", "方若帆", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 2.1, "陽明": 3.25, "後昌": 1.85, "仁雄": 2.95, "凱旋": 4.15}}, "2026-08-31": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "黃子珊", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 3.05, "後昌": 2.95, "仁雄": 3.15, "凱旋": 4.55}}, "2026-09-01": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["黃庭鈞", "黃子珊", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.15, "陽明": 2.2, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.25}}, "2026-09-02": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 1.95, "後昌": 1.95, "仁雄": 2.1, "凱旋": 3.2}}, "2026-09-03": {"weekday": "四", "stores": {"鼎山": ["陳亭安", "高琦茗"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃庭鈞", "郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.1, "陽明": 1.95, "後昌": 3.15, "仁雄": 3.3, "凱旋": 2.95}}, "2026-09-04": {"weekday": "五", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["黃庭鈞", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "蔡冠廷", "林庭逸"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.95, "陽明": 2.4, "後昌": 2.1, "仁雄": 2.9, "凱旋": 2.95}}, "2026-09-05": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "黃子珊", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 3.15, "陽明": 2.2, "後昌": 1.95, "仁雄": 3.15, "凱旋": 4.05}}, "2026-09-06": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "黃子珊"], "總部": []}, "coef": {"鼎山": 2.15, "陽明": 1.95, "後昌": 1.85, "仁雄": 2.95, "凱旋": 3.7}}, "2026-09-07": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 1.95, "後昌": 2.95, "仁雄": 3.05, "凱旋": 3.2}}, "2026-09-08": {"weekday": "二", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["黃庭鈞", "劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.95, "陽明": 3.25, "後昌": 2.1, "仁雄": 3.3, "凱旋": 2.95}}, "2026-09-09": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "黃子珊", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 2.2, "後昌": 1.85, "仁雄": 2.95, "凱旋": 3.25}}, "2026-09-10": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州", "林文怡"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["黃庭鈞", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 1.95, "後昌": 3.25, "仁雄": 3.15, "凱旋": 2.75}}, "2026-09-11": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗", "林文怡"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": ["廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.15, "凱旋": 3.2}}, "2026-09-12": {"weekday": "六", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "劉宗翰"], "凱旋": ["黃庭鈞", "陳宛姍", "林瑞献"], "總部": []}, "coef": {"鼎山": 2.95, "陽明": 2.2, "後昌": 2.1, "仁雄": 3.0, "凱旋": 3.45}}, "2026-09-13": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "凃彥州", "林文怡"], "陽明": ["黃庭鈞", "劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 3.5, "後昌": 1.95, "仁雄": 3.05, "凱旋": 2.95}}, "2026-09-14": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州", "林文怡"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "黃子珊"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 1.95, "後昌": 1.85, "仁雄": 2.95, "凱旋": 3.7}}, "2026-09-15": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗", "林文怡"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.15, "凱旋": 2.75}}, "2026-09-16": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 2.2, "後昌": 1.95, "仁雄": 2.95, "凱旋": 2.75}}, "2026-09-17": {"weekday": "四", "stores": {"鼎山": ["陳亭安", "凃彥州", "林文怡"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "林瑞献"], "凱旋": ["黃庭鈞", "陳宛姍", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 1.95, "陽明": 1.95, "後昌": 1.85, "仁雄": 2.95, "凱旋": 3.4}}, "2026-09-18": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州", "林文怡"], "陽明": ["黃庭鈞", "劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 3.25, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.2}}, "2026-09-19": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗", "林文怡"], "陽明": ["劉芳廷", "邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "黃子珊", "林瑞献"], "總部": []}, "coef": {"鼎山": 3.4, "陽明": 3.05, "後昌": 2.95, "仁雄": 3.15, "凱旋": 4.55}}, "2026-09-20": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃庭鈞", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 3.25, "陽明": 2.2, "後昌": 3.25, "仁雄": 3.3, "凱旋": 2.95}}, "2026-09-21": {"weekday": "一", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州", "林文怡"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.95, "陽明": 1.95, "後昌": 1.85, "仁雄": 2.95, "凱旋": 2.75}}, "2026-09-22": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "高琦茗", "林文怡"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.3, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.25}}, "2026-09-23": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "高琦茗", "凃彥州", "林文怡"], "陽明": ["劉芳廷", "邱雨蔚", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "黃子珊"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.15, "陽明": 3.05, "後昌": 1.95, "仁雄": 3.15, "凱旋": 3.7}}, "2026-09-24": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["黃庭鈞", "邱雨蔚", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "石佳穎"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 3.25, "後昌": 1.95, "仁雄": 3.3, "凱旋": 2.95}}, "2026-09-25": {"weekday": "五", "stores": {"鼎山": ["陳亭安", "高琦茗", "凃彥州", "林文怡"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "林瑞献"], "凱旋": ["黃庭鈞", "陳宛姍", "劉宗翰"], "總部": []}, "coef": {"鼎山": 2.95, "陽明": 2.2, "後昌": 1.85, "仁雄": 2.95, "凱旋": 3.4}}, "2026-09-26": {"weekday": "六", "stores": {"鼎山": ["陳亭安", "高琦茗", "林文怡"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 2.1, "陽明": 1.95, "後昌": 2.1, "仁雄": 2.95, "凱旋": 2.75}}, "2026-09-27": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "高琦茗"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "蔡冠廷", "凃彥州"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 2.3, "陽明": 1.95, "後昌": 2.1, "仁雄": 2.9, "凱旋": 2.75}}, "2026-09-28": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "黃子珊"], "總部": []}, "coef": {"鼎山": 3.25, "陽明": 2.2, "後昌": 1.95, "仁雄": 3.05, "凱旋": 3.7}}, "2026-09-29": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "陳亭安", "高琦茗", "林文怡"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃庭鈞", "郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "石佳穎", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "邱雨蔚"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.4, "陽明": 1.95, "後昌": 3.15, "仁雄": 2.95, "凱旋": 3.5}}, "2026-09-30": {"weekday": "三", "stores": {"鼎山": ["陳亭安", "高琦茗", "林文怡"], "陽明": ["黃庭鈞", "劉芳廷", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "石佳穎", "凃彥州"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.1, "陽明": 3.25, "後昌": 1.85, "仁雄": 3.15, "凱旋": 2.95}}, "2026-10-01": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["郭紳鴻", "高琦茗", "劉宗翰"], "凱旋": ["黃庭鈞", "黃子珊", "林瑞献", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 1.95, "後昌": 2.1, "仁雄": 2.8, "凱旋": 3.25}}, "2026-10-02": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "高琦茗"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 1.95, "後昌": 1.85, "仁雄": 3.2, "凱旋": 3.25}}, "2026-10-03": {"weekday": "六", "stores": {"鼎山": ["陳亭安", "凃彥州"], "陽明": ["黃庭鈞", "劉芳廷"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "邱雨蔚"], "凱旋": ["陳宛姍", "劉宗翰", "蔡冠廷"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 2.4, "後昌": 1.95, "仁雄": 3.3, "凱旋": 2.95}}, "2026-10-04": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["黃庭鈞", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "高琦茗", "邱雨蔚"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰", "林文怡"], "總部": []}, "coef": {"鼎山": 3.0, "陽明": 2.15, "後昌": 2.1, "仁雄": 3.3, "凱旋": 3.2}}, "2026-10-05": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "林庭逸"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.15, "陽明": 2.2, "後昌": 1.85, "仁雄": 2.85, "凱旋": 2.75}}, "2026-10-06": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "林瑞献"], "凱旋": ["黃庭鈞", "黃子珊", "秦曼芯"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.25}}, "2026-10-07": {"weekday": "三", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "高琦茗"], "凱旋": ["黃庭鈞", "陳宛姍", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 2.2, "後昌": 1.95, "仁雄": 3.2, "凱旋": 3.4}}, "2026-10-08": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["黃庭鈞", "郭家維"], "仁雄": ["黃傑稜", "高琦茗", "秦曼芯"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 1.95, "後昌": 2.3, "仁雄": 3.05, "凱旋": 2.95}}, "2026-10-09": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃庭鈞", "郭家維"], "仁雄": ["黃傑稜", "郭紳鴻", "凃彥州"], "凱旋": ["黃子珊", "林瑞献", "黃閔聖"], "總部": []}, "coef": {"鼎山": 2.4, "陽明": 1.95, "後昌": 2.3, "仁雄": 3.05, "凱旋": 3.05}}, "2026-10-10": {"weekday": "六", "stores": {"鼎山": ["陳亭安", "蔡冠廷", "林文怡"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["郭紳鴻", "高琦茗", "凃彥州"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 2.2, "後昌": 2.1, "仁雄": 2.85, "凱旋": 2.75}}, "2026-10-11": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "蔡冠廷", "林文怡"], "陽明": ["黃庭鈞", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "高琦茗", "林庭逸"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": []}, "coef": {"鼎山": 2.15, "陽明": 2.4, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.2}}, "2026-10-12": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["黃庭鈞", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "林庭逸"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 2.4, "後昌": 1.95, "仁雄": 3.05, "凱旋": 2.95}}, "2026-10-13": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "凃彥州", "林文怡"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "陳亭安"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.15, "陽明": 1.95, "後昌": 1.85, "仁雄": 3.3, "凱旋": 3.25}}, "2026-10-14": {"weekday": "三", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃庭鈞", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "黃閔聖"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 2.2, "後昌": 2.15, "仁雄": 3.1, "凱旋": 2.75}}, "2026-10-15": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["黃庭鈞", "黃閔聖"], "仁雄": ["黃傑稜", "高琦茗", "劉芳廷"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 1.95, "後昌": 2.4, "仁雄": 3.3, "凱旋": 3.2}}, "2026-10-16": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "林瑞献"], "凱旋": ["黃庭鈞", "陳宛姍", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.4, "陽明": 1.95, "後昌": 1.95, "仁雄": 3.05, "凱旋": 3.4}}, "2026-10-17": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "蔡冠廷"], "凱旋": ["黃庭鈞", "黃子珊", "林瑞献", "林文怡"], "總部": []}, "coef": {"鼎山": 2.4, "陽明": 1.95, "後昌": 1.85, "仁雄": 2.85, "凱旋": 3.25}}, "2026-10-18": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "凃彥州", "林文怡"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["郭紳鴻", "高琦茗", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 1.95, "後昌": 2.1, "仁雄": 2.85, "凱旋": 3.2}}, "2026-10-19": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "高琦茗", "劉宗翰"], "凱旋": ["陳宛姍", "林瑞献", "秦曼芯"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 2.2, "後昌": 2.1, "仁雄": 3.0, "凱旋": 3.0}}, "2026-10-20": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃庭鈞", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "凃彥州"], "凱旋": ["黃子珊", "林瑞献", "林文怡", "郭家維"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.4, "陽明": 2.2, "後昌": 2.15, "仁雄": 3.05, "凱旋": 2.95}}, "2026-10-21": {"weekday": "三", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃庭鈞", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "黃閔聖"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 1.95, "後昌": 2.15, "仁雄": 3.1, "凱旋": 3.25}}, "2026-10-22": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "高琦茗"], "凱旋": ["黃庭鈞", "陳宛姍", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.2, "凱旋": 3.4}}, "2026-10-23": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "黃閔聖", "林文怡"], "陽明": ["劉芳廷", "邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "林瑞献"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.4, "陽明": 3.05, "後昌": 1.85, "仁雄": 3.05, "凱旋": 3.2}}, "2026-10-24": {"weekday": "六", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "高琦茗"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 2.8, "陽明": 3.05, "後昌": 2.95, "仁雄": 3.2, "凱旋": 2.75}}, "2026-10-25": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "凃彥州"], "陽明": ["黃庭鈞", "劉芳廷"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 2.4, "後昌": 1.85, "仁雄": 3.05, "凱旋": 3.25}}, "2026-10-26": {"weekday": "一", "stores": {"鼎山": ["陳亭安", "凃彥州"], "陽明": ["黃庭鈞", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "劉芳廷"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 2.4, "後昌": 1.95, "仁雄": 3.1, "凱旋": 2.95}}, "2026-10-27": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "高琦茗"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.2, "凱旋": 3.2}}, "2026-10-28": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "黃子珊"], "凱旋": ["黃庭鈞", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 1.95, "後昌": 1.85, "仁雄": 3.3, "凱旋": 2.95}}, "2026-10-29": {"weekday": "四", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["郭紳鴻", "秦曼芯", "黃子珊"], "凱旋": ["黃庭鈞", "陳宛姍", "林瑞献"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 1.95, "後昌": 2.1, "仁雄": 2.95, "凱旋": 3.45}}, "2026-10-30": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "凃彥州"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "陳亭安", "邱雨蔚"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.15, "陽明": 1.95, "後昌": 1.95, "仁雄": 3.2, "凱旋": 2.95}}, "2026-10-31": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃庭鈞", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "郭家維"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰", "林文怡"], "總部": []}, "coef": {"鼎山": 2.4, "陽明": 2.2, "後昌": 2.15, "仁雄": 3.2, "凱旋": 3.2}}, "2026-11-01": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["黃庭鈞", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "高琦茗"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献", "林文怡", "邱雨蔚"], "總部": []}, "coef": {"鼎山": 3.0, "陽明": 2.15, "後昌": 2.1, "仁雄": 3.2, "凱旋": 4.95}}, "2026-11-02": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["黃庭鈞", "劉芳廷"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "林庭逸"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 2.4, "後昌": 1.95, "仁雄": 2.85, "凱旋": 2.75}}, "2026-11-03": {"weekday": "二", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "秦曼芯"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.05, "凱旋": 2.95}}, "2026-11-04": {"weekday": "三", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "高琦茗", "劉宗翰"], "凱旋": ["陳宛姍", "黃子珊", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.0, "凱旋": 3.0}}, "2026-11-05": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "黃子珊"], "凱旋": ["黃庭鈞", "陳宛姍", "林瑞献", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 2.2, "後昌": 1.85, "仁雄": 3.1, "凱旋": 4.05}}, "2026-11-06": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "黃子珊", "林瑞献"], "凱旋": ["黃庭鈞", "陳宛姍", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 2.2, "後昌": 1.95, "仁雄": 2.95, "凱旋": 3.2}}, "2026-11-07": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["郭紳鴻", "高琦茗", "劉宗翰"], "凱旋": ["黃子珊", "林瑞献", "林文怡"], "總部": []}, "coef": {"鼎山": 2.4, "陽明": 1.95, "後昌": 2.1, "仁雄": 2.8, "凱旋": 2.55}}, "2026-11-08": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "蔡冠廷"], "陽明": ["黃庭鈞", "劉芳廷"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["高琦茗", "凃彥州", "林庭逸"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 2.4, "後昌": 2.1, "仁雄": 2.7, "凱旋": 2.95}}, "2026-11-09": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃庭鈞", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "郭家維"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 1.95, "後昌": 2.15, "仁雄": 3.0, "凱旋": 3.8}}, "2026-11-10": {"weekday": "二", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃庭鈞", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "黃閔聖"], "凱旋": ["陳宛姍", "黃子珊", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 2.2, "後昌": 2.15, "仁雄": 3.3, "凱旋": 3.0}}, "2026-11-11": {"weekday": "三", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "高琦茗"], "凱旋": ["黃庭鈞", "陳宛姍", "林瑞献", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.2, "凱旋": 4.05}}, "2026-11-12": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "林庭逸"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.4, "陽明": 2.2, "後昌": 1.85, "仁雄": 3.05, "凱旋": 2.75}}, "2026-11-13": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "凃彥州"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃庭鈞", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "郭家維"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.15, "陽明": 1.95, "後昌": 2.15, "仁雄": 3.0, "凱旋": 3.8}}, "2026-11-14": {"weekday": "六", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["黃庭鈞", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰", "林文怡"], "總部": []}, "coef": {"鼎山": 2.4, "陽明": 1.95, "後昌": 3.25, "仁雄": 3.05, "凱旋": 3.55}}, "2026-11-15": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "高琦茗", "蔡冠廷"], "凱旋": ["黃庭鈞", "陳宛姍", "林瑞献"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 2.2, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.45}}, "2026-11-16": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "劉芳廷"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.15, "陽明": 1.95, "後昌": 1.85, "仁雄": 3.3, "凱旋": 3.8}}, "2026-11-17": {"weekday": "二", "stores": {"鼎山": ["劉家妘", "凃彥州"], "陽明": ["黃庭鈞", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "秦曼芯"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.15, "陽明": 2.15, "後昌": 2.1, "仁雄": 3.05, "凱旋": 2.75}}, "2026-11-18": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "邱雨蔚"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 1.95, "後昌": 1.95, "仁雄": 3.1, "凱旋": 2.95}}, "2026-11-19": {"weekday": "四", "stores": {"鼎山": ["黃庭鈞", "劉家妘", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "劉宗翰"], "凱旋": ["陳宛姍", "黃子珊", "林文怡"], "總部": ["姚東妍", "曾芳新"]}, "coef": {"鼎山": 3.45, "陽明": 2.2, "後昌": 1.95, "仁雄": 3.0, "凱旋": 3.0}}, "2026-11-20": {"weekday": "五", "stores": {"鼎山": ["陳亭安", "凃彥州"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "林瑞献"], "凱旋": ["陳宛姍", "黃子珊", "林文怡"], "總部": ["姚東妍", "曾芳新"]}, "coef": {"鼎山": 1.95, "陽明": 2.2, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.0}}, "2026-11-21": {"weekday": "六", "stores": {"鼎山": ["陳亭安", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "林瑞献"], "凱旋": ["黃庭鈞", "黃子珊", "劉宗翰", "林文怡"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 1.95, "後昌": 1.85, "仁雄": 2.85, "凱旋": 3.8}}, "2026-11-22": {"weekday": "日", "stores": {"鼎山": ["劉家妘", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "凃彥州"], "凱旋": ["黃庭鈞", "陳宛姍", "劉宗翰", "林文怡"], "總部": []}, "coef": {"鼎山": 2.15, "陽明": 1.95, "後昌": 1.95, "仁雄": 2.85, "凱旋": 4.0}}, "2026-11-23": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "陳亭安"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "凃彥州"], "凱旋": ["陳宛姍", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.4, "陽明": 1.95, "後昌": 1.95, "仁雄": 3.05, "凱旋": 2.95}}, "2026-11-24": {"weekday": "二", "stores": {"鼎山": ["陳亭安", "凃彥州", "蔡冠廷"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "高琦茗", "林瑞献"], "凱旋": ["陳宛姍", "黃子珊", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.8, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.05, "凱旋": 3.0}}, "2026-11-25": {"weekday": "三", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["黃庭鈞", "林瑞献"], "後昌": ["郭家維", "秦曼芯"], "仁雄": ["黃傑稜", "郭紳鴻", "劉宗翰"], "凱旋": ["黃子珊", "林文怡", "劉芳廷"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 2.15, "後昌": 1.85, "仁雄": 3.0, "凱旋": 2.8}}, "2026-11-26": {"weekday": "四", "stores": {"鼎山": ["劉家妘", "凃彥州", "蔡冠廷"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["黃閔聖", "秦曼芯"], "仁雄": ["郭紳鴻", "高琦茗", "劉宗翰"], "凱旋": ["黃庭鈞", "黃子珊", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.0, "陽明": 1.95, "後昌": 1.95, "仁雄": 2.8, "凱旋": 3.0}}, "2026-11-27": {"weekday": "五", "stores": {"鼎山": ["劉家妘", "凃彥州"], "陽明": ["劉芳廷", "林庭逸"], "後昌": ["郭家維", "黃閔聖", "秦曼芯"], "仁雄": ["黃傑稜", "高琦茗", "陳亭安"], "凱旋": ["黃子珊", "林瑞献", "劉宗翰"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 2.15, "陽明": 1.95, "後昌": 2.95, "仁雄": 3.3, "凱旋": 2.75}}, "2026-11-28": {"weekday": "六", "stores": {"鼎山": ["陳亭安", "凃彥州"], "陽明": ["邱雨蔚", "林庭逸"], "後昌": ["郭家維", "黃閔聖"], "仁雄": ["黃傑稜", "郭紳鴻", "蔡冠廷"], "凱旋": ["黃庭鈞", "林瑞献", "林文怡"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 1.95, "後昌": 2.1, "仁雄": 3.05, "凱旋": 2.75}}, "2026-11-29": {"weekday": "日", "stores": {"鼎山": ["陳亭安", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃庭鈞", "郭家維"], "仁雄": ["黃傑稜", "郭紳鴻", "秦曼芯"], "凱旋": ["陳宛姍", "黃子珊", "林瑞献", "林文怡"], "總部": []}, "coef": {"鼎山": 1.95, "陽明": 2.2, "後昌": 2.3, "仁雄": 3.05, "凱旋": 3.85}}, "2026-11-30": {"weekday": "一", "stores": {"鼎山": ["劉家妘", "陳亭安", "蔡冠廷"], "陽明": ["劉芳廷", "邱雨蔚"], "後昌": ["黃庭鈞", "郭家維"], "仁雄": ["郭紳鴻", "高琦茗", "秦曼芯"], "凱旋": ["陳宛姍", "黃子珊", "劉宗翰", "林文怡"], "總部": ["姚東妍", "廖宛如", "曾芳新"]}, "coef": {"鼎山": 3.25, "陽明": 2.2, "後昌": 2.3, "仁雄": 2.85, "凱旋": 3.8}}};
 
 let scheduleData = DEFAULT_SCHEDULE;
 
-/* 人力係數低於這個數字會標成淡紅色，要調整改這裡 */
-const LOW_COEF = 2.0;
-
 function pad2(n) { return String(n).padStart(2,"0"); }
 function isoOf(y,m,d) { return `${y}-${pad2(m)}-${pad2(d)}`; }
-
-/* 日期加減一律用 UTC 算，避免時區造成跳日 */
-function addDays(iso, n) {
-  const [y, m, d] = iso.split("-").map(Number);
-  const dt = new Date(Date.UTC(y, m - 1, d + n));
-  return dt.toISOString().slice(0, 10);
-}
-function weekdayOf(iso) {
-  const [y, m, d] = iso.split("-").map(Number);
-  return new Date(Date.UTC(y, m - 1, d)).getUTCDay();
-}
-function shortDate(iso) {
-  const [, m, d] = iso.split("-").map(Number);
-  return `${m}/${d}（${WEEKDAY_ZH[weekdayOf(iso)]}）`;
-}
-function todayIso() {
-  const t = new Date();
-  return isoOf(t.getFullYear(), t.getMonth() + 1, t.getDate());
-}
-
-const DATES = Object.keys(scheduleData).sort();
-const FIRST_DATE = DATES[0];
-const LAST_DATE = DATES[DATES.length - 1];
-function clampIso(iso) {
-  return iso < FIRST_DATE ? FIRST_DATE : iso > LAST_DATE ? LAST_DATE : iso;
-}
 
 function formatDateBanner(y, m, d) {
   const dt = new Date(y, m - 1, d);
@@ -892,137 +404,18 @@ function getDayData(iso) {
   return rec;
 }
 
-/* ── 原店判斷：每個人在「該月」最常出現的那間店就是他的原店，
-      在其他店出現就標「支援」。人員調店時會自動跟著變，不用手動維護。 ── */
-const HOME_BY_MONTH = {};
-function homeOf(name, iso) {
-  const ym = iso.slice(0, 7);
-  if (!HOME_BY_MONTH[ym]) {
-    const cnt = {};
-    DATES.filter(k => k.startsWith(ym)).forEach(k => {
-      const st = scheduleData[k].stores;
-      Object.keys(st).forEach(s => st[s].forEach(n => {
-        cnt[n] = cnt[n] || {};
-        cnt[n][s] = (cnt[n][s] || 0) + 1;
-      }));
-    });
-    const home = {};
-    Object.keys(cnt).forEach(n => {
-      home[n] = Object.keys(cnt[n]).sort((a, b) => cnt[n][b] - cnt[n][a])[0];
-    });
-    HOME_BY_MONTH[ym] = home;
-  }
-  return HOME_BY_MONTH[ym][name];
-}
-function isSupport(name, store, iso) {
-  if (name === SUPERVISOR || store === "總部") return false;
-  const h = homeOf(name, iso);
-  return !!h && h !== store;
-}
-
-/* ── 我的班：選的名字存在這支手機上 ── */
-const ME_KEY = "ym-class-me";
-let ME = "";
-try { ME = localStorage.getItem(ME_KEY) || ""; } catch (e) {}
-
-function storeOfOn(name, iso) {
-  const rec = scheduleData[iso];
-  if (!rec) return null;
-  for (const s of Object.keys(rec.stores)) {
-    if (rec.stores[s].includes(name)) return s;
-  }
-  return null;
-}
-
-function buildMeSelect() {
-  const sel = document.getElementById("meSel");
-  const lastHome = {};
-  DATES.forEach(k => {
-    const st = scheduleData[k].stores;
-    Object.keys(st).forEach(s => st[s].forEach(n => { lastHome[n] = homeOf(n, k); }));
-  });
-  /* 最後一個月還有排班的人才列出來（離職的人不會出現） */
-  const lastMonth = LAST_DATE.slice(0, 7);
-  const active = new Set();
-  DATES.filter(k => k.startsWith(lastMonth)).forEach(k => {
-    const st = scheduleData[k].stores;
-    Object.keys(st).forEach(s => st[s].forEach(n => active.add(n)));
-  });
-  if (active.has(SUPERVISOR)) {
-    const g = document.createElement("optgroup");
-    g.label = "督導";
-    const o = document.createElement("option");
-    o.value = SUPERVISOR; o.textContent = SUPERVISOR;
-    g.appendChild(o);
-    sel.appendChild(g);
-  }
-  STORES.forEach(s => {
-    const names = [...active].filter(n => n !== SUPERVISOR && lastHome[n] === s);
-    if (!names.length) return;
-    names.sort((a, b) => rankOf(a, s) - rankOf(b, s));
-    const g = document.createElement("optgroup");
-    g.label = s;
-    names.forEach(n => {
-      const o = document.createElement("option");
-      o.value = n; o.textContent = n;
-      g.appendChild(o);
-    });
-    sel.appendChild(g);
-  });
-  if (ME && active.has(ME)) sel.value = ME; else ME = "";
-  sel.addEventListener("change", () => {
-    ME = sel.value;
-    try { ME ? localStorage.setItem(ME_KEY, ME) : localStorage.removeItem(ME_KEY); } catch (e) {}
-    renderDay();
-    if (VIEW === "month") renderMonth();
-  });
-}
-
-function renderMeInfo(iso) {
-  const box = document.getElementById("meInfo");
-  if (!ME) { box.textContent = ""; return; }
-  const parts = [];
-  const where = storeOfOn(ME, iso);
-  parts.push(where
-    ? `這天在 <b>${where}</b> 上班`
-    : `<span class="me-off">這天休假</span>`);
-
-  /* 這週（週一到週日）上幾天 */
-  const wd = weekdayOf(iso);
-  const mon = addDays(iso, -((wd + 6) % 7));
-  const sun = addDays(mon, 6);
-  let work = 0;
-  for (let k = mon; k <= sun; k = addDays(k, 1)) if (storeOfOn(ME, k)) work++;
-  parts.push(`這週（${shortDate(mon).split("（")[0]}–${shortDate(sun).split("（")[0]}）上 <b>${work}</b> 天`);
-
-  /* 下次休假／下次上班 */
-  let k = addDays(iso, 1), found = "";
-  while (k <= LAST_DATE) {
-    const on = !!storeOfOn(ME, k);
-    if (where ? !on : on) { found = k; break; }
-    k = addDays(k, 1);
-  }
-  if (found) parts.push(where ? `下次休假 <b>${shortDate(found)}</b>` : `下次上班 <b>${shortDate(found)}</b>`);
-  else parts.push(where ? "班表內已無休假日" : "班表內已無上班日");
-  box.innerHTML = parts.map(t => `<span class="me-part">${t}</span>`).join("｜");
-}
-
 function renderDay() {
   const picker = document.getElementById("datePicker");
-  const iso = picker.value;
-  const [y, m, d] = iso.split("-").map(Number);
+  const [y, m, d] = picker.value.split("-").map(Number);
   document.getElementById("dateBanner").textContent = formatDateBanner(y, m, d);
   document.getElementById("dateLabel").textContent = `${y}/${pad2(m)}/${pad2(d)}`;
-  document.getElementById("prevBtn").disabled = iso <= FIRST_DATE;
-  document.getElementById("nextBtn").disabled = iso >= LAST_DATE;
-  renderMeInfo(iso);
 
   const headerRow = document.getElementById("headerRow");
   const tbody = document.getElementById("scheduleBody");
   headerRow.innerHTML = "";
   tbody.innerHTML = "";
 
-  const dayData = getDayData(iso);
+  const dayData = getDayData(isoOf(y, m, d));
 
   if (!dayData) {
     tbody.innerHTML = `<tr><td colspan="6" class="empty-day">尚無此日期資料</td></tr>`;
@@ -1056,31 +449,18 @@ function renderDay() {
     const tr = document.createElement("tr");
     displayCols.forEach(s => {
       const td = document.createElement("td");
-      const name = ordered[s][i] || "";
-      if (name) {
-        td.appendChild(document.createTextNode(name));
-        if (isSupport(name, s, iso)) {
-          const tag = document.createElement("span");
-          tag.className = "sup-tag";
-          tag.textContent = "支援";
-          td.appendChild(tag);
-        }
-        if (NAME_BG[name]) td.style.background = NAME_BG[name];
-        else if (MANAGER_SET.has(name)) td.classList.add("mgr-cell");
-        if (name === ME) td.classList.add("me");
+      const names = ordered[s];
+      const name = names[i] || "";
+      td.textContent = name;
+      if (name && NAME_BG[name]) {
+        td.style.background = NAME_BG[name];
+      } else if (name && MANAGER_SET.has(name)) {
+        td.classList.add("mgr-cell");
       }
       tr.appendChild(td);
     });
     tbody.appendChild(tr);
   }
-
-  const labelRow = document.createElement("tr");
-  labelRow.className = "coef-label";
-  const ltd = document.createElement("td");
-  ltd.colSpan = displayCols.length;
-  ltd.textContent = "▼ 人力係數";
-  labelRow.appendChild(ltd);
-  tbody.appendChild(labelRow);
 
   const coefRow = document.createElement("tr");
   coefRow.className = "coef-row";
@@ -1091,29 +471,34 @@ function renderDay() {
     } else {
       const val = (dayData.coef && dayData.coef[s] !== undefined) ? dayData.coef[s] : 0;
       td.textContent = val.toFixed(2);
-      if (val < LOW_COEF) td.classList.add("coef-low");
     }
     coefRow.appendChild(td);
   });
   tbody.appendChild(coefRow);
 }
 
-function goTo(iso) {
-  document.getElementById("datePicker").value = clampIso(iso);
-  renderDay();
-}
 document.getElementById("prevBtn").addEventListener("click", () => {
-  goTo(addDays(document.getElementById("datePicker").value, -1));
+  const picker = document.getElementById("datePicker");
+  const dt = new Date(picker.value);
+  dt.setDate(dt.getDate() - 1);
+  picker.value = dt.toISOString().slice(0,10);
+  renderDay();
 });
 document.getElementById("nextBtn").addEventListener("click", () => {
-  goTo(addDays(document.getElementById("datePicker").value, 1));
+  const picker = document.getElementById("datePicker");
+  const dt = new Date(picker.value);
+  dt.setDate(dt.getDate() + 1);
+  picker.value = dt.toISOString().slice(0,10);
+  renderDay();
 });
-document.getElementById("todayBtn").addEventListener("click", () => goTo(todayIso()));
-document.getElementById("datePicker").addEventListener("change", () => {
-  const p = document.getElementById("datePicker");
-  if (!p.value) p.value = clampIso(todayIso());
-  goTo(p.value);
+document.getElementById("todayBtn").addEventListener("click", () => {
+  const today = new Date();
+  const iso = isoOf(today.getFullYear(), today.getMonth()+1, today.getDate());
+  const picker = document.getElementById("datePicker");
+  picker.value = scheduleData[iso] ? iso : Object.keys(scheduleData).sort().pop();
+  renderDay();
 });
+document.getElementById("datePicker").addEventListener("change", renderDay);
 
 /* 支援 showPicker 的瀏覽器（電腦版 Chrome/Edge 等）：點整個欄位就打開日曆。
    不支援的舊版：透明的原生欄位仍可直接點，行為不變。 */
@@ -1313,145 +698,11 @@ function drawZodiac(){
   });
 })();
 
-/* ── 整月總覽 ── */
-const MONTHS = [...new Set(DATES.map(k => k.slice(0, 7)))];
-const SHORT = { "鼎山":"鼎", "陽明":"陽", "後昌":"後", "仁雄":"仁", "凱旋":"凱", "總部":"總" };
-let VIEW = "day", MONTH = "", MTAB = "people";
-
-function monthDates(ym) { return DATES.filter(k => k.startsWith(ym)); }
-
-function setView(v) {
-  VIEW = v;
-  document.getElementById("tabDay").classList.toggle("on", v === "day");
-  document.getElementById("tabMonth").classList.toggle("on", v === "month");
-  document.getElementById("dayView").hidden = v !== "day";
-  document.getElementById("monthView").hidden = v !== "month";
-  if (v === "month") {
-    const cur = document.getElementById("datePicker").value.slice(0, 7);
-    if (!MONTH) MONTH = MONTHS.includes(cur) ? cur : MONTHS[MONTHS.length - 1];
-    renderMonth();
-  }
-  try { localStorage.setItem("ym-class-view", v); } catch (e) {}
-}
-
-function jumpToDay(iso) {
-  setView("day");
-  goTo(iso);
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function renderMonth() {
-  const [y, m] = MONTH.split("-").map(Number);
-  document.getElementById("mLabel").textContent = `${y} 年 ${m} 月`;
-  const i = MONTHS.indexOf(MONTH);
-  document.getElementById("mPrev").disabled = i <= 0;
-  document.getElementById("mNext").disabled = i >= MONTHS.length - 1;
-  document.querySelectorAll(".mv-sub button").forEach(b => b.classList.toggle("on", b.dataset.t === MTAB));
-  renderMonthPeople();
-}
-
-function renderMonthStaff() {
-  const days = monthDates(MONTH);
-  const cols = STORES.filter(s => s !== "總部");
-  const today = todayIso();
-  const sum = {}, cnt = {};
-  let h = '<table class="mstaff"><thead><tr><th>日期</th>' +
-    cols.map(s => `<th>${s}</th>`).join("") + '</tr></thead><tbody>';
-  days.forEach(k => {
-    const rec = scheduleData[k], wd = weekdayOf(k);
-    const cls = [(wd === 0 || wd === 6) ? "we" : "", k === today ? "today" : ""].join(" ").trim();
-    h += `<tr data-d="${k}" class="${cls}"><td class="d">${shortDate(k).replace("（", "<br>（")}</td>`;
-    cols.forEach(s => {
-      const c = rec.coef[s] || 0, n = (rec.stores[s] || []).length;
-      sum[s] = (sum[s] || 0) + c; cnt[s] = (cnt[s] || 0) + 1;
-      h += `<td class="${c < LOW_COEF ? "low" : ""}"><span class="c">${c.toFixed(2)}</span><span class="n">${n} 人</span></td>`;
-    });
-    h += '</tr>';
-  });
-  h += '<tr class="avg"><td>平均</td>' +
-    cols.map(s => `<td>${(sum[s] / cnt[s]).toFixed(2)}</td>`).join("") + '</tr>';
-  h += '</tbody></table>';
-  const body = document.getElementById("mvBody");
-  body.innerHTML = h;
-  body.querySelectorAll("tr[data-d]").forEach(tr =>
-    tr.addEventListener("click", () => jumpToDay(tr.dataset.d)));
-  document.getElementById("mvNote").innerHTML =
-    `大字是人力係數、小字是人數；淡紅色＝係數低於 ${LOW_COEF.toFixed(1)}<br>點任一天可跳到當天班表`;
-}
-
-function renderMonthPeople() {
-  const days = monthDates(MONTH);
-  const today = todayIso();
-  /* 這個月有出現的人，依原店分組 */
-  const people = new Set();
-  days.forEach(k => Object.values(scheduleData[k].stores).forEach(ns => ns.forEach(n => people.add(n))));
-  const groups = [];
-  if (people.has(SUPERVISOR)) groups.push(["督導", [SUPERVISOR]]);
-  STORES.forEach(s => {
-    const ns = [...people].filter(n => n !== SUPERVISOR && homeOf(n, days[0]) === s)
-      .sort((a, b) => rankOf(a, s) - rankOf(b, s));
-    if (ns.length) groups.push([s, ns]);
-  });
-
-  let h = '<table class="mpeople"><thead><tr><th class="nm">姓名</th>';
-  days.forEach(k => {
-    const wd = weekdayOf(k), d = Number(k.slice(8));
-    const cls = [(wd === 0 || wd === 6) ? "we" : "", k === today ? "today" : ""].join(" ").trim();
-    h += `<th class="${cls}" data-d="${k}">${d}<br>${WEEKDAY_ZH[wd]}</th>`;
-  });
-  h += '<th>天數</th></tr></thead><tbody>';
-  groups.forEach(([g, ns]) => {
-    h += `<tr class="grp"><td class="nm">${g}</td><td colspan="${days.length + 1}"></td></tr>`;
-    ns.forEach(n => {
-      let work = 0;
-      h += `<tr class="${n === ME ? "me" : ""}"><td class="nm">${n}</td>`;
-      days.forEach(k => {
-        const s = storeOfOn(n, k);
-        if (!s) { h += '<td class="off">休</td>'; return; }
-        work++;
-        const we = [0, 6].includes(weekdayOf(k)) ? " we" : "";
-        if (n === SUPERVISOR) h += `<td class="boss">${SHORT[s] || s}</td>`;
-        else if (isSupport(n, s, k)) h += `<td class="sup">${SHORT[s] || s}</td>`;
-        else h += `<td class="w${we}"></td>`;
-      });
-      h += `<td class="cnt">${work}</td></tr>`;
-    });
-  });
-  h += '</tbody></table>';
-  const body = document.getElementById("mvBody");
-  body.innerHTML = h;
-  body.querySelectorAll("th[data-d]").forEach(th =>
-    th.addEventListener("click", () => jumpToDay(th.dataset.d)));
-  /* 每次開啟全員班表都從 1 號開始，避免手機上看不到月初 */
-  body.scrollLeft = 0;
-  document.getElementById("mvNote").innerHTML =
-    '<div class="mv-key">' +
-    '<span><i style="background:#e3f1e6"></i>在原店上班</span>' +
-    '<span><i style="color:#d0533f;background:#fff">休</i>休假</span>' +
-    '<span><i style="background:#5b8fc9;color:#fff;border-color:#5b8fc9">仁</i>去別店支援（寫支援的店）</span>' +
-    '<span><i style="background:#fff6dc;color:#6b4a00">凱</i>督導當天所在店</span>' +
-    '</div>表格可左右滑動；點上方日期可跳到當天班表';
-}
-
-document.getElementById("tabDay").addEventListener("click", () => setView("day"));
-document.getElementById("tabMonth").addEventListener("click", () => setView("month"));
-document.getElementById("mPrev").addEventListener("click", () => {
-  const i = MONTHS.indexOf(MONTH); if (i > 0) { MONTH = MONTHS[i - 1]; renderMonth(); }
-});
-document.getElementById("mNext").addEventListener("click", () => {
-  const i = MONTHS.indexOf(MONTH); if (i < MONTHS.length - 1) { MONTH = MONTHS[i + 1]; renderMonth(); }
-});
-
-
 (function init() {
-  const dp = document.getElementById("datePicker");
-  dp.min = FIRST_DATE;
-  dp.max = LAST_DATE;
-  buildMeSelect();
-  goTo(todayIso());
-  let v = "day";
-  try { v = localStorage.getItem("ym-class-view") || "day"; } catch (e) {}
-  setView(v === "month" ? "month" : "day");
+  const today = new Date();
+  const iso = isoOf(today.getFullYear(), today.getMonth()+1, today.getDate());
+  document.getElementById("datePicker").value = scheduleData[iso] ? iso : Object.keys(scheduleData).sort().pop();
+  renderDay();
 })();
 </script>
 </body>
