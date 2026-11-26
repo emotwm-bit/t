@@ -304,6 +304,19 @@
     .demo-note{font-size:10.5px;}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+  /* tab-cards-v2 */
+  .tabbar{gap:12px;}
+  .tab{gap:6px;padding:14px 14px 12px;}
+  .tab .badge{display:flex;flex-direction:column;gap:4px;width:100%;margin-top:4px;padding:9px 10px;border-radius:12px;background:rgba(13,19,33,.55);text-align:center;}
+  .tab .badge b{font-size:19px;font-weight:900;line-height:1.15;color:#fff;letter-spacing:.3px;}
+  .tab .badge i{font-style:normal;font-size:11.5px;font-weight:600;line-height:1.35;color:rgba(255,255,255,.85);}
+  @media (max-width:640px){
+    .tabbar{gap:8px;}
+    .tab{min-width:150px;padding:11px 8px 10px;}
+    .tab .badge{padding:7px 6px;}
+    .tab .badge b{font-size:15px;}
+    .tab .badge i{font-size:10.5px;}
+  }
 </style>
 </head>
 <body>
@@ -327,17 +340,17 @@
     <div class="tab active" data-page="season">
       <span class="t1">🏆 季獎金</span>
       <span class="t2">$90,000／店・官方四項</span>
-      <span class="badge b-red">照目前進度：無人四項全過｜鼎山：RT點 85.34%、AQ點 88.89%｜陽明：5G 86.51%、RT點 90.2%、AQ點 86.84%｜後昌：RT點 95.95%、AQ點 68%、好速案 67.5%｜仁雄：AQ點 80.44%｜凱旋：RT點 85.25%</span>
+      <span class="badge b-red"><b>還沒有店過關</b><i>最缺：後昌 好速案 67.5%</i></span>
     </div>
     <div class="tab" data-page="toll">
       <span class="t1">💰 重點策略</span>
       <span class="t2">五項計分・獎懲試算</span>
-      <span class="badge b-red">照進度試算全區 −$5,000｜鼎山 +1・陽明 +1・後昌 -1・仁雄 +1・凱旋 +1</span>
+      <span class="badge b-red"><b>全區 −$5,000</b><i>扣分：後昌 −1</i></span>
     </div>
     <div class="tab" data-page="kpi">
       <span class="t1">🎰 RT KPI獎勵</span>
       <span class="t2">領獎線27%・每門單價跳檔</span>
-      <span class="badge b-red">照進度：仁雄$500・陽明$420・後昌$360・凱旋$360・鼎山$230（RT KPI）</span>
+      <span class="badge b-red"><b>仁雄 $500／門</b><i>最近跳檔：鼎山 差 0.03 分到 $310</i></span>
     </div>
   </div>
 
@@ -349,7 +362,7 @@
         <span class="dest">🎯 目的地：$90,000／店｜官方四項（AQ／RT點／5G／好速）三個月均 ≥100% 且單月 ≥85%（好速免地板）・全有全無</span>
       </div>
       <div style="margin:0 0 14px;padding:14px 16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,209,102,.25);border-radius:14px">
-        <div style="font-size:12px;color:var(--dim);line-height:1.7;margin-bottom:10px">Q4 第2個月（11月）｜10月已結算，季獎金看 10、11、12 三個月平均 ≥100%，<b style="color:var(--gold)">單月不可低於85%</b>（好速免）｜下面的「進度」＝目前做的量 ÷ 今天該到的進度線（目標×25/31）</div>
+        <div style="font-size:12px;color:var(--dim);line-height:1.7;margin-bottom:10px">Q4 第2個月（11月）｜10月已結算，季獎金看 10、11、12 三個月平均 ≥100%，<b style="color:var(--gold)">單月不可低於85%</b>（好速免）｜下面的「進度」＝目前做的量 ÷ 今天該到的進度線（目標×25/30）</div>
         <div style="padding:12px 14px;background:var(--surface-2);border-left:3px solid var(--gold);border-radius:10px">
           <div style="font-size:16px;font-weight:900;margin-bottom:6px">🧭 11/25 進度（11月）：<span class="num" style="color:var(--gold)">尚無店四項全在線</span></div>
           <div style="font-size:12.5px;line-height:1.9;color:var(--text)">
