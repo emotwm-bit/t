@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>門市日結檢核</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root{
+  --bg:#f3f5f4; --surface:#ffffff; --line:#d5dbd8; --fg:#17211d; --muted:#5d6b65;
+  --brand:#d9601a; --brand-ink:#ffffff; --head:#26302c; --head-ink:#f3f5f4;
+  --ok:#17794a; --ok-bg:#e2f3ea; --warn:#8a5a00; --warn-bg:#fbefcf; --bad:#b3261e; --bad-bg:#fbe4e2; --none-bg:#e6eae8;
+  --k-biz:#2563eb; --k-pre:#7c3aed; --k-top:#b7791f; --k-dep:#0d9488; --k-swap:#64748b;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root{
+  --bg:#121816; --surface:#1b2320; --line:#34403b; --fg:#e9efec; --muted:#9aa9a2;
+  --brand:#f08a4b; --brand-ink:#1a0f06; --head:#0c110f; --head-ink:#e9efec;
+  --ok:#6fd3a0; --ok-bg:#153526; --warn:#f0c560; --warn-bg:#3a2e0d; --bad:#ff9a92; --bad-bg:#431b18; --none-bg:#28322e;
+  --k-biz:#7aa7ff; --k-pre:#b79cff; --k-top:#e0b252; --k-dep:#4fd1c5; --k-swap:#a3b1c2;
+  color-scheme:dark } }
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.6}
+.wrap{max-width:720px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:16px}
+h1{font-size:22px;margin:0;font-weight:700}
+.sub{color:var(--muted);font-size:13px;margin:0}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.top{border-top:6px solid var(--brand);padding-top:14px;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+[hidden]{display:none!important}
+.stack{display:flex;flex-direction:column;gap:14px}
+.tabs{display:flex;gap:8px}
+.tabs a{flex:1;text-align:center;padding:10px 4px;font-size:14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);text-decoration:none;font-weight:500;white-space:nowrap}
+.tabs a[aria-current="page"]{background:var(--head);color:var(--head-ink);border-color:var(--head)}
+summary{cursor:pointer;color:var(--muted);font-size:13px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.panel>header{background:var(--head);color:var(--head-ink);padding:8px 14px;font-weight:700;letter-spacing:.08em;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.panel>header button{background:transparent;border-color:currentColor;color:inherit;padding:2px 10px;font-size:13px;letter-spacing:0}
+.panel .body{padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.note{background:var(--none-bg);border-radius:8px;padding:10px 12px;font-size:13px}
+.note.ok{background:var(--ok-bg);color:var(--ok);font-weight:700}
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:700;white-space:nowrap}
+.pill.ok{background:var(--ok-bg);color:var(--ok)} .pill.warn{background:var(--warn-bg);color:var(--warn)} .pill.fail{background:var(--bad-bg);color:var(--bad)}
+ul.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+ul.checks li{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:start}
+ul.checks .mark{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;margin-top:2px}
+.mark.ok{background:var(--ok-bg);color:var(--ok)} .mark.warn{background:var(--warn-bg);color:var(--warn)} .mark.fail{background:var(--bad-bg);color:var(--bad)}
+ul.checks .t{font-weight:500} ul.checks .d{font-size:13px;color:var(--muted)}
+/* 自動檢核：兩欄、相符的只留一行，有問題的才展開 */
+ul.checks.mini{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px}
+ul.checks.mini li.bad{grid-column:1/-1}
+ul.checks.mini .t{font-size:14px}
+.row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+.row.calc{border-top:1px dashed var(--line);padding-top:8px;font-weight:700}
+input,select,textarea,button{font:inherit;color:inherit}
+input[type=text],input[type=password],input[type=date],select,textarea{width:100%;min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px}
+input.amt{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+input[readonly]{opacity:.85}
+textarea{min-height:64px;resize:vertical}
+button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:9px 14px;cursor:pointer;font-weight:500}
+button.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-ink);font-weight:700}
+button[disabled]{opacity:.45;cursor:not-allowed}
+button.x{padding:6px 10px}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field>span{font-size:13px;color:var(--muted)}
+#toast{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));background:var(--head);color:var(--head-ink);border-radius:8px;padding:10px 14px;font-size:14px}
+.val{text-align:right}
+.due{border:2px solid var(--brand);border-radius:8px;padding:10px 12px}
+.due .big{font-size:32px;font-weight:600;line-height:1.3}
+.chk{display:flex;gap:10px;align-items:center;font-weight:700;font-size:16px}
+.chk input{width:22px;height:22px;flex:none;accent-color:var(--brand)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border-radius:999px;padding:7px 14px}
+.chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:var(--brand-ink);font-weight:700}
+.chip[disabled]{opacity:1;cursor:default}
+.me{background:var(--none-bg);border-radius:6px;padding:8px 10px;min-height:39px;font-weight:700}
+#c-dow{color:var(--brand);margin-left:4px}
+
+/* ---------- 色塊：項目名稱就在格子正上方，一塊一種顏色 ---------- */
+.blk{--k:var(--muted);border:1px solid var(--line);border-left:6px solid var(--k);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:6px;background:var(--surface);background:color-mix(in srgb,var(--k) 9%,var(--surface))}
+.blk>.h{font-weight:700;color:var(--k);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:2px 8px;white-space:nowrap}
+.blk>.h small{font-weight:400;color:var(--muted);font-size:12px}
+.k-biz{--k:var(--k-biz)} .k-pre{--k:var(--k-pre)} .k-top{--k:var(--k-top)} .k-dep{--k:var(--k-dep)} .k-swap{--k:var(--k-swap)}
+.k-exp{--k:var(--bad)} .k-cash{--k:var(--brand)} .k-sum{--k:var(--head)}
+.k-sum>.h{color:var(--fg)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:end}
+.tile{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tile>span{font-size:13px;font-weight:500}
+.tile input{font-size:17px;padding:7px 10px}
+.tile.hi input{border:2px solid var(--brand);background:var(--warn-bg);font-weight:600}
+.tile.exp input{border:2px solid var(--bad);background:var(--bad-bg);color:var(--bad);font-weight:600}
+.sumline{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-weight:700}
+.sumline .v{font-family:var(--mono);font-size:20px}
+.agree{border:2px solid var(--bad);background:var(--bad-bg);color:var(--bad);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:6px}
+.agree .chk{font-size:14px;color:var(--bad)} .agree .chk input{accent-color:var(--bad)}
+.st{font-size:13px;font-weight:700} .st.ok{color:var(--ok)} .st.warn{color:var(--warn)} .st.fail{color:var(--bad)}
+.slip{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;gap:8px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:8px}
+.slip>input.amt{grid-column:1/-1;font-size:18px;padding:9px 10px}
+.slip .today[aria-pressed="true"]{background:var(--brand);color:var(--brand-ink)}
+.slip .cal{position:relative;width:44px;height:40px;display:grid;place-items:center;border:1px solid var(--line);border-radius:8px;font-size:20px;background:var(--surface)}
+.slip .cal input{position:absolute;inset:0;width:100%;height:100%;opacity:0;padding:0;border:0;cursor:pointer}
+.slip .dt{font-weight:700}
+.keytag{display:inline-flex;align-items:center;gap:4px;background:#f6d36b;color:#4a3600;border:1px solid #b88a00;border-radius:999px;padding:1px 10px;font-weight:700;font-size:13px;white-space:nowrap}
+#todo ul{margin:0;padding-left:1.2em}
+
+/* ---------- 支出單：一張一張的單據、手寫簽名 ---------- */
+.sigbox{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+canvas.sig{width:100%;max-width:420px;aspect-ratio:8/3;border:2px dashed var(--brand);border-radius:8px;background:#fff;touch-action:none;display:block}
+.sigimg{height:44px;background:#fff;border:1px solid var(--line);border-radius:4px;vertical-align:middle}
+.sgrow{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:13px}
+.vch .cat{font-size:17px}
+.xline{display:flex;justify-content:space-between;gap:8px;font-size:13px}
+.scroll{overflow-x:auto}
+table.pivot{border-collapse:collapse;font-size:13px;min-width:100%}
+table.pivot th,table.pivot td{border:1px solid var(--line);padding:4px 8px;text-align:right;white-space:nowrap;font-family:var(--mono)}
+table.pivot th{font-family:var(--sans);font-weight:500;text-align:left}
+table.pivot tr.sum th,table.pivot tr.sum td{font-weight:700;background:var(--none-bg)}
+table.pivot.det td{font-family:var(--sans);text-align:left;white-space:normal} table.pivot.det td.r{font-family:var(--mono);text-align:right}
+
+/* 鞠躬的小人 */
+#bow{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.55);display:grid;place-items:center;padding:16px}
+#bow .card{background:var(--surface);border-radius:16px;padding:18px 20px;max-width:340px;text-align:center;border:3px solid var(--brand)}
+#bow svg{width:170px;height:auto}
+#bow .say{font-size:20px;font-weight:700;line-height:1.5;margin:6px 0 0}
+#bow .up{transform-origin:100px 150px;animation:bow 2.2s ease-in-out 2}
+@keyframes bow{0%,100%{transform:rotate(0)}35%,65%{transform:rotate(52deg)}}
+@media (prefers-reduced-motion:reduce){#bow .up{animation:none}}
+.slip .today{padding:8px 10px;border-color:var(--brand);color:var(--brand);font-weight:700}
+.step{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;padding:8px 0;border-top:1px dashed var(--line)}
+.step:first-child{border-top:0;padding-top:0}
+.step>.n{width:28px;height:28px;border-radius:50%;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font-weight:700;font-family:var(--mono)}
+.step.off>.n{background:var(--none-bg);color:var(--muted)}
+.step>div{display:flex;flex-direction:column;gap:6px;min-width:0}
+
+/* ---------- 小橘子：填寫教學 ---------- */
+#orange{flex:none;display:flex;flex-direction:column;align-items:center;gap:0;border:0;background:none;padding:0;font-size:12px;font-weight:700;color:var(--brand)}
+#orange .o{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:30px;line-height:1;background:var(--warn-bg);border:2px solid var(--brand)}
+#guide{width:min(680px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:0;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--fg)}
+#guide::backdrop{background:rgba(0,0,0,.5)}
+#guide .g-head{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--brand);color:var(--brand-ink);padding:10px 14px;font-weight:700;font-size:17px}
+#guide .g-head button{background:transparent;border-color:currentColor;color:inherit;padding:4px 12px}
+#guide .g-body{padding:14px;display:flex;flex-direction:column;gap:16px}
+#guide h2{font-size:15px;margin:0 0 6px;padding:4px 10px;background:var(--head);color:var(--head-ink);border-radius:6px;letter-spacing:.06em}
+#guide ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+#guide li{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:start}
+#guide .n{width:26px;height:26px;border-radius:50%;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font-size:13px;font-weight:700;font-family:var(--mono)}
+#guide .k{font-weight:700}
+#guide .v{font-size:14px;color:var(--muted)}
+#guide .tag{display:inline-block;margin-left:6px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:700}
+#guide .tag.c{background:var(--ok-bg);color:var(--ok)} #guide .tag.x{background:var(--none-bg);color:var(--muted)} #guide .tag.a{background:var(--warn-bg);color:var(--warn)}
+
+/* ---------- v9 色系：每一頁一個主色，白底、淡色標題列 ---------- */
+:root{
+  --bg:#f3f8f9; --surface:#ffffff; --line:#dbe6e8; --fg:#172a30; --muted:#5f7379;
+  --head:#1f3a40; --head-ink:#f3f8f9; --none-bg:#eaf1f2;
+  --a-fill:#07797e; --a-exp:#c2415a; --a-hq:#4553c4;
+  --accent:var(--a-fill); --accent-ink:#ffffff;
+}
+@media (prefers-color-scheme: dark){ :root{
+  --bg:#0f1719; --surface:#172124; --line:#2f3f43; --fg:#e6eff0; --muted:#94a8ad;
+  --head:#0a1113; --head-ink:#e6eff0; --none-bg:#223034;
+  --a-fill:#4fcfcf; --a-exp:#ff8fa3; --a-hq:#9aa5ff; --accent-ink:#0e1516;
+} }
+body[data-view="exp"]{--accent:var(--a-exp)}
+body[data-view="hq"]{--accent:var(--a-hq)}
+body{--accent-soft:color-mix(in srgb,var(--accent) 9%,var(--surface));--accent-deep:color-mix(in srgb,var(--accent) 72%,var(--fg))}
+.wrap{gap:18px;padding-block:18px 56px}
+.top{border-top:0;padding-top:4px;align-items:center}
+h1{font-size:24px;letter-spacing:.02em}
+h1::after{content:"";display:block;width:44px;height:4px;border-radius:2px;background:var(--accent);margin-top:6px}
+.tabs{gap:4px;padding:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px}
+.tabs a{border:0;border-radius:999px;background:transparent;color:var(--muted);padding:9px 6px}
+.tabs a[aria-current="page"]{background:var(--accent);color:var(--accent-ink);font-weight:700}
+#tab-fill:not([aria-current]){color:var(--a-fill)} #tab-exp:not([aria-current]){color:var(--a-exp)} #tab-hq:not([aria-current]){color:var(--a-hq)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline-color:var(--accent)}
+.panel{border-radius:14px}
+.panel>header{background:var(--accent-soft);color:var(--accent-deep);border-bottom:1px solid var(--line);padding:10px 16px;letter-spacing:.04em;font-size:16px}
+.panel .body{padding:14px 16px;gap:12px}
+details.panel>summary{color:var(--accent-deep);font-weight:700;font-size:15px}
+input[type=text],input[type=password],input[type=date],select,textarea{background:var(--surface);border-radius:8px;padding:9px 11px}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+button{border-radius:10px}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chip{background:var(--surface)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chk input{accent-color:var(--accent)}
+#c-dow{color:var(--accent)}
+.due{border:0;border-radius:12px;background:var(--accent-soft);padding:12px 14px}
+.due .big{color:var(--accent-deep)}
+.blk{border-color:transparent;border-left:4px solid var(--k);border-radius:10px;padding:10px 12px;background:color-mix(in srgb,var(--k) 6%,var(--surface))}
+.k-cash{--k:var(--k-top)} .k-sum{--k:var(--accent)}
+.k-sum>.h{color:var(--accent-deep)}
+.tile.hi input{border:2px solid var(--accent);background:var(--surface)}
+.note{border-radius:10px}
+.me{border-radius:8px}
+.slip{border-radius:10px;background:var(--surface)}
+.slip .today{border-color:var(--accent);color:var(--accent)}
+.slip .today[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+canvas.sig{border:2px dashed var(--accent);border-radius:10px}
+.step>.n{background:var(--accent);color:var(--accent-ink)}
+#toast{border-radius:12px}
+table.pivot th{background:var(--accent-soft);color:var(--accent-deep)}
+.tile.exp input{background:color-mix(in srgb,var(--bad) 5%,var(--surface));border-width:1.5px}
+input[type=month]{width:100%;min-width:0;font:inherit;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+body[data-view="exp"] .tile.exp input,body[data-view="hq"] .tile.exp input{border-color:var(--accent);color:var(--fg);background:var(--surface)}
+
+/* ---------- 列印：A4 橫式 ---------- */
+#print{display:none}
+@media print{#bow{display:none!important}}
+@page{size:A4 landscape;margin:10mm}
+@media print{
+  body{background:#fff;color:#000;font-size:10.5pt;line-height:1.45}
+  .wrap{display:none}
+  #print{display:block}
+  #print h1{font-size:16pt;margin:0 0 2mm}
+  #print .meta{display:flex;gap:6mm;flex-wrap:wrap;margin-bottom:3mm}
+  #print .cols{display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:5mm;align-items:start}
+  #print table{width:100%;border-collapse:collapse}
+  #print caption{text-align:left;font-weight:700;background:#000;color:#fff;padding:1mm 2mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #print th,#print td{border:1px solid #000;padding:1mm 2mm;font-weight:400;text-align:left}
+  #print td{text-align:right;font-family:var(--mono);white-space:nowrap}
+  #print tr.sum th,#print tr.sum td{font-weight:700}
+  #print table.vouch{margin-top:3mm;font-size:9.5pt}
+  #print table.vouch td{text-align:left;font-family:inherit;white-space:normal}
+  #print table.vouch td.r{text-align:right;font-family:var(--mono)}
+  #print table.vouch img{height:9mm}
+  #print table.pivot th,#print table.pivot td{border:1px solid #000;font-size:9pt;padding:.8mm 1.5mm}
+  #print table.pivot.det td{text-align:left;font-family:inherit;white-space:normal} #print table.pivot.det td.r{text-align:right}
+  #print .chk-list{margin:3mm 0 0;padding:0;list-style:none;font-size:9.5pt}
+  #print .memo{margin-top:2mm;border:1px solid #000;padding:1.5mm 2mm;min-height:10mm}
+  #print .sign{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm;margin-top:4mm}
+  #print .sign div{border:1px solid #000;height:16mm;padding:1mm 2mm;font-size:9pt}
+  #print .foot{margin-top:2mm;font-size:9pt}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div>
+      <h1>門市日結檢核</h1>
+    </div>
+    <button type="button" id="orange" aria-haspopup="dialog" aria-label="打開填寫教學"><span class="o" aria-hidden="true">🍊</span>教學</button>
+  </div>
+  <p class="note" id="demo" hidden>示範模式：這個頁面還沒接上總部試算表。可以整個流程走一遍（開支出單、簽名、放行都能試），但資料只暫存在這台裝置，不會送到總部。</p>
+
+  <nav class="tabs" aria-label="檢視"><a href="#fill" id="tab-fill">門市營運日報表</a><a href="#exp" id="tab-exp">🧾 開立支出單</a><a href="#hq" id="tab-hq">🏢 總管理部</a></nav>
+
+  <section id="view-fill" class="stack">
+  <details id="rv" class="panel" style="padding:10px 14px"><summary><span class="keytag">🔑 主管覆核</span>　主管點這裡：放行支出單、覆核日報表</summary>
+    <div class="stack" style="margin-top:10px">
+      <div class="two">
+        <label class="field"><span>大禾登入名稱</span><input type="text" id="r-id" autocomplete="off"></label>
+        <label class="field"><span>覆核碼</span><input type="password" id="r-code" autocomplete="off"></label>
+      </div>
+      <div class="actions"><button type="button" class="primary" id="r-load">讀取待放行的單據與報表</button></div>
+      <div id="r-sum"></div>
+      <div id="r-list" class="stack"></div>
+    </div>
+  </details>
+  <form id="form" style="display:flex;flex-direction:column;gap:14px" novalidate>
+    <div class="two">
+      <label class="field"><span>營業日<b id="c-dow"></b></span><input type="date" id="f-date" required></label>
+      <label class="field"><span>門市</span><select id="f-store"></select></label>
+      <label class="field"><span>填寫人（大禾登入名稱）</span><input type="text" id="f-byId" autocomplete="off"></label>
+      <div class="field"><span>填寫人姓名（自動帶出）</span><div class="me" id="c-me"></div></div>
+    </div>
+    <div class="field"><span>今天的天氣（點一個）</span><div class="chips" id="wx" role="group" aria-label="今天的天氣"></div></div>
+    <div class="panel"><header>上班人員與輪值</header><div class="body">
+      <p class="sub" id="crew-hint"></p>
+      <div class="chips" id="crew" role="group" aria-label="當天上班人員"></div>
+      <div id="turns" class="pair"></div>
+    </div></div>
+
+    <div class="panel" id="carry" hidden><header>🌅 早上先做：補登前一天的存款</header><div class="body" id="carry-body"></div></div>
+
+    <div class="panel"><header><span>收　銀</span><button type="button" class="clear">清空重填</button></header><div class="body">
+      <div class="blk k-biz"><div class="h">營業</div><div class="pair" id="b-biz"></div></div>
+      <div class="blk k-pre"><div class="h">預繳</div><div class="pair" id="b-pre"></div></div>
+      <div class="pair">
+        <div class="blk k-top"><div class="h">儲值</div><div id="b-top"></div></div>
+        <div class="blk k-swap"><div class="h">拆挽</div><div id="b-swap"></div></div>
+      </div>
+      <div class="blk k-dep"><div class="h">訂金</div><div class="pair" id="b-dep"></div></div>
+      <div class="blk k-sum"><div class="h">💵 收銀現金加總</div>
+        <div class="sub num" id="c-pos-how"></div>
+        <div class="sumline"><span>應回現金（自動計算）</span><span class="v" id="c-posBack-due"></span></div>
+        <div id="b-posBack"></div>
+        <div class="sumline"><span>誤差金額（自動計算）</span><span class="v" id="c-posBack-diff"></span></div>
+        <div class="agree" id="ag-pos" hidden><div>現金對不起來，不能送出。請重新點算；確定就是這個數字，才勾下面這一格。</div>
+          <label class="chk"><input type="checkbox" id="ag-pos-c"><span id="ag-pos-t"></span></label></div>
+      </div>
+    </div></div>
+
+    <div class="panel"><header>電　資（台哥大代收繳費）</header><div class="body">
+      <div class="pair" id="b-etu1"></div>
+      <div class="pair">
+        <div class="blk k-cash"><div class="h">💵 現金</div><div id="b-cash"></div></div>
+        <div class="blk k-exp"><div class="h">支出</div><div id="b-exp"></div></div>
+      </div>
+      <div class="blk k-exp"><div class="h">🧾 今天的支出單</div>
+        <div id="c-exp-list" class="stack" style="gap:4px"></div>
+        <div class="actions"><button type="button" id="x-reload">重新整理支出單</button><a href="#exp">去開支出單</a></div>
+      </div>
+      <div class="blk k-sum"><div class="h">💵 電資現金加總</div>
+        <div class="sub num" id="c-etu-how"></div>
+        <div class="sumline"><span>應回現金（自動計算）</span><span class="v" id="c-etuBack-due"></span></div>
+        <div id="b-etuBack"></div>
+        <div class="sumline"><span>誤差金額（自動計算）</span><span class="v" id="c-etuBack-diff"></span></div>
+        <div class="agree" id="ag-etu" hidden><div>現金對不起來，不能送出。請重新點算；確定就是這個數字，才勾下面這一格。</div>
+          <label class="chk"><input type="checkbox" id="ag-etu-c"><span id="ag-etu-t"></span></label></div>
+      </div>
+    </div></div>
+
+    <div class="panel"><header>憑　證</header><div class="body">
+      <div class="blk"><div class="h">💳 信用卡結帳單</div><div class="pair" id="b-nccc"></div><div class="st" id="c-nccc-st"></div></div>
+      <div class="blk"><div class="h">🧾 發票副聯</div><div class="pair" id="b-inv"></div><div class="st" id="c-inv-st"></div></div>
+    </div></div>
+
+    <div class="panel"><header>存　款</header><div class="body">
+      <div class="due"><div class="sub" id="c-due-t"></div><div class="big num" id="c-due"></div><div class="sub num" id="c-due-how"></div></div>
+      <div class="pair" id="b-settle"></div>
+      <div id="defer-box" style="display:flex;flex-direction:column;gap:8px" hidden>
+        <div class="slip" style="grid-template-columns:1fr"><input class="amt" type="text" inputmode="numeric" id="f-dAmt" aria-label="明日預計匯款金額" placeholder="明天要存的金額" autocomplete="off"><div class="dt" id="c-dDue"></div></div>
+        <div class="row calc"><span>總共多少錢（自動計算）</span><span class="val num" id="c-dSum"></span></div>
+        <label class="chk" for="f-dDone"><input type="checkbox" id="f-dDone"> <span id="c-dLbl">明日預計</span></label>
+        <div class="note" id="defer-note" hidden></div>
+      </div>
+      <div id="slip-box" style="display:flex;flex-direction:column;gap:8px">
+        <div id="slips" style="display:flex;flex-direction:column;gap:8px"></div>
+        <div><button type="button" id="add-slip">＋ 分兩次存，再加一張</button></div>
+        <div class="row calc"><span>總共多少錢（自動計算）</span><span class="val num" id="c-slips"></span></div>
+        <label class="chk" for="f-done"><input type="checkbox" id="f-done"> 已存入完成</label>
+      </div>
+    </div></div>
+
+    <div class="panel"><header>自動檢核</header><div class="body">
+      <div id="live-status"></div>
+      <ul class="checks mini" id="live-checks"></ul>
+    </div></div>
+
+    <label class="field"><span>備註說明（有特殊狀況在這裡輸入；有待確認或不符項目時必填）</span><textarea id="f-memo"></textarea></label>
+
+    <div class="agree" id="todo" hidden><b id="todo-h"></b><ul id="todo-l"></ul></div>
+    <p class="note ok" id="todo-ok" hidden>✓ 都填好了，可以從第 1 步開始。</p>
+    <div class="panel"><header>列印與送出（照 1 → 2 → 3）</header><div class="body" style="gap:0">
+      <div class="step" id="st1"><span class="n">1</span><div>
+        <b>先列印</b>
+        <div class="actions"><button type="button" id="btn-print">列印（A4 橫式）</button><span class="st ok" id="st1-s"></span></div>
+      </div></div>
+      <div class="step" id="st2"><span class="n">2</span><div>
+        <b>主管二次覆核確認</b>
+        <div class="actions"><button type="button" id="btn-review">送主管覆核</button><span class="st" id="st2-s"></span></div>
+        <div id="st2-in" class="stack" style="gap:8px" hidden>
+          <div class="blk k-top"><div class="h"><span class="keytag">🔑 主管放行</span></div>
+            <div class="pair">
+              <label class="tile"><span>主管登入名稱</span><input type="text" id="m-id" autocomplete="off"></label>
+              <label class="tile"><span>主管覆核碼</span><input type="password" id="m-code" autocomplete="off"></label>
+            </div>
+            <div class="actions"><button type="button" id="m-ok">🔑 主管放行</button></div>
+          </div>
+          <div class="blk"><div class="h">主管不在店裡</div>
+                        <div class="actions"><button type="button" id="m-check">看主管放行了沒</button></div>
+          </div>
+        </div>
+      </div></div>
+      <div class="step" id="st3"><span class="n">3</span><div>
+        <b>正式送出日報表</b>
+        <div class="actions"><button type="button" class="primary" id="btn-send">正式送出日報表</button></div>
+        <p class="note ok" id="sent" hidden></p>
+      </div></div>
+    </div></div>
+    <div class="actions"><button type="button" class="clear">清空重填</button></div>
+  </form>
+  </section>
+
+  <section id="view-exp" class="stack" hidden>
+    <div class="panel"><header>🧾 開立支出單</header><div class="body">
+      <div class="two">
+        <label class="field"><span>營業日</span><input type="date" id="e-date"></label>
+        <label class="field"><span>所屬單位（哪一家店的現金）</span><select id="e-store"></select></label>
+        <label class="field"><span>開單人（大禾登入名稱）</span><input type="text" id="e-id" autocomplete="off"></label>
+        <label class="field"><span>個人碼</span><input type="password" id="e-code" autocomplete="off"></label>
+      </div>
+      <div class="field"><span>哪一種支出</span><div class="chips" id="e-mode" role="group" aria-label="哪一種支出"></div></div>
+      <div class="field"><span>支出分類（點一個）</span><div class="chips" id="e-cats" role="group" aria-label="支出分類"></div></div>
+      <div class="blk k-pre" id="e-cust" hidden><div class="h">👤 客戶資料</div>
+        <div class="pair">
+          <label class="tile"><span>客戶門號</span><input type="text" inputmode="numeric" id="e-phone" maxlength="10" placeholder="09 開頭 10 碼" autocomplete="off"></label>
+          <label class="tile"><span>客戶姓名</span><input type="text" id="e-cname" maxlength="30" autocomplete="off"></label>
+        </div>
+      </div>
+      <div id="e-extra" class="stack" style="gap:8px"></div>
+      <div class="pair">
+        <label class="tile exp"><span>金額</span><input class="amt" type="text" inputmode="numeric" id="e-amt" autocomplete="off"></label>
+        <label class="tile exp"><span>金額再填一次</span><input class="amt" type="text" inputmode="numeric" id="e-amt2" autocomplete="off"></label>
+      </div>
+      <label class="field"><span>事由（一句話寫清楚）</span><input type="text" id="e-why" maxlength="200" autocomplete="off"></label>
+      <div class="field" id="e-for-box"><span>替誰付</span><div class="chips" id="e-for" role="group" aria-label="替誰付"></div></div>
+      <div id="e-split-box" class="stack" style="gap:6px" hidden>
+        <div class="pair" id="e-split"></div>
+        <div class="st" id="e-split-st"></div>
+      </div>
+      <div class="field"><span>單據</span><div class="chips" id="e-doc" role="group" aria-label="單據"></div></div>
+      <div class="blk k-pre" id="e-csig-box" hidden><div class="h">✍️ 客人簽收</div>
+        <div class="sumline"><span>本人已收到現金</span><span class="v" id="e-crecv">0 元</span></div>
+        <div class="sigbox"><canvas class="sig" id="e-csig" aria-label="客人簽名"></canvas><button type="button" class="sig-clear">重簽</button></div>
+      </div>
+      <div class="field"><span>承辦人簽名（開單人，用手指或筆簽在框裡）</span>
+        <div class="sigbox"><canvas class="sig" id="e-sig" aria-label="開單人簽名"></canvas><button type="button" class="sig-clear">重簽</button></div></div>
+      <div class="actions"><button type="button" class="primary" id="e-save">存檔開單</button></div>
+      <p class="note ok" id="e-ok" hidden></p>
+    </div></div>
+    <div class="panel"><header><span>這一天的支出單</span><button type="button" id="e-reload">重新整理</button></header><div class="body" id="e-list"></div></div>
+  </section>
+
+  <section id="view-hq" class="stack" hidden>
+    <div class="panel"><header>🏢 總管理部</header><div class="body">
+      <div class="two">
+        <label class="field"><span>大禾登入名稱</span><input type="text" id="h-id" autocomplete="off"></label>
+        <label class="field"><span>個人碼</span><input type="password" id="h-code" autocomplete="off"></label>
+      </div>
+    </div></div>
+    <div class="panel"><header>登打費用（水電、電話費、帳單…）</header><div class="body">
+      <div class="two">
+        <label class="field"><span>所屬單位（這筆是哪一家店的）</span><select id="h-unit"></select></label>
+        <label class="field"><span>日期（繳費日或帳單日）</span><input type="date" id="h-date"></label>
+      </div>
+      <div class="field"><span>支出分類（點一個）</span><div class="chips" id="h-cats" role="group" aria-label="支出分類"></div></div>
+      <div class="pair">
+        <label class="tile exp"><span>金額</span><input class="amt" type="text" inputmode="numeric" id="h-amt" autocomplete="off"></label>
+        <label class="tile exp"><span>金額再填一次</span><input class="amt" type="text" inputmode="numeric" id="h-amt2" autocomplete="off"></label>
+      </div>
+      <label class="field"><span>事由（例：11 月電費、公務機電話費 4 支）</span><input type="text" id="h-why" maxlength="200" autocomplete="off"></label>
+      <label class="field"><span>廠商／收款單位（有就填）</span><input type="text" id="h-vendor" maxlength="60" autocomplete="off"></label>
+      <div class="field"><span>單據</span><div class="chips" id="h-doc" role="group" aria-label="單據"></div></div>
+      <div class="actions"><button type="button" class="primary" id="h-save">存檔入帳</button></div>
+      <p class="note ok" id="h-ok" hidden></p>
+    </div></div>
+    <div class="panel"><header>全公司支出總表</header><div class="body">
+      <div class="two">
+        <label class="field"><span>月份</span><input type="month" id="h-month" placeholder="2026-11"></label>
+        <label class="field"><span>下面的明細要看哪個單位</span><select id="h-filter"></select></label>
+      </div>
+      <div class="actions"><button type="button" class="primary" id="h-load">產生總表</button><button type="button" id="h-csv" disabled>下載明細檔</button><button type="button" id="h-print" disabled>列印總表</button></div>
+      <div id="h-out" class="stack"></div>
+    </div></div>
+  </section>
+
+  <details id="codebox" class="panel" style="padding:10px 14px"><summary>第一次使用／更改個人碼</summary>
+    <div class="stack" style="margin-top:10px">
+      <label class="field"><span>大禾登入名稱</span><input type="text" id="c-id" autocomplete="off"></label>
+      <label class="field"><span>舊的個人碼</span><input type="password" id="c-old" autocomplete="off"></label>
+      <label class="field"><span>新的個人碼</span><input type="password" id="c-new" autocomplete="new-password"></label>
+      <label class="field"><span>新的個人碼再打一次</span><input type="password" id="c-new2" autocomplete="new-password"></label>
+      <div class="actions"><button type="button" id="c-save">儲存個人碼</button></div>
+    </div>
+  </details>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+
+  <dialog id="guide" aria-labelledby="g-title">
+    <div class="g-head"><span id="g-title">🍊 填寫教學：照順序一格一格填</span><button type="button" id="g-close">關閉</button></div>
+    <div class="g-body" id="g-body"></div>
+  </dialog>
+</div>
+<div id="bow" hidden role="dialog" aria-label="辛苦了"><div class="card">
+  <svg viewBox="0 0 200 215" aria-hidden="true">
+    <rect x="80" y="148" width="16" height="52" rx="6" fill="#26302c"/><rect x="104" y="148" width="16" height="52" rx="6" fill="#26302c"/>
+    <ellipse cx="86" cy="203" rx="14" ry="7" fill="#17211d"/><ellipse cx="114" cy="203" rx="14" ry="7" fill="#17211d"/>
+    <g class="up">
+      <rect x="68" y="84" width="64" height="72" rx="18" fill="#d9601a"/>
+      <rect x="92" y="84" width="16" height="30" rx="4" fill="#fff"/>
+      <rect x="56" y="92" width="16" height="50" rx="8" fill="#d9601a"/><rect x="128" y="92" width="16" height="50" rx="8" fill="#d9601a"/>
+      <circle cx="64" cy="144" r="8" fill="#f6cfa8"/><circle cx="136" cy="144" r="8" fill="#f6cfa8"/>
+      <path d="M66 62c0-26 14-40 34-40s34 14 34 40v22c-6-4-8-12-8-20H74c0 8-2 16-8 20z" fill="#3b2a20"/>
+      <circle cx="100" cy="58" r="27" fill="#f6cfa8"/>
+      <path d="M73 52c4-16 18-24 30-22 12 1 22 9 24 22-12-2-22-8-28-16-6 8-14 14-26 16z" fill="#3b2a20"/>
+      <path d="M86 60q5 5 10 0M104 60q5 5 10 0" stroke="#3b2a20" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M91 70q9 8 18 0" stroke="#b3261e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <circle cx="82" cy="67" r="4" fill="#f4a7a0"/><circle cx="118" cy="67" r="4" fill="#f4a7a0"/>
+    </g>
+  </svg>
+  <p class="say" id="bow-say"></p>
+</div></div>
+<div id="print"></div>
+
+<script>
+/* ↓↓↓ 把 Apps Script 部署後的網址貼在引號裡。空白＝示範模式（不儲存）。 ↓↓↓ */
+const API_URL='https://script.google.com/macros/s/AKfycbzrQI9C-TjfQzVDxpqtVPptchVDbne4_RbjyVnkOrdu8ZUwRhdQQk6Ia3evpAO8lYXS/exec';
+
+const STORES=['鼎山','陽明','後昌','仁雄','凱旋'];
+/* 各店存哪一家銀行（只放銀行名稱；帳號只存在總部試算表，不放在這個頁面） */
+const BANK={'鼎山':'中國信託','陽明':'高雄三信','後昌':'台新','仁雄':'中國信託','凱旋':'國泰世華'};
+const NEXT_DAY=['陽明']; /* 隔天上班才臨櫃存款的店：當晚填「明日預計」，隔天早上在最上面補登存款 */
+const WEATHER=['晴','多雲','陰','小雨','大雨','颱風'];
+/* 示範模式用的假名單；正式名單由總部試算表的「員工」工作表帶出，不寫在這個頁面 */
+const DEMO_STAFF=['同仁甲','同仁乙','同仁丙','同仁丁','同仁戊','同仁己','同仁庚','同仁辛'];
+const DEMO_MGRS=['主管甲','主管乙'];
+const ALL=['bizCash','bizCard','preCash','preCard','topup','depCash','depCard','swap','posBack','cnt','card','cash','exp','etuBack','nccc','ncccCnt','inv','invCnt','keep','remit'];
+const CASH='💵 現金', CARD='💳 刷卡';
+/* 支出分類（和總部試算表的後端程式同一套） */
+const CUST_CATS=['門號補貼','退款','客戶其他']; /* 客戶支出：錢交到客人手上，要門號、姓名、客人簽收 */
+const CATS=['運費','電話費','印刷文具','修繕清潔','水與雜支','員工福利','交際禮品','系統與軟體','差旅','其他費用','現金進貨','代墊'];
+const SUBSIDY=['手機折價','入帳單','入電資','吸收解約金','其他'];
+const DOCS=['發票','收據','無'];
+const SPLIT=STORES.concat(['總部']);
+const UNITS=STORES.concat(['管理部']); /* 支出的所屬單位 */
+const NON=['現金進貨','退款','代墊']; /* 不算費用的支出 */
+const HQ_CATS=['水電費','租金','電話費','系統與軟體','修繕清潔','印刷文具','運費','水與雜支','員工福利','交際禮品','差旅','稅捐規費','保險費','其他費用'];
+const ORDER=CATS.concat(CUST_CATS,HQ_CATS);
+
+/* 小橘子教學：照畫面由上到下的順序。tag：c＝算現金、x＝不算現金、a＝自動計算 */
+const GUIDE=[
+ ['開頭',[
+  ['營業日','這張報表是哪一天的帳。過了半夜才填，也要選「營業那一天」。星期幾會自動顯示。'],
+  ['門市','今天結的是哪一家店。存款的銀行會跟著自動帶出來。'],
+  ['填寫人','打您自己在大禾的登入名稱，旁邊會帶出您的姓名。這張報表的責任就記在這個人身上。'],
+  ['天氣','點今天的天氣，總部用來對照當天的來客狀況。'],
+  ['上班人員','先填填寫人的登入名稱，按「帶出名單」。再點今天有上班的同仁，點一次選、再點一次取消。至少兩位，填寫人已自動選好。'],
+  ['接洽未成交組數','每位同仁今天接了幾組「有接洽但沒成交」的客人。沒有就留空白。']]],
+ ['🧾 開支出單（從店裡現金拿錢出去時）',[
+  ['什麼時候開','只要從店裡的現金拿錢出去（運費、門號補貼、現金進貨、退款…），當下就到「開立支出單」分頁開一張，不用再手寫傳票。'],
+  ['開單人和個人碼','打自己的大禾登入名稱和個人碼。第一次用，先到頁面最下面「第一次使用／更改個人碼」設定：自己設、自己記，至少 6 個字，第一次「舊的個人碼」留空白。開支出單和主管放行用同一組，系統只存加密結果，總部也看不到。'],
+  ['👤 客戶支出','錢是交到客人手上的（門號補貼、退款、其他要給客人的錢），先點「客戶支出」。要填客戶門號、客戶姓名、事由，客人在平板上簽收（畫面會顯示收到多少錢），承辦人再簽名。沒有客人簽名不能存檔。'],
+  ['分類','點一個分類。門號補貼要點補貼種類；現金進貨要填廠商、機型和「代訂主管」；退款要填原銷貨單號；運費要寫從哪到哪。上面都不是的，點「其他費用」，自己打費用項目名稱。'],
+  ['金額填兩次','兩次要一樣，避免打錯。'],
+  ['替誰付','本店的就點「本店」。替別家店或總部付的，點「替別家店或總部付」，再填各自多少錢。'],
+  ['簽名','用手指或筆簽在框裡，簽不好按「重簽」。簽名會跟著這張單存起來。'],
+  ['存檔開單','存檔後系統自動給單號（門市－日期－第幾張）。存檔就不能改；寫錯了在下面按「寫錯了要作廢」並寫原因，再重開一張。'],
+  ['🔑 主管放行','每一張都要主管放行並簽名。現金進貨只有「代訂主管」能放行。開單人不能放行自己開的單。'],
+  ['和日報表的關係','主管放行的支出單，金額會自動加進日報表的「支出」。還有單子沒放行，日報表不能送出。']]],
+ ['🏢 總管理部（管理部人員用）',[
+  ['登打費用','收到帳單、繳完費之後，選這筆是哪一家店的（或管理部自己的）、分類、金額填兩次、事由，按「存檔入帳」。不用主管放行，也不會算進門市當天的現金支出。'],
+  ['全公司支出總表','選月份按「產生總表」：每一家店、每一個分類花了多少，一張表看完。門市替別家店付的錢，會照分攤算回各店。'],
+  ['下載與列印','「下載明細檔」可以用 Excel 打開；「列印總表」印出當月總表和明細。']]],
+ ['收銀（💵＝現金，💳＝刷卡）',[
+  ['營業','門市賣東西收到的錢。現金、刷卡分開填。','c'],
+  ['預繳','客人預繳電信費。現金、刷卡分開填。','c'],
+  ['儲值','客人在店裡用現金儲值預付卡。','c'],
+  ['拆挽','拆機挽留。填向客人收的違約金，一律當現金。','c'],
+  ['訂金','收訂金。現金、刷卡分開填。','c'],
+  ['刷卡的格子','營業、預繳、訂金的刷卡都不算現金，要跟信用卡結帳單對得起來。','x'],
+  ['應回現金','現金（營業＋預繳＋儲值）＋訂金＋拆挽。系統自己算，不用填。','a'],
+  ['實回現金','您實際點到的收銀現金。請真的點過再填，不要照抄應回現金。'],
+  ['誤差金額','實回 − 應回。不是 0 會跳紅字，而且不能送出。','a'],
+  ['同意誤差金額','重新點算後還是多錢或少錢，才勾這一格，並在備註寫原因。金額有變就要重勾。']]],
+ ['電資（台哥大代收繳費）',[
+  ['當日總筆數','今天代收了幾筆。'],
+  ['刷卡金額','客人刷卡繳費的金額。只做紀錄，不算進要存的錢。','x'],
+  ['現金','代收收到的現金，是要存進銀行的錢，所以特別標出來。','c'],
+  ['支出','不用填。系統把今天「主管已放行」的支出單加起來帶進來。金額不對，按「重新整理支出單」。','a'],
+  ['應回、實回、誤差','應回＝現金 − 支出。實回填實際點到的。有誤差一樣要勾「同意誤差金額」才能送出。']]],
+ ['憑證',[
+  ['信用卡結帳單','填結帳單上的總額，和今天總共刷了幾筆。總額要等於收銀的刷卡合計（營業＋預繳＋訂金）。'],
+  ['發票副聯','填今天發票加起來的金額和張數。金額要等於營業合計（現金＋刷卡）。少開了不能送出，要自己當場補開；發票比營業多（例如之前收訂金、今天取貨才開票）要在備註說明。']]],
+ ['存款',[
+  ['今天要存入銀行的金額','收銀實回現金 ＋ 電資實回現金 − 留店零頭。照這個數字去存。','a'],
+  ['匯款','實際存進銀行的金額。'],
+  ['留店現金','存不進去、要留在店裡的零頭。100 元以上應該存得進去，留太多會亮黃燈。'],
+  ['存款單','金額再填一次，再按「今天」；不是今天存的，點旁邊的小日曆 📅 選日期。分兩次存就再加一張。'],
+  ['總共多少錢','所有存款單加起來，要等於匯款。','a'],
+  ['已存入完成','錢真的存進去之後才打勾。上面有沒填好或對不起來的，勾不起來，畫面會告訴您是哪一項。'],
+  ['陽明店：明日預計','陽明店是隔天上班臨櫃存，一筆全部匯款、沒有留店零頭。晚上金額再填一次，日期自動帶下一個銀行營業日，確認後勾「明日預計」。'],
+  ['陽明店：早上補登','隔天存完錢，打開網頁，最上面「早上先做」會出現前一天那一筆：填金額、按「今天」、勾「已存入完成」、按「補登存款」。前面的沒補登，當天的報表不能送。']]],
+ ['檢核、列印與送出',[
+  ['燈號','綠燈＝相符；黃燈＝待確認；紅燈＝不符。有黃燈或紅燈時，備註一定要寫原因。'],
+  ['第 1 步　先列印','印出來簽名，連同存款單和憑證用迴紋針整理好送回總部。不可用訂書機。支出單和兩個簽名會一起印在報表上。'],
+  ['還沒完成的清單','送出區上面的紅框會列出所有還沒完成的項目，全部處理完才能列印。'],
+  ['第 2 步　🔑 主管放行','按「送主管覆核」。主管在店裡就直接在這台輸入登入名稱和覆核碼按「主管放行」；不在店裡就用自己的手機開這個網頁，點最上面的「🔑 主管覆核」，之後按「看主管放行了沒」。填寫人不能放行自己。'],
+  ['第 3 步　正式送出','主管覆核通過後，這顆按鈕才能按。按了才算完成。'],
+  ['清空重填','最上面和最下面各有一顆，要連按兩次才會清空。']]]
+];
+const TAG={c:['c','算現金'],x:['x','不算現金'],a:['a','自動計算']};
+
+const n=v=>Math.round(Number(String(v??'').replace(/[^\d.-]/g,'')))||0;
+const $=id=>document.getElementById(id);
+const fmt=v=>n(v).toLocaleString('en-US');
+const diff=v=>(v>0?'+':v<0?'−':'±')+Math.abs(v).toLocaleString('en-US');
+const when=s=>s?s.slice(5,10).replace('-','/'):'未填日期';
+const ymd=t=>t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
+/* 下一個銀行營業日：遇到週六、週日帶星期一 */
+function nextBiz(d){const t=new Date(d+'T00:00:00');do{t.setDate(t.getDate()+1);}while(t.getDay()===0||t.getDay()===6);return ymd(t);}
+const dowOf=d=>/^\d{4}-\d\d-\d\d$/.test(d)?'星期'+'日一二三四五六'[new Date(d+'T00:00:00').getDay()]:'';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const bankOf=s=>BANK[s]||'銀行';
+const posDueOf=r=>r.bizCash+r.preCash+r.topup+r.depCash+r.swap;
+
+/* 檢核規則：這裡只是讓門市即時看到結果，總部試算表收到後會用同一套規則重算一次。 */
+function check(r,deps,date){
+  const out=[],add=(lv,t,d)=>out.push({lv,t,d});
+  const posCash=posDueOf(r), e1=r.posBack-posCash;
+  add(e1===0?'ok':'fail','收銀實回現金','現金項目合計 '+fmt(posCash)+'，實回 '+fmt(r.posBack)+'，誤差 '+diff(e1)+(r.posAgree?'（填寫人已同意誤差金額）':''));
+  const etuCash=r.cash-r.exp, e2=r.etuBack-etuCash;
+  add(e2===0?'ok':'fail','電資實回現金','現金 '+fmt(r.cash)+' − 支出 '+fmt(r.exp)+' = '+fmt(etuCash)+'，實回 '+fmt(r.etuBack)+'，誤差 '+diff(e2)+(r.etuAgree?'（填寫人已同意誤差金額）':''));
+  const total=r.posBack+r.etuBack, e3=r.remit+r.keep-total;
+  add(e3===0?'ok':'fail','總額＝匯款＋留店現金','實回合計 '+fmt(total)+'，匯款 '+fmt(r.remit)+' ＋ 留店 '+fmt(r.keep)+'，誤差 '+diff(e3));
+  if(r.keep>=100) add('warn','留店現金偏高','留店 '+fmt(r.keep)+'，100 元以上應該存得進去');
+  const cardSum=r.bizCard+r.preCard+r.depCard, e4=r.nccc-cardSum;
+  add(e4===0?'ok':'fail','刷卡＝信用卡結帳單','收銀刷卡合計 '+fmt(cardSum)+'，結帳單 '+fmt(r.nccc)+'（'+r.ncccCnt+' 筆），誤差 '+diff(e4));
+  const biz=r.bizCash+r.bizCard, e5=r.inv-biz;
+  add(e5===0?'ok':e5<0?'fail':'warn','發票合計對營業合計','發票 '+fmt(r.inv)+'（'+r.invCnt+' 張），營業 '+fmt(biz)+(e5===0?'':'，差 '+diff(e5)+(e5<0?'，記得補開發票':'，請說明這筆怎麼收款')));
+  const dep=deps.reduce((s,x)=>s+x.amt,0), e6=dep-r.remit, src=r.deferred?'明日預計金額':'存款單合計';
+  add(e6===0?'ok':'fail',src+'＝匯款',src+' '+fmt(dep)+'（'+deps.length+' 筆），日報表匯款 '+fmt(r.remit)+'，誤差 '+diff(e6));
+  if(r.deferred){add('ok','明日預計','預計 '+when(r.due)+'（'+dowOf(r.due).slice(2)+'）臨櫃存入，存完後補登');return out;}
+  const late=deps.filter(x=>!x.at||x.at>date);
+  if(deps.length) add(late.length?'warn':'ok','存款時間',late.length
+    ? late.map(x=>fmt(x.amt)+' 在 '+when(x.at)+' 才存').join('、')+'（規定：當天下班就存，不放到隔天）'
+    : '都在營業日當天存入');
+  return out;
+}
+const level=cs=>cs.some(c=>c.lv==='fail')?'fail':cs.some(c=>c.lv==='warn')?'warn':'ok';
+const LABEL={ok:'✓ 相符',warn:'! 待確認',fail:'✕ 不符'};
+const MARK={ok:'✓',warn:'!',fail:'✕'};
+const checksHtml=(cs,mini)=>cs.map(c=>'<li'+(c.lv!=='ok'?' class="bad"':'')+'><span class="mark '+c.lv+'" aria-hidden="true">'+MARK[c.lv]+'</span><div><div class="t">'+esc(c.t)+(mini&&c.lv==='ok'?'':'<span class="sub">（'+LABEL[c.lv].slice(2)+'）</span>')+'</div>'+(mini&&c.lv==='ok'?'':'<div class="d num">'+esc(c.d)+'</div>')+'</div></li>').join('');
+
+async function api(body){
+  let res;
+  try{res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});}
+  catch(e){throw new Error('網路連不上，請再試一次');}
+  const j=await res.json();
+  if(!j.ok) throw new Error(j.error||'沒有成功');
+  return j;
+}
+
+/* ---------- 表單：每一格的名稱就在格子正上方 ---------- */
+const T=(k,l,cls)=>'<label class="tile '+(cls||'')+'"><span>'+l+'</span><input class="amt" type="text" inputmode="numeric" id="f-'+k+'" autocomplete="off"></label>';
+$('b-biz').innerHTML=T('bizCash',CASH)+T('bizCard',CARD);
+$('b-pre').innerHTML=T('preCash',CASH)+T('preCard',CARD);
+$('b-top').innerHTML=T('topup',CASH);
+$('b-swap').innerHTML=T('swap',CASH);
+$('b-dep').innerHTML=T('depCash',CASH)+T('depCard',CARD);
+$('b-posBack').innerHTML=T('posBack','💵 實回現金（實際點到的）','hi');
+$('b-etu1').innerHTML=T('cnt','當日總筆數')+T('card','💳 刷卡金額（只記錄）');
+$('b-cash').innerHTML=T('cash','代收收到的現金','hi');
+$('b-exp').innerHTML=T('exp','已放行的支出單合計','exp');
+$('f-exp').readOnly=true; $('f-exp').tabIndex=-1;
+$('b-etuBack').innerHTML=T('etuBack','💵 實回現金（實際點到的）','hi');
+$('b-nccc').innerHTML=T('nccc','結帳單總額')+T('ncccCnt','今天總共刷了幾筆');
+$('b-inv').innerHTML=T('inv','發票合計金額')+T('invCnt','發票張數');
+$('b-settle').innerHTML=T('remit','<span class="bank-l"></span>','hi')+T('keep','留店零頭');
+$('f-store').innerHTML=$('e-store').innerHTML=STORES.map(s=>'<option>'+s+'</option>').join('');
+
+/* ---------- 天氣、上班人員、輪值 ---------- */
+let WX='', STAFF=null, CREW={}; /* STAFF={id,me,list}；CREW=姓名→接洽未成交組數 */
+let AGREE={pos:null,etu:null}; /* 同意的誤差金額；金額一變就失效 */
+let FLOW={printed:false,id:'',status:'',final:false}; /* 三步驟進度 */
+function renderWx(){$('wx').innerHTML=WEATHER.map(w=>'<button type="button" class="chip" data-wx="'+w+'" aria-pressed="'+(WX===w)+'">'+w+'</button>').join('');}
+function renderCrew(){
+  $('c-me').textContent=STAFF?STAFF.me:'';
+  if(!STAFF){
+    $('crew-hint').hidden=true;
+    $('crew').innerHTML='<button type="button" id="crew-load">帶出名單</button>'; $('turns').innerHTML=''; return;
+  }
+  $('crew-hint').hidden=true;
+  $('crew').innerHTML=STAFF.list.map(x=>'<button type="button" class="chip" data-name="'+esc(x)+'" aria-pressed="'+(x in CREW)+'"'+(x===STAFF.me?' disabled':'')+'>'+esc(x)+'</button>').join('');
+  $('turns').innerHTML=STAFF.list.filter(x=>x in CREW).map((x,i)=>'<label class="tile"><span>'+esc(x)+'　接洽未成交</span><input class="amt" type="text" inputmode="numeric" id="t-'+i+'" data-turn="'+esc(x)+'" value="'+esc(CREW[x]||'')+'" placeholder="0 組" autocomplete="off"></label>').join('');
+}
+async function loadStaff(){
+  const id=$('f-byId').value.trim();
+  if(!id){STAFF=null;CREW={};renderCrew();toast('請先填填寫人的大禾登入名稱');return;}
+  if(STAFF&&STAFF.id===id) return;
+  if(!API_URL) STAFF={id,me:DEMO_STAFF[0],list:DEMO_STAFF};
+  else try{const j=await api({action:'staff',id});STAFF={id,me:j.me,list:j.list};}catch(err){STAFF=null;CREW={};renderCrew();toast(err.message);return;}
+  for(const k of Object.keys(CREW)) if(!STAFF.list.includes(k)) delete CREW[k];
+  if(!(STAFF.me in CREW)) CREW[STAFF.me]='';
+  renderCrew(); saveDraft(); loadCarry(); loadExpDay(true);
+}
+
+/* ---------- 明日預計的店：早上補登前一天的存款 ---------- */
+let CARRY=null; /* null＝還沒查；[]＝都補登完了；[{id,date,amt,due}] */
+const yest=()=>{const t=new Date();t.setDate(t.getDate()-1);return ymd(t);};
+let DEMO_CARRY=[{id:'示範-昨天',date:yest(),amt:64000,due:nextBiz(yest())}];
+async function loadCarry(){
+  const s=$('f-store').value, byId=$('f-byId').value.trim();
+  if(!NEXT_DAY.includes(s)) CARRY=[];
+  else if(!API_URL) CARRY=DEMO_CARRY.slice();
+  else if(!byId) CARRY=null;
+  else try{CARRY=(await api({action:'carry',store:s,byId})).list;}catch(err){CARRY=null;toast(err.message);}
+  renderCarry(); live();
+}
+function renderCarry(){
+  const bank=esc(bankOf($('f-store').value));
+  $('carry-body').innerHTML=CARRY===null?'<p class="sub">先填上面的「填寫人」登入名稱，就會帶出前一天要補登的存款。</p>'
+   :!CARRY.length?'<p class="note ok">✓ 前面的存款都補登完了，今天不用補登。</p>'
+   :CARRY.map((x,i)=>
+     '<div class="blk k-cash" data-i="'+i+'"><div class="h">'+when(x.date)+' '+dowOf(x.date)+' 的現金<small>預計 '+when(x.due)+' 存入'+bank+'</small></div>'
+     +'<div class="sumline"><span>要存的金額</span><span class="v">'+fmt(x.amt)+'</span></div>'
+     +'<div class="slip"><input class="amt" type="text" inputmode="numeric" aria-label="存款金額" placeholder="存款單上的金額" autocomplete="off"><button type="button" class="today" aria-pressed="false">今天</button><span class="cal"><span aria-hidden="true">📅</span><input type="date" aria-label="不是今天存的，選存款日期"></span><span class="dt"></span></div>'
+     +'<label class="chk"><input type="checkbox" class="c-done"> 已存入完成</label>'
+     +'<div class="actions"><button type="button" class="primary c-send">補登存款</button></div></div>').join('');
+  slipUi();
+}
+const carryOf=el=>{const b=el.closest('.blk');return {b,x:CARRY[+b.dataset.i],amt:n(b.querySelector('.amt').value),at:b.querySelector('input[type=date]').value};};
+$('carry-body').addEventListener('input',e=>{
+  if(e.target.classList.contains('c-done')&&e.target.checked){
+    const c=carryOf(e.target), bad=c.amt!==c.x.amt?'金額跟報表上的 '+fmt(c.x.amt)+' 不一樣':!c.at?'還沒選存款日期':c.at<=c.x.date?'存款日期要在營業日之後':'';
+    if(bad){e.target.checked=false;toast('還不能打勾：'+bad);} else bow();
+  }
+  slipUi();
+});
+$('carry-body').addEventListener('click',async e=>{
+  const t=e.target;
+  if(t.type==='date'){try{t.showPicker();}catch(_){}}
+  if(t.classList.contains('today')){t.parentNode.querySelector('input[type=date]').value=ymd(new Date());slipUi();}
+  if(!t.classList.contains('c-send')) return;
+  const c=carryOf(t), byId=$('f-byId').value.trim();
+  if(!c.b.querySelector('.c-done').checked){toast('先填金額、選日期，勾「已存入完成」，再按補登');return;}
+  if(!byId){toast('請先填上面的填寫人登入名稱');return;}
+  t.disabled=true;
+  try{
+    if(API_URL){const j=await api({action:'deposit',reportId:c.x.id,byId,amt:c.amt,at:c.at});toast(j.late?'已補登（比預計日期晚，總部會看到）':'已補登存款，謝謝');}
+    else{DEMO_CARRY=DEMO_CARRY.filter(y=>y.id!==c.x.id);toast('示範模式：已補登（資料沒有儲存）');}
+    await loadCarry();
+  }catch(err){toast(err.message);t.disabled=false;}
+});
+
+/* ---------- 手寫簽名板 ---------- */
+function padInit(c){
+  if(c.dataset.on) return; c.dataset.on='1'; c.width=640; c.height=240;
+  const g=c.getContext('2d'); if(!g) return;
+  const blank=()=>{g.fillStyle='#fff';g.fillRect(0,0,640,240);c.dataset.ink='0';};
+  blank(); c.blank=blank; g.lineWidth=5; g.lineCap='round'; g.lineJoin='round'; g.strokeStyle='#111';
+  let on=false;
+  const pt=e=>{const r=c.getBoundingClientRect();return [(e.clientX-r.left)*640/r.width,(e.clientY-r.top)*240/r.height];};
+  c.addEventListener('pointerdown',e=>{on=true;try{c.setPointerCapture(e.pointerId);}catch(_){}const p=pt(e);g.beginPath();g.moveTo(p[0],p[1]);e.preventDefault();});
+  c.addEventListener('pointermove',e=>{if(!on)return;const p=pt(e);g.lineTo(p[0],p[1]);g.stroke();c.dataset.ink=String(+c.dataset.ink+1);});
+  for(const k of ['pointerup','pointercancel','pointerleave']) c.addEventListener(k,()=>{on=false;});
+}
+/* 簽名縮成小張的 PNG 再送出；筆畫太少當作沒簽 */
+function padData(c){
+  if(+c.dataset.ink<8) return '';
+  const o=document.createElement('canvas'); o.width=320; o.height=120;
+  o.getContext('2d').drawImage(c,0,0,320,120); return o.toDataURL('image/png');
+}
+const pads=()=>document.querySelectorAll('canvas.sig').forEach(padInit);
+document.addEventListener('click',e=>{if(e.target.classList&&e.target.classList.contains('sig-clear')){const c=e.target.closest('.sigbox').querySelector('canvas');if(c.blank)c.blank();}});
+const sigImg=s=>/^data:image\/png;base64,[A-Za-z0-9+\/=]+$/.test(s||'')?'<img class="sigimg" alt="簽名" src="'+s+'">':'';
+
+/* ---------- 支出單 ---------- */
+/* 示範模式：支出單暫存在這台裝置，讓整個流程可以試一遍 */
+const DEMO_KEY='daily-close-demo-exp';
+let DEMO_EXP=[]; try{DEMO_EXP=JSON.parse(localStorage.getItem(DEMO_KEY))||[];}catch(e){}
+const demoSave=()=>{try{localStorage.setItem(DEMO_KEY,JSON.stringify(DEMO_EXP));}catch(e){}};
+const roc=d=>(+d.slice(0,4)-1911)+d.slice(5,7)+d.slice(8,10);
+function demoExp(b){
+  if(b.action==='expNew'){
+    const k=DEMO_EXP.filter(x=>x.store===b.store&&x.date===b.date).length+1;
+    const x={no:b.store+'-'+roc(b.date)+'-'+String(k).padStart(2,'0'),date:b.date,store:b.store,by:b.id,byId:b.id,cat:b.cat,amt:b.amt,why:b.why,
+      forWho:b.cat==='代墊'?'代墊：'+b.proxy:b.forWho==='分攤'?'分攤':'本店',split:b.forWho==='分攤'?SPLIT.filter(s=>b.split[s]).map(s=>s+' '+b.split[s]).join('、'):'',
+      doc:b.doc,phone:b.phone||'',plan:b.plan||'',subsidy:b.subsidy||'',saleNo:b.saleNo||'',vendor:b.vendor||'',model:b.model||'',imei:b.imei||'',mgr:b.mgr||'',reason:b.reason||'',route:b.route||'',
+      status:'待放行',reviewer:'',note:'',voidWhy:'',sigBy:b.sig,sigRv:'',custName:b.custName||'',sigCust:b.csig||'',src:'門市現金'};
+    DEMO_EXP.push(x); demoSave(); return {no:x.no};
+  }
+  if(b.action==='hqNew'){
+    const k=DEMO_EXP.filter(x=>x.store===b.unit&&x.date===b.date).length+1;
+    const x={no:b.unit+'-'+roc(b.date)+'-'+String(k).padStart(2,'0'),date:b.date,store:b.unit,by:b.id,byId:b.id,cat:b.cat,amt:b.amt,why:b.why,forWho:'本店',split:'',doc:b.doc,vendor:b.vendor||'',status:'已入帳',src:'管理部'};
+    DEMO_EXP.push(x); demoSave(); return {no:x.no};
+  }
+  if(b.action==='hqSum'){ /* 和後端同一套算法：替別家店付的照分攤算回各店 */
+    const list=[];
+    for(const x of DEMO_EXP){
+      if(x.date.slice(0,7)!==b.month||!['已放行','已入帳'].includes(x.status)) continue;
+      const base={no:x.no,date:x.date,cat:x.cat,type:NON.includes(x.cat)?'非費用':'費用',why:x.why,by:x.by,src:x.src||'門市現金',paidBy:x.store,doc:x.doc};
+      const parts=x.split?x.split.split('、'):[];
+      if(!parts.length){list.push({unit:x.store,amt:x.amt,...base});continue;}
+      for(const t of parts){const m=t.match(/^(\S+) (\d+)$/);if(m)list.push({unit:m[1]==='總部'?'管理部':m[1],amt:+m[2],...base});}
+    }
+    return {month:b.month,list};
+  }
+  const x=DEMO_EXP.find(y=>y.no===b.no); if(!x) throw new Error('找不到這張支出單');
+  if(b.action==='expVoid'){x.status='已作廢';x.voidWhy=b.reason;}
+  if(b.action==='expReview'){x.status=b.decision==='approve'?'已放行':'已退回';x.reviewer=b.id;x.note=b.note;x.sigRv=b.sig||'';}
+  demoSave(); return {};
+}
+const expApi=b=>API_URL?api(b):Promise.resolve(demoExp(b));
+async function fetchDay(store,date,id){
+  if(!API_URL) return DEMO_EXP.filter(x=>x.store===store&&x.date===date&&x.src!=='管理部').map(x=>({...x,mine:!!id&&x.byId===id}));
+  return (await api({action:'expDay',store,date,byId:id})).list;
+}
+const ST={'待放行':'warn','已放行':'ok','已入帳':'ok','已退回':'fail','已作廢':'fail'};
+/* 一張支出單的樣子。mode：mine＝開單頁（可作廢）；review＝主管放行（簽名＋放行／退回） */
+function slipHtml(x,mode){
+  const more=[x.forWho&&x.forWho!=='本店'?'替誰付：'+x.forWho+(x.split?'（'+x.split+'）':''):'',x.custName?'客戶 '+x.custName:'',x.phone?'門號 '+x.phone:'',x.subsidy,x.plan?'方案 '+x.plan:'',x.saleNo?'銷貨單 '+x.saleNo:'',
+    x.vendor?'廠商 '+x.vendor:'',x.model,x.imei?'IMEI '+x.imei:'',x.mgr?'代訂主管 '+x.mgr:'',x.reason?'原因 '+x.reason:'',x.route,'單據：'+x.doc].filter(Boolean).join('・');
+  let h='<div class="blk k-exp vch" data-no="'+esc(x.no)+'"><div class="h"><span class="num">'+esc(x.no)+'</span><span class="pill '+(ST[x.status]||'warn')+'">'+esc(x.status)+'</span></div>'
+   +'<div class="sumline"><span class="cat">'+esc(x.cat)+'</span><span class="v">'+fmt(x.amt)+'</span></div>'
+   +'<div>'+esc(x.why)+'</div><div class="sub">'+(mode==='review'?esc(x.store)+'店　'+esc(when(x.date))+'・':'')+esc(more)+'</div>'
+   +'<div class="sgrow">'+(x.sigCust?'<span>客人簽收 '+esc(x.custName||'')+'</span>'+sigImg(x.sigCust):'')+'<span>開單人 '+esc(x.by)+'</span>'+sigImg(x.sigBy)+(x.reviewer?'<span>'+(x.status==='已退回'?'退回':'🔑 放行')+' '+esc(x.reviewer)+'</span>'+sigImg(x.sigRv):'')+'</div>'
+   +(x.note?'<div class="note">主管說明：'+esc(x.note)+'</div>':'')+(x.voidWhy?'<div class="note">作廢原因：'+esc(x.voidWhy)+'</div>':'');
+  if(mode==='mine'&&x.status==='待放行'&&x.mine) h+='<details><summary>寫錯了要作廢</summary><div class="stack" style="gap:6px;margin-top:6px"><input type="text" data-vr placeholder="作廢原因（必填）" maxlength="200" aria-label="作廢原因"><div class="actions"><button type="button" data-void>確定作廢這張</button></div></div></details>';
+  if(mode==='review') h+=x.mine?'<div class="note">這張是您自己開的，要請另一位主管放行。</div>'
+    :!x.can?'<div class="note">這張是現金進貨，要由代訂主管 '+esc(x.mgr)+' 放行。</div>'
+    :'<div class="field"><span>主管簽名（放行時要簽）</span><div class="sigbox"><canvas class="sig" aria-label="主管簽名"></canvas><button type="button" class="sig-clear">重簽</button></div></div>'
+     +'<label class="field"><span>說明（退回時必填）</span><input type="text" data-xnote maxlength="200"></label>'
+     +'<div class="actions"><button type="button" class="primary" data-xact="approve">🔑 放行這張</button><button type="button" data-xact="reject">退回</button></div>';
+  return h+'</div>';
+}
+
+/* 開單頁的狀態 */
+const E0=()=>({mode:'一般支出',cat:'',forWho:'本店',doc:'',sub:''});
+const MODES=['一般支出','👤 客戶支出'];
+const isCust=()=>E.mode===MODES[1];
+let E=E0(), MGRS=null;
+const chipsOf=(list,cur,key)=>list.map(x=>'<button type="button" class="chip" data-'+key+'="'+esc(x)+'" aria-pressed="'+(cur===x)+'">'+esc(x)+'</button>').join('');
+const F=(id,l,ph,mode)=>'<label class="field"><span>'+l+'</span><input type="text" id="'+id+'"'+(mode?' inputmode="'+mode+'"':'')+' placeholder="'+(ph||'')+'" autocomplete="off"></label>';
+function renderExpForm(){
+  $('e-mode').innerHTML=chipsOf(MODES,E.mode,'mode');
+  $('e-cats').innerHTML=chipsOf(isCust()?CUST_CATS:CATS,E.cat,'cat');
+  $('e-cust').hidden=$('e-csig-box').hidden=!isCust(); custUi();
+  $('e-for').innerHTML=chipsOf(['本店','替別家店或總部付'],E.forWho==='分攤'?'替別家店或總部付':'本店','for');
+  $('e-doc').innerHTML=chipsOf(DOCS,E.doc,'doc');
+  $('e-for-box').hidden=E.cat==='代墊'||isCust();
+  $('e-split-box').hidden=E.cat==='代墊'||E.forWho!=='分攤';
+  if(!$('e-split').children.length) $('e-split').innerHTML=SPLIT.map((s,i)=>'<label class="tile"><span>'+s+'</span><input class="amt" type="text" inputmode="numeric" id="e-sp-'+i+'" autocomplete="off"></label>').join('');
+  splitUi();
+}
+/* 各分類自己要多填的欄位：只有換分類時才重畫，免得把已經打的字洗掉 */
+function renderExtra(){
+  const x=E.cat;
+  $('e-extra').innerHTML=x==='門號補貼'?'<div class="blk k-pre"><div class="h">門號補貼</div>'
+      +'<div class="field"><span>補貼種類（點一個）</span><div class="chips" id="e-sub">'+chipsOf(SUBSIDY,E.sub,'sub')+'</div></div>'
+      +F('e-plan','方案（例：NP1399 24 個月）')+F('e-sale','銷貨單號（有就填）')+'</div>'
+    :x==='現金進貨'?'<div class="blk k-cash"><div class="h">現金進貨</div>'+F('e-vendor','廠商')+F('e-model','機型（含容量、顏色）')+F('e-imei','IMEI（15 碼，有就填）','','numeric')
+      +'<label class="field"><span>🔑 代訂主管（是哪一位主管幫忙叫貨的）</span><select id="e-mgr"><option value="">'+(MGRS?'請選擇':'先填上面的開單人登入名稱')+'</option>'+(MGRS||[]).map(m=>'<option>'+esc(m)+'</option>').join('')+'</select></label>'
+      +'</div>'
+    :x==='退款'?'<div class="blk k-dep"><div class="h">退款</div>'+F('e-sale','原銷貨單號')+F('e-reason','退款原因')+'</div>'
+    :x==='其他費用'?'<div class="blk k-swap"><div class="h">其他費用</div>'+F('e-other','費用項目名稱（自己打，例：停車費、鑰匙複製）')+'</div>'
+    :x==='運費'?'<div class="blk k-swap"><div class="h">運費</div>'+F('e-route','從哪到哪、送什麼（例：仁雄→鼎山 手機殼）')+'</div>'
+    :x==='代墊'?'<div class="blk k-top"><div class="h">代墊</div>'+F('e-proxy','替誰代墊（例：大姐、總部）')+'</div>':'';
+}
+const custUi=()=>{$('e-crecv').textContent=fmt($('e-amt').value)+' 元';};
+function splitUi(){
+  const sum=SPLIT.reduce((s,_,i)=>s+n(($('e-sp-'+i)||{}).value),0), amt=n($('e-amt').value), e=$('e-split-st');
+  e.className='st '+(sum===amt&&amt?'ok':'fail');
+  e.textContent=sum===amt&&amt?'✓ 加起來 '+fmt(sum)+'，跟金額相符':'加起來 '+fmt(sum)+'，金額是 '+fmt(amt);
+}
+const val=id=>($(id)?$(id).value.trim():'');
+/* 把畫面上填的整理成一張支出單；有問題回傳說明文字 */
+function slipOf(){
+  const b={store:$('e-store').value,date:$('e-date').value,id:val('e-id'),code:$('e-code').value,cat:E.cat,amt:n($('e-amt').value),amt2:n($('e-amt2').value),
+    why:val('e-why'),forWho:E.cat==='代墊'?'代墊':E.forWho,doc:E.doc,sig:padData($('e-sig'))};
+  if(!b.date||b.date>ymd(new Date())) return '營業日不正確（不能是未來）';
+  if(!b.id) return '請填開單人的大禾登入名稱';
+  if(API_URL&&!b.code) return '請填個人碼';
+  if(!b.cat) return '請點支出分類';
+  if(CUST_CATS.includes(b.cat)){b.phone=val('e-phone');b.custName=val('e-cname');b.forWho='本店';
+    if(!/^09\d{8}$/.test(b.phone)) return '客戶門號要填 09 開頭的 10 碼'; if(!b.custName) return '請填客戶姓名';}
+  if(b.cat==='門號補貼'){b.subsidy=E.sub;b.plan=val('e-plan');b.saleNo=val('e-sale'); if(!b.subsidy) return '請點補貼種類';}
+  if(b.cat==='現金進貨'){b.vendor=val('e-vendor');b.model=val('e-model');b.imei=val('e-imei');b.mgr=val('e-mgr');
+    if(!b.vendor||!b.model) return '現金進貨要填廠商和機型'; if(b.imei&&!/^\d{14,16}$/.test(b.imei)) return 'IMEI 要填 15 碼數字'; if(!b.mgr) return '請選代訂主管';}
+  if(b.cat==='退款'){b.saleNo=val('e-sale');b.reason=val('e-reason'); if(!b.saleNo||!b.reason) return '退款要填原銷貨單號和原因';}
+  if(b.cat==='其他費用'){const o=val('e-other').slice(0,30); if(!o) return '其他費用要自己打費用項目名稱'; b.why='【'+o+'】'+b.why;}
+  if(b.cat==='運費'){b.route=val('e-route'); if(!b.route) return '運費要寫從哪到哪、送什麼';}
+  if(b.cat==='代墊'){b.proxy=val('e-proxy'); if(!b.proxy) return '請寫替誰代墊';}
+  if(b.amt<=0) return '請填金額';
+  if(b.amt!==b.amt2) return '兩次填的金額不一樣';
+  if(!b.why||/^【[^】]*】$/.test(b.why)) return '請寫事由';
+  if(b.forWho==='分攤'){b.split={};SPLIT.forEach((s,i)=>{const a=n($('e-sp-'+i).value);if(a>0)b.split[s]=a;});
+    if(Object.values(b.split).reduce((s,a)=>s+a,0)!==b.amt) return '分攤金額加起來要等於金額 '+fmt(b.amt);}
+  if(!b.doc) return '請點有沒有單據';
+  if(CUST_CATS.includes(b.cat)){b.csig=padData($('e-csig')); if(!b.csig) return '客人還沒簽名';}
+  if(!b.sig) return '承辦人（開單人）還沒簽名';
+  return b;
+}
+async function loadMgrs(){
+  const id=val('e-id'), keep=val('e-mgr');
+  if(!API_URL) MGRS=DEMO_MGRS;
+  else if(!id) MGRS=null;
+  else try{MGRS=(await api({action:'staff',id})).mgrs||[];}catch(err){MGRS=null;toast(err.message);}
+  if(E.cat==='現金進貨'){const v=['e-vendor','e-model','e-imei'].map(val);renderExtra();['e-vendor','e-model','e-imei'].forEach((k,i)=>$(k).value=v[i]);if(MGRS&&MGRS.includes(keep))$('e-mgr').value=keep;}
+}
+async function loadExpList(quiet){
+  const store=$('e-store').value, date=$('e-date').value, id=val('e-id');
+  if(API_URL&&!id){$('e-list').innerHTML='<p class="sub">先填上面的開單人登入名稱，就會列出這一天的支出單。</p>';return;}
+  try{
+    const list=await fetchDay(store,date,id), ok=list.filter(x=>x.status==='已放行');
+    $('e-list').innerHTML=list.length?'<div class="xline"><b>'+esc(store)+'店 '+esc(when(date))+'：共 '+list.length+' 張</b><span>已放行 '+ok.length+' 張，'+fmt(ok.reduce((s,x)=>s+n(x.amt),0))+' 元</span></div>'+list.map(x=>slipHtml(x,'mine')).join('')
+      :'<p class="sub">'+esc(store)+'店 '+esc(when(date))+' 還沒有支出單。</p>';
+  }catch(err){if(!quiet)toast(err.message);}
+}
+$('e-cats').addEventListener('click',e=>{const c=e.target.dataset.cat;if(!c)return;E.cat=c;E.sub='';renderExpForm();renderExtra();});
+$('e-for').addEventListener('click',e=>{const c=e.target.dataset.for;if(!c)return;E.forWho=c==='本店'?'本店':'分攤';renderExpForm();});
+$('e-doc').addEventListener('click',e=>{const c=e.target.dataset.doc;if(!c)return;E.doc=c;renderExpForm();});
+$('e-extra').addEventListener('click',e=>{const c=e.target.dataset.sub;if(!c)return;E.sub=c;$('e-sub').innerHTML=chipsOf(SUBSIDY,E.sub,'sub');});
+$('e-split').addEventListener('input',splitUi); $('e-amt').addEventListener('input',()=>{splitUi();custUi();});
+$('e-mode').addEventListener('click',e=>{const c=e.target.dataset.mode;if(!c||c===E.mode)return;E.mode=c;E.cat='';E.sub='';E.forWho='本店';renderExpForm();renderExtra();});
+$('e-id').addEventListener('change',()=>{loadMgrs();loadExpList(true);});
+$('e-store').addEventListener('change',()=>loadExpList(true)); $('e-date').addEventListener('change',()=>loadExpList(true));
+$('e-reload').addEventListener('click',()=>loadExpList());
+$('e-save').addEventListener('click',async()=>{
+  const b=slipOf(), btn=$('e-save'); if(typeof b==='string'){toast(b);return;}
+  btn.disabled=true;
+  try{
+    const j=await expApi({action:'expNew',...b});
+    $('e-ok').hidden=false; $('e-ok').textContent='✓ 已開單，單號 '+j.no+'。請主管點「門市營運日報表」最上面的「🔑 主管覆核」放行。';
+    toast('已開單 '+j.no+(API_URL?'':'（示範模式）'));
+    for(const k of ['e-amt','e-amt2','e-why']) $(k).value='';
+    SPLIT.forEach((_,i)=>$('e-sp-'+i).value=''); for(const k of ['e-phone','e-cname']) $(k).value=''; E=E0(); $('e-sig').blank(); $('e-csig').blank(); renderExpForm(); renderExtra();
+    await loadExpList(true); loadExpDay(true);
+  }catch(err){toast(err.message);}finally{btn.disabled=false;}
+});
+$('e-list').addEventListener('click',async e=>{
+  if(e.target.dataset.void===undefined) return;
+  const card=e.target.closest('.vch'), reason=card.querySelector('[data-vr]').value.trim(), id=val('e-id'), code=$('e-code').value;
+  if(!reason){toast('請寫作廢原因');return;}
+  if(!id||(API_URL&&!code)){toast('先在上面填開單人登入名稱和個人碼');return;}
+  e.target.disabled=true;
+  try{await expApi({action:'expVoid',id,code,no:card.dataset.no,reason});toast('已作廢 '+card.dataset.no);await loadExpList(true);loadExpDay(true);}
+  catch(err){toast(err.message);e.target.disabled=false;}
+});
+
+/* 日結頁：帶出這家店這一天的支出單，已放行的自動加總成「支出」 */
+let EXPDAY=null; /* null＝還沒讀到 */
+async function loadExpDay(quiet){
+  const store=$('f-store').value, date=$('f-date').value, byId=$('f-byId').value.trim();
+  if(API_URL&&(!byId||!date)) EXPDAY=null;
+  else try{EXPDAY=await fetchDay(store,date,byId);}catch(err){EXPDAY=null;if(!quiet)toast(err.message);}
+  const sum=(EXPDAY||[]).filter(x=>x.status==='已放行').reduce((s,x)=>s+n(x.amt),0), was=n($('f-exp').value);
+  $('f-exp').value=sum?String(sum):'';
+  if(was!==sum) resetFlow();
+  $('c-exp-list').innerHTML=EXPDAY===null?'<p class="sub">先填最上面的填寫人登入名稱，就會帶出今天的支出單。</p>'
+    :!EXPDAY.length?'<p class="sub">今天沒有支出單。有從現金拿錢出去，要先去開單。</p>'
+    :EXPDAY.map(x=>'<div class="xline"><span><span class="num">'+esc(x.no.slice(-2))+'</span>　'+esc(x.cat)+'　'+esc(x.why)+'</span><span class="num">'+fmt(x.amt)+' <span class="pill '+(ST[x.status]||'warn')+'">'+esc(x.status)+'</span></span></div>').join('');
+  live(); saveDraft();
+}
+$('x-reload').addEventListener('click',()=>loadExpDay());
+
+/* ---------- 總管理部：登打費用、全公司支出總表 ---------- */
+let H={cat:'',doc:''}, HSUM=null, PMODE='day';
+const hid=()=>({id:val('h-id'),code:$('h-code').value});
+function hqUi(){
+  if(!$('h-unit').options.length){
+    $('h-unit').innerHTML=UNITS.map(u=>'<option>'+u+'</option>').join('');
+    $('h-filter').innerHTML='<option value="">全部單位</option>'+UNITS.map(u=>'<option>'+u+'</option>').join('');
+    $('h-date').value=ymd(new Date()); $('h-month').value=ymd(new Date()).slice(0,7);
+  }
+  $('h-cats').innerHTML=chipsOf(HQ_CATS,H.cat,'hcat'); $('h-doc').innerHTML=chipsOf(DOCS,H.doc,'hdoc');
+}
+$('h-cats').addEventListener('click',e=>{const c=e.target.dataset.hcat;if(!c)return;H.cat=c;hqUi();});
+$('h-doc').addEventListener('click',e=>{const c=e.target.dataset.hdoc;if(!c)return;H.doc=c;hqUi();});
+$('h-save').addEventListener('click',async()=>{
+  const b={action:'hqNew',...hid(),unit:$('h-unit').value,date:$('h-date').value,cat:H.cat,amt:n($('h-amt').value),amt2:n($('h-amt2').value),why:val('h-why'),vendor:val('h-vendor'),doc:H.doc};
+  const bad=!b.id?'請填大禾登入名稱':API_URL&&!b.code?'請填個人碼':!b.date||b.date>ymd(new Date())?'日期不正確（不能是未來）':!b.cat?'請點支出分類':b.amt<=0?'請填金額':b.amt!==b.amt2?'兩次填的金額不一樣':!b.why?'請寫事由':!b.doc?'請點有沒有單據':'';
+  if(bad){toast(bad);return;}
+  const btn=$('h-save'); btn.disabled=true;
+  try{
+    const j=await expApi(b);
+    $('h-ok').hidden=false; $('h-ok').textContent='✓ 已入帳，單號 '+j.no+'（'+b.unit+'　'+b.cat+'　'+fmt(b.amt)+' 元）';
+    toast('已入帳 '+j.no+(API_URL?'':'（示範模式）'));
+    for(const k of ['h-amt','h-amt2','h-why','h-vendor']) $(k).value=''; H={cat:'',doc:''}; hqUi();
+    if(HSUM&&HSUM.month===b.date.slice(0,7)) loadSum(true);
+  }catch(err){toast(err.message);}finally{btn.disabled=false;}
+});
+async function loadSum(quiet){
+  const month=$('h-month').value.trim(), a=hid();
+  if(!/^\d{4}-\d{2}$/.test(month)){toast('請選月份（例：2026-11）');return;}
+  if(!a.id||(API_URL&&!a.code)){toast('請先填最上面的登入名稱和個人碼');return;}
+  try{HSUM=await expApi({action:'hqSum',...a,month});sumRender();}catch(err){if(!quiet)toast(err.message);}
+}
+/* 總表：直的是分類、橫的是單位。費用和非費用（現金進貨、退款、代墊）分開小計 */
+function sumTable(){
+  const L=HSUM.list, sum=f=>L.filter(f).reduce((s,x)=>s+n(x.amt),0);
+  const cats=[...new Set(L.map(x=>x.cat))].sort((a,b)=>NON.includes(a)-NON.includes(b)||(ORDER.indexOf(a)-ORDER.indexOf(b)));
+  const units=UNITS.concat([...new Set(L.map(x=>x.unit))].filter(u=>!UNITS.includes(u)));
+  const row=(name,f,cls)=>'<tr'+(cls?' class="sum"':'')+'><th>'+esc(name)+'</th>'+units.map(u=>'<td>'+(sum(x=>f(x)&&x.unit===u)?fmt(sum(x=>f(x)&&x.unit===u)):'')+'</td>').join('')+'<td><b>'+fmt(sum(f))+'</b></td></tr>';
+  const fee=cats.filter(c=>!NON.includes(c)), non=cats.filter(c=>NON.includes(c));
+  return '<table class="pivot"><tr><th>分類</th>'+units.map(u=>'<th>'+esc(u)+'</th>').join('')+'<th>合計</th></tr>'
+    +fee.map(c=>row(c,x=>x.cat===c)).join('')+row('費用小計',x=>!NON.includes(x.cat),1)
+    +(non.length?non.map(c=>row(c,x=>x.cat===c)).join('')+row('非費用小計（進貨、退款、代墊）',x=>NON.includes(x.cat),1):'')
+    +row('總計（現金流出）',()=>true,1)+'</table>';
+}
+const sumRows=()=>HSUM.list.filter(x=>!$('h-filter').value||x.unit===$('h-filter').value).sort((a,b)=>a.date.localeCompare(b.date)||a.no.localeCompare(b.no));
+const sumDetail=()=>'<table class="pivot det"><tr><th>日期</th><th>單號</th><th>單位</th><th>分類</th><th>事由</th><th>金額</th><th>來源</th><th>登打人</th></tr>'
+  +sumRows().map(x=>'<tr><td>'+esc(when(x.date))+'</td><td>'+esc(x.no)+'</td><td>'+esc(x.unit)+(x.paidBy!==x.unit?'<br><small>'+esc(x.paidBy)+'代付</small>':'')+'</td><td>'+esc(x.cat)+'</td><td>'+esc(x.why)+'</td><td class="r">'+fmt(x.amt)+'</td><td>'+esc(x.src)+'</td><td>'+esc(x.by)+'</td></tr>').join('')+'</table>';
+function sumRender(){
+  const L=HSUM.list, f=$('h-filter').value;
+  $('h-csv').disabled=$('h-print').disabled=!L.length;
+  $('h-out').innerHTML=!L.length?'<p class="note">'+esc(HSUM.month)+' 還沒有已放行或已入帳的支出。</p>'
+    :'<div class="xline"><b>'+esc(HSUM.month)+' 全公司支出</b><span>共 '+L.length+' 筆，'+fmt(L.reduce((s,x)=>s+n(x.amt),0))+' 元</span></div>'
+     +'<div class="scroll">'+sumTable()+'</div>'
+     +'<div class="xline"><b>明細：'+esc(f||'全部單位')+'</b><span>'+sumRows().length+' 筆，'+fmt(sumRows().reduce((s,x)=>s+n(x.amt),0))+' 元</span></div>'
+     +'<div class="scroll">'+sumDetail()+'</div>';
+}
+$('h-load').addEventListener('click',()=>loadSum());
+$('h-filter').addEventListener('change',()=>{if(HSUM)sumRender();});
+$('h-csv').addEventListener('click',()=>{ /* 加 BOM，Excel 打開中文才不會亂碼 */
+  const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+  const rows=[['日期','單號','所屬單位','付款單位','付款來源','大類','分類','事由','金額','單據','登打人']].concat(sumRows().map(x=>[x.date,x.no,x.unit,x.paidBy,x.src,x.type,x.cat,x.why,x.amt,x.doc,x.by]));
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob(['﻿'+rows.map(r=>r.map(q).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}));
+  a.download='支出明細-'+HSUM.month+($('h-filter').value?'-'+$('h-filter').value:'')+'.csv'; document.body.appendChild(a); a.click(); a.remove();
+});
+function buildSum(){
+  $('print').innerHTML='<h1>倚盟電訊　'+esc(HSUM.month)+' 支出總表</h1><div class="meta"><span>列印日：<b>'+esc(ymd(new Date()).replace(/-/g,'/'))+'</b></span><span>明細範圍：<b>'+esc($('h-filter').value||'全部單位')+'</b></span></div>'
+    +sumTable()+'<div style="height:4mm"></div>'+sumDetail();
+}
+$('h-print').addEventListener('click',()=>{PMODE='sum';buildSum();window.print();});
+window.addEventListener('afterprint',()=>{PMODE='day';});
+
+/* ---------- 存款單 ---------- */
+let slipSeq=0;
+function addSlip(v){
+  const i=slipSeq++, d=document.createElement('div'); d.className='slip';
+  d.innerHTML='<input class="amt" type="text" inputmode="numeric" id="s-amt-'+i+'" aria-label="存款金額" placeholder="存款單上的金額"><button type="button" class="today" aria-pressed="false">今天</button><span class="cal"><span aria-hidden="true">📅</span><input type="date" id="s-at-'+i+'" aria-label="不是今天存的，選存款日期"></span><span class="dt"></span><button type="button" class="x" aria-label="刪除這張存款單">✕</button>';
+  $('slips').appendChild(d);
+  if(v){d.children[0].value=v.amt||'';d.querySelector('input[type=date]').value=(v.at||'').slice(0,10);}
+}
+function slipUi(){
+  const td=ymd(new Date());
+  for(const d of document.querySelectorAll('#slips .slip, #carry-body .slip')){const v=d.querySelector('input[type=date]').value;
+    d.querySelector('.today').setAttribute('aria-pressed',String(v===td));
+    const t=d.querySelector('.dt'); t.textContent=v?v.slice(5).replace('-','/')+' '+dowOf(v):'還沒選日期'; t.style.color=v?'':'var(--bad)';}
+}
+function readForm(){
+  const s=$('f-store').value;
+  const r={byId:$('f-byId').value.trim(),weather:WX,memo:$('f-memo').value.trim(),deferred:NEXT_DAY.includes(s)};
+  r.crew=STAFF?STAFF.list.filter(x=>x in CREW).map(x=>({name:x,turns:Math.max(0,n(CREW[x]))})):[];
+  for(const k of ALL) r[k]=Math.max(0,n($('f-'+k).value));
+  if(r.deferred) r.keep=0; /* 一筆全部匯款，沒有留店零頭 */
+  r.due=r.deferred?nextBiz($('f-date').value||ymd(new Date())):'';
+  r.done=r.deferred?$('f-dDone').checked:$('f-done').checked;
+  r.slips=r.deferred?(n($('f-dAmt').value)>0?[{amt:n($('f-dAmt').value),at:r.due}]:[]):[...$('slips').children].map(d=>({amt:Math.max(0,n(d.children[0].value)),at:d.querySelector('input[type=date]').value.slice(0,10)})).filter(x=>x.amt||x.at);
+  r.e1=r.posBack-posDueOf(r); r.e2=r.etuBack-(r.cash-r.exp);
+  r.posAgree=r.e1!==0&&AGREE.pos===r.e1; r.etuAgree=r.e2!==0&&AGREE.etu===r.e2;
+  return r;
+}
+function live(){
+  const s=$('f-store').value, bank=bankOf(s), date=$('f-date').value||ymd(new Date());
+  document.querySelectorAll('#form .bank').forEach(e=>e.textContent=bank);
+  $('c-dow').textContent=dowOf($('f-date').value);
+  const r=readForm(), cs=check(r,r.slips,date), lv=level(cs);
+  document.querySelector('.bank-l').textContent=(r.deferred?'明日預計匯款':'匯款')+'（'+bank+'）';
+  const setDiff=(id,v)=>{const e=$(id);e.textContent=diff(v);e.style.color=v===0?'var(--ok)':'var(--bad)';};
+  const agree=(k,d)=>{$('ag-'+k).hidden=d===0;$('ag-'+k+'-t').textContent='同意誤差金額 '+diff(d)+'（'+(d>0?'多':'少')+' '+fmt(Math.abs(d))+' 元）';$('ag-'+k+'-c').checked=d!==0&&AGREE[k]===d;};
+  $('c-pos-how').textContent='現金 '+fmt(r.bizCash+r.preCash+r.topup)+' ＋ 訂金 '+fmt(r.depCash)+' ＋ 拆挽 '+fmt(r.swap);
+  $('c-posBack-due').textContent=fmt(posDueOf(r)); setDiff('c-posBack-diff',r.e1); agree('pos',r.e1);
+  $('c-etu-how').textContent='現金 '+fmt(r.cash)+' − 支出 '+fmt(r.exp);
+  $('c-etuBack-due').textContent=fmt(r.cash-r.exp); setDiff('c-etuBack-diff',r.e2); agree('etu',r.e2);
+  const st=(id,lv,t)=>{const e=$(id);e.className='st '+lv;e.textContent=t;};
+  const cardSum=r.bizCard+r.preCard+r.depCard, e4=r.nccc-cardSum;
+  st('c-nccc-st',e4===0?'ok':'fail',e4===0?'✓ 跟收銀刷卡合計 '+fmt(cardSum)+' 相符':'✕ 收銀刷卡合計是 '+fmt(cardSum)+'，差 '+diff(e4));
+  const biz=r.bizCash+r.bizCard, e5=r.inv-biz;
+  st('c-inv-st',e5===0?'ok':e5<0?'fail':'warn',e5===0?'✓ 跟營業合計 '+fmt(biz)+' 相符':e5<0?'✕ 營業合計是 '+fmt(biz)+'，發票少開了 '+fmt(-e5)+' 元。請現在補開發票，再把金額和張數改正確，不然不能送出':'! 營業合計是 '+fmt(biz)+'，發票多了 '+fmt(e5)+' 元。請在備註說明（例如之前收訂金、今天取貨才開票）');
+  const total=r.posBack+r.etuBack;
+  $('c-due-t').textContent=(r.deferred?'明日預計匯款：'+when(r.due)+' '+dowOf(r.due)+' 要存入':'今天要存入')+bank+'的金額（自動計算）';
+  $('c-due').textContent=fmt(total-r.keep);
+  $('c-due-how').textContent='收銀現金 '+fmt(r.posBack)+' ＋ 電資現金 '+fmt(r.etuBack)+' ＝ 今日總現金 '+fmt(total)+(r.keep?'，扣留店零頭 '+fmt(r.keep):'');
+  $('slip-box').hidden=r.deferred; $('defer-box').hidden=!r.deferred; $('carry').hidden=!r.deferred;
+  $('f-keep').closest('.tile').hidden=r.deferred;
+  $('c-dDue').textContent='預計存入日：'+when(r.due)+' '+dowOf(r.due)+'（自動帶入）';
+  $('c-dSum').textContent=fmt($('f-dAmt').value);
+  $('c-dLbl').textContent='明日預計（'+when(r.due)+' '+dowOf(r.due)+' 存入'+bank+'）';
+  $('defer-note').textContent='正式送出後，這一筆會自動複製到明天頁面最上面的「早上先做」。明天存完錢，在那裡補登就完成。';
+  $('c-slips').textContent=fmt(r.slips.reduce((a,x)=>a+x.amt,0));
+  $('live-status').innerHTML='<span class="pill '+lv+'">'+LABEL[lv]+'</span>';
+  $('live-checks').innerHTML=checksHtml(cs,true);
+  slipUi();
+  const todo=issues();
+  $('todo').hidden=!todo.length; $('todo-ok').hidden=!!todo.length||FLOW.printed;
+  $('todo-h').textContent='還有 '+todo.length+' 項沒完成，不能列印和送出：';
+  $('todo-l').innerHTML=todo.map(x=>'<li>'+esc(x)+'</li>').join('');
+  renderFlow();
+  return lv;
+}
+function toast(m){const t=$('toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,6000);}
+
+/* 還沒完成的項目，全部列出來。pre=true：只看「已存入完成」那一格以上的（打勾前先檢查） */
+function issues(pre){
+  const r=readForm(), a=[], total=r.posBack+r.etuBack;
+  if(!$('f-date').value) a.push('營業日還沒選');
+  if(!r.byId) a.push('填寫人的大禾登入名稱還沒填');
+  if(!r.weather) a.push('今天的天氣還沒點');
+  if(r.crew.length<2) a.push(STAFF?'當天上班人員至少要點兩位':'上班人員還沒選（先帶出名單）');
+  if(EXPDAY===null) a.push('今天的支出單還沒讀到：填好填寫人後，按「重新整理支出單」');
+  else{const w=EXPDAY.filter(x=>x.status==='待放行');
+    if(w.length) a.push('還有 '+w.length+' 張支出單沒放行（'+w.map(x=>x.no).join('、')+'）：請主管放行，再按「重新整理支出單」');}
+  if(r.e1!==0&&!r.posAgree) a.push('收銀現金有誤差 '+diff(r.e1)+'：重新點算，或勾「同意誤差金額」');
+  if(r.e2!==0&&!r.etuAgree) a.push('電資現金有誤差 '+diff(r.e2)+'：重新點算，或勾「同意誤差金額」');
+  if(r.inv<r.bizCash+r.bizCard) a.push('發票少開了 '+fmt(r.bizCash+r.bizCard-r.inv)+' 元：補開發票後，把發票金額和張數改正確');
+  if(total===0) a.push('收銀和電資的實回現金都還沒填');
+  if(r.remit+r.keep!==total) a.push('匯款 '+fmt(r.remit)+' ＋ 留店零頭 '+fmt(r.keep)+' 要等於今日總現金 '+fmt(total));
+  const sum=r.slips.reduce((s,x)=>s+x.amt,0);
+  if(!r.slips.length) a.push(r.deferred?'明日預計的金額還沒再填一次':'存款單還沒填');
+  else if(r.slips.some(x=>!x.at||!x.amt)) a.push('每張存款單都要有金額和日期');
+  else if(sum!==r.remit) a.push((r.deferred?'明日預計金額 ':'存款單總共 ')+fmt(sum)+'，跟匯款 '+fmt(r.remit)+' 不一樣');
+  if(r.deferred&&CARRY&&CARRY.some(x=>x.due<=($('f-date').value||ymd(new Date())))) a.push('最上面「早上先做」還有前面的存款沒補登');
+  if(!pre&&!r.done) a.push(r.deferred?'金額確認後，要勾「明日預計」':'存完錢後，要勾「已存入完成」');
+  if(!pre&&!r.memo&&level(check(r,r.slips,$('f-date').value||ymd(new Date())))!=='ok') a.push('有待確認或不符的項目，備註要寫原因');
+  return a;
+}
+function validate(){live();const a=issues();if(a.length)$('todo').scrollIntoView({block:'center'});return a.length?'還不能繼續：'+a[0]+(a.length>1?'（另外還有 '+(a.length-1)+' 項）':''):'';}
+/* 勾「已存入完成」時，小人鞠躬說辛苦了（有聲音） */
+const THANKS='辛苦、辛苦，辛苦大家，辛苦倚盟的隊友們！';
+function bow(){
+  $('bow-say').textContent=THANKS; $('bow').hidden=false;
+  try{const u=new SpeechSynthesisUtterance(THANKS);u.lang='zh-TW';u.rate=0.95;speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}
+  clearTimeout(bow.t); bow.t=setTimeout(()=>$('bow').hidden=true,6000);
+}
+$('bow').addEventListener('click',()=>{$('bow').hidden=true;try{speechSynthesis.cancel();}catch(e){}});
+
+/* ---------- 三步驟：1 列印 → 2 主管覆核 → 3 正式送出 ---------- */
+let NAMES=null; /* 送出後總部回傳的填寫人姓名，列印用 */
+function renderFlow(){
+  const f=FLOW, st2=$('st2-s');
+  $('st1-s').textContent=f.printed?'✓ 已列印':'';
+  $('st2').classList.toggle('off',!f.printed); $('st3').classList.toggle('off',f.status!=='已覆核');
+  $('btn-review').disabled=!f.printed||!!f.id;
+  $('st2-in').hidden=f.status!=='待覆核';
+  st2.className='st '+(f.status==='已覆核'?'ok':f.status==='已退回'?'fail':'warn');
+  st2.textContent=f.id?'報表編號 '+f.id+'：'+(f.status==='待覆核'?'等主管放行':f.status==='已覆核'?'🔑 主管已放行':'✕ 主管退回，請修改後重來'):'';
+  $('btn-send').disabled=f.status!=='已覆核'||f.final;
+  $('sent').hidden=!f.final;
+  $('sent').textContent='已正式送出，報表編號 '+f.id+'。請把簽好名的報表連同存款單與憑證送回總部。';
+}
+function resetFlow(){
+  if(FLOW.id&&!FLOW.final) toast('內容有修改：要重新列印、重新送主管覆核');
+  FLOW={printed:false,id:'',status:'',final:false}; NAMES=null;
+}
+
+/* 草稿：結帳時先填，存完錢回來再補存款單。只存在這台裝置的瀏覽器裡。 */
+const DRAFT='daily-close-draft';
+function saveDraft(){
+  try{const d={date:$('f-date').value,store:$('f-store').value,byId:$('f-byId').value,wx:WX,staff:STAFF,crew:CREW,agree:AGREE,flow:FLOW,names:NAMES,memo:$('f-memo').value,done:$('f-done').checked,dAmt:$('f-dAmt').value,dDone:$('f-dDone').checked,f:{},
+    slips:[...$('slips').children].map(x=>({amt:x.children[0].value,at:x.querySelector('input[type=date]').value}))};
+    for(const k of ALL) d.f[k]=$('f-'+k).value;
+    localStorage.setItem(DRAFT,JSON.stringify(d));}catch(e){}
+}
+function loadDraft(){
+  let d=null; try{d=JSON.parse(localStorage.getItem(DRAFT));}catch(e){}
+  $('f-date').value=(d&&d.date)||ymd(new Date());
+  if(d){
+    if(STORES.includes(d.store)) $('f-store').value=d.store;
+    $('f-byId').value=d.byId||''; WX=WEATHER.includes(d.wx)?d.wx:''; STAFF=(d.staff&&Array.isArray(d.staff.list))?d.staff:null; CREW=(STAFF&&d.crew&&typeof d.crew==='object')?d.crew:{};
+    if(d.agree) AGREE={pos:d.agree.pos??null,etu:d.agree.etu??null};
+    if(d.flow) FLOW={printed:!!d.flow.printed,id:String(d.flow.id||''),status:String(d.flow.status||''),final:!!d.flow.final};
+    NAMES=d.names||null; $('f-memo').value=d.memo||''; $('f-done').checked=!!d.done; $('f-dAmt').value=d.dAmt||''; $('f-dDone').checked=!!d.dDone;
+    for(const k of ALL) $('f-'+k).value=(d.f&&d.f[k])||'';
+    (d.slips&&d.slips.length?d.slips:[{}]).forEach(addSlip);
+  }else addSlip();
+}
+function clearAll(){
+  for(const k of ALL)$('f-'+k).value='';
+  $('f-byId').value='';WX='';STAFF=null;CREW={};AGREE={pos:null,etu:null};FLOW={printed:false,id:'',status:'',final:false};NAMES=null;
+  $('f-memo').value='';$('f-done').checked=false;$('f-dAmt').value='';$('f-dDone').checked=false;$('f-date').value=ymd(new Date());$('m-id').value='';$('m-code').value='';
+  $('slips').innerHTML='';addSlip();renderWx();renderCrew();loadExpDay(true);toast('已清空，可以重新填寫');
+}
+/* 清空要連按兩次，免得誤觸 */
+document.querySelectorAll('.clear').forEach(b=>b.addEventListener('click',()=>{
+  if(b.dataset.arm){delete b.dataset.arm;b.textContent='清空重填';clearAll();return;}
+  b.dataset.arm='1';b.textContent='再按一次確定清空';
+  setTimeout(()=>{if(b.dataset.arm){delete b.dataset.arm;b.textContent='清空重填';}},4000);
+}));
+
+const changed=()=>{resetFlow();live();saveDraft();};
+$('form').addEventListener('submit',e=>e.preventDefault());
+$('form').addEventListener('input',e=>{
+  const t=e.target; if(t.closest('#st2-in,#carry')) return; /* 主管輸入覆核碼、早上補登存款，不算修改今天的報表 */
+  if(t.dataset.turn!==undefined) CREW[t.dataset.turn]=t.value;
+  if(t.id==='f-byId'&&STAFF&&STAFF.id!==t.value.trim()){STAFF=null;CREW={};renderCrew();}
+  if((t.id==='f-done'||t.id==='f-dDone')&&t.checked){ /* 上面沒弄對，不能打勾 */
+    const pre=issues(true);
+    if(pre.length){t.checked=false;live();toast('還不能打勾：'+pre[0]);$('todo').scrollIntoView({block:'center'});return;}
+    if(t.id==='f-done') bow();
+  }
+  if(t.id==='ag-pos-c'||t.id==='ag-etu-c'){const r=readForm(),k=t.id==='ag-pos-c'?'pos':'etu';AGREE[k]=t.checked?(k==='pos'?r.e1:r.e2):null;}
+  changed();
+});
+$('f-store').addEventListener('change',()=>{changed();loadCarry();loadExpDay(true);});
+$('f-date').addEventListener('change',()=>loadExpDay(true));
+$('f-byId').addEventListener('change',()=>{if($('f-byId').value.trim())loadStaff();});
+$('wx').addEventListener('click',e=>{const w=e.target.dataset.wx;if(!w)return;WX=w;renderWx();changed();});
+$('crew').addEventListener('click',e=>{
+  if(e.target.id==='crew-load'){loadStaff();return;}
+  const x=e.target.dataset.name; if(!x||!STAFF||x===STAFF.me) return;
+  if(x in CREW) delete CREW[x]; else CREW[x]='';
+  renderCrew();changed();});
+$('add-slip').addEventListener('click',()=>{addSlip();changed();});
+$('slips').addEventListener('click',e=>{
+  const c=e.target.classList;
+  if(c.contains('x')){e.target.parentNode.remove();if(!$('slips').children.length)addSlip();changed();}
+  if(e.target.type==='date'){try{e.target.showPicker();}catch(_){}}
+  if(c.contains('today')){e.target.parentNode.querySelector('input[type=date]').value=ymd(new Date());changed();}
+});
+
+$('btn-print').addEventListener('click',()=>{
+  const err=validate(); if(err){toast(err);return;}
+  buildPrint(); window.print(); FLOW.printed=true; renderFlow(); saveDraft();
+});
+async function busy(btn,fn){btn.disabled=true;try{await fn();}catch(err){toast(err.message);}finally{btn.disabled=false;renderFlow();saveDraft();}}
+$('btn-review').addEventListener('click',()=>busy($('btn-review'),async()=>{
+  const err=validate(); if(err) throw new Error(err);
+  const r=readForm();
+  if(!API_URL){FLOW.id='示範-0001';FLOW.status='待覆核';toast('示範模式：已送主管覆核（資料沒有儲存）');return;}
+  const j=await api({action:'submit',store:$('f-store').value,date:$('f-date').value,...r});
+  FLOW.id=j.id; FLOW.status='待覆核'; NAMES={by:j.by}; toast('已送主管覆核，報表編號 '+j.id);
+}));
+$('m-ok').addEventListener('click',()=>busy($('m-ok'),async()=>{
+  const id=$('m-id').value.trim(), code=$('m-code').value;
+  if(!id||!code) throw new Error('請主管輸入登入名稱和覆核碼');
+  if(id===$('f-byId').value.trim()) throw new Error('填寫人不能放行自己的報表，要請另一位主管');
+  if(API_URL) await api({action:'review',id,code,reportId:FLOW.id,decision:'approve',note:''});
+  FLOW.status='已覆核'; $('m-code').value=''; toast(API_URL?'🔑 主管已放行，可以正式送出':'示範模式：🔑 主管已放行');
+}));
+$('m-check').addEventListener('click',()=>busy($('m-check'),async()=>{
+  if(!API_URL){toast('示範模式：尚未接上總部試算表');return;}
+  const j=await api({action:'status',reportId:FLOW.id,byId:$('f-byId').value.trim()});
+  FLOW.status=j.status; FLOW.final=!!j.final;
+  toast(j.status==='已退回'?'主管退回：'+(j.note||'請修改後重來'):j.status==='已覆核'?'🔑 '+(j.reviewer||'主管')+' 已放行，可以正式送出':'主管還沒放行');
+}));
+$('btn-send').addEventListener('click',()=>busy($('btn-send'),async()=>{
+  if(API_URL) await api({action:'finalize',reportId:FLOW.id,byId:$('f-byId').value.trim()});
+  else{const r=readForm();if(r.deferred)DEMO_CARRY.push({id:'示範-'+$('f-date').value,date:$('f-date').value,amt:r.remit,due:r.due});}
+  FLOW.final=true; loadCarry(); toast(API_URL?$('f-store').value+'店日報表已正式送出':'示範模式：流程走完了，但資料沒有儲存');
+}));
+
+/* ---------- 小橘子：填寫教學 ---------- */
+(function(){
+  let i=0;
+  $('g-body').innerHTML=GUIDE.map(([sec,items])=>'<section><h2>'+esc(sec)+'</h2><ol>'+items.map(([k,v,t])=>
+    '<li><span class="n" aria-hidden="true">'+(++i)+'</span><div><div class="k">'+esc(k)+(t?'<span class="tag '+TAG[t][0]+'">'+TAG[t][1]+'</span>':'')+'</div><div class="v">'+esc(v)+'</div></div></li>').join('')+'</ol></section>').join('');
+  const g=$('guide');
+  $('orange').addEventListener('click',()=>{g.showModal?g.showModal():g.setAttribute('open','');g.scrollTop=0;});
+  $('g-close').addEventListener('click',()=>{g.close?g.close():g.removeAttribute('open');});
+  g.addEventListener('click',e=>{if(e.target===g&&g.close)g.close();});
+})();
+
+/* ---------- 主管覆核（主管用自己的手機，或店裡的平板） ---------- */
+const LV={'相符':'ok','待確認':'warn','不符':'fail'};
+const rid=()=>({id:$('r-id').value.trim(),code:$('r-code').value});
+function card(o){
+  const kv=(a,b,c)=>'<div class="row'+(c?' calc':'')+'"><span>'+a+'</span><span class="val num">'+esc(/^-?\d+$/.test(b)?Number(b).toLocaleString('en-US'):b)+'</span></div>';
+  const id=esc(o['報表編號']), bank=esc(bankOf(o['門市']));
+  return '<div class="panel"><header>'+esc(o['門市'])+'店　'+esc(o['營業日'])+'</header><div class="body">'
+   +'<div class="sub">填寫人 '+esc(o['填寫人'])+'・上班人員 '+esc(o['上班人員'])+'・'+esc(o['送出時間'])+' 送出'+(o.title?'・您的身分：'+esc(o.title):'')+'</div>'
+   +'<div class="sub">星期'+esc(o['星期']||'')+'・天氣 '+esc(o['天氣']||'')+'・接洽未成交：'+esc((o.turns||[]).map(x=>x.name+' '+x.turns+' 組').join('、'))+'</div>'
+   +'<div><span class="pill '+(LV[o['燈號']]||'warn')+'">'+esc(o['燈號'])+'</span></div>'
+   +kv('營收現金（收銀實回）',o['收銀實回'])+kv('收銀誤差'+(o['收銀誤差同意']?'（填寫人已同意）':''),o['收銀誤差'])
+   +kv('電資現金（電資實回）',o['電資實回'])+kv('電資支出（已放行的支出單）',o['電資支出'])+kv('電資誤差'+(o['電資誤差同意']?'（填寫人已同意）':''),o['電資誤差'])
+   +kv('今日總現金',o['今日總現金'],1)+kv('留店現金',o['留店現金'])+kv((o['存款方式']==='明日預計'?'明日預計匯款 '+esc(o['預計存款日']||''):'匯款')+'（存入'+bank+'）',o['匯款'],1)
+   +o.slips.map((x,i)=>kv('存款單 '+(i+1)+'　'+esc(x.at),x.amt)).join('')
+   +'<ul class="checks">'+o.checks.map(c=>{const lv=LV[c.r]||'warn';return '<li><span class="mark '+lv+'" aria-hidden="true">'+MARK[lv]+'</span><div><div class="t">'+esc(c.t)+'<span class="sub">（'+esc(c.r)+'）</span></div><div class="d num">'+esc(c.d)+'</div></div></li>';}).join('')+'</ul>'
+   +(o['門市備註']?'<div class="note">門市備註：'+esc(o['門市備註'])+'</div>':'')
+   +(o.mine?'<div class="note">這張是您自己填的，要請另一位主管覆核。</div>'
+     :'<label class="field"><span>覆核說明（退回時必填）</span><textarea data-note="'+id+'"></textarea></label>'
+      +'<div class="actions"><button type="button" class="primary" data-act="approve" data-id="'+id+'">覆核通過</button><button type="button" data-act="reject" data-id="'+id+'">退回</button></div>')
+   +'</div></div>';
+}
+async function loadPending(){
+  const a=rid(); if(!a.id||(API_URL&&!a.code)){toast('請輸入登入名稱和覆核碼');return;}
+  const b=$('r-load'); b.disabled=true;
+  try{
+    /* 示範模式沒有名單可查：誰都能放行別人開的單（正式版：現金進貨只有代訂主管能放行） */
+    const j=API_URL?await api({action:'pending',...a}):{name:a.id,list:[],exps:DEMO_EXP.filter(x=>x.status==='待放行').map(x=>({...x,mine:x.byId===a.id,can:x.byId!==a.id}))};
+    const ex=j.exps||[];
+    $('r-sum').innerHTML='<p class="note'+(ex.length||j.list.length?'':' ok')+'">'+esc(j.name)+'：待放行的支出單 '+ex.length+' 張'+(ex.length?'，共 '+fmt(ex.reduce((s,x)=>s+n(x.amt),0))+' 元（'+esc([...new Set(ex.map(x=>x.by))].join('、'))+' 開的）':'')+'；待覆核的日報表 '+j.list.length+' 張。'+(ex.length?'請一張一張看過、簽名、放行。':'')+'</p>';
+    $('r-list').innerHTML=(ex.length?'<div class="panel"><header>🧾 待放行的支出單</header><div class="body">'+ex.map(x=>slipHtml(x,'review')).join('')+'</div></div>':'')+j.list.map(card).join('');
+    pads();
+  }catch(err){toast(err.message);}finally{b.disabled=false;}
+}
+$('r-load').addEventListener('click',loadPending);
+$('r-list').addEventListener('click',async e=>{
+  const t=e.target, xact=t.dataset.xact, act=t.dataset.act;
+  if(xact){ /* 支出單：一張一張放行 */
+    const c=t.closest('.vch'), note=c.querySelector('[data-xnote]').value.trim(), sig=xact==='approve'?padData(c.querySelector('canvas')):'';
+    if(xact==='approve'&&!sig){toast('放行前請主管先簽名');return;}
+    if(xact==='reject'&&!note){toast('退回請寫原因');return;}
+    t.disabled=true;
+    try{await expApi({action:'expReview',...rid(),no:c.dataset.no,decision:xact,note,sig});toast((xact==='approve'?'🔑 已放行 ':'已退回 ')+c.dataset.no);await loadPending();loadExpDay(true);}
+    catch(err){toast(err.message);t.disabled=false;}
+    return;
+  }
+  if(!act) return;
+  const reportId=t.dataset.id;
+  const note=[...document.querySelectorAll('[data-note]')].find(x=>x.dataset.note===reportId).value.trim();
+  if(act==='reject'&&!note){toast('退回請寫原因');return;}
+  t.disabled=true;
+  try{
+    await api({action:'review',...rid(),reportId,decision:act,note});
+    toast(act==='approve'?'已覆核通過':'已退回'); await loadPending();
+  }catch(err){toast(err.message);t.disabled=false;}
+});
+$('c-save').addEventListener('click',async()=>{
+  const id=$('c-id').value.trim(), nw=$('c-new').value;
+  if(!API_URL){toast('示範模式：不用個人碼，直接試就可以');return;}
+  if(!id){toast('請輸入登入名稱');return;}
+  if(nw.length<6){toast('個人碼至少 6 個字');return;}
+  if(nw!==$('c-new2').value){toast('兩次輸入的新個人碼不一樣');return;}
+  try{
+    const j=await api({action:'setcode',id,oldCode:$('c-old').value,newCode:nw});
+    for(const k of ['c-old','c-new','c-new2']) $(k).value='';
+    toast(j.name+' 的個人碼已設定');
+  }catch(err){toast(err.message);}
+});
+
+/* ---------- 分頁 ---------- */
+const VIEWS=['fill','exp','hq'];
+function route(){
+  const h=location.hash.slice(1), v=VIEWS.includes(h)?h:'fill';
+  document.body.dataset.view=v;
+  for(const k of VIEWS){$('view-'+k).hidden=k!==v; k===v?$('tab-'+k).setAttribute('aria-current','page'):$('tab-'+k).removeAttribute('aria-current');}
+  if(h==='review'){$('rv').open=true;$('rv').scrollIntoView();} /* 舊的主管覆核連結：帶到第一頁最上面 */
+  if(v==='hq') hqUi();
+  if(v==='exp'){ /* 從日結頁帶過來，少打一次 */
+    if(!$('e-date').value) $('e-date').value=$('f-date').value||ymd(new Date());
+    if(!val('e-id')){$('e-id').value=$('f-byId').value.trim();$('e-store').value=$('f-store').value;}
+    pads(); if(MGRS===null) loadMgrs(); loadExpList(true);
+  }
+  if(v==='fill') loadExpDay(true);
+}
+window.addEventListener('hashchange',route);
+
+/* ---------- 列印（A4 橫式） ---------- */
+function buildPrint(){
+  const r=readForm(), date=$('f-date').value, cs=check(r,r.slips,date||ymd(new Date()));
+  const tr=(a,b,c)=>'<tr'+(c?' class="sum"':'')+'><th>'+a+'</th><td>'+b+'</td></tr>';
+  const posDue=posDueOf(r), etuDue=r.cash-r.exp, total=r.posBack+r.etuBack;
+  const bank=esc(bankOf($('f-store').value)), ag=b=>b?'（已同意）':'';
+  const ex=(EXPDAY||[]).filter(x=>x.status==='已放行'||x.status==='待放行');
+  $('print').innerHTML='<h1>銷貨分類表</h1>'
+   +'<div class="meta"><span>門市：<b>'+esc($('f-store').value)+'店</b></span><span>營業日：<b>'+esc(date.replace(/-/g,'/'))+' '+dowOf(date)+'</b></span><span>天氣：<b>'+esc(r.weather)+'</b></span><span>填寫人：<b>'+esc(NAMES?NAMES.by:(STAFF?STAFF.me:r.byId))+'</b></span><span>上班人員（接洽未成交組數）：<b>'+esc(r.crew.map(x=>x.name+' '+x.turns).join('、'))+'</b></span></div>'
+   +'<div class="cols">'
+   +'<table><caption>收銀</caption>'+tr('營業（現金）',fmt(r.bizCash))+tr('營業（刷卡）',fmt(r.bizCard))+tr('預繳（現金）',fmt(r.preCash))+tr('預繳（刷卡）',fmt(r.preCard))
+     +tr('儲值',fmt(r.topup))+tr('訂金（現金）',fmt(r.depCash))+tr('訂金（刷卡）',fmt(r.depCard))+tr('拆挽（違約金，現金）',fmt(r.swap))
+     +tr('應回現金',fmt(posDue),1)+tr('實回現金',fmt(r.posBack),1)+tr('誤差金額'+ag(r.posAgree),diff(r.e1),1)+'</table>'
+   +'<table><caption>電資</caption>'+tr('當日總筆數',fmt(r.cnt))+tr('刷卡金額',fmt(r.card))+tr('現金',fmt(r.cash))+tr('支出（'+ex.length+' 張支出單）',fmt(r.exp))
+     +tr('應回現金',fmt(etuDue),1)+tr('實回現金',fmt(r.etuBack),1)+tr('誤差金額'+ag(r.etuAgree),diff(r.e2),1)
+     +'</table><table style="margin-top:3mm"><caption>憑證</caption>'+tr('信用卡結帳單總額',fmt(r.nccc))+tr('刷卡筆數',fmt(r.ncccCnt))+tr('發票副聯合計',fmt(r.inv))+tr('發票張數',fmt(r.invCnt))+'</table>'
+   +'<table><caption>現金結算明細</caption>'+tr('電資現金 (1)　電資實回',fmt(r.etuBack))+tr('營收現金 (2)　收銀實回',fmt(r.posBack))
+     +tr('合計應匯現金 (1+2)　總額',fmt(total),1)+tr('留店現金',fmt(r.keep))+tr((r.deferred?'明日預計匯款':'匯款')+'（存入'+bank+'）',fmt(r.remit),1)
+     +(r.deferred?tr('預計存入日',when(r.due)+' '+dowOf(r.due))+tr('金額再填一次',fmt(n($('f-dAmt').value)))+tr('明日預計',r.done?'是':'否'):r.slips.map((x,i)=>tr('存款單 '+(i+1)+'　'+when(x.at),fmt(x.amt))).join('')
+       +tr('總共多少錢',fmt(r.slips.reduce((s,x)=>s+x.amt,0)),1)+tr('已存入完成',$('f-done').checked?'是':'否'))+'</table>'
+   +'</div>'
+   +(ex.length?'<table class="vouch"><caption>支出單</caption><tr><th>單號</th><th>分類</th><th>事由</th><th>金額</th><th>開單人／簽名</th><th>放行主管／簽名</th></tr>'
+     +ex.map(x=>'<tr><td>'+esc(x.no)+'</td><td>'+esc(x.cat)+'</td><td>'+esc(x.why)+(x.forWho&&x.forWho!=='本店'?'（'+esc(x.forWho)+(x.split?'：'+esc(x.split):'')+'）':'')+(x.custName?'<br>客戶 '+esc(x.custName)+' '+esc(x.phone||'')+' 簽收 '+sigImg(x.sigCust):'')+'</td><td class="r">'+fmt(x.amt)+'</td><td>'+esc(x.by)+' '+sigImg(x.sigBy)+'</td><td>'+(x.reviewer?esc(x.reviewer)+' '+sigImg(x.sigRv):'待放行')+'</td></tr>').join('')+'</table>':'')
+   +'<ul class="chk-list">'+cs.map(c=>'<li>'+MARK[c.lv]+' '+esc(c.t)+'（'+LABEL[c.lv].slice(2)+'）：'+esc(c.d)+'</li>').join('')+'</ul>'
+   +'<div class="memo">備註說明：'+esc(r.memo)+'</div>'
+   +'<div class="sign"><div>填寫人簽名</div><div>當天主管簽名（覆核）</div><div>總部覆核簽名</div></div>'
+   +'<div class="foot">憑證（預付卡儲值明細、信用卡結帳單、信用卡簽單、發票副聯、存款單、支出的發票或收據）一律用迴紋針整理回送，不可用訂書機釘。</div>';
+}
+window.addEventListener('beforeprint',()=>{if(PMODE==='sum'&&HSUM)buildSum();else buildPrint();});
+
+$('demo').hidden=!!API_URL;
+$('e-date').value=ymd(new Date());
+loadDraft(); renderWx(); renderCrew(); renderCarry(); renderExpForm(); live(); route(); loadCarry();
+</script>
+</body>
+</html>
