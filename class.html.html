@@ -179,6 +179,89 @@
     .quote .q-line { animation: none; background: none;
       -webkit-text-fill-color: #223229 }
   }
+
+
+  /* ===== 頁首：五店色條＋綠色漸層橫幅＋浮起的操作卡 ===== */
+  .hero { margin: 0 0 14px; }
+  .hero-stripe { display:flex; height:7px; overflow:hidden; border-radius:14px 14px 0 0; }
+  .hero-stripe i { flex:1; }
+  .hero-stripe i:nth-child(1){background:#B5D4F4} .hero-stripe i:nth-child(2){background:#C0DD97}
+  .hero-stripe i:nth-child(3){background:#FAC775} .hero-stripe i:nth-child(4){background:#CECBF6}
+  .hero-stripe i:nth-child(5){background:#F4C0D1}
+  .hero-ban { position:relative; overflow:hidden; color:#fff; padding:15px 18px 40px;
+    border-radius:0 0 16px 16px;
+    background:linear-gradient(135deg,#2e7d4f,#4ea073 58%,#7fb894); }
+  .hero-ban::after { content:""; position:absolute; right:-28px; top:-30px; width:118px; height:118px;
+    border-radius:50%; background:rgba(255,255,255,.13); }
+  .hero-ban::before { content:""; position:absolute; right:38px; bottom:-36px; width:70px; height:70px;
+    border-radius:50%; background:rgba(255,255,255,.10); }
+  .hero-t { position:relative; z-index:1; display:flex; align-items:center; gap:8px;
+    font-size:20px; font-weight:bold; letter-spacing:.02em; }
+  .hero-s { position:relative; z-index:1; font-size:12px; opacity:.92; margin-top:4px; letter-spacing:.1em; }
+  .hero-card { position:relative; z-index:2; margin:-28px 10px 0; background:#fff; border-radius:13px;
+    padding:12px 10px 13px; box-shadow:0 3px 12px rgba(27,94,58,.17); }
+  .hero-card .controls { margin-bottom:0; }
+  .controls[hidden] { display:none !important; }
+  @media (max-width: 420px) {
+    #monthCtl select { min-width:118px; font-size:14.5px; padding:8px 6px; }
+    #monthCtl button { padding:8px 10px; font-size:14.5px; }
+  }
+  .hero .date-hint { margin:9px 0 0; }
+  @media (max-width: 420px) {
+    .hero-ban { padding:14px 15px 38px; }
+    .hero-t { font-size:18px; }
+    .hero-card { margin:-26px 7px 0; padding:11px 8px 12px; }
+  }
+
+  /* ===== 檢視切換（每日／整月） ===== */
+  .vtabs { display:flex; gap:8px; justify-content:center; margin:0 0 14px; }
+  .vtab { background:#fff; color:var(--header-green-dark); border:1.5px solid var(--header-green);
+    border-radius:999px; padding:7px 20px; font-size:15px; font-weight:bold; cursor:pointer;
+    font-family:inherit; }
+  .vtab.on { background:var(--header-green); color:#fff; }
+  .vtab:active { opacity:.85; }
+
+  /* ===== 整月班表 ===== */
+  .m-banner { background:var(--header-banner); text-align:center; font-size:20px; font-weight:bold;
+    padding:10px; border-radius:10px 10px 0 0; color:#d32f2f; letter-spacing:1px; }
+  .mscroll { overflow-x:auto; background:#fff; border-radius:0 0 10px 10px;
+    box-shadow:0 2px 8px rgba(47,107,79,.12); -webkit-overflow-scrolling:touch; }
+  table.mtable { width:auto; min-width:100%; border-collapse:separate; border-spacing:0;
+    background:#fff; border-radius:0; box-shadow:none; overflow:visible; }
+  table.mtable th, table.mtable td { border:1px solid var(--border-c); padding:0;
+    font-size:13px; text-align:center; vertical-align:middle; }
+  table.mtable th { background:var(--header-green); color:#fff; border-color:var(--header-green-dark);
+    font-size:12.5px; line-height:1.25; padding:5px 0; min-width:26px; }
+  table.mtable th .m-wk { display:block; font-size:10.5px; font-weight:normal; opacity:.9; }
+  table.mtable th.sat, table.mtable th.sun { background:#1b5e3a; }
+  /* 姓名欄固定在左邊，橫向滑動時不會跑掉 */
+  table.mtable .m-name { position:sticky; left:0; z-index:3; background:#f7faf7;
+    text-align:left; padding:6px 9px; font-size:13.5px; white-space:nowrap;
+    min-width:84px; box-shadow:2px 0 4px rgba(0,0,0,.05); }
+  table.mtable thead .m-name { z-index:5; background:var(--header-green); color:#fff; }
+  table.mtable td.m-day { min-width:26px; height:29px; background:#fbfdfc; }
+  table.mtable td.m-day.off { background:#f1efe6; }
+  table.mtable td.m-day.wk  { background:#f6f4ec; }
+  table.mtable td.m-day.na  { background:repeating-linear-gradient(45deg,#f3f3ef,#f3f3ef 3px,#e8e8e2 3px,#e8e8e2 6px); color:#b9b9b2; }
+  table.mtable td.m-day .on-dot { color:#2e7d4f; font-size:14px; font-weight:bold; }
+  table.mtable td.m-sup { font-size:12px; font-weight:bold; }
+  table.mtable td.m-tot { position:sticky; right:0; z-index:3; background:#eaf4ec; font-weight:bold;
+    color:#1b5e3a; min-width:34px; box-shadow:-2px 0 4px rgba(0,0,0,.05); }
+  table.mtable thead .m-tot { background:var(--header-green); color:#fff; z-index:5; }
+  table.mtable tr.m-grp td { background:#e7efe8; color:#1b5e3a; font-weight:bold; text-align:left;
+    padding:0; font-size:13px; letter-spacing:.06em; }
+  table.mtable tr.m-grp span { position:sticky; left:0; display:inline-block; padding:5px 9px; }
+  table.mtable tr.m-mgr .m-name { background:#fff3d6; font-weight:bold; color:#6b4a00; }
+  /* 電腦版：整月表格放寬，讓一整個月盡量一次看完 */
+  @media (min-width: 760px) {
+    body.month-mode #monthView { width: min(1060px, calc(100vw - 28px));
+      margin-left: 50%; transform: translateX(-50%); }
+  }
+  .mlegend { margin:10px 2px 0; font-size:12.5px; color:#4e6b58; line-height:2; }
+  .mlegend b { color:#223229; }
+  .mlegend .lg { display:inline-block; min-width:21px; text-align:center; border:1px solid var(--border-c);
+    border-radius:4px; margin-right:4px; font-weight:bold; }
+
   /* 12星座運勢 */
   .horo { background:#fff; border:1px solid var(--border-c); border-radius:12px;
     margin-top:12px; box-shadow:0 2px 8px rgba(47,107,79,.12); overflow:hidden; }
@@ -305,19 +388,36 @@
 </head>
 <body>
 <div class="wrap">
-  <h1>倚盟電訊 每日班表查詢</h1>
-
-  <div class="controls">
-    <button id="prevBtn">◀ 前一天</button>
-    <span class="date-field" id="dateField">
-      <span id="dateLabel">2026/08/02</span>
-      <input type="date" id="datePicker" min="2026-08-01" max="2026-11-30" value="2026-08-02">
-    </span>
-    <button id="todayBtn">今天</button>
-    <button id="nextBtn">後一天 ▶</button>
+  <div class="hero">
+    <div class="hero-stripe"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="hero-ban">
+      <div class="hero-t">🗓️ 倚盟電訊 班表查詢</div>
+      <div class="hero-s">E-MO TELECOM　五店人力一次看</div>
+    </div>
+    <div class="hero-card">
+      <div class="vtabs">
+        <button type="button" class="vtab on" id="tabDay">每日班表</button>
+        <button type="button" class="vtab" id="tabMonth">整月班表</button>
+      </div>
+      <div class="controls" id="dayCtl">
+        <button id="prevBtn">◀ 前一天</button>
+        <span class="date-field" id="dateField">
+          <span id="dateLabel">2026/08/02</span>
+          <input type="date" id="datePicker" min="2026-08-01" max="2026-11-30" value="2026-08-02">
+        </span>
+        <button id="todayBtn">今天</button>
+        <button id="nextBtn">後一天 ▶</button>
+      </div>
+      <div class="controls" id="monthCtl" hidden>
+        <button type="button" id="mPrev">◀ 上個月</button>
+        <select id="monthSel"></select>
+        <button type="button" id="mNext">下個月 ▶</button>
+      </div>
+    </div>
+    <div class="date-hint" id="dayHint">📅 點選上方日期欄可直接挑選日期</div>
   </div>
-  <div class="date-hint">📅 點選上方日期欄可直接挑選日期</div>
 
+  <div id="dayView">
   <div class="date-banner" id="dateBanner">2026/8/2 星期日</div>
   <table>
     <thead>
@@ -327,6 +427,18 @@
       <tr id="bodyRow"></tr>
     </tbody>
   </table>
+  </div><!-- /dayView -->
+
+  <div id="monthView" hidden>
+    <div class="m-banner" id="mBanner"></div>
+    <div class="mscroll"><table class="mtable" id="mTable"></table></div>
+    <div class="mlegend">
+      <span class="lg" style="background:#fbfdfc;color:#2e7d4f">●</span>本店上班
+      <span class="lg" style="background:#B5D4F4;color:#0C447C">鼎</span><span class="lg" style="background:#C0DD97;color:#27500A">陽</span><span class="lg" style="background:#FAC775;color:#633806">後</span><span class="lg" style="background:#CECBF6;color:#3C3489">仁</span><span class="lg" style="background:#F4C0D1;color:#72243E">凱</span>支援該店
+      <span class="lg" style="background:#f1efe6">　</span>休假<br>
+      橫向可左右滑動，姓名欄會固定在左邊。<b>上班</b>欄為該月上班天數。
+    </div>
+  </div><!-- /monthView -->
 
   <div class="quote">
     <span class="q-txt">
@@ -698,11 +810,218 @@ function drawZodiac(){
   });
 })();
 
+
+/* =========================================================
+   整月班表
+   ========================================================= */
+const STORE_ABBR = { "鼎山":"鼎", "陽明":"陽", "後昌":"後", "仁雄":"仁", "凱旋":"凱", "總部":"總" };
+const STORE_TINT = {
+  "鼎山": ["#B5D4F4","#0C447C"], "陽明": ["#C0DD97","#27500A"],
+  "後昌": ["#FAC775","#633806"], "仁雄": ["#CECBF6","#3C3489"],
+  "凱旋": ["#F4C0D1","#72243E"], "總部": ["#E3E0D6","#4A463C"]
+};
+
+/* 所有有資料的月份，例：["2026-08","2026-09",...] */
+function monthKeys() {
+  const set = new Set(Object.keys(scheduleData).map(d => d.slice(0,7)));
+  return [...set].sort();
+}
+
+/* 每個人在整份資料裡第一次／最後一次出現的日期（判斷到職前、離職後） */
+let PERSON_RANGE = null;
+function personRange() {
+  if (PERSON_RANGE) return PERSON_RANGE;
+  const r = {};
+  Object.keys(scheduleData).sort().forEach(iso => {
+    const st = scheduleData[iso].stores || {};
+    Object.keys(st).forEach(s => (st[s] || []).forEach(n => {
+      if (!r[n]) r[n] = { first: iso, last: iso };
+      else r[n].last = iso;
+    }));
+  });
+  PERSON_RANGE = r;
+  return r;
+}
+
+/* 整理某個月：每個人每天在哪一店，以及本店（該月出現最多次的店） */
+function monthModel(ym) {
+  const days = Object.keys(scheduleData).filter(d => d.startsWith(ym)).sort();
+  const at = {};            /* at[name][iso] = 店名 */
+  const tally = {};         /* tally[name][店名] = 天數 */
+  days.forEach(iso => {
+    const st = scheduleData[iso].stores || {};
+    Object.keys(st).forEach(s => (st[s] || []).forEach(n => {
+      (at[n] = at[n] || {})[iso] = s;
+      const t = tally[n] = tally[n] || {};
+      t[s] = (t[s] || 0) + 1;
+    }));
+  });
+  const home = {};
+  Object.keys(tally).forEach(n => {
+    if (n === SUPERVISOR) { home[n] = null; return; }   /* 督導不綁店 */
+    home[n] = Object.keys(tally[n]).sort((a,b) =>
+      tally[n][b] - tally[n][a] || STORES.indexOf(a) - STORES.indexOf(b))[0];
+  });
+  return { days, at, home };
+}
+
+const MKEY_FIRST = monthKeys()[0];
+const MKEY_LAST  = monthKeys()[monthKeys().length - 1];
+
+function renderMonth() {
+  const sel = document.getElementById("monthSel");
+  const ym  = sel.value;
+  const [yy, mm] = ym.split("-").map(Number);
+  document.getElementById("mBanner").textContent = `${yy}年 ${mm}月班表`;
+
+  const { days, at, home } = monthModel(ym);
+  const range = personRange();
+  const tbl = document.getElementById("mTable");
+  tbl.innerHTML = "";
+
+  /* ---- 表頭 ---- */
+  const thead = document.createElement("thead");
+  const hr = document.createElement("tr");
+  const th0 = document.createElement("th");
+  th0.className = "m-name";
+  th0.textContent = "姓名";
+  hr.appendChild(th0);
+  days.forEach(iso => {
+    const th = document.createElement("th");
+    const w = scheduleData[iso].weekday;
+    th.innerHTML = `${Number(iso.slice(8,10))}<span class="m-wk">${w}</span>`;
+    if (w === "六") th.classList.add("sat");
+    if (w === "日") th.classList.add("sun");
+    hr.appendChild(th);
+  });
+  const thT = document.createElement("th");
+  thT.className = "m-tot";
+  thT.textContent = "上班";
+  hr.appendChild(thT);
+  thead.appendChild(hr);
+  tbl.appendChild(thead);
+
+  /* ---- 分組：督導 → 五店 → 總部 ---- */
+  const groups = [];
+  if (at[SUPERVISOR]) groups.push({ label: "督導", store: null, people: [SUPERVISOR] });
+  STORES.forEach(s => {
+    const people = Object.keys(home)
+      .filter(n => home[n] === s)
+      .map((n, i) => ({ n, i, r: rankOf(n, s) }))
+      .sort((a, b) => a.r - b.r || a.n.localeCompare(b.n, "zh-Hant"))
+      .map(x => x.n);
+    if (people.length) groups.push({ label: s, store: s, people });
+  });
+
+  const tbody = document.createElement("tbody");
+  const colspan = days.length + 2;
+
+  groups.forEach(g => {
+    const gr = document.createElement("tr");
+    gr.className = "m-grp";
+    const gtd = document.createElement("td");
+    gtd.colSpan = colspan;
+    gtd.innerHTML = `<span>${g.label}</span>`;
+    if (g.store && STORE_TINT[g.store]) {
+      gtd.style.background = STORE_TINT[g.store][0];
+      gtd.style.color = STORE_TINT[g.store][1];
+    }
+    gr.appendChild(gtd);
+    tbody.appendChild(gr);
+
+    g.people.forEach(name => {
+      const tr = document.createElement("tr");
+      if (MANAGER_SET.has(name)) tr.classList.add("m-mgr");
+      const ntd = document.createElement("td");
+      ntd.className = "m-name";
+      ntd.textContent = name;
+      if (NAME_BG[name]) ntd.style.background = NAME_BG[name];
+      tr.appendChild(ntd);
+
+      let work = 0;
+      days.forEach(iso => {
+        const td = document.createElement("td");
+        td.className = "m-day";
+        const w = scheduleData[iso].weekday;
+        if (w === "六" || w === "日") td.classList.add("wk");
+        const where = at[name] && at[name][iso];
+        const rg = range[name];
+        if (where) {
+          work++;
+          if (g.store && where === g.store) {
+            td.innerHTML = '<span class="on-dot">●</span>';
+          } else {
+            td.textContent = STORE_ABBR[where] || where;
+            td.classList.add("m-sup");
+            const t = STORE_TINT[where];
+            if (t) { td.style.background = t[0]; td.style.color = t[1]; }
+          }
+          td.title = `${name}　${iso}　${where}`;
+        } else if (rg && ((rg.first.slice(0,7) > MKEY_FIRST && iso < rg.first) ||
+                          (rg.last.slice(0,7)  < MKEY_LAST  && iso > rg.last))) {
+          td.classList.add("na");       /* 到職前／離職後 */
+          td.textContent = "–";
+        } else {
+          td.classList.add("off");
+        }
+        tr.appendChild(td);
+      });
+
+      const ttd = document.createElement("td");
+      ttd.className = "m-tot";
+      ttd.textContent = work;
+      tr.appendChild(ttd);
+      tbody.appendChild(tr);
+    });
+  });
+
+  tbl.appendChild(tbody);
+}
+
+/* ---- 月份選單與切換 ---- */
+(function buildMonthUI() {
+  const sel = document.getElementById("monthSel");
+  monthKeys().forEach(ym => {
+    const o = document.createElement("option");
+    o.value = ym;
+    o.textContent = `${Number(ym.slice(5,7))} 月（${ym.slice(0,4)}）`;
+    sel.appendChild(o);
+  });
+  sel.addEventListener("change", renderMonth);
+  const step = d => {
+    const ks = monthKeys(), i = ks.indexOf(sel.value) + d;
+    if (i >= 0 && i < ks.length) { sel.value = ks[i]; renderMonth(); }
+  };
+  document.getElementById("mPrev").addEventListener("click", () => step(-1));
+  document.getElementById("mNext").addEventListener("click", () => step(1));
+})();
+
+(function viewTabs() {
+  const tabD = document.getElementById("tabDay"), tabM = document.getElementById("tabMonth");
+  const vD = document.getElementById("dayView"), vM = document.getElementById("monthView");
+  let monthDrawn = false;
+  function show(which) {
+    const month = which === "m";
+    vD.hidden = month; vM.hidden = !month;
+    document.getElementById("dayCtl").hidden = month;
+    document.getElementById("monthCtl").hidden = !month;
+    document.getElementById("dayHint").hidden = month;
+    document.body.classList.toggle("month-mode", month);
+    tabD.classList.toggle("on", !month);
+    tabM.classList.toggle("on", month);
+    if (month && !monthDrawn) { renderMonth(); monthDrawn = true; }
+  }
+  tabD.addEventListener("click", () => show("d"));
+  tabM.addEventListener("click", () => show("m"));
+})();
+
 (function init() {
   const today = new Date();
   const iso = isoOf(today.getFullYear(), today.getMonth()+1, today.getDate());
   document.getElementById("datePicker").value = scheduleData[iso] ? iso : Object.keys(scheduleData).sort().pop();
   renderDay();
+  const ks = monthKeys(), ym = iso.slice(0,7);
+  document.getElementById("monthSel").value = ks.indexOf(ym) >= 0 ? ym : ks[ks.length-1];
 })();
 </script>
 </body>
